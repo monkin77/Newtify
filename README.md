@@ -1,4 +1,4 @@
-# Cronews
+# Newtify
 
 ## Team
 
