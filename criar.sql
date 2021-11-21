@@ -1,13 +1,167 @@
-create table authenticated_user (
-  id integer PRIMARY KEY, 
-  name text NOT NULL, 
-  email text NOT NULL, 
-  birth_date date NOT NULL CHECK (CURRENT_DATE - birth_date >= 12), 
-  description text, 
-  password text NOT NULL, 
-  avatar text, 
-  city text, 
-  is_suspended boolean NOT NULL,
-  coutry_code text REFERENCES Country(code)
-  );
-		
+DROP DOMAIN IF EXISTS EMAIL CASCADE;
+DROP TYPE IF EXISTS PROPOSED_TAG_STATES CASCADE;
+
+DROP TABLE IF EXISTS "authenticated_user" CASCADE;
+DROP TABLE IF EXISTS "admin" CASCADE;
+DROP TABLE IF EXISTS "suspension" CASCADE;
+DROP TABLE IF EXISTS "report" CASCADE;
+DROP TABLE IF EXISTS "country" CASCADE;
+DROP TABLE IF EXISTS "tag" CASCADE;
+DROP TABLE IF EXISTS "area_of_expertise" CASCADE;
+DROP TABLE IF EXISTS "favorite_tag" CASCADE;
+DROP TABLE IF EXISTS "proposed_tag" CASCADE;
+DROP TABLE IF EXISTS "message" CASCADE;
+DROP TABLE IF EXISTS "follow" CASCADE;
+DROP TABLE IF EXISTS "content" CASCADE;
+DROP TABLE IF EXISTS "article" CASCADE;
+DROP TABLE IF EXISTS "comment" CASCADE;
+DROP TABLE IF EXISTS "feedback" CASCADE;
+DROP TABLE IF EXISTS "article_tag" CASCADE;
+DROP TABLE IF EXISTS "notification" CASCADE;
+DROP TABLE IF EXISTS "message_notification" CASCADE;
+DROP TABLE IF EXISTS "feedback_notification" CASCADE;
+DROP TABLE IF EXISTS "comment_notification" CASCADE;
+
+CREATE DOMAIN VALID_EMAIL AS TEXT CHECK(VALUE LIKE '_%@_%.__%');
+
+CREATE TYPE PROPOSED_TAG_STATES AS ENUM ('Pending', 'Accepted', 'Rejected');
+
+CREATE TABLE "country" (
+  code TEXT PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE "authenticated_user" (
+  id SERIAL PRIMARY KEY, 
+  name TEXT NOT NULL, 
+  email VALID_EMAIL NOT NULL UNIQUE, 
+  birth_date TIMESTAMP NOT NULL CHECK (CURRENT_TIMESTAMP >= birth_date), 
+  description TEXT, 
+  password TEXT NOT NULL, 
+  avatar TEXT, 
+  city TEXT, 
+  is_suspended BOOLEAN NOT NULL,
+  reputation INTEGER NOT NULL DEFAULT 0,
+  coutry_code TEXT REFERENCES "country"(code) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE "admin" (
+  user_id SERIAL PRIMARY KEY REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE "suspension" (
+  id SERIAL PRIMARY KEY,
+  reason TEXT NOT NULL,
+  start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  end_time TIMESTAMP NOT NULL CHECK (end_time >= start_time),
+  admin_id INTEGER NOT NULL REFERENCES "admin"(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE "report"(
+  id SERIAL PRIMARY KEY, 
+  reason TEXT NOT NULL, 
+  reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP CHECK (reported_at <= CURRENT_TIMESTAMP), 
+  is_closed BOOLEAN DEFAULT false, 
+  reported_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+  reporter_id INTEGER REFERENCES "authenticated_user"(id) ON UPDATE CASCADE,
+  CONSTRAINT different_ids CHECK (reporter_id != reported_id)
+);
+
+CREATE TABLE "tag" (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE "area_of_expertise"(
+  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  tag_id  INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  reputation INTEGER NOT NULL,
+  PRIMARY KEY (user_id, tag_id)
+);
+
+CREATE TABLE "favorite_tag"(
+  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  tag_id  INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY (user_id, tag_id)
+);
+
+CREATE TABLE "proposed_tag"(
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE,
+  proposed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP CHECK (proposed_at <= CURRENT_TIMESTAMP),
+  state PROPOSED_TAG_STATES NOT NULL DEFAULT 'Pending',
+  user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE "message"(
+  id SERIAL PRIMARY KEY,
+  body TEXT NOT NULL,
+  published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP CHECK (published_at <= CURRENT_TIMESTAMP),
+  sender_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE "follow"(
+  follower_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  followed_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY(follower_id, followed_id)
+);
+
+CREATE TABLE "content"(
+  id SERIAL PRIMARY KEY,
+  body TEXT NOT NULL,
+  published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  is_edited BOOLEAN DEFAULT false,
+  likes INTEGER CHECK (likes >= 0),
+  dislikes INTEGER CHECK (dislikes >= 0),
+  author_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE -- trigger must update user instead of deleting it
+);
+
+CREATE TABLE "article" (
+  content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+  title TEXT NOT NULL, 
+  thumbnail TEXT
+);
+
+CREATE TABLE "comment"(
+  content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  article_id INTEGER NOT NULL REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON UPDATE CASCADE
+);
+
+CREATE TABLE "feedback"(
+  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+  content_id INTEGER REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+  is_like BOOLEAN NOT NULL,
+  PRIMARY KEY (user_id, content_id)
+);
+
+CREATE TABLE "article_tag"(
+  article_id INTEGER REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  tag_id INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY(article_id, tag_id)
+);
+
+CREATE TABLE "notification"(
+  id SERIAL PRIMARY KEY, 
+  date TIMESTAMP NOT NULL CHECK (date <= CURRENT_TIMESTAMP), 
+  is_read BOOLEAN DEFAULT false
+);
+
+CREATE TABLE "message_notification"(
+  id INTEGER PRIMARY KEY REFERENCES "notification"(id),
+  msg INTEGER NOT NULL REFERENCES "message"(id)
+);
+
+CREATE TABLE "feedback_notification"(
+  id INTEGER PRIMARY KEY REFERENCES "notification"(id), 
+  fb_giver INTEGER NOT NULL REFERENCES "authenticated_user"(id), 
+  rated_content INTEGER NOT NULL REFERENCES "content"(id)
+);
+
+CREATE TABLE "comment_notification"(
+  id INTEGER PRIMARY KEY REFERENCES "notification"(id),
+  new_comment INTEGER NOT NULL REFERENCES "comment"(content_id)
+);
+
