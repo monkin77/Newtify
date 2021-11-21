@@ -1,3 +1,8 @@
+SET search_path TO lbaw2111;
+
+-----------------------------------------
+-- Drop old schema
+-----------------------------------------
 DROP DOMAIN IF EXISTS EMAIL CASCADE;
 DROP TYPE IF EXISTS PROPOSED_TAG_STATES CASCADE;
 
@@ -22,14 +27,30 @@ DROP TABLE IF EXISTS "message_notification" CASCADE;
 DROP TABLE IF EXISTS "feedback_notification" CASCADE;
 DROP TABLE IF EXISTS "comment_notification" CASCADE;
 
+-----------------------------------------
+-- DOMAINS
+-----------------------------------------
+
 CREATE DOMAIN VALID_EMAIL AS TEXT CHECK(VALUE LIKE '_%@_%.__%');
+
+-----------------------------------------
+-- TYPES
+-----------------------------------------
 
 CREATE TYPE PROPOSED_TAG_STATES AS ENUM ('Pending', 'Accepted', 'Rejected');
 
+-----------------------------------------
+-- Tables
+-----------------------------------------
+
 CREATE TABLE "country" (
-  code TEXT PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
+  code TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL UNIQUE
 );
+
+-----------------------------------------
+
 
 CREATE TABLE "authenticated_user" (
   id SERIAL PRIMARY KEY, 
@@ -42,12 +63,16 @@ CREATE TABLE "authenticated_user" (
   city TEXT, 
   is_suspended BOOLEAN NOT NULL,
   reputation INTEGER NOT NULL DEFAULT 0,
-  coutry_code TEXT REFERENCES "country"(code) ON DELETE CASCADE ON UPDATE CASCADE
+  country_id INTEGER REFERENCES "country"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-----------------------------------------
 
 CREATE TABLE "admin" (
   user_id SERIAL PRIMARY KEY REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-----------------------------------------
 
 CREATE TABLE "suspension" (
   id SERIAL PRIMARY KEY,
@@ -57,6 +82,8 @@ CREATE TABLE "suspension" (
   admin_id INTEGER NOT NULL REFERENCES "admin"(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
   user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-----------------------------------------
 
 CREATE TABLE "report"(
   id SERIAL PRIMARY KEY, 
@@ -68,10 +95,14 @@ CREATE TABLE "report"(
   CONSTRAINT different_ids CHECK (reporter_id != reported_id)
 );
 
+-----------------------------------------
+
 CREATE TABLE "tag" (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE
 );
+
+-----------------------------------------
 
 CREATE TABLE "area_of_expertise"(
   user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -80,11 +111,15 @@ CREATE TABLE "area_of_expertise"(
   PRIMARY KEY (user_id, tag_id)
 );
 
+-----------------------------------------
+
 CREATE TABLE "favorite_tag"(
   user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   tag_id  INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (user_id, tag_id)
 );
+
+-----------------------------------------
 
 CREATE TABLE "proposed_tag"(
   id SERIAL PRIMARY KEY,
@@ -94,6 +129,8 @@ CREATE TABLE "proposed_tag"(
   user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-----------------------------------------
+
 CREATE TABLE "message"(
   id SERIAL PRIMARY KEY,
   body TEXT NOT NULL,
@@ -102,11 +139,15 @@ CREATE TABLE "message"(
   receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-----------------------------------------
+
 CREATE TABLE "follow"(
   follower_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   followed_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(follower_id, followed_id)
 );
+
+-----------------------------------------
 
 CREATE TABLE "content"(
   id SERIAL PRIMARY KEY,
@@ -118,17 +159,23 @@ CREATE TABLE "content"(
   author_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE -- trigger must update user instead of deleting it
 );
 
+-----------------------------------------
+
 CREATE TABLE "article" (
   content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
   title TEXT NOT NULL, 
   thumbnail TEXT
 );
 
+-----------------------------------------
+
 CREATE TABLE "comment"(
   content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   article_id INTEGER NOT NULL REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
   parent_comment_id INTEGER REFERENCES "comment"(content_id) ON UPDATE CASCADE
 );
+
+-----------------------------------------
 
 CREATE TABLE "feedback"(
   user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
@@ -137,11 +184,15 @@ CREATE TABLE "feedback"(
   PRIMARY KEY (user_id, content_id)
 );
 
+-----------------------------------------
+
 CREATE TABLE "article_tag"(
   article_id INTEGER REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
   tag_id INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(article_id, tag_id)
 );
+
+-----------------------------------------
 
 CREATE TABLE "notification"(
   id SERIAL PRIMARY KEY, 
@@ -149,10 +200,14 @@ CREATE TABLE "notification"(
   is_read BOOLEAN DEFAULT false
 );
 
+-----------------------------------------
+
 CREATE TABLE "message_notification"(
   id INTEGER PRIMARY KEY REFERENCES "notification"(id),
   msg INTEGER NOT NULL REFERENCES "message"(id)
 );
+
+-----------------------------------------
 
 CREATE TABLE "feedback_notification"(
   id INTEGER PRIMARY KEY REFERENCES "notification"(id), 
@@ -160,8 +215,11 @@ CREATE TABLE "feedback_notification"(
   rated_content INTEGER NOT NULL REFERENCES "content"(id)
 );
 
+-----------------------------------------
+
 CREATE TABLE "comment_notification"(
   id INTEGER PRIMARY KEY REFERENCES "notification"(id),
   new_comment INTEGER NOT NULL REFERENCES "comment"(content_id)
 );
 
+-----------------------------------------
