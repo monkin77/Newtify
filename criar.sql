@@ -7,7 +7,6 @@ DROP DOMAIN IF EXISTS EMAIL CASCADE;
 DROP TYPE IF EXISTS PROPOSED_TAG_STATES CASCADE;
 
 DROP TABLE IF EXISTS "authenticated_user" CASCADE;
-DROP TABLE IF EXISTS "admin" CASCADE;
 DROP TABLE IF EXISTS "suspension" CASCADE;
 DROP TABLE IF EXISTS "report" CASCADE;
 DROP TABLE IF EXISTS "country" CASCADE;
@@ -56,7 +55,8 @@ CREATE TABLE "authenticated_user" (
   id SERIAL PRIMARY KEY, 
   name TEXT NOT NULL, 
   email VALID_EMAIL NOT NULL UNIQUE, 
-  birth_date TIMESTAMP NOT NULL CHECK (CURRENT_TIMESTAMP >= birth_date), 
+  birth_date TIMESTAMP NOT NULL CHECK (CURRENT_TIMESTAMP >= birth_date),
+  admin BOOLEAN DEFAULT false,
   description TEXT, 
   password TEXT NOT NULL, 
   avatar TEXT, 
@@ -66,11 +66,6 @@ CREATE TABLE "authenticated_user" (
   country_id INTEGER REFERENCES "country"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
------------------------------------------
-
-CREATE TABLE "admin" (
-  user_id SERIAL PRIMARY KEY REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
 
 -----------------------------------------
 
@@ -79,8 +74,9 @@ CREATE TABLE "suspension" (
   reason TEXT NOT NULL,
   start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   end_time TIMESTAMP NOT NULL CHECK (end_time >= start_time),
-  admin_id INTEGER NOT NULL REFERENCES "admin"(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  admin_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT diff_entities CHECK (admin_id != user_id)
 );
 
 -----------------------------------------
@@ -88,7 +84,7 @@ CREATE TABLE "suspension" (
 CREATE TABLE "report"(
   id SERIAL PRIMARY KEY, 
   reason TEXT NOT NULL, 
-  reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP CHECK (reported_at <= CURRENT_TIMESTAMP), 
+  reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
   is_closed BOOLEAN DEFAULT false, 
   reported_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
   reporter_id INTEGER REFERENCES "authenticated_user"(id) ON UPDATE CASCADE,
@@ -99,7 +95,10 @@ CREATE TABLE "report"(
 
 CREATE TABLE "tag" (
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE
+  name TEXT NOT NULL UNIQUE,
+  proposed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  state PROPOSED_TAG_STATES NOT NULL DEFAULT 'Pending',
+  user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -----------------------------------------
@@ -119,24 +118,16 @@ CREATE TABLE "favorite_tag"(
   PRIMARY KEY (user_id, tag_id)
 );
 
------------------------------------------
-
-CREATE TABLE "proposed_tag"(
-  id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE,
-  proposed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP CHECK (proposed_at <= CURRENT_TIMESTAMP),
-  state PROPOSED_TAG_STATES NOT NULL DEFAULT 'Pending',
-  user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
 
 -----------------------------------------
 
 CREATE TABLE "message"(
   id SERIAL PRIMARY KEY,
   body TEXT NOT NULL,
-  published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP CHECK (published_at <= CURRENT_TIMESTAMP),
+  published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   sender_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  is_read BOOLEAN DEFAULT false
 );
 
 -----------------------------------------
@@ -196,7 +187,7 @@ CREATE TABLE "article_tag"(
 
 CREATE TABLE "notification"(
   id SERIAL PRIMARY KEY, 
-  date TIMESTAMP NOT NULL CHECK (date <= CURRENT_TIMESTAMP), 
+  date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   is_read BOOLEAN DEFAULT false
 );
 
