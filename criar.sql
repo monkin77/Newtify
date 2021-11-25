@@ -4,7 +4,9 @@ SET search_path TO lbaw2111;
 -- Drop old schema
 -----------------------------------------
 DROP DOMAIN IF EXISTS EMAIL CASCADE;
+
 DROP TYPE IF EXISTS PROPOSED_TAG_STATES CASCADE;
+DROP TYPE IF EXISTS NOTIFICATION_TYPE;
 
 DROP TABLE IF EXISTS "authenticated_user" CASCADE;
 DROP TABLE IF EXISTS "suspension" CASCADE;
@@ -36,7 +38,8 @@ CREATE DOMAIN VALID_EMAIL AS TEXT CHECK(VALUE LIKE '_%@_%.__%');
 -- TYPES
 -----------------------------------------
 
-CREATE TYPE PROPOSED_TAG_STATES AS ENUM ('Pending', 'Accepted', 'Rejected');
+CREATE TYPE PROPOSED_TAG_STATES AS ENUM ('PENDING', 'ACCEPTED', 'REJECTED');
+CREATE TYPE NOTIFICATION_TYPE AS ENUM ('MESSAGE', 'FEEDBACK', 'COMMENT');
 
 -----------------------------------------
 -- Tables
@@ -97,7 +100,7 @@ CREATE TABLE "tag" (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
   proposed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  state PROPOSED_TAG_STATES NOT NULL DEFAULT 'Pending',
+  state PROPOSED_TAG_STATES NOT NULL DEFAULT 'PENDING',
   user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -188,29 +191,12 @@ CREATE TABLE "article_tag"(
 CREATE TABLE "notification"(
   id SERIAL PRIMARY KEY, 
   date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-  is_read BOOLEAN DEFAULT false
-);
-
------------------------------------------
-
-CREATE TABLE "message_notification"(
-  id INTEGER PRIMARY KEY REFERENCES "notification"(id),
-  msg INTEGER NOT NULL REFERENCES "message"(id)
-);
-
------------------------------------------
-
-CREATE TABLE "feedback_notification"(
-  id INTEGER PRIMARY KEY REFERENCES "notification"(id), 
-  fb_giver INTEGER NOT NULL REFERENCES "authenticated_user"(id), 
-  rated_content INTEGER NOT NULL REFERENCES "content"(id)
-);
-
------------------------------------------
-
-CREATE TABLE "comment_notification"(
-  id INTEGER PRIMARY KEY REFERENCES "notification"(id),
-  new_comment INTEGER NOT NULL REFERENCES "comment"(content_id)
+  is_read BOOLEAN DEFAULT false,
+  msg INTEGER REFERENCES "message"(id),
+  fb_giver INTEGER REFERENCES "authenticated_user"(id),
+  rated_content INTEGER REFERENCES "content"(id),
+  new_comment INTEGER REFERENCES "comment"(content_id),
+  type NOTIFICATION_TYPE NOT NULL
 );
 
 -----------------------------------------
