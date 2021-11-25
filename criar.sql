@@ -1,32 +1,11 @@
-SET search_path TO lbaw2111;
-
 -----------------------------------------
 -- Drop old schema
 -----------------------------------------
-DROP DOMAIN IF EXISTS EMAIL CASCADE;
 
-DROP TYPE IF EXISTS PROPOSED_TAG_STATES CASCADE;
-DROP TYPE IF EXISTS NOTIFICATION_TYPE;
+DROP SCHEMA IF EXISTS lbaw2111 CASCADE;
+CREATE SCHEMA lbaw2111;
 
-DROP TABLE IF EXISTS "authenticated_user" CASCADE;
-DROP TABLE IF EXISTS "suspension" CASCADE;
-DROP TABLE IF EXISTS "report" CASCADE;
-DROP TABLE IF EXISTS "country" CASCADE;
-DROP TABLE IF EXISTS "tag" CASCADE;
-DROP TABLE IF EXISTS "area_of_expertise" CASCADE;
-DROP TABLE IF EXISTS "favorite_tag" CASCADE;
-DROP TABLE IF EXISTS "proposed_tag" CASCADE;
-DROP TABLE IF EXISTS "message" CASCADE;
-DROP TABLE IF EXISTS "follow" CASCADE;
-DROP TABLE IF EXISTS "content" CASCADE;
-DROP TABLE IF EXISTS "article" CASCADE;
-DROP TABLE IF EXISTS "comment" CASCADE;
-DROP TABLE IF EXISTS "feedback" CASCADE;
-DROP TABLE IF EXISTS "article_tag" CASCADE;
-DROP TABLE IF EXISTS "notification" CASCADE;
-DROP TABLE IF EXISTS "message_notification" CASCADE;
-DROP TABLE IF EXISTS "feedback_notification" CASCADE;
-DROP TABLE IF EXISTS "comment_notification" CASCADE;
+SET search_path TO lbaw2111;
 
 -----------------------------------------
 -- DOMAINS
@@ -45,7 +24,7 @@ CREATE TYPE NOTIFICATION_TYPE AS ENUM ('MESSAGE', 'FEEDBACK', 'COMMENT');
 -- Tables
 -----------------------------------------
 
-CREATE TABLE "country" (
+CREATE TABLE "country"(
   id SERIAL PRIMARY KEY,
   code TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL UNIQUE
@@ -54,7 +33,7 @@ CREATE TABLE "country" (
 -----------------------------------------
 
 
-CREATE TABLE "authenticated_user" (
+CREATE TABLE "authenticated_user"(
   id SERIAL PRIMARY KEY, 
   name TEXT NOT NULL, 
   email VALID_EMAIL NOT NULL UNIQUE, 
@@ -72,7 +51,7 @@ CREATE TABLE "authenticated_user" (
 
 -----------------------------------------
 
-CREATE TABLE "suspension" (
+CREATE TABLE "suspension"(
   id SERIAL PRIMARY KEY,
   reason TEXT NOT NULL,
   start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -96,7 +75,7 @@ CREATE TABLE "report"(
 
 -----------------------------------------
 
-CREATE TABLE "tag" (
+CREATE TABLE "tag"(
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
   proposed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -155,7 +134,7 @@ CREATE TABLE "content"(
 
 -----------------------------------------
 
-CREATE TABLE "article" (
+CREATE TABLE "article"(
   content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
   title TEXT NOT NULL, 
   thumbnail TEXT
@@ -189,7 +168,8 @@ CREATE TABLE "article_tag"(
 -----------------------------------------
 
 CREATE TABLE "notification"(
-  id SERIAL PRIMARY KEY, 
+  id SERIAL PRIMARY KEY,
+  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id),
   date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   is_read BOOLEAN DEFAULT false,
   msg INTEGER REFERENCES "message"(id),
@@ -198,5 +178,86 @@ CREATE TABLE "notification"(
   new_comment INTEGER REFERENCES "comment"(content_id),
   type NOTIFICATION_TYPE NOT NULL
 );
+
+
+-----------------------------------------
+-- INDICES
+-----------------------------------------
+
+CREATE INDEX content_author ON content USING hash (author_id);
+
+CREATE INDEX user_messages ON message USING btree (receiver_id, sender_id);
+
+CREATE INDEX notification_receiver ON notification USING hash (receiver_id);
+
+
+-----------------------------------------
+-- FULL-TEXT SEARCH INDICES
+-----------------------------------------
+
+ALTER TABLE "article" ADD COLUMN tsvectors TSVECTOR;
+
+CREATE FUNCTION article_search_update() RETURNS TRIGGER AS $$
+DECLARE new_body text = (select body from "content" where id = NEW.content_id);
+BEGIN
+  IF TG_OP = 'INSERT' THEN
+    NEW.tsvectors = (
+      setweight(to_tsvector('english', NEW.title), 'A') ||
+      setweight(to_tsvector('english', new_body), 'B')
+    );
+  END IF;
+
+  IF TG_OP = 'UPDATE' THEN
+      IF (NEW.title <> OLD.title OR new_body <> OLD.text) THEN
+        NEW.tsvectors = (
+          setweight(to_tsvector('english', NEW.title), 'A') ||
+          setweight(to_tsvector('english', new_body), 'B')
+        );
+      END IF;
+  END IF;
+
+  RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER article_search_update
+  BEFORE INSERT OR UPDATE ON "article"
+  FOR EACH ROW
+  EXECUTE PROCEDURE article_search_update();
+
+CREATE INDEX article_search ON "article" USING GIST (tsvectors);
+
+
+
+ALTER TABLE "authenticated_user" ADD COLUMN tsvectors TSVECTOR;
+
+CREATE FUNCTION user_search_update() RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'INSERT' THEN
+    NEW.tsvectors = (
+      setweight(to_tsvector('english', NEW.name), 'A') ||
+      setweight(to_tsvector('english', NEW.email), 'B')
+    );
+  END IF;
+
+  IF TG_OP = 'UPDATE' THEN
+      IF (NEW.name <> OLD.name OR NEW.email <> OLD.email) THEN
+        NEW.tsvectors = (
+          setweight(to_tsvector('english', NEW.name), 'A') ||
+          setweight(to_tsvector('english', NEW.email), 'B')
+        );
+      END IF;
+  END IF;
+
+  RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER user_search_update
+  BEFORE INSERT OR UPDATE ON "authenticated_user"
+  FOR EACH ROW
+  EXECUTE PROCEDURE user_search_update();
+
+CREATE INDEX user_search ON "authenticated_user" USING GIST (tsvectors);
 
 -----------------------------------------
