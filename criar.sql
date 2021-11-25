@@ -1,7 +1,6 @@
 -----------------------------------------
 -- Drop old schema
 -----------------------------------------
-
 DROP SCHEMA IF EXISTS lbaw2111 CASCADE;
 CREATE SCHEMA lbaw2111;
 
@@ -145,7 +144,7 @@ CREATE TABLE "article"(
 CREATE TABLE "comment"(
   content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   article_id INTEGER NOT NULL REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON UPDATE CASCADE
+  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON UPDATE CASCADE,
 );
 
 -----------------------------------------
@@ -164,6 +163,7 @@ CREATE TABLE "article_tag"(
   tag_id INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(article_id, tag_id)
 );
+
 
 -----------------------------------------
 
