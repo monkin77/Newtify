@@ -443,3 +443,26 @@ INSERT INTO "article"(content_id, title) VALUES (2, 'title1');
 
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE FUNCTION is_suspended_flag_true() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "authenticated_user" SET is_suspended = true
+    WHERE id = NEW.user_id;
+	RETURN NEW;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS is_suspended_flag_true ON "suspension";
+CREATE TRIGGER is_suspended_flag_true
+    AFTER INSERT ON "suspension"
+    FOR EACH ROW
+    EXECUTE PROCEDURE is_suspended_flag_true();
+
+
+INSERT INTO "suspension" (reason,start_time,end_time,admin_id,user_id)
+VALUES
+  ('AAAAAAAAAAAAAAA',TO_TIMESTAMP('2019-04-23', 'YYYY-MM-DD'),TO_TIMESTAMP('2021-07-13', 'YYYY-MM-DD'),1,4);
