@@ -192,12 +192,6 @@ VALUES
 
   INSERT INTO "content" (body,published_at,is_edited,likes,dislikes,author_id)
 VALUES
-  
-  
-  
-  
-  
-  
   ("ante ipsum primis in faucibus orci luctus et ultrices posuere",TO_TIMESTAMP("21-03-02"),false,95,68,19),
   ("amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing",TO_TIMESTAMP("21-01-22"),false,88,76,19),
   ("dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit, est",TO_TIMESTAMP("21-05-19"),false,78,84,9),
