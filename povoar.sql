@@ -94,7 +94,7 @@ VALUES
   ('Hector Richard',TO_TIMESTAMP('2019-10-28', 'YYYY-MM-DD'),'PENDING',8);
 
 
-INSERT INTO "area_of_expertise" (user_id,proposed_at,reputation)
+INSERT INTO "area_of_expertise" (user_id,tag_id,reputation)
 VALUES
   (6,12,43),
   (3,9,77),
@@ -118,7 +118,7 @@ VALUES
   (2,4,29);
 
 
-INSERT INTO "favorite_tag" (user_id,proposed_at)
+INSERT INTO "favorite_tag" (user_id,tag_id)
 VALUES
   (20,6),
   (16,20),
