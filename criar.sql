@@ -31,7 +31,6 @@ CREATE TABLE "country"(
 
 -----------------------------------------
 
-
 CREATE TABLE "authenticated_user"(
   id SERIAL PRIMARY KEY, 
   name TEXT NOT NULL, 
@@ -68,7 +67,7 @@ CREATE TABLE "report"(
   reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
   is_closed BOOLEAN DEFAULT false, 
   reported_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
-  reporter_id INTEGER REFERENCES "authenticated_user"(id) ON UPDATE CASCADE,
+  reporter_id INTEGER REFERENCES "authenticated_user"(id) ON UPDATE CASCADE ON DELETE SET NULL,
   CONSTRAINT different_ids CHECK (reporter_id != reported_id)
 );
 
@@ -79,7 +78,7 @@ CREATE TABLE "tag"(
   name TEXT NOT NULL UNIQUE,
   proposed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   state PROPOSED_TAG_STATES NOT NULL DEFAULT 'PENDING',
-  user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -----------------------------------------
@@ -128,7 +127,7 @@ CREATE TABLE "content"(
   is_edited BOOLEAN DEFAULT false,
   likes INTEGER DEFAULT 0 CHECK (likes >= 0),
   dislikes INTEGER DEFAULT 0 CHECK (dislikes >= 0),
-  author_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE -- trigger must update user instead of deleting it
+  author_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -----------------------------------------
@@ -144,13 +143,13 @@ CREATE TABLE "article"(
 CREATE TABLE "comment"(
   content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   article_id INTEGER NOT NULL REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON UPDATE CASCADE,
+  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -----------------------------------------
 
 CREATE TABLE "feedback"(
-  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE SET NULL ON UPDATE CASCADE, 
   content_id INTEGER REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
   is_like BOOLEAN NOT NULL,
   PRIMARY KEY (user_id, content_id)
@@ -169,13 +168,13 @@ CREATE TABLE "article_tag"(
 
 CREATE TABLE "notification"(
   id SERIAL PRIMARY KEY,
-  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id),
+  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   is_read BOOLEAN DEFAULT false,
-  msg INTEGER REFERENCES "message"(id),
-  fb_giver INTEGER REFERENCES "authenticated_user"(id),
-  rated_content INTEGER REFERENCES "content"(id),
-  new_comment INTEGER REFERENCES "comment"(content_id),
+  msg INTEGER REFERENCES "message"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  fb_giver INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  rated_content INTEGER REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  new_comment INTEGER REFERENCES "comment"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
   type NOTIFICATION_TYPE NOT NULL
 );
 
@@ -199,6 +198,7 @@ ALTER TABLE "article" ADD COLUMN tsvectors TSVECTOR;
 
 CREATE FUNCTION article_search_update() RETURNS TRIGGER AS $$
 DECLARE new_body text = (select body from "content" where id = NEW.content_id);
+DECLARE old_body text = (select body from "content" where id = OLD.content_id);
 BEGIN
   IF TG_OP = 'INSERT' THEN
     NEW.tsvectors = (
@@ -208,7 +208,7 @@ BEGIN
   END IF;
 
   IF TG_OP = 'UPDATE' THEN
-      IF (NEW.title <> OLD.title OR new_body <> OLD.text) THEN
+      IF (NEW.title <> OLD.title OR new_body <> old_body) THEN
         NEW.tsvectors = (
           setweight(to_tsvector('english', NEW.title), 'A') ||
           setweight(to_tsvector('english', new_body), 'B')
