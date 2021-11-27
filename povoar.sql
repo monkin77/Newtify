@@ -1,7 +1,7 @@
 INSERT INTO "authenticated_user" (name,email,birth_date,admin,description,password,avatar,city,is_suspended,reputation,country_id)
 VALUES
   ("Jackson Hatrue","penatibus.et@protonmail.org",TO_TIMESTAMP("70-02-04"),true,"purus mauris a nunc. In at pede. Cras vulputate velit","neque","risus. Donec egestas.","Huntly",false,808,36),
-  ("Tatyana Hunter","duis.a@icloud.ca",TO_TIMESTAMP("14-10-29"),false,"dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus","Integer","torquent per conubia","Bad Neuenahr-Ahrweiler",false,494,53),
+  ("Tatyana Hunter","duis.a@icloud.ca",TO_TIMESTAMP("14-10-29"),true,"dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus","Integer","torquent per conubia","Bad Neuenahr-Ahrweiler",false,494,53),
   ("Sigourney Garcia","cras.lorem.lorem@outlook.edu",TO_TIMESTAMP("07-05-03"),false,"bibendum. Donec felis orci, adipiscing falsen, luctus sit amet, faucibus","ut","eu odio tristique","Galway",true,440,91),
   ("Melinda Lawson","aliquam@protonmail.org",TO_TIMESTAMP("70-09-29"),false,"ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.","eu","ligula. Nullam enim.","Gorzów Wielkopolski",false,203,86),
   ("Gavin Rosa","odio.phasellus@yahoo.net",TO_TIMESTAMP("76-10-13"),false,"nunc nulla vulputate dui, nec tempus mauris erat eget ipsum.","enim.","est, congue a,","Hebei",true,418,84),
@@ -44,3 +44,247 @@ VALUES
   ("ac turpis egestas. Aliquam fringilla",TO_TIMESTAMP("19-08-12"),TO_TIMESTAMP("21-11-28"),2,4),
   ("pede sagittis augue, eu tempor",TO_TIMESTAMP("19-04-29"),TO_TIMESTAMP("22-01-22"),2,9),
   ("amet nulla. Donec non justo.",TO_TIMESTAMP("19-04-22"),TO_TIMESTAMP("20-07-25"),1,4);
+
+
+  INSERT INTO "report" (reason,reported_at,is_closed,reported_id,reporter_id)
+VALUES
+  ("sit amet metus. Aliquam erat",TO_TIMESTAMP("19-08-11"),false,18,6),
+  ("aliquet, sem ut cursus luctus,",TO_TIMESTAMP("19-10-08"),false,15,5),
+  ("nec urna suscipit nonummy. Fusce",TO_TIMESTAMP("19-08-18"),false,18,3),
+  ("cursus non, egestas a, dui.",TO_TIMESTAMP("19-05-03"),true,11,9),
+  ("Praesent eu nulla at sem",TO_TIMESTAMP("19-03-07"),true,19,7),
+  ("ac facilisis facilisis, magna tellus",TO_TIMESTAMP("19-09-15"),false,18,10),
+  ("interdum feugiat. Sed nec metus",TO_TIMESTAMP("19-11-09"),true,12,4),
+  ("quis accumsan convallis, ante lectus",TO_TIMESTAMP("19-08-22"),true,20,8),
+  ("Curabitur sed tortor. Integer aliquam",TO_TIMESTAMP("19-02-14"),true,16,2),
+  ("dis parturient montes, nascetur ridiculus",TO_TIMESTAMP("19-07-04"),true,11,2),
+  ("Integer aliquam adipiscing lacus. Ut",TO_TIMESTAMP("19-04-17"),true,15,2),
+  ("arcu imperdiet ullamcorper. Duis at",TO_TIMESTAMP("19-05-21"),true,12,2),
+  ("Sed diam lorem, auctor quis,",TO_TIMESTAMP("19-09-15"),true,12,2),
+  ("vulputate velit eu sem. Pellentesque",TO_TIMESTAMP("19-03-29"),true,18,9),
+  ("laoreet, libero et tristique pellentesque,",TO_TIMESTAMP("19-06-10"),false,17,10),
+  ("vel, convallis in, cursus et,",TO_TIMESTAMP("19-07-24"),true,18,4),
+  ("tincidunt tempus risus. Donec egestas.",TO_TIMESTAMP("19-06-05"),false,20,2),
+  ("Donec porttitor tellus non magna.",TO_TIMESTAMP("19-09-03"),true,13,3),
+  ("iaculis odio. Nam interdum enim",TO_TIMESTAMP("19-08-20"),true,17,10),
+  ("eros non enim commodo hendrerit.",TO_TIMESTAMP("19-08-04"),false,17,2);
+
+
+INSERT INTO "tag" (name,proposed_at,state,user_id)
+VALUES
+  ("Dominique Bishop",TO_TIMESTAMP("19-08-27"),"PENDING",13),
+  ("Kai Gilmore",TO_TIMESTAMP("19-06-28"),"ACCEPTED",14),
+  ("Berk Mccall",TO_TIMESTAMP("19-09-21"),"REJECTED",19),
+  ("Emmanuel Dickson",TO_TIMESTAMP("19-02-03"),"ACCEPTED",9),
+  ("Chandler Stuart",TO_TIMESTAMP("19-08-31"),"ACCEPTED",4),
+  ("Noelani Knapp",TO_TIMESTAMP("19-05-28"),"PENDING",15),
+  ("Isabelle Johnson",TO_TIMESTAMP("19-05-22"),"REJECTED",11),
+  ("Marsden Lloyd",TO_TIMESTAMP("19-03-14"),"PENDING",16),
+  ("Indigo Alston",TO_TIMESTAMP("19-05-14"),"ACCEPTED",18),
+  ("Tamekah Dyer",TO_TIMESTAMP("19-07-17"),"REJECTED",7),
+  ("Brent Glass",TO_TIMESTAMP("19-06-01"),"PENDING",5),
+  ("Roth Bates",TO_TIMESTAMP("19-03-02"),"REJECTED",2),
+  ("Illiana Hoover",TO_TIMESTAMP("19-03-17"),"PENDING",19),
+  ("Dean Macdonald",TO_TIMESTAMP("19-09-08"),"REJECTED",16),
+  ("Hector Giles",TO_TIMESTAMP("19-09-29"),"REJECTED",8),
+  ("Mufutau Fisher",TO_TIMESTAMP("19-03-09"),"PENDING",19),
+  ("Avye Wolfe",TO_TIMESTAMP("19-05-11"),"REJECTED",10),
+  ("Noah Holt",TO_TIMESTAMP("19-11-15"),"PENDING",5),
+  ("Olga Aguirre",TO_TIMESTAMP("19-04-04"),"PENDING",1),
+  ("Hector Richard",TO_TIMESTAMP("19-10-28"),"PENDING",8);
+
+
+INSERT INTO "area_of_expertise" (user_id,proposed_at,reputation)
+VALUES
+  (6,12,43),
+  (3,9,77),
+  (18,10,77),
+  (20,9,81),
+  (12,15,63),
+  (1,11,53),
+  (13,20,90),
+  (4,3,92),
+  (13,14,81),
+  (7,11,29),
+  (15,13,86),
+  (10,17,14),
+  (3,14,65),
+  (4,2,87),
+  (8,20,31),
+  (6,9,76),
+  (10,4,82),
+  (3,13,19),
+  (3,6,93),
+  (2,4,29);
+
+
+  INSERT INTO "favorite_tag" (user_id,proposed_at)
+VALUES
+  (20,6),
+  (16,20),
+  (5,3),
+  (19,17),
+  (11,10),
+  (14,20),
+  (20,14),
+  (6,8),
+  (11,14),
+  (15,1),
+  (7,1),
+  (17,12),
+  (17,16),
+  (17,3),
+  (4,13),
+  (18,14),
+  (15,6),
+  (13,17),
+  (9,15),
+  (20,4);
+
+
+INSERT INTO "message" (body,proposed_at,sender_id,receiver_id,is_read)
+VALUES
+  ("eget magna. Suspendisse tristique neque venenatis lacus. Etiam bibendum fermentum",TO_TIMESTAMP("20-03-07"),7,15,true),
+  ("Aliquam ultrices iaculis odio. Nam interdum enim non nisi. Aenean",TO_TIMESTAMP("21-04-16"),8,16,false),
+  ("sed sem egestas blandit. Nam nulla magna, malesuada vel, convallis",TO_TIMESTAMP("20-11-04"),4,18,false),
+  ("Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor",TO_TIMESTAMP("21-04-26"),3,11,true),
+  ("aliquet, sem ut cursus luctus, ipsum leo elementum sem, vitae",TO_TIMESTAMP("21-06-05"),2,18,true),
+  ("arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida",TO_TIMESTAMP("21-06-20"),5,13,true),
+  ("leo, in lobortis tellus justo sit amet nulla. Donec non",TO_TIMESTAMP("20-02-19"),1,18,true),
+  ("Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis",TO_TIMESTAMP("20-02-27"),3,18,false),
+  ("ut nisi a odio semper cursus. Integer mollis. Integer tincidunt",TO_TIMESTAMP("20-10-10"),6,12,true),
+  ("quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar",TO_TIMESTAMP("19-12-02"),6,18,true),
+  ("purus gravida sagittis. Duis gravida. Praesent eu nulla at sem",TO_TIMESTAMP("21-06-20"),8,15,false),
+  ("feugiat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam",TO_TIMESTAMP("21-09-19"),2,17,false),
+  ("tempus, lorem fringilla ornare placerat, orci lacus vestibulum lorem, sit",TO_TIMESTAMP("21-06-19"),10,19,false),
+  ("at, velit. Pellentesque ultricies dignissim lacus. Aliquam rutrum lorem ac",TO_TIMESTAMP("20-10-07"),3,18,false),
+  ("imperdiet, erat nonummy ultricies ornare, elit elit fermentum risus, at",TO_TIMESTAMP("19-11-30"),9,16,false),
+  ("lobortis quam a felis ullamcorper viverra. Maecenas iaculis aliquet diam.",TO_TIMESTAMP("21-07-12"),6,15,true),
+  ("tristique pellentesque, tellus sem mollis dui, in sodales elit erat",TO_TIMESTAMP("21-03-07"),5,18,true),
+  ("urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas iaculis",TO_TIMESTAMP("20-09-04"),1,13,true),
+  ("purus mauris a nunc. In at pede. Cras vulputate velit",TO_TIMESTAMP("20-03-06"),4,19,true),
+  ("vulputate, posuere vulputate, lacus. Cras interdum. Nunc sollicitudin commodo ipsum.",TO_TIMESTAMP("21-02-21"),9,17,true);
+
+
+INSERT INTO "follow" (follower_id,followed_at)
+VALUES
+  (4,13),
+  (2,14),
+  (8,15),
+  (5,19),
+  (9,16),
+  (2,13),
+  (4,12),
+  (5,12),
+  (8,18),
+  (7,17),
+  (3,12),
+  (7,17),
+  (2,12),
+  (6,17),
+  (5,17),
+  (9,12),
+  (6,15),
+  (2,14),
+  (8,12),
+  (5,15);
+
+
+  INSERT INTO "content" (body,published_at,is_edited,likes,dislikes,author_id)
+VALUES
+  ("ante ipsum primis in faucibus orci luctus et ultrices posuere",TO_TIMESTAMP("21-03-02"),false,95,68,19),
+  ("amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing",TO_TIMESTAMP("21-01-22"),false,88,76,19),
+  ("dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit, est",TO_TIMESTAMP("21-05-19"),false,78,84,9),
+  ("fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed",TO_TIMESTAMP("21-05-23"),true,59,71,8),
+  ("vulputate eu, odio. Phasellus at augue id ante dictum cursus.",TO_TIMESTAMP("20-12-06"),false,85,49,19),
+  ("pede. Praesent eu dui. Cum sociis natoque penatibus et magnis",TO_TIMESTAMP("21-10-27"),false,3,66,12),
+  ("Cras interdum. Nunc sollicitudin commodo ipsum. Suspendisse non leo. Vivamus",TO_TIMESTAMP("21-03-04"),false,91,41,17),
+  ("vel, vulputate eu, odio. Phasellus at augue id ante dictum",TO_TIMESTAMP("21-03-11"),false,1,20,19),
+  ("sed pede. Cum sociis natoque penatibus et magnis dis parturient",TO_TIMESTAMP("21-08-07"),true,23,52,8),
+  ("Nullam nisl. Maecenas malesuada fringilla est. Mauris eu turpis. Nulla",TO_TIMESTAMP("21-04-09"),true,62,45,16),
+  ("feugiat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam",TO_TIMESTAMP("21-09-05"),true,67,79,6),
+  ("sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum",TO_TIMESTAMP("21-02-13"),false,3,8,10),
+  ("nunc. In at pede. Cras vulputate velit eu sem. Pellentesque",TO_TIMESTAMP("21-09-15"),false,28,95,2),
+  ("urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat",TO_TIMESTAMP("21-05-27"),false,43,69,18),
+  ("in, tempus eu, ligula. Aenean euismod mauris eu elit. Nulla",TO_TIMESTAMP("21-04-25"),true,60,82,12),
+  ("enim, gravida sit amet, dapibus id, blandit at, nisi. Cum",TO_TIMESTAMP("21-07-11"),true,53,78,14),
+  ("posuere, enim nisl elementum purus, accumsan interdum libero dui nec",TO_TIMESTAMP("21-01-02"),false,38,63,2),
+  ("mauris. Integer sem elit, pharetra ut, pharetra sed, hendrerit a,",TO_TIMESTAMP("21-03-09"),false,4,70,13),
+  ("a, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",TO_TIMESTAMP("21-07-18"),true,37,12,10),
+  ("enim diam vel arcu. Curabitur ut odio vel est tempor",TO_TIMESTAMP("21-07-04"),true,5,85,14);
+
+
+INSERT INTO "article" (content_id,title,thumbnail)
+VALUES
+  (1,"velit. Cras lorem lorem,","risus. Duis a mi fringilla"),
+  (2,"nunc id enim. Curabitur","sem eget massa. Suspendisse eleifend."),
+  (3,"Fusce fermentum fermentum arcu.","in aliquet lobortis, nisi nibh"),
+  (4,"eget varius ultrices, mauris","eget metus. In nec orci."),
+  (5,"Curabitur vel lectus. Cum","Donec luctus aliquet odio. Etiam"),
+  (6,"enim. Suspendisse aliquet, sem","lorem, vehicula et, rutrum eu,"),
+  (7,"urna. Nullam lobortis quam","urna, nec luctus felis purus"),
+  (8,"feugiat placerat velit. Quisque","sit amet luctus vulputate, nisi"),
+  (9,"varius et, euismod et,","et malesuada fames ac turpis"),
+  (10,"mauris blandit mattis. Cras","aliquet nec, imperdiet nec, leo.");
+
+
+INSERT INTO "comment" (content_id,article_id,parent_comment_id)
+VALUES
+  (11,7,NULL),
+  (12,4,NULL),
+  (13,10,NULL),
+  (14,6,NULL),
+  (15,2,NULL),
+  (16,4,3),
+  (17,4,3),
+  (18,2,3),
+  (19,7,4),
+  (20,4,3);
+
+
+INSERT INTO "feedback" (user_id,content_id,is_like)
+VALUES
+  (7,3,false),
+  (11,9,true),
+  (10,6,true),
+  (8,3,true),
+  (16,8,true),
+  (19,7,true),
+  (3,10,true),
+  (15,6,true),
+  (18,2,false),
+  (5,13,true),
+  (6,2,false),
+  (19,14,false),
+  (7,4,false),
+  (11,4,false),
+  (2,12,true),
+  (19,16,false),
+  (3,9,false),
+  (1,15,false),
+  (7,15,true),
+  (10,7,true);
+
+
+INSERT INTO "article_tag" (article_id,tag_id)
+VALUES
+  (7,9),
+  (4,4),
+  (2,4),
+  (6,2),
+  (5,13),
+  (2,18),
+  (8,4),
+  (8,12),
+  (1,12),
+  (10,5),
+  (7,14),
+  (8,16),
+  (6,3),
+  (10,4),
+  (4,2),
+  (3,13),
+  (3,15),
+  (9,4),
+  (6,16),
+  (5,11);

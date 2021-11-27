@@ -2,28 +2,25 @@
 -- creates a notification on that feedback and update user reputation
 CREATE OR REPLACE FUNCTION feedback_content() RETURNS TRIGGER AS
 $BODY$
+DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = NEW.content_id);
 BEGIN
     IF (NEW.is_like) THEN
         UPDATE "content" SET likes = likes + 1 WHERE id = NEW.content_id;
         
         UPDATE "authenticated_user" SET reputation = reputation + 1 
-            WHERE id = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = NEW.content_id);
-
-        INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) VALUES (CURRENT_TIMESTAMP, 1, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+            WHERE id = author_id;
     ELSE 
         UPDATE "content" SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
         
-        UPDATE "authenticated_user" SET reputation = reputation - 1 WHERE id = 
-            (SELECT author_id 
-             FROM content INNER JOIN authenticated_user ON (authenticated_user.id = content.author_id)
-             WHERE content.id = NEW.content_id);
-        
-        INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) VALUES (CURRENT_TIMESTAMP, 1, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+        UPDATE "authenticated_user" SET reputation = reputation - 1
+            WHERE id = author_id;
     END IF;
+
+    INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) VALUES (CURRENT_TIMESTAMP, author_id, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+
     RETURN NULL;
 END
 $BODY$
-
 LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS feedback_content ON "feedback";
@@ -268,28 +265,6 @@ CREATE TRIGGER check_add_article_tag
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
 
--- create a trigger to check if an article already has 3 tags
-
--- TRIGGER FOREVER 
-
-INSERT INTO "authenticated_user"(name, email, birth_date, password, is_suspended, reputation) 
-    VALUES ('rui', 'rui@gmail.com', CURRENT_TIMESTAMP, '1234567', false, 0);
-
-INSERT INTO "authenticated_user"(name, email, birth_date, password, is_suspended, reputation) 
-    VALUES ('joao', 'joao@gmail.com', CURRENT_TIMESTAMP, '1234567', false, 0);  
-
-INSERT INTO "content" (body, author_id) VALUES ('oi', 1);
-
-INSERT INTO "content" (body, author_id) VALUES ('oi2', 2);
-
-UPDATE lbaw2111.content
-    SET body='AAAAAAAAAAAAAAAAAAAAAAAAA'
-    WHERE id = 1;
-
-INSERT INTO "article"(content_id, title) VALUES (2, 'title1');
-
-
-
 -- TRIGGER JORGE
 
 INSERT INTO "authenticated_user"(name, email, birth_date, password, is_suspended, reputation) 
@@ -314,4 +289,91 @@ INSERT INTO "article_tag"(article_id, tag_id) VALUES  (2, 3);
 INSERT INTO "article_tag"(article_id, tag_id) VALUES  (2, 4);
 
 
- 
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE FUNCTION create_area_expertise() RETURNS TRIGGER AS
+$BODY$
+DECLARE author_id INTEGER = (
+    SELECT author_id FROM "content" WHERE id = NEW.article_id
+);
+BEGIN
+    IF NEW.tag_id NOT IN (
+        SELECT tag_id FROM "area_of_expertise" where user_id = author_id
+    )
+    THEN
+        INSERT INTO "area_of_expertise" VALUES(author_id, NEW.tag_id, 0);
+	END IF;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS create_area_expertise ON "article_tag";
+CREATE TRIGGER create_area_expertise
+    AFTER INSERT ON "article_tag"
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_area_expertise();
+
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION set_content_is_edited() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "content" SET is_edited = TRUE
+    WHERE id = NEW.id;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS set_content_is_edited ON "content";
+CREATE TRIGGER set_content_is_edited
+    AFTER UPDATE ON "content"
+    FOR EACH ROW
+    WHEN (OLD.body IS DISTINCT FROM NEW.body)
+    EXECUTE PROCEDURE set_content_is_edited();
+
+
+CREATE OR REPLACE FUNCTION set_article_is_edited() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "content" SET is_edited = TRUE
+    WHERE id = NEW.content_id;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS set_article_is_edited ON "article";
+CREATE TRIGGER set_article_is_edited
+    AFTER UPDATE ON "article"
+    FOR EACH ROW
+    WHEN (OLD.title IS DISTINCT FROM NEW.title)
+    EXECUTE PROCEDURE set_article_is_edited();
+
+
+INSERT INTO "authenticated_user"(name, email, birth_date, password, is_suspended, reputation) 
+    VALUES ('rui', 'rui@gmail.com', CURRENT_TIMESTAMP, '1234567', false, 0);
+
+INSERT INTO "authenticated_user"(name, email, birth_date, password, is_suspended, reputation) 
+    VALUES ('joao', 'joao@gmail.com', CURRENT_TIMESTAMP, '1234567', false, 0);  
+
+INSERT INTO "content" (body, author_id) VALUES ('oi', 1);
+
+INSERT INTO "content" (body, author_id) VALUES ('oi2', 2);
+
+UPDATE lbaw2111.content
+    SET body='AAAAAAAAAAAAAAAAAAAAAAAAA'
+    WHERE id = 1;
+
+INSERT INTO "article"(content_id, title) VALUES (2, 'title1');
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
