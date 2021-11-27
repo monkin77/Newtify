@@ -36,7 +36,7 @@ CREATE TABLE "country"(
 CREATE TABLE "authenticated_user"(
   id SERIAL PRIMARY KEY, 
   name TEXT NOT NULL, 
-  email VALID_EMAIL NOT NULL UNIQUE, 
+  email VALID_EMAIL UNIQUE, 
   birth_date TIMESTAMP NOT NULL CHECK (CURRENT_TIMESTAMP >= birth_date),
   admin BOOLEAN DEFAULT false,
   description TEXT, 
