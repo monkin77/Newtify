@@ -217,3 +217,67 @@ CREATE TRIGGER check_add_article_tag
     BEFORE INSERT ON article
     FOR EACH ROW
     EXECUTE PROCEDURE check_add_article_tag();
+
+----------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION create_area_expertise() RETURNS TRIGGER AS
+$BODY$
+DECLARE author_id INTEGER = (
+    SELECT author_id FROM "content" WHERE id = NEW.article_id
+);
+BEGIN
+    IF NEW.tag_id NOT IN (
+        SELECT tag_id FROM "area_of_expertise" where user_id = author_id
+    )
+    THEN
+        INSERT INTO "area_of_expertise" VALUES(author_id, NEW.tag_id, 0);
+	END IF;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS create_area_expertise ON "article_tag";
+CREATE TRIGGER create_area_expertise
+    AFTER INSERT ON "article_tag"
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_area_expertise();
+
+
+CREATE OR REPLACE FUNCTION set_content_is_edited() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "content" SET is_edited = TRUE
+    WHERE id = NEW.id;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS set_content_is_edited ON "content";
+CREATE TRIGGER set_content_is_edited
+    AFTER UPDATE ON "content"
+    FOR EACH ROW
+    WHEN (OLD.body IS DISTINCT FROM NEW.body)
+    EXECUTE PROCEDURE set_content_is_edited();
+
+
+CREATE OR REPLACE FUNCTION set_article_is_edited() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "content" SET is_edited = TRUE
+    WHERE id = NEW.content_id;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS set_article_is_edited ON "article";
+CREATE TRIGGER set_article_is_edited
+    AFTER UPDATE ON "article"
+    FOR EACH ROW
+    WHEN (OLD.title IS DISTINCT FROM NEW.title)
+    EXECUTE PROCEDURE set_article_is_edited();
