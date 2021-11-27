@@ -39,6 +39,19 @@ CREATE TRIGGER feedback_content
     FOR EACH ROW
     EXECUTE PROCEDURE feedback_content();
 
+
+INSERT INTO "authenticated_user"(name, birth_date, password, is_suspended, reputation)
+    VALUES ('rui', TO_TIMESTAMP('2001-03-23', 'YYYY-MM-DD'), '1234567', false, 0);
+
+INSERT INTO "authenticated_user"(name, birth_date, password, is_suspended, reputation)
+    VALUES ('bruno', TO_TIMESTAMP('2001-05-12', 'YYYY-MM-DD'), '1234567', false, 0);
+
+INSERT INTO "content"(body, author_id) VALUES ('oi', 1);
+INSERT INTO "content"(body, author_id) VALUES ('oi2', 2);
+
+INSERT INTO "feedback"(user_id, content_id, is_like) VALUES (1, 2, True);
+INSERT INTO "feedback"(user_id, content_id, is_like) VALUES (2, 1, False);
+
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
 
@@ -208,6 +221,7 @@ INSERT INTO "article"(content_id, title) VALUES (1, 'Article');
 INSERT INTO "content"(body, published_at, is_edited, likes, dislikes, author_id) VALUES ('ola filho', CURRENT_TIMESTAMP, false, 0, 0, 2);
 INSERT INTO "comment"(content_id, article_id, parent_comment_id) VALUES (2, 1, NULL);
 
+
 INSERT INTO "content"(body, published_at, is_edited, likes, dislikes, author_id) VALUES ('ola pai', CURRENT_TIMESTAMP, false, 3, 1, 3);
 INSERT INTO "comment"(content_id, article_id, parent_comment_id) VALUES (3, 1, 2);
 
@@ -225,7 +239,7 @@ CREATE OR REPLACE FUNCTION delete_article() RETURNS TRIGGER AS
 $BODY$
 BEGIN 
     DELETE FROM content WHERE content.id = OLD.content_id;
-    RETURN NULL;
+    RETURN OLD;
 END
 $BODY$
 
@@ -233,11 +247,40 @@ LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS delete_article ON "article";
 CREATE TRIGGER delete_article
-    BEFORE DELETE ON "article"
+    AFTER DELETE ON "article"
     FOR EACH ROW
     EXECUTE PROCEDURE delete_article();
 
+
+
+
+CREATE OR REPLACE FUNCTION delete_comment() RETURNS TRIGGER AS
+$BODY$
+BEGIN 
+    DELETE FROM content WHERE content.id = OLD.content_id;
+    RETURN OLD;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+
+DROP TRIGGER IF EXISTS delete_comment ON "comment";
+CREATE TRIGGER delete_comment
+    AFTER DELETE ON "comment"
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_comment();
+
 -- need to test this in order to check the cascade
+INSERT INTO "content"(body) VALUES ('ola');
+INSERT INTO "content"(body) VALUES ('ola sou comentario');
+INSERT INTO "content"(body) VALUES ('ola sou filho do comentario de cima');
+INSERT INTO "content"(body) VALUES ('ola sou outro comentario');
+
+INSERT INTO "article"(content_id, title) VALUES (1, 'vou vos apagar');
+INSERT INTO "comment"(content_id, article_id) VALUES (2, 1);
+INSERT INTO "comment"(content_id, article_id, parent_comment_id) VALUES (3, 1, 2);
+INSERT INTO "comment"(content_id, article_id) VALUES (4, 1);
 
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
