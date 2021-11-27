@@ -3,10 +3,6 @@
 CREATE OR REPLACE FUNCTION feedback_content() RETURNS TRIGGER AS
 $BODY$
 DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = NEW.content_id);
-/* DECLARE tag_ids tag.id%type = (
-    SELECT * FROM article_tag
-    WHERE article_id=NEW.content_id
-); */
 DECLARE feedback_value INTEGER = 1;
 BEGIN
     IF (NOT NEW.is_like)
@@ -42,19 +38,6 @@ CREATE TRIGGER feedback_content
     AFTER INSERT ON "feedback"
     FOR EACH ROW
     EXECUTE PROCEDURE feedback_content();
-
-
-INSERT INTO "authenticated_user"(name, birth_date, password, is_suspended, reputation)
-    VALUES ('rui', TO_TIMESTAMP('2001-03-23', 'YYYY-MM-DD'), '1234567', false, 0);
-
-INSERT INTO "authenticated_user"(name, birth_date, password, is_suspended, reputation)
-    VALUES ('bruno', TO_TIMESTAMP('2001-05-12', 'YYYY-MM-DD'), '1234567', false, 0);
-
-INSERT INTO "content"(body, author_id) VALUES ('oi', 1);
-INSERT INTO "content"(body, author_id) VALUES ('oi2', 2);
-
-INSERT INTO "feedback"(user_id, content_id, is_like) VALUES (1, 2, True);
-INSERT INTO "feedback"(user_id, content_id, is_like) VALUES (2, 1, False);
 
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
