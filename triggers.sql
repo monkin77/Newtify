@@ -2,28 +2,25 @@
 -- it also adds a notification
 CREATE OR REPLACE FUNCTION feedback_content() RETURNS TRIGGER AS
 $BODY$
+DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = NEW.content_id);
 BEGIN
     IF (NEW.is_like) THEN
-        UPDATE "content" SET likes = likes + 1 WHERE id = NEW.user_id;
+        UPDATE "content" SET likes = likes + 1 WHERE id = NEW.content_id;
         
         UPDATE "authenticated_user" SET reputation = reputation + 1 
-            WHERE id = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = NEW.content_id);
-
-        INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) VALUES (CURRENT_TIMESTAMP, 1, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+            WHERE id = author_id;
     ELSE 
-        UPDATE "content" SET dislikes = dislikes + 1 WHERE id = NEW.user_id;
+        UPDATE "content" SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
         
-        UPDATE "authenticated_user" SET reputation = reputation - 1 WHERE id = 
-            (SELECT author_id 
-             FROM content INNER JOIN authenticated_user ON (authenticated_user.id = content.author_id)
-             WHERE content.id = NEW.content_id);
-        
-        INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) VALUES (CURRENT_TIMESTAMP, 1, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+        UPDATE "authenticated_user" SET reputation = reputation - 1
+            WHERE id = author_id;
     END IF;
+
+    INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) VALUES (CURRENT_TIMESTAMP, author_id, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+
     RETURN NULL;
 END
 $BODY$
-
 LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS feedback_content ON "feedback";

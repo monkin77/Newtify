@@ -144,7 +144,7 @@ CREATE TABLE "article"(
 CREATE TABLE "comment"(
   content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   article_id INTEGER NOT NULL REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON UPDATE CASCADE,
+  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON UPDATE CASCADE
 );
 
 -----------------------------------------
