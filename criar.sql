@@ -180,7 +180,7 @@ CREATE TABLE "notification"(
 
 
 -----------------------------------------
--- INDICES
+-- PERFORMANCE INDICES
 -----------------------------------------
 
 CREATE INDEX content_author ON content USING hash (author_id);
@@ -227,7 +227,7 @@ CREATE TRIGGER article_search_update
 
 CREATE INDEX article_search ON "article" USING GIST (tsvectors);
 
-
+-----------------------------------------
 
 ALTER TABLE "authenticated_user" ADD COLUMN tsvectors TSVECTOR;
 
@@ -261,3 +261,278 @@ CREATE TRIGGER user_search_update
 CREATE INDEX user_search ON "authenticated_user" USING GIST (tsvectors);
 
 -----------------------------------------
+-- TRIGGERS
+-----------------------------------------
+
+/*
+Trigger to update likes/dislikes of a content when feedback is given,
+creates a notification on that feedback and updates user reputation
+*/
+CREATE FUNCTION feedback_content() RETURNS TRIGGER AS
+$BODY$
+DECLARE author_id authenticated_user.id%type = (
+  SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id)
+  WHERE content.id = NEW.content_id
+);
+DECLARE feedback_value INTEGER = 1;
+BEGIN
+    IF (NOT NEW.is_like)
+        THEN feedback_value = -1;
+    END IF;
+
+    IF (NEW.is_like) THEN
+        UPDATE "content" SET likes = likes + 1 WHERE id = NEW.content_id;
+    ELSE 
+        UPDATE "content" SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
+    END IF;
+    
+    UPDATE "authenticated_user" SET reputation = reputation + feedback_value
+    WHERE id = author_id;
+
+    UPDATE area_of_expertise SET reputation = reputation + feedback_value
+    WHERE 
+        user_id = author_id AND 
+        tag_id IN (
+			SELECT tag_id FROM article_tag
+    		WHERE article_id=NEW.content_id
+		);
+
+    INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
+    VALUES (CURRENT_TIMESTAMP, author_id, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+
+    RETURN NULL;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER feedback_content
+    AFTER INSERT ON "feedback"
+    FOR EACH ROW
+    EXECUTE PROCEDURE feedback_content();
+
+-----------------------------------------
+
+-- Trigger to remove like/dislike of a content when feedback on it is removed and to update authenticated user reputation
+CREATE FUNCTION remove_feedback() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF (OLD.is_like) THEN
+        UPDATE "content" SET likes = likes - 1 WHERE id = OLD.content_id;
+
+        UPDATE "authenticated_user" SET reputation = reputation - 1 
+            WHERE id = (
+                SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id)
+                    WHERE content.id = OLD.content_id
+                );
+
+    ELSE 
+        UPDATE "authenticated_user" SET reputation = reputation + 1 
+            WHERE id = (
+                SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id)
+                    WHERE content.id = OLD.content_id
+              );
+        
+        UPDATE "content" SET dislikes = dislikes - 1
+        WHERE id = OLD.content_id;
+    END IF;
+    RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER remove_feedback
+    AFTER DELETE ON "feedback"
+    FOR EACH ROW
+    EXECUTE PROCEDURE remove_feedback();
+
+-----------------------------------------
+
+-- Trigger to prevent users from liking or disliking his own content (articles or comments)
+CREATE FUNCTION check_feedback() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF (NEW.user_id in (
+        SELECT content.author_id 
+        FROM content 
+        WHERE content.id = NEW.content_id)) THEN
+            RAISE EXCEPTION 'You cannot give feedback on your own content';
+    END IF;
+    RETURN NEW;
+END;
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER check_feedback
+    BEFORE INSERT ON "feedback"
+    FOR EACH ROW
+    EXECUTE PROCEDURE check_feedback();
+
+-----------------------------------------
+
+-- trigger to add notification when a message is sent form an user to another or to remove, in case of being read
+CREATE FUNCTION message_sent_notification() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF (NEW.is_read) THEN
+        DELETE FROM "notification" WHERE msg = NEW.id;
+    ELSE 
+        INSERT INTO "notification"(receiver_id, date, is_read, msg, fb_giver, rated_content, new_comment, type) 
+            VALUES (NEW.receiver_id, NEW.published_at, FALSE, NEW.id, NULL, NULL, NULL, 'MESSAGE');
+    END IF;
+    RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER message_sent_notification
+    AFTER INSERT ON "message"
+    FOR EACH ROW
+    EXECUTE PROCEDURE message_sent_notification();
+
+-----------------------------------------
+
+-- trigger to prevent user from deleting a comment or article (content) with likes, dislikes or subcomments
+CREATE FUNCTION check_content_delete() RETURNS TRIGGER AS
+$BODY$
+BEGIN 
+    IF (OLD.likes != 0 or OLD.dislikes != 0) THEN
+        RAISE EXCEPTION 'You cannot delete a content that has likes/dislikes';
+    ELSE 
+        IF (OLD.id in (SELECT article_id FROM comment WHERE comment.content_id = OLD.id) OR 
+            OLD.id in (SELECT parent_comment_id FROM comment WHERE comment.parent_comment_id = OLD.id))
+            -- it's an article with comments or a comment with sub comments
+            THEN RAISE EXCEPTION 'You cannot delete a content that has comments';
+        ELSE 
+            DELETE FROM "content" WHERE content.id = OLD.id;
+        END IF;
+    END IF;
+    RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER check_content_delete
+    BEFORE DELETE ON "content"
+    FOR EACH ROW
+    EXECUTE PROCEDURE check_content_delete();
+
+-----------------------------------------
+
+/*
+Trigger to delete all the information about an article that was deleted
+it just needs to delete the content represented by that article 
+since its that deletion is cascaded to the comments and other elements of the article
+*/
+CREATE OR REPLACE FUNCTION delete_article() RETURNS TRIGGER AS
+$BODY$
+BEGIN 
+    DELETE FROM content WHERE content.id = OLD.content_id;
+    RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER delete_article
+    BEFORE DELETE ON "article"
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_article();
+
+-----------------------------------------
+
+-- Trigger to prevent an article from having an unaccepted tag or more than 3 tags
+CREATE FUNCTION add_article_tag_check() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF ((SELECT state FROM "tag" WHERE NEW.tag_id = tag.id) <> 'ACCEPTED')
+    THEN
+        RAISE EXCEPTION 'You cannot associate an article to an Unaccepted tag';
+    END IF;
+    
+    IF ((SELECT COUNT(*) FROM "article_tag" WHERE article_id = NEW.article_id)) >= 3
+    THEN
+        RAISE EXCEPTION 'You cannot associate anymore tags to this article';
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER add_article_tag_check
+    BEFORE INSERT ON "article_tag"
+    FOR EACH ROW
+    EXECUTE PROCEDURE add_article_tag_check();
+
+-----------------------------------------
+
+/*
+Trigger to create an area of expertise when an article_tag is inserted,
+in case the author the article doesn’t have it yet
+*/
+CREATE FUNCTION create_area_expertise() RETURNS TRIGGER AS
+$BODY$
+DECLARE author_id INTEGER = (
+    SELECT author_id FROM "content" WHERE id = NEW.article_id
+);
+BEGIN
+    IF NEW.tag_id NOT IN (
+        SELECT tag_id FROM "area_of_expertise" where user_id = author_id
+    )
+    THEN
+        INSERT INTO "area_of_expertise" VALUES(author_id, NEW.tag_id, 0);
+	END IF;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER create_area_expertise
+    AFTER INSERT ON "article_tag"
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_area_expertise();
+
+-----------------------------------------
+
+-- Trigger to mark the content as edited when its body is changed
+CREATE FUNCTION set_content_is_edited() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "content" SET is_edited = TRUE
+    WHERE id = NEW.id;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER set_content_is_edited
+    AFTER UPDATE ON "content"
+    FOR EACH ROW
+    WHEN (OLD.body IS DISTINCT FROM NEW.body)
+    EXECUTE PROCEDURE set_content_is_edited();
+
+-----------------------------------------
+
+-- Trigger to mark the content as edited when an article's title is changed
+CREATE FUNCTION set_article_is_edited() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "content" SET is_edited = TRUE
+    WHERE id = NEW.content_id;
+	RETURN NULL;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER set_article_is_edited
+    AFTER UPDATE ON "article"
+    FOR EACH ROW
+    WHEN (OLD.title IS DISTINCT FROM NEW.title)
+    EXECUTE PROCEDURE set_article_is_edited();
