@@ -265,7 +265,30 @@ CREATE TRIGGER check_add_article_tag
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
 
--- TRIGGER JORGE
+CREATE OR REPLACE FUNCTION add_article_tag_check() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF ((SELECT state FROM "tag" WHERE NEW.tag_id = tag.id) <> 'ACCEPTED')
+    THEN
+        RAISE EXCEPTION 'You cannot relate an article to an Unaccepted tag';
+    END IF;
+    
+    IF ((SELECT COUNT(*) FROM "article_tag" WHERE article_id = NEW.article_id)) >= 3
+    THEN
+        RAISE EXCEPTION 'You cannot relate anymore tags to this article';
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS add_article_tag_check ON "article_tag";
+CREATE TRIGGER add_article_tag_check
+    BEFORE INSERT ON "article_tag"
+    FOR EACH ROW
+    EXECUTE PROCEDURE add_article_tag_check();
+
 
 INSERT INTO "authenticated_user"(name, email, birth_date, password, is_suspended, reputation) 
     VALUES ('rui', 'rui@gmail.com', CURRENT_TIMESTAMP, '1234567', false, 0);
@@ -288,6 +311,9 @@ INSERT INTO "article_tag"(article_id, tag_id) VALUES  (2, 2);
 INSERT INTO "article_tag"(article_id, tag_id) VALUES  (2, 3);
 INSERT INTO "article_tag"(article_id, tag_id) VALUES  (2, 4);
 
+INSERT INTO "tag"(name, state, user_id) VALUES ('eletrodomesticos', 'PENDING', 1);
+DELETE FROM "article_tag" WHERE tag_id = 3;
+INSERT INTO "article_tag"(article_id, tag_id) VALUES  (2, 5);
 
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
