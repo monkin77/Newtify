@@ -3,18 +3,32 @@
 CREATE OR REPLACE FUNCTION feedback_content() RETURNS TRIGGER AS
 $BODY$
 DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = NEW.content_id);
+/* DECLARE tag_ids tag.id%type = (
+    SELECT * FROM article_tag
+    WHERE article_id=NEW.content_id
+); */
+DECLARE feedback_value INTEGER = 1;
 BEGIN
+    IF (NOT NEW.is_like)
+        THEN feedback_value = -1;
+    END IF;
+
     IF (NEW.is_like) THEN
         UPDATE "content" SET likes = likes + 1 WHERE id = NEW.content_id;
-        
-        UPDATE "authenticated_user" SET reputation = reputation + 1 
-            WHERE id = author_id;
     ELSE 
         UPDATE "content" SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
-        
-        UPDATE "authenticated_user" SET reputation = reputation - 1
-            WHERE id = author_id;
     END IF;
+    
+    UPDATE "authenticated_user" SET reputation = reputation + feedback_value
+    WHERE id = author_id;
+
+    UPDATE area_of_expertise SET reputation = reputation + feedback_value
+    WHERE 
+        user_id = author_id AND 
+        tag_id IN (
+			SELECT tag_id FROM article_tag
+    		WHERE article_id=NEW.content_id
+		);
 
     INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) VALUES (CURRENT_TIMESTAMP, author_id, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
 
