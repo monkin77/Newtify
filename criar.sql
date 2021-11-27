@@ -463,7 +463,7 @@ CREATE TRIGGER delete_comment
     AFTER DELETE ON "comment"
     FOR EACH ROW
     EXECUTE PROCEDURE delete_comment();
-    
+
 -----------------------------------------
 
 -- Trigger to prevent an article from having an unaccepted tag or more than 3 tags
@@ -521,7 +521,7 @@ CREATE TRIGGER create_area_expertise
 
 -----------------------------------------
 
--- Triggers to update the is_edited flag when a content’s body or an article’s title is updated
+-- Trigger to mark the content as edited when its body is changed
 CREATE FUNCTION set_content_is_edited() RETURNS TRIGGER AS
 $BODY$
 BEGIN
@@ -537,7 +537,7 @@ CREATE TRIGGER set_content_is_edited
     AFTER UPDATE ON "content"
     FOR EACH ROW
     WHEN (OLD.body IS DISTINCT FROM NEW.body)
-    EXECUTE PROCEDURE set_content_is_edited();
+    EXECUTE PROCEDURE setd_content_is_edited();
 
 -----------------------------------------
 
