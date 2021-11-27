@@ -35,7 +35,7 @@ CREATE TABLE "country"(
 CREATE TABLE "authenticated_user"(
   id SERIAL PRIMARY KEY, 
   name TEXT NOT NULL, 
-  email VALID_EMAIL NOT NULL UNIQUE, 
+  email VALID_EMAIL UNIQUE, 
   birth_date TIMESTAMP NOT NULL CHECK (CURRENT_TIMESTAMP >= birth_date),
   admin BOOLEAN DEFAULT false,
   description TEXT, 
@@ -126,8 +126,8 @@ CREATE TABLE "content"(
   body TEXT NOT NULL,
   published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   is_edited BOOLEAN DEFAULT false,
-  likes INTEGER CHECK (likes >= 0),
-  dislikes INTEGER CHECK (dislikes >= 0),
+  likes INTEGER DEFAULT 0 CHECK (likes >= 0),
+  dislikes INTEGER DEFAULT 0 CHECK (dislikes >= 0),
   author_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE -- trigger must update user instead of deleting it
 );
 

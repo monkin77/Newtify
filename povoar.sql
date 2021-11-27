@@ -1,0 +1,46 @@
+INSERT INTO "authenticated_user" (name,email,birth_date,admin,description,password,avatar,city,is_suspended,reputation,country_id)
+VALUES
+  ("Jackson Hatrue","penatibus.et@protonmail.org",TO_TIMESTAMP("70-02-04"),true,"purus mauris a nunc. In at pede. Cras vulputate velit","neque","risus. Donec egestas.","Huntly",false,808,36),
+  ("Tatyana Hunter","duis.a@icloud.ca",TO_TIMESTAMP("14-10-29"),false,"dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus","Integer","torquent per conubia","Bad Neuenahr-Ahrweiler",false,494,53),
+  ("Sigourney Garcia","cras.lorem.lorem@outlook.edu",TO_TIMESTAMP("07-05-03"),false,"bibendum. Donec felis orci, adipiscing falsen, luctus sit amet, faucibus","ut","eu odio tristique","Galway",true,440,91),
+  ("Melinda Lawson","aliquam@protonmail.org",TO_TIMESTAMP("70-09-29"),false,"ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.","eu","ligula. Nullam enim.","Gorzów Wielkopolski",false,203,86),
+  ("Gavin Rosa","odio.phasellus@yahoo.net",TO_TIMESTAMP("76-10-13"),false,"nunc nulla vulputate dui, nec tempus mauris erat eget ipsum.","enim.","est, congue a,","Hebei",true,418,84),
+  ("Malcolm Schwartz","ullamcorper.eu@yahoo.edu",TO_TIMESTAMP("90-11-15"),false,"Proin mi. Aliquam gravida mauris ut mi. Duis risus odio,","Mauris","libero mauris, aliquam","Colorado Springs",false,497,36),
+  ("Christen Faulkner","aliquam.nisl@yahoo.org",TO_TIMESTAMP("54-09-28"),false,"sagittis. Nullam vitae diam. Proin dolor. Nulla semper tellus id","a,","mauris a nunc.","Kaliningrad",false,433,60),
+  ("Devin Kaufman","urna@google.net",TO_TIMESTAMP("77-06-05"),false,"vel lectus. Cum sociis natoque penatibus et magnis dis parturient","Vivamus","Nullam ut nisi","Chesapeake",true,412,38),
+  ("Tad falseel","lacus@google.ca",TO_TIMESTAMP("70-01-22"),false,"in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit","molestie","Nam interdum enim","Campina Grande",false,802,35),
+  ("Hall May","turpis.vitae.purus@google.ca",TO_TIMESTAMP("16-09-12"),false,"ante blandit viverra. Donec tempus, lorem fringilla ornare placerat, orci","dolor.","in, tempus eu,","Cockburn",false,886,15),
+  ("Baxter Hansen","ipsum@aol.edu",TO_TIMESTAMP("08-10-14"),false,"felis. Nulla tempor augue ac ipsum. Phasellus vitae mauris sit","nascetur","aliquam iaculis, lacus","Sechura",false,66,27),
+  ("Scarlet Chapman","convallis.erat@hotmail.com",TO_TIMESTAMP("08-09-07"),false,"neque. Morbi quis urna. Nunc quis arcu vel quam dignissim","ultricies","dignissim magna a","Magadan",true,342,75),
+  ("Darryl Noel","vulputate.dui.nec@protonmail.com",TO_TIMESTAMP("63-12-22"),false,"odio. Nam interdum enim non nisi. Aenean eget metus. In","at,","tincidunt vehicula risus.","Canoas",true,302,42),
+  ("Jerome Jacobson","tincidunt@google.org",TO_TIMESTAMP("55-08-20"),false,"arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida","a","purus, in molestie","Arequipa",true,965,2),
+  ("Teegan Hayes","in@protonmail.net",TO_TIMESTAMP("70-11-18"),false,"Donec egestas. Aliquam nec enim. Nunc ut erat. Sed nunc","cubilia","porttitor eros nec","Chillán Viejo",true,576,46),
+  ("Cecilia Quinn","arcu@hotmail.ca",TO_TIMESTAMP("22-08-22"),false,"cursus, diam at pretium aliquet, metus urna convallis erat, eget","faucibus","odio a purus.","Blenheim",true,254,74),
+  ("Geoffrey Guerra","dictum.proin@aol.net",TO_TIMESTAMP("95-09-05"),false,"euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas","sapien,","Sed eu nibh","Pfungstadt",true,869,9),
+  ("Anastasia Jones","nisl@yahoo.couk",TO_TIMESTAMP("98-09-28"),false,"urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat","non","congue turpis. In","Iseyin",false,54,51),
+  ("Natalie Perez","ornare.elit.elit@aol.couk",TO_TIMESTAMP("79-11-04"),false,"Phasellus fermentum convallis ligula. Donec luctus aliquet odio. Etiam ligula","egestas","volutpat ornare, facilisis","Stevenage",true,310,15),
+  ("Althea Michael","pede.nunc.sed@aol.edu",TO_TIMESTAMP("78-05-03"),false,"mauris id sapien. Cras dolor dolor, tempus non, lacinia at,","risus.","non nisi. Aenean","Sakhalin",true,711,52);
+
+  
+INSERT INTO "suspension" (reason,start_time,end_time,admin_id,user_id)
+VALUES
+  ("vel lectus. Cum sociis natoque",TO_TIMESTAMP("19-04-23"),TO_TIMESTAMP("21-07-13"),2,9),
+  ("ipsum ac mi eleifend egestas.",TO_TIMESTAMP("19-02-07"),TO_TIMESTAMP("22-11-18"),1,3),
+  ("Aliquam rutrum lorem ac risus.",TO_TIMESTAMP("19-05-19"),TO_TIMESTAMP("20-06-27"),1,2),
+  ("Etiam ligula tortor, dictum eu,",TO_TIMESTAMP("19-08-06"),TO_TIMESTAMP("22-10-30"),2,3),
+  ("Lorem ipsum dolor sit amet,",TO_TIMESTAMP("19-04-22"),TO_TIMESTAMP("20-07-23"),1,1),
+  ("Vestibulum ante ipsum primis in",TO_TIMESTAMP("19-07-30"),TO_TIMESTAMP("21-08-10"),2,3),
+  ("diam. Duis mi enim, condimentum",TO_TIMESTAMP("19-11-24"),TO_TIMESTAMP("21-11-14"),1,8),
+  ("a, aliquet vel, vulputate eu,",TO_TIMESTAMP("19-06-30"),TO_TIMESTAMP("21-05-06"),2,8),
+  ("Cras dictum ultricies ligula. Nullam",TO_TIMESTAMP("19-10-13"),TO_TIMESTAMP("21-10-19"),1,4),
+  ("orci quis lectus. Nullam suscipit,",TO_TIMESTAMP("19-06-27"),TO_TIMESTAMP("21-11-21"),1,7),
+  ("adipiscing. Mauris molestie pharetra nibh.",TO_TIMESTAMP("19-06-21"),TO_TIMESTAMP("22-03-17"),2,3),
+  ("lorem, auctor quis, tristique ac,",TO_TIMESTAMP("19-03-30"),TO_TIMESTAMP("22-09-10"),2,2),
+  ("purus, in molestie tortor nibh",TO_TIMESTAMP("19-04-25"),TO_TIMESTAMP("20-10-03"),1,8),
+  ("Ut semper pretium neque. Morbi",TO_TIMESTAMP("19-03-13"),TO_TIMESTAMP("20-11-21"),2,4),
+  ("facilisis, magna tellus faucibus leo,",TO_TIMESTAMP("19-09-04"),TO_TIMESTAMP("21-06-07"),1,4),
+  ("egestas lacinia. Sed congue, elit",TO_TIMESTAMP("19-09-30"),TO_TIMESTAMP("20-08-28"),2,10),
+  ("mauris blandit mattis. Cras eget",TO_TIMESTAMP("19-11-03"),TO_TIMESTAMP("21-12-27"),2,1),
+  ("ac turpis egestas. Aliquam fringilla",TO_TIMESTAMP("19-08-12"),TO_TIMESTAMP("21-11-28"),2,4),
+  ("pede sagittis augue, eu tempor",TO_TIMESTAMP("19-04-29"),TO_TIMESTAMP("22-01-22"),2,9),
+  ("amet nulla. Donec non justo.",TO_TIMESTAMP("19-04-22"),TO_TIMESTAMP("20-07-25"),1,4);
