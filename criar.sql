@@ -444,6 +444,28 @@ CREATE TRIGGER delete_article
 
 -----------------------------------------
 
+/*
+Trigger to delete the respective content of a comment when a comment
+is deleted. */
+CREATE OR REPLACE FUNCTION delete_comment() RETURNS TRIGGER AS
+$BODY$
+BEGIN 
+    DELETE FROM content WHERE content.id = OLD.content_id;
+    RETURN OLD;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+
+DROP TRIGGER IF EXISTS delete_comment ON "comment";
+CREATE TRIGGER delete_comment
+    AFTER DELETE ON "comment"
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_comment();
+    
+-----------------------------------------
+
 -- Trigger to prevent an article from having an unaccepted tag or more than 3 tags
 CREATE FUNCTION add_article_tag_check() RETURNS TRIGGER AS
 $BODY$
@@ -499,7 +521,7 @@ CREATE TRIGGER create_area_expertise
 
 -----------------------------------------
 
--- Trigger to mark the content as edited when its body is changed
+-- Triggers to update the is_edited flag when a content’s body or an article’s title is updated
 CREATE FUNCTION set_content_is_edited() RETURNS TRIGGER AS
 $BODY$
 BEGIN
