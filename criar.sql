@@ -267,7 +267,7 @@ CREATE INDEX user_search ON authenticated_user USING GIST (tsvectors);
 
 /*
 Trigger to update likes/dislikes of a content when feedback is given,
-creates a notification on that feedback and updates user reputation
+creates a notification on that feedback and updates user reputation, as well as its areas of expertise.
 */
 CREATE FUNCTION feedback_content() RETURNS TRIGGER AS
 $BODY$
@@ -376,7 +376,7 @@ CREATE TRIGGER check_feedback
 
 -----------------------------------------
 
--- trigger to add notification when a message is sent form an user to another or to remove, in case of being read
+-- Trigger to add notification when a message is sent form an user to another or to remove, in case of being read
 CREATE FUNCTION message_sent_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
@@ -399,7 +399,7 @@ CREATE TRIGGER message_sent_notification
 
 -----------------------------------------
 
--- trigger to prevent user from deleting a comment or article (content) with likes, dislikes or subcomments
+-- Trigger to prevent user from deleting a comment or article (content) with likes, dislikes or subcomments
 CREATE FUNCTION check_content_delete() RETURNS TRIGGER AS
 $BODY$
 BEGIN 
@@ -526,7 +526,7 @@ CREATE TRIGGER create_area_expertise
 
 -----------------------------------------
 
--- Trigger to mark the content as edited when its body is changed
+-- Triggers to update the *is_edited* flag when a content's body or an article's title is updated
 CREATE FUNCTION set_content_is_edited() RETURNS TRIGGER AS
 $BODY$
 BEGIN
@@ -563,8 +563,6 @@ CREATE TRIGGER set_article_is_edited
     FOR EACH ROW
     WHEN (OLD.title IS DISTINCT FROM NEW.title)
     EXECUTE PROCEDURE set_article_is_edited();
-
-
   
 -----------------------------------------
 
