@@ -427,27 +427,28 @@ Trigger to delete all the information about an article that was deleted
 it just needs to delete the content represented by that article 
 since its that deletion is cascaded to the comments and other elements of the article
 */
-CREATE OR REPLACE FUNCTION delete_article() RETURNS TRIGGER AS
+CREATE FUNCTION delete_article() RETURNS TRIGGER AS
 $BODY$
 BEGIN 
     DELETE FROM content WHERE content.id = OLD.content_id;
-    RETURN NULL;
+    RETURN OLD;
 END
 $BODY$
 
 LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_article
-    BEFORE DELETE ON "article"
+    AFTER DELETE ON "article"
     FOR EACH ROW
     EXECUTE PROCEDURE delete_article();
+
 
 -----------------------------------------
 
 /*
 Trigger to delete the respective content of a comment when a comment
 is deleted. */
-CREATE OR REPLACE FUNCTION delete_comment() RETURNS TRIGGER AS
+CREATE FUNCTION delete_comment() RETURNS TRIGGER AS
 $BODY$
 BEGIN 
     DELETE FROM content WHERE content.id = OLD.content_id;
@@ -458,7 +459,6 @@ $BODY$
 LANGUAGE plpgsql;
 
 
-DROP TRIGGER IF EXISTS delete_comment ON "comment";
 CREATE TRIGGER delete_comment
     AFTER DELETE ON "comment"
     FOR EACH ROW
@@ -537,7 +537,7 @@ CREATE TRIGGER set_content_is_edited
     AFTER UPDATE ON "content"
     FOR EACH ROW
     WHEN (OLD.body IS DISTINCT FROM NEW.body)
-    EXECUTE PROCEDURE setd_content_is_edited();
+    EXECUTE PROCEDURE set_content_is_edited();
 
 -----------------------------------------
 
@@ -558,3 +558,25 @@ CREATE TRIGGER set_article_is_edited
     FOR EACH ROW
     WHEN (OLD.title IS DISTINCT FROM NEW.title)
     EXECUTE PROCEDURE set_article_is_edited();
+
+
+  
+-----------------------------------------
+
+-- Trigger to put authenticated_user flag to true if a suspension on him is created
+CREATE FUNCTION is_suspended_flag_true() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE "authenticated_user" SET is_suspended = true
+    WHERE id = NEW.user_id;
+	RETURN NEW;
+END
+$BODY$
+
+LANGUAGE plpgsql;
+
+CREATE TRIGGER is_suspended_flag_true
+    AFTER INSERT ON "suspension"
+    FOR EACH ROW
+    EXECUTE PROCEDURE is_suspended_flag_true();
+
