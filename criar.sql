@@ -23,7 +23,7 @@ CREATE TYPE NOTIFICATION_TYPE AS ENUM ('MESSAGE', 'FEEDBACK', 'COMMENT');
 -- Tables
 -----------------------------------------
 
-CREATE TABLE "country"(
+CREATE TABLE country(
   id SERIAL PRIMARY KEY,
   code TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL UNIQUE
@@ -31,7 +31,7 @@ CREATE TABLE "country"(
 
 -----------------------------------------
 
-CREATE TABLE "authenticated_user"(
+CREATE TABLE authenticated_user(
   id SERIAL PRIMARY KEY, 
   name TEXT NOT NULL, 
   email VALID_EMAIL UNIQUE, 
@@ -43,139 +43,139 @@ CREATE TABLE "authenticated_user"(
   city TEXT, 
   is_suspended BOOLEAN NOT NULL,
   reputation INTEGER NOT NULL DEFAULT 0,
-  country_id INTEGER REFERENCES "country"(id) ON DELETE CASCADE ON UPDATE CASCADE
+  country_id INTEGER REFERENCES country(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 -----------------------------------------
 
-CREATE TABLE "suspension"(
+CREATE TABLE suspension(
   id SERIAL PRIMARY KEY,
   reason TEXT NOT NULL,
   start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   end_time TIMESTAMP NOT NULL CHECK (end_time >= start_time),
-  admin_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  user_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE
+  admin_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE
   CONSTRAINT diff_entities CHECK (admin_id != user_id)
 );
 
 -----------------------------------------
 
-CREATE TABLE "report"(
+CREATE TABLE report(
   id SERIAL PRIMARY KEY, 
   reason TEXT NOT NULL, 
   reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
   is_closed BOOLEAN DEFAULT false, 
-  reported_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
-  reporter_id INTEGER REFERENCES "authenticated_user"(id) ON UPDATE CASCADE ON DELETE SET NULL,
+  reported_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+  reporter_id INTEGER REFERENCES authenticated_user(id) ON UPDATE CASCADE ON DELETE SET NULL,
   CONSTRAINT different_ids CHECK (reporter_id != reported_id)
 );
 
 -----------------------------------------
 
-CREATE TABLE "tag"(
+CREATE TABLE tag(
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
   proposed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   state PROPOSED_TAG_STATES NOT NULL DEFAULT 'PENDING',
-  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE SET NULL ON UPDATE CASCADE
+  user_id INTEGER REFERENCES authenticated_user(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -----------------------------------------
 
-CREATE TABLE "area_of_expertise"(
-  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  tag_id  INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE area_of_expertise(
+  user_id INTEGER REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  tag_id  INTEGER REFERENCES tag(id) ON DELETE CASCADE ON UPDATE CASCADE,
   reputation INTEGER NOT NULL,
   PRIMARY KEY (user_id, tag_id)
 );
 
 -----------------------------------------
 
-CREATE TABLE "favorite_tag"(
-  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  tag_id  INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE favorite_tag(
+  user_id INTEGER REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  tag_id  INTEGER REFERENCES tag(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (user_id, tag_id)
 );
 
 
 -----------------------------------------
 
-CREATE TABLE "message"(
+CREATE TABLE message(
   id SERIAL PRIMARY KEY,
   body TEXT NOT NULL,
   published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  sender_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  sender_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  receiver_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
   is_read BOOLEAN DEFAULT false
 );
 
 -----------------------------------------
 
-CREATE TABLE "follow"(
-  follower_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  followed_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE follow(
+  follower_id INTEGER REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  followed_id INTEGER REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT own_follows CHECK (follower_id != followed_id),
   PRIMARY KEY(follower_id, followed_id)
 );
 
 -----------------------------------------
 
-CREATE TABLE "content"(
+CREATE TABLE content(
   id SERIAL PRIMARY KEY,
   body TEXT NOT NULL,
   published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   is_edited BOOLEAN DEFAULT false,
   likes INTEGER DEFAULT 0 CHECK (likes >= 0),
   dislikes INTEGER DEFAULT 0 CHECK (dislikes >= 0),
-  author_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE SET NULL ON UPDATE CASCADE
+  author_id INTEGER REFERENCES authenticated_user(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -----------------------------------------
 
-CREATE TABLE "article"(
-  content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+CREATE TABLE article(
+  content_id INTEGER PRIMARY KEY REFERENCES content(id) ON DELETE CASCADE ON UPDATE CASCADE, 
   title TEXT NOT NULL, 
   thumbnail TEXT
 );
 
 -----------------------------------------
 
-CREATE TABLE "comment"(
-  content_id INTEGER PRIMARY KEY REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  article_id INTEGER NOT NULL REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  parent_comment_id INTEGER REFERENCES "comment"(content_id) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE comment(
+  content_id INTEGER PRIMARY KEY REFERENCES content(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  article_id INTEGER NOT NULL REFERENCES article(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  parent_comment_id INTEGER REFERENCES comment(content_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -----------------------------------------
 
-CREATE TABLE "feedback"(
-  user_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE SET NULL ON UPDATE CASCADE, 
-  content_id INTEGER REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+CREATE TABLE feedback(
+  user_id INTEGER REFERENCES authenticated_user(id) ON DELETE SET NULL ON UPDATE CASCADE, 
+  content_id INTEGER REFERENCES content(id) ON DELETE CASCADE ON UPDATE CASCADE, 
   is_like BOOLEAN NOT NULL,
   PRIMARY KEY (user_id, content_id)
 );
 
 -----------------------------------------
 
-CREATE TABLE "article_tag"(
-  article_id INTEGER REFERENCES "article"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  tag_id INTEGER REFERENCES "tag"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+CREATE TABLE article_tag(
+  article_id INTEGER REFERENCES article(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  tag_id INTEGER REFERENCES tag(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(article_id, tag_id)
 );
 
 
 -----------------------------------------
 
-CREATE TABLE "notification"(
+CREATE TABLE notification(
   id SERIAL PRIMARY KEY,
-  receiver_id INTEGER NOT NULL REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  receiver_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
   date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
   is_read BOOLEAN DEFAULT false,
-  msg INTEGER REFERENCES "message"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  fb_giver INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  rated_content INTEGER REFERENCES "content"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  new_comment INTEGER REFERENCES "comment"(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  msg INTEGER REFERENCES message(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  fb_giver INTEGER REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  rated_content INTEGER REFERENCES content(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  new_comment INTEGER REFERENCES comment(content_id) ON DELETE CASCADE ON UPDATE CASCADE,
   type NOTIFICATION_TYPE NOT NULL
 );
 
@@ -195,11 +195,11 @@ CREATE INDEX notification_receiver ON notification USING hash (receiver_id);
 -- FULL-TEXT SEARCH INDICES
 -----------------------------------------
 
-ALTER TABLE "article" ADD COLUMN tsvectors TSVECTOR;
+ALTER TABLE article ADD COLUMN tsvectors TSVECTOR;
 
 CREATE FUNCTION article_search_update() RETURNS TRIGGER AS $$
-DECLARE new_body text = (select body from "content" where id = NEW.content_id);
-DECLARE old_body text = (select body from "content" where id = OLD.content_id);
+DECLARE new_body text = (select body from content where id = NEW.content_id);
+DECLARE old_body text = (select body from content where id = OLD.content_id);
 BEGIN
   IF TG_OP = 'INSERT' THEN
     NEW.tsvectors = (
@@ -222,15 +222,15 @@ END $$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER article_search_update
-  BEFORE INSERT OR UPDATE ON "article"
+  BEFORE INSERT OR UPDATE ON article
   FOR EACH ROW
   EXECUTE PROCEDURE article_search_update();
 
-CREATE INDEX article_search ON "article" USING GIST (tsvectors);
+CREATE INDEX article_search ON article USING GIST (tsvectors);
 
 -----------------------------------------
 
-ALTER TABLE "authenticated_user" ADD COLUMN tsvectors TSVECTOR;
+ALTER TABLE authenticated_user ADD COLUMN tsvectors TSVECTOR;
 
 CREATE FUNCTION user_search_update() RETURNS TRIGGER AS $$
 BEGIN
@@ -255,11 +255,11 @@ END $$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER user_search_update
-  BEFORE INSERT OR UPDATE ON "authenticated_user"
+  BEFORE INSERT OR UPDATE ON authenticated_user
   FOR EACH ROW
   EXECUTE PROCEDURE user_search_update();
 
-CREATE INDEX user_search ON "authenticated_user" USING GIST (tsvectors);
+CREATE INDEX user_search ON authenticated_user USING GIST (tsvectors);
 
 -----------------------------------------
 -- TRIGGERS
@@ -282,12 +282,12 @@ BEGIN
     END IF;
 
     IF (NEW.is_like) THEN
-        UPDATE "content" SET likes = likes + 1 WHERE id = NEW.content_id;
+        UPDATE content SET likes = likes + 1 WHERE id = NEW.content_id;
     ELSE 
-        UPDATE "content" SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
+        UPDATE content SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
     END IF;
     
-    UPDATE "authenticated_user" SET reputation = reputation + feedback_value
+    UPDATE authenticated_user SET reputation = reputation + feedback_value
     WHERE id = author_id;
 
     UPDATE area_of_expertise SET reputation = reputation + feedback_value
@@ -298,7 +298,7 @@ BEGIN
     		WHERE article_id=NEW.content_id
 		);
 
-    INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
+    INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
     VALUES (author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
 
     RETURN NULL;
@@ -307,7 +307,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER feedback_content
-    AFTER INSERT ON "feedback"
+    AFTER INSERT ON feedback
     FOR EACH ROW
     EXECUTE PROCEDURE feedback_content();
 
@@ -347,7 +347,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER remove_feedback
-    AFTER DELETE ON "feedback"
+    AFTER DELETE ON feedback
     FOR EACH ROW
     EXECUTE PROCEDURE remove_feedback();
 
@@ -370,7 +370,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER check_feedback
-    BEFORE INSERT ON "feedback"
+    BEFORE INSERT ON feedback
     FOR EACH ROW
     EXECUTE PROCEDURE check_feedback();
 
@@ -381,9 +381,9 @@ CREATE FUNCTION message_sent_notification() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF (NEW.is_read) THEN
-        DELETE FROM "notification" WHERE msg = NEW.id;
+        DELETE FROM notification WHERE msg = NEW.id;
     ELSE 
-        INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
+        INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
             VALUES (NEW.receiver_id, FALSE, NEW.id, NULL, NULL, NULL, 'MESSAGE');
     END IF;
     RETURN NULL;
@@ -393,7 +393,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER message_sent_notification
-    AFTER INSERT ON "message"
+    AFTER INSERT ON message
     FOR EACH ROW
     EXECUTE PROCEDURE message_sent_notification();
 
@@ -411,7 +411,7 @@ BEGIN
             -- it's an article with comments or a comment with sub comments
             THEN RAISE EXCEPTION 'You cannot delete a content that has comments';
         ELSE 
-            DELETE FROM "content" WHERE content.id = OLD.id;
+            DELETE FROM content WHERE content.id = OLD.id;
         END IF;
     END IF;
     RETURN NULL;
@@ -421,7 +421,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER check_content_delete
-    BEFORE DELETE ON "content"
+    BEFORE DELETE ON content
     FOR EACH ROW
     EXECUTE PROCEDURE check_content_delete();
 
@@ -443,7 +443,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_article
-    AFTER DELETE ON "article"
+    AFTER DELETE ON article
     FOR EACH ROW
     EXECUTE PROCEDURE delete_article();
 
@@ -465,7 +465,7 @@ LANGUAGE plpgsql;
 
 
 CREATE TRIGGER delete_comment
-    AFTER DELETE ON "comment"
+    AFTER DELETE ON comment
     FOR EACH ROW
     EXECUTE PROCEDURE delete_comment();
 
@@ -475,12 +475,12 @@ CREATE TRIGGER delete_comment
 CREATE FUNCTION add_article_tag_check() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    IF ((SELECT state FROM "tag" WHERE NEW.tag_id = tag.id) <> 'ACCEPTED')
+    IF ((SELECT state FROM tag WHERE NEW.tag_id = tag.id) <> 'ACCEPTED')
     THEN
         RAISE EXCEPTION 'You cannot associate an article to an Unaccepted tag';
     END IF;
     
-    IF ((SELECT COUNT(*) FROM "article_tag" WHERE article_id = NEW.article_id)) >= 3
+    IF ((SELECT COUNT(*) FROM article_tag WHERE article_id = NEW.article_id)) >= 3
     THEN
         RAISE EXCEPTION 'You cannot associate anymore tags to this article';
     END IF;
@@ -491,7 +491,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER add_article_tag_check
-    BEFORE INSERT ON "article_tag"
+    BEFORE INSERT ON article_tag
     FOR EACH ROW
     EXECUTE PROCEDURE add_article_tag_check();
 
@@ -504,14 +504,14 @@ in case the author the article doesn’t have it yet
 CREATE FUNCTION create_area_expertise() RETURNS TRIGGER AS
 $BODY$
 DECLARE author_id INTEGER = (
-    SELECT author_id FROM "content" WHERE id = NEW.article_id
+    SELECT author_id FROM content WHERE id = NEW.article_id
 );
 BEGIN
     IF NEW.tag_id NOT IN (
-        SELECT tag_id FROM "area_of_expertise" where user_id = author_id
+        SELECT tag_id FROM area_of_expertise where user_id = author_id
     )
     THEN
-        INSERT INTO "area_of_expertise" VALUES(author_id, NEW.tag_id, 0);
+        INSERT INTO area_of_expertise VALUES(author_id, NEW.tag_id, 0);
 	END IF;
 	RETURN NULL;
 END
@@ -520,7 +520,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER create_area_expertise
-    AFTER INSERT ON "article_tag"
+    AFTER INSERT ON article_tag
     FOR EACH ROW
     EXECUTE PROCEDURE create_area_expertise();
 
@@ -530,7 +530,7 @@ CREATE TRIGGER create_area_expertise
 CREATE FUNCTION set_content_is_edited() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    UPDATE "content" SET is_edited = TRUE
+    UPDATE content SET is_edited = TRUE
     WHERE id = NEW.id;
 	RETURN NULL;
 END
@@ -539,7 +539,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER set_content_is_edited
-    AFTER UPDATE ON "content"
+    AFTER UPDATE ON content
     FOR EACH ROW
     WHEN (OLD.body IS DISTINCT FROM NEW.body)
     EXECUTE PROCEDURE set_content_is_edited();
@@ -550,7 +550,7 @@ CREATE TRIGGER set_content_is_edited
 CREATE FUNCTION set_article_is_edited() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    UPDATE "content" SET is_edited = TRUE
+    UPDATE content SET is_edited = TRUE
     WHERE id = NEW.content_id;
 	RETURN NULL;
 END
@@ -559,7 +559,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER set_article_is_edited
-    AFTER UPDATE ON "article"
+    AFTER UPDATE ON article
     FOR EACH ROW
     WHEN (OLD.title IS DISTINCT FROM NEW.title)
     EXECUTE PROCEDURE set_article_is_edited();
@@ -572,7 +572,7 @@ CREATE TRIGGER set_article_is_edited
 CREATE FUNCTION is_suspended_flag_true() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    UPDATE "authenticated_user" SET is_suspended = true
+    UPDATE authenticated_user SET is_suspended = true
     WHERE id = NEW.user_id;
 	RETURN NEW;
 END
@@ -581,7 +581,7 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER is_suspended_flag_true
-    AFTER INSERT ON "suspension"
+    AFTER INSERT ON suspension
     FOR EACH ROW
     EXECUTE PROCEDURE is_suspended_flag_true();
 
@@ -593,23 +593,25 @@ CREATE TRIGGER is_suspended_flag_true
 CREATE FUNCTION create_comment_notification() RETURNS TRIGGER AS
 $BODY$
 DECLARE article_author INTEGER = (
-  SELECT id FROM "content" WHERE id = NEW.article_id
+  SELECT id FROM content WHERE id = NEW.article_id
 );
 DECLARE parent_author INTEGER = (
-  SELECT id FROM "content" WHERE id = NEW.parent_comment_id
+  SELECT id FROM content WHERE id = NEW.parent_comment_id
 );
 BEGIN
-  IF IS NULL parent_author THEN
-    INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
-        VALUES (article_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'MESSAGE');
+  IF parent_author IS NULL THEN
+    INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
+        VALUES (article_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'COMMENT');
   ELSE
-    INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
-        VALUES (parent_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'MESSAGE');
+    INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
+        VALUES (parent_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'COMMENT');
+  END IF;
+  RETURN NULL;
 END
 $BODY$
 
 LANGUAGE plpgsql;
 CREATE TRIGGER create_comment_notification
-    AFTER INSERT ON "comment"
+    AFTER INSERT ON comment
     FOR EACH ROW
     EXECUTE PROCEDURE create_comment_notification();

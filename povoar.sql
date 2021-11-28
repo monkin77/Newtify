@@ -1,6 +1,6 @@
 SET search_path TO lbaw2111;
 
-INSERT INTO "country" (code,name)
+INSERT INTO country (code,name)
 VALUES
   ('NG','Nigeria'),
   ('PH','Philippines'),
@@ -22,31 +22,32 @@ VALUES
 
   
   
-INSERT INTO "authenticated_user" (name,email,birth_date,admin,description,password,avatar,city,is_suspended,reputation,country_id)
+INSERT INTO authenticated_user (name,email,birth_date,admin,description,password,avatar,city,is_suspended,country_id)
 VALUES
-  ('Jackson Hatrue','penatibus.et@protonmail.org',TO_TIMESTAMP('1970-02-04', 'YYYY-MM-DD'),true,'purus mauris a nunc. In at pede. Cras vulputate velit','neque','risus. Donec egestas.','Huntly',false,808,1),
-  ('Tatyana Hunter','duis.a@icloud.ca',TO_TIMESTAMP('2014-10-29', 'YYYY-MM-DD'),true,'dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus','Integer','torquent per conubia','Bad Neuenahr-Ahrweiler',false,494,3),
-  ('Sigourney Garcia','cras.lorem.lorem@outlook.edu',TO_TIMESTAMP('2007-05-03', 'YYYY-MM-DD'),false,'bibendum. Donec felis orci, adipiscing falsen, luctus sit amet, faucibus','ut','eu odio tristique','Galway',true,440,4),
-  ('Melinda Lawson','aliquam@protonmail.org',TO_TIMESTAMP('1970-09-29', 'YYYY-MM-DD'),false,'ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.','eu','ligula. Nullam enim.','Gorzów Wielkopolski',false,203,7),
-  ('Gavin Rosa','odio.phasellus@yahoo.net',TO_TIMESTAMP('1976-10-13', 'YYYY-MM-DD'),false,'nunc nulla vulputate dui, nec tempus mauris erat eget ipsum.','enim.','est, congue a,','Hebei',true,418,2),
-  ('Malcolm Schwartz','ullamcorper.eu@yahoo.edu',TO_TIMESTAMP('1990-11-15', 'YYYY-MM-DD'),false,'Proin mi. Aliquam gravida mauris ut mi. Duis risus odio,','Mauris','libero mauris, aliquam','Colorado Springs',false,497,6),
-  ('Christen Faulkner','aliquam.nisl@yahoo.org',TO_TIMESTAMP('1954-09-28', 'YYYY-MM-DD'),false,'sagittis. Nullam vitae diam. Proin dolor. Nulla semper tellus id','a,','mauris a nunc.','Kaliningrad',false,433,3),
-  ('Devin Kaufman','urna@google.net',TO_TIMESTAMP('1977-06-05', 'YYYY-MM-DD'),false,'vel lectus. Cum sociis natoque penatibus et magnis dis parturient','Vivamus','Nullam ut nisi','Chesapeake',true,412,2),
-  ('Tad falseel','lacus@google.ca',TO_TIMESTAMP('1970-01-22', 'YYYY-MM-DD'),false,'in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit','molestie','Nam interdum enim','Campina Grande',false,802,7),
-  ('Hall May','turpis.vitae.purus@google.ca',TO_TIMESTAMP('2016-09-12', 'YYYY-MM-DD'),false,'ante blandit viverra. Donec tempus, lorem fringilla ornare placerat, orci','dolor.','in, tempus eu,','Cockburn',false,886,1),
-  ('Baxter Hansen','ipsum@aol.edu',TO_TIMESTAMP('2008-10-14', 'YYYY-MM-DD'),false,'felis. Nulla tempor augue ac ipsum. Phasellus vitae mauris sit','nascetur','aliquam iaculis, lacus','Sechura',false,66,3),
-  ('Scarlet Chapman','convallis.erat@hotmail.com',TO_TIMESTAMP('2008-09-07', 'YYYY-MM-DD'),false,'neque. Morbi quis urna. Nunc quis arcu vel quam dignissim','ultricies','dignissim magna a','Magadan',true,342,6),
-  ('Darryl Noel','vulputate.dui.nec@protonmail.com',TO_TIMESTAMP('1963-12-22', 'YYYY-MM-DD'),false,'odio. Nam interdum enim non nisi. Aenean eget metus. In','at,','tincidunt vehicula risus.','Canoas',true,302,5),
-  ('Jerome Jacobson','tincidunt@google.org',TO_TIMESTAMP('1955-08-20', 'YYYY-MM-DD'),false,'arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida','a','purus, in molestie','Arequipa',true,965,2),
-  ('Teegan Hayes','in@protonmail.net',TO_TIMESTAMP('1970-11-18', 'YYYY-MM-DD'),false,'Donec egestas. Aliquam nec enim. Nunc ut erat. Sed nunc','cubilia','porttitor eros nec','Chillán Viejo',true,576,7),
-  ('Cecilia Quinn','arcu@hotmail.ca',TO_TIMESTAMP('2020-08-22', 'YYYY-MM-DD'),false,'cursus, diam at pretium aliquet, metus urna convallis erat, eget','faucibus','odio a purus.','Blenheim',true,254,2),
-  ('Geoffrey Guerra','dictum.proin@aol.net',TO_TIMESTAMP('1995-09-05', 'YYYY-MM-DD'),false,'euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas','sapien,','Sed eu nibh','Pfungstadt',true,869,4),
-  ('Anastasia Jones','nisl@yahoo.couk',TO_TIMESTAMP('1998-09-28', 'YYYY-MM-DD'),false,'urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat','non','congue turpis. In','Iseyin',false,54,1),
-  ('Natalie Perez','ornare.elit.elit@aol.couk',TO_TIMESTAMP('1979-11-04', 'YYYY-MM-DD'),false,'Phasellus fermentum convallis ligula. Donec luctus aliquet odio. Etiam ligula','egestas','volutpat ornare, facilisis','Stevenage',true,310,2),
-  ('Althea Michael','pede.nunc.sed@aol.edu',TO_TIMESTAMP('1978-05-03', 'YYYY-MM-DD'),false,'mauris id sapien. Cras dolor dolor, tempus non, lacinia at,','risus.','non nisi. Aenean','Sakhalin',true,711,5);
+  ('Rui Alves', 'rui@gmail.com', TO_TIMESTAMP('2003-03-23', 'YYYY-MM-DD'), true, 'o maior debugger', '1234567', 'https://rui-image.com', 'Tchabes', false, 11),
+  ('Jackson Hatrue','penatibus.et@protonmail.org',TO_TIMESTAMP('1970-02-04', 'YYYY-MM-DD'),true,'purus mauris a nunc. In at pede. Cras vulputate velit','neque','risus. Donec egestas.','Huntly',false,1),
+  ('Tatyana Hunter','duis.a@icloud.ca',TO_TIMESTAMP('2014-10-29', 'YYYY-MM-DD'),true,'dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus','Integer','torquent per conubia','Bad Neuenahr-Ahrweiler',false,3),
+  ('Sigourney Garcia','cras.lorem.lorem@outlook.edu',TO_TIMESTAMP('2007-05-03', 'YYYY-MM-DD'),false,'bibendum. Donec felis orci, adipiscing falsen, luctus sit amet, faucibus','ut','eu odio tristique','Galway',true,4),
+  ('Melinda Lawson','aliquam@protonmail.org',TO_TIMESTAMP('1970-09-29', 'YYYY-MM-DD'),false,'ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.','eu','ligula. Nullam enim.','Gorzów Wielkopolski',false,7),
+  ('Gavin Rosa','odio.phasellus@yahoo.net',TO_TIMESTAMP('1976-10-13', 'YYYY-MM-DD'),false,'nunc nulla vulputate dui, nec tempus mauris erat eget ipsum.','enim.','est, congue a,','Hebei',true,2),
+  ('Malcolm Schwartz','ullamcorper.eu@yahoo.edu',TO_TIMESTAMP('1990-11-15', 'YYYY-MM-DD'),false,'Proin mi. Aliquam gravida mauris ut mi. Duis risus odio,','Mauris','libero mauris, aliquam','Colorado Springs',false,6),
+  ('Christen Faulkner','aliquam.nisl@yahoo.org',TO_TIMESTAMP('1954-09-28', 'YYYY-MM-DD'),false,'sagittis. Nullam vitae diam. Proin dolor. Nulla semper tellus id','a,','mauris a nunc.','Kaliningrad',false,3),
+  ('Devin Kaufman','urna@google.net',TO_TIMESTAMP('1977-06-05', 'YYYY-MM-DD'),false,'vel lectus. Cum sociis natoque penatibus et magnis dis parturient','Vivamus','Nullam ut nisi','Chesapeake',true,2),
+  ('Tad falseel','lacus@google.ca',TO_TIMESTAMP('1970-01-22', 'YYYY-MM-DD'),false,'in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit','molestie','Nam interdum enim','Campina Grande',false,7),
+  ('Hall May','turpis.vitae.purus@google.ca',TO_TIMESTAMP('2016-09-12', 'YYYY-MM-DD'),false,'ante blandit viverra. Donec tempus, lorem fringilla ornare placerat, orci','dolor.','in, tempus eu,','Cockburn',false,1),
+  ('Baxter Hansen','ipsum@aol.edu',TO_TIMESTAMP('2008-10-14', 'YYYY-MM-DD'),false,'felis. Nulla tempor augue ac ipsum. Phasellus vitae mauris sit','nascetur','aliquam iaculis, lacus','Sechura',false,3),
+  ('Scarlet Chapman','convallis.erat@hotmail.com',TO_TIMESTAMP('2008-09-07', 'YYYY-MM-DD'),false,'neque. Morbi quis urna. Nunc quis arcu vel quam dignissim','ultricies','dignissim magna a','Magadan',true,6),
+  ('Darryl Noel','vulputate.dui.nec@protonmail.com',TO_TIMESTAMP('1963-12-22', 'YYYY-MM-DD'),false,'odio. Nam interdum enim non nisi. Aenean eget metus. In','at,','tincidunt vehicula risus.','Canoas',true,5),
+  ('Jerome Jacobson','tincidunt@google.org',TO_TIMESTAMP('1955-08-20', 'YYYY-MM-DD'),false,'arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida','a','purus, in molestie','Arequipa',true,2),
+  ('Teegan Hayes','in@protonmail.net',TO_TIMESTAMP('1970-11-18', 'YYYY-MM-DD'),false,'Donec egestas. Aliquam nec enim. Nunc ut erat. Sed nunc','cubilia','porttitor eros nec','Chillán Viejo',true,7),
+  ('Cecilia Quinn','arcu@hotmail.ca',TO_TIMESTAMP('2020-08-22', 'YYYY-MM-DD'),false,'cursus, diam at pretium aliquet, metus urna convallis erat, eget','faucibus','odio a purus.','Blenheim',true,2),
+  ('Geoffrey Guerra','dictum.proin@aol.net',TO_TIMESTAMP('1995-09-05', 'YYYY-MM-DD'),false,'euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas','sapien,','Sed eu nibh','Pfungstadt',true,4),
+  ('Anastasia Jones','nisl@yahoo.couk',TO_TIMESTAMP('1998-09-28', 'YYYY-MM-DD'),false,'urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat','non','congue turpis. In','Iseyin',false,1),
+  ('Natalie Perez','ornare.elit.elit@aol.couk',TO_TIMESTAMP('1979-11-04', 'YYYY-MM-DD'),false,'Phasellus fermentum convallis ligula. Donec luctus aliquet odio. Etiam ligula','egestas','volutpat ornare, facilisis','Stevenage',true,2),
+  ('Althea Michael','pede.nunc.sed@aol.edu',TO_TIMESTAMP('1978-05-03', 'YYYY-MM-DD'),false,'mauris id sapien. Cras dolor dolor, tempus non, lacinia at,','risus.','non nisi. Aenean','Sakhalin',true,5);
 
  
-INSERT INTO "suspension" (reason,start_time,end_time,admin_id,user_id)
+INSERT INTO suspension (reason,start_time,end_time,admin_id,user_id)
 VALUES
   ('vel lectus. Cum sociis natoque',TO_TIMESTAMP('2019-04-23', 'YYYY-MM-DD'),TO_TIMESTAMP('2021-07-13', 'YYYY-MM-DD'),2,3),
   ('ipsum ac mi eleifend egestas.',TO_TIMESTAMP('2019-02-07', 'YYYY-MM-DD'),TO_TIMESTAMP('2021-11-18', 'YYYY-MM-DD'),1,5),
@@ -54,7 +55,7 @@ VALUES
   ('Etiam ligula tortor, dictum eu,',TO_TIMESTAMP('2019-08-06', 'YYYY-MM-DD'),TO_TIMESTAMP('2021-10-30', 'YYYY-MM-DD'),2,12);
 
 
-INSERT INTO "report" (reason,reported_at,is_closed,reported_id,reporter_id)
+INSERT INTO report (reason,reported_at,is_closed,reported_id,reporter_id)
 VALUES
   ('sit amet metus. Aliquam erat',TO_TIMESTAMP('2019-08-11', 'YYYY-MM-DD'),false,18,6),
   ('aliquet, sem ut cursus luctus,',TO_TIMESTAMP('2019-10-08', 'YYYY-MM-DD'),false,15,5),
@@ -78,8 +79,9 @@ VALUES
   ('eros non enim commodo hendrerit.',TO_TIMESTAMP('2019-08-04', 'YYYY-MM-DD'),false,17,2);
 
 
-INSERT INTO "tag" (name,proposed_at,state,user_id)
+INSERT INTO tag (name,proposed_at,state,user_id)
 VALUES
+  ('Anime', TO_TIMESTAMP('2018-11-25', 'YYYY-MM-DD'), 'ACCEPTED', 1),
   ('Dominique Bishop',TO_TIMESTAMP('2019-08-27', 'YYYY-MM-DD'),'PENDING',13),
   ('Kai Gilmore',TO_TIMESTAMP('2019-06-28', 'YYYY-MM-DD'),'ACCEPTED',14), 
   ('Berk Mccall',TO_TIMESTAMP('2019-09-21', 'YYYY-MM-DD'),'REJECTED',19),
@@ -102,32 +104,33 @@ VALUES
   ('Hector Richard',TO_TIMESTAMP('2019-10-28', 'YYYY-MM-DD'),'PENDING',8); 
 
 
-INSERT INTO "area_of_expertise" (user_id,tag_id,reputation)
+INSERT INTO area_of_expertise (user_id,tag_id,reputation)
 VALUES
-  (6,2,43),
-  (3,9,77),
-  (18,14,77),
-  (20,9,81),
-  (12,16,63),
-  (1,16,53),
-  (13,18,90),
-  (4,2,92),
-  (13,14,81),
-  (7,2,29),
-  (15,14,86),
-  (10,18,14),
-  (3,14,65),
-  (4,4,87),
-  (8,18,31),
-  (6,9,76),
-  (10,4,82),
-  (3,18,19),
-  (3,5,93),
-  (2,4,29);
+  (6,2,0),
+  (3,9,0),
+  (18,14,0),
+  (20,9,0),
+  (12,16,0),
+  (1,16,0),
+  (13,18,0),
+  (4,2,0),
+  (13,14,0),
+  (7,2,0),
+  (15,14,0),
+  (10,18,0),
+  (3,14,0),
+  (4,4,0),
+  (8,18,0),
+  (6,9,0),
+  (10,4,0),
+  (3,18,0),
+  (3,5,0),
+  (2,4,0);
 
 
-INSERT INTO "favorite_tag" (user_id,tag_id)
+INSERT INTO favorite_tag (user_id,tag_id)
 VALUES
+  (1,1),
   (20,2),
   (16,18),
   (5,4),
@@ -150,8 +153,9 @@ VALUES
   (20,4);
 
 
-INSERT INTO "message" (body,published_at,sender_id,receiver_id,is_read)
+INSERT INTO message (body,published_at,sender_id,receiver_id,is_read)
 VALUES
+  ('ola individuo', TO_TIMESTAMP('2021-04-16', 'YYYY-MM-DD'), 1, 2, false),
   ('eget magna. Suspendisse tristique neque venenatis lacus. Etiam bibendum fermentum',TO_TIMESTAMP('2020-03-07', 'YYYY-MM-DD'),7,15,true),
   ('Aliquam ultrices iaculis odio. Nam interdum enim non nisi. Aenean',TO_TIMESTAMP('2021-04-16', 'YYYY-MM-DD'),8,16,false),
   ('sed sem egestas blandit. Nam nulla magna, malesuada vel, convallis',TO_TIMESTAMP('2020-11-04', 'YYYY-MM-DD'),4,18,false),
@@ -174,8 +178,9 @@ VALUES
   ('vulputate, posuere vulputate, lacus. Cras interdum. Nunc sollicitudin commodo ipsum.',TO_TIMESTAMP('2021-02-21', 'YYYY-MM-DD'),9,17,true);
 
 
-INSERT INTO "follow" (follower_id,followed_id)
+INSERT INTO follow (follower_id,followed_id)
 VALUES
+  (1,2),
   (4,13),
   (8,15),
   (5,19),
@@ -196,33 +201,34 @@ VALUES
   (5,15);
 
 
-INSERT INTO "content" (body,published_at,is_edited,likes,dislikes,author_id)
+INSERT INTO content (body,published_at,is_edited,author_id)
 VALUES
-  ('ante ipsum primis in faucibus orci luctus et ultrices posuere',TO_TIMESTAMP('2021-03-02', 'YYYY-MM-DD'),false,95,68,19),
-  ('amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing',TO_TIMESTAMP('2021-01-22', 'YYYY-MM-DD'),false,88,76,19),
-  ('dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit, est',TO_TIMESTAMP('2021-05-19', 'YYYY-MM-DD'),false,78,84,9),
-  ('fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed',TO_TIMESTAMP('2021-05-23', 'YYYY-MM-DD'),true,59,71,8),
-  ('vulputate eu, odio. Phasellus at augue id ante dictum cursus.',TO_TIMESTAMP('2020-12-06', 'YYYY-MM-DD'),false,85,49,19),
-  ('pede. Praesent eu dui. Cum sociis natoque penatibus et magnis',TO_TIMESTAMP('2021-10-27', 'YYYY-MM-DD'),false,3,66,12),
-  ('Cras interdum. Nunc sollicitudin commodo ipsum. Suspendisse non leo. Vivamus',TO_TIMESTAMP('2021-03-04', 'YYYY-MM-DD'),false,91,41,17),
-  ('vel, vulputate eu, odio. Phasellus at augue id ante dictum',TO_TIMESTAMP('2021-03-11', 'YYYY-MM-DD'),false,1,20,19),
-  ('sed pede. Cum sociis natoque penatibus et magnis dis parturient',TO_TIMESTAMP('2021-08-07', 'YYYY-MM-DD'),true,23,52,8),
-  ('Nullam nisl. Maecenas malesuada fringilla est. Mauris eu turpis. Nulla',TO_TIMESTAMP('2021-04-09', 'YYYY-MM-DD'),true,62,45,16),
-  ('feugiat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam',TO_TIMESTAMP('2021-09-05', 'YYYY-MM-DD'),true,67,79,6),
-  ('sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum',TO_TIMESTAMP('2021-02-13', 'YYYY-MM-DD'),false,3,8,10),
-  ('nunc. In at pede. Cras vulputate velit eu sem. Pellentesque',TO_TIMESTAMP('2021-09-15', 'YYYY-MM-DD'),false,28,95,2),
-  ('urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat',TO_TIMESTAMP('2021-05-27', 'YYYY-MM-DD'),false,43,69,18),
-  ('in, tempus eu, ligula. Aenean euismod mauris eu elit. Nulla',TO_TIMESTAMP('2021-04-25', 'YYYY-MM-DD'),true,60,82,12),
-  ('enim, gravida sit amet, dapibus id, blandit at, nisi. Cum',TO_TIMESTAMP('2021-07-11', 'YYYY-MM-DD'),true,53,78,14),
-  ('posuere, enim nisl elementum purus, accumsan interdum libero dui nec',TO_TIMESTAMP('2021-01-02', 'YYYY-MM-DD'),false,38,63,2),
-  ('mauris. Integer sem elit, pharetra ut, pharetra sed, hendrerit a,',TO_TIMESTAMP('2021-03-09', 'YYYY-MM-DD'),false,4,70,13),
-  ('a, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',TO_TIMESTAMP('2021-07-18', 'YYYY-MM-DD'),true,37,12,10),
-  ('enim diam vel arcu. Curabitur ut odio vel est tempor',TO_TIMESTAMP('2021-07-04', 'YYYY-MM-DD'),true,5,85,14);
+  ('ola este artigo e do rui', TO_TIMESTAMP('2021-04-03', 'YYYY-MM-DD'), false, 1),
+  ('ante ipsum primis in faucibus orci luctus et ultrices posuere',TO_TIMESTAMP('2021-03-02', 'YYYY-MM-DD'),false,19),
+  ('amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing',TO_TIMESTAMP('2021-01-22', 'YYYY-MM-DD'),false,19),
+  ('dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit, est',TO_TIMESTAMP('2021-05-19', 'YYYY-MM-DD'),false,9),
+  ('fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed',TO_TIMESTAMP('2021-05-23', 'YYYY-MM-DD'),true,8),
+  ('vulputate eu, odio. Phasellus at augue id ante dictum cursus.',TO_TIMESTAMP('2020-12-06', 'YYYY-MM-DD'),false,19),
+  ('pede. Praesent eu dui. Cum sociis natoque penatibus et magnis',TO_TIMESTAMP('2021-10-27', 'YYYY-MM-DD'),false,12),
+  ('Cras interdum. Nunc sollicitudin commodo ipsum. Suspendisse non leo. Vivamus',TO_TIMESTAMP('2021-03-04', 'YYYY-MM-DD'),false,17),
+  ('vel, vulputate eu, odio. Phasellus at augue id ante dictum',TO_TIMESTAMP('2021-03-11', 'YYYY-MM-DD'),false,19),
+  ('sed pede. Cum sociis natoque penatibus et magnis dis parturient',TO_TIMESTAMP('2021-08-07', 'YYYY-MM-DD'),true,8),
+  ('O artigo do rui é muito bom',TO_TIMESTAMP('2021-04-09', 'YYYY-MM-DD'),true,16),
+  ('feugiat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam',TO_TIMESTAMP('2021-09-05', 'YYYY-MM-DD'),true,6),
+  ('sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum',TO_TIMESTAMP('2021-02-13', 'YYYY-MM-DD'),false,10),
+  ('nunc. In at pede. Cras vulputate velit eu sem. Pellentesque',TO_TIMESTAMP('2021-09-15', 'YYYY-MM-DD'),false,2),
+  ('urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat',TO_TIMESTAMP('2021-05-27', 'YYYY-MM-DD'),false,18),
+  ('in, tempus eu, ligula. Aenean euismod mauris eu elit. Nulla',TO_TIMESTAMP('2021-04-25', 'YYYY-MM-DD'),true,12),
+  ('enim, gravida sit amet, dapibus id, blandit at, nisi. Cum',TO_TIMESTAMP('2021-07-11', 'YYYY-MM-DD'),true,14),
+  ('posuere, enim nisl elementum purus, accumsan interdum libero dui nec',TO_TIMESTAMP('2021-01-02', 'YYYY-MM-DD'),false,2),
+  ('mauris. Integer sem elit, pharetra ut, pharetra sed, hendrerit a,',TO_TIMESTAMP('2021-03-09', 'YYYY-MM-DD'),false,13),
+  ('a, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',TO_TIMESTAMP('2021-07-18', 'YYYY-MM-DD'),true,10),
+  ('enim diam vel arcu. Curabitur ut odio vel est tempor',TO_TIMESTAMP('2021-07-04', 'YYYY-MM-DD'),true,14);
 
 
-INSERT INTO "article" (content_id,title,thumbnail)
+INSERT INTO article (content_id,title,thumbnail)
 VALUES
-  (1,'velit. Cras lorem lorem,','risus. Duis a mi fringilla'),
+  (1,'Artigo do rui', 'https://artigo-do-rui.com'),
   (2,'nunc id enim. Curabitur','sem eget massa. Suspendisse eleifend.'),
   (3,'Fusce fermentum fermentum arcu.','in aliquet lobortis, nisi nibh'),
   (4,'eget varius ultrices, mauris','eget metus. In nec orci.'),
@@ -234,9 +240,9 @@ VALUES
   (10,'mauris blandit mattis. Cras','aliquet nec, imperdiet nec, leo.');
 
 
-INSERT INTO "comment" (content_id,article_id,parent_comment_id)
+INSERT INTO comment (content_id,article_id,parent_comment_id)
 VALUES
-  (11,7,NULL),
+  (11,1,NULL),
   (12,4,NULL),
   (13,10,NULL),
   (14,6,NULL),
@@ -248,8 +254,34 @@ VALUES
   (20,4,13);
 
 
-INSERT INTO "feedback" (user_id,content_id,is_like)
+INSERT INTO article_tag (article_id,tag_id)
 VALUES
+  (1, 1),
+  (7,10),
+  (4,5),
+  (2,5),
+  (6,3),
+  (5,15),
+  (2,19),
+  (8,5),
+  (8,15),
+  (1,15),
+  (10,6),
+  (7,15),
+  (8,17),
+  (6,5),
+  (10,5),
+  (4,3),
+  (3,15),
+  (3,17),
+  (9,5),
+  (6,17),
+  (5,19);
+
+
+INSERT INTO feedback (user_id,content_id,is_like)
+VALUES
+  (7, 1, true),
   (7,3,false),
   (11,9,true),
   (10,6,true),
@@ -270,28 +302,3 @@ VALUES
   (1,15,false),
   (7,15,true),
   (10,7,true);
-
-
-INSERT INTO "article_tag" (article_id,tag_id)
-VALUES
-  (7,9),
-  (4,4),
-  (2,4),
-  (6,2),
-  (5,14),
-  (2,18),
-  (8,4),
-  (8,14),
-  (1,14),
-  (10,5),
-  (7,14),
-  (8,16),
-  (6,4),
-  (10,4),
-  (4,2),
-  (3,14),
-  (3,16),
-  (9,4),
-  (6,16),
-  (5,18);
-
