@@ -115,6 +115,7 @@ CREATE TABLE "message"(
 CREATE TABLE "follow"(
   follower_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
   followed_id INTEGER REFERENCES "authenticated_user"(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT own_follows CHECK (follower_id != followed_id),
   PRIMARY KEY(follower_id, followed_id)
 );
 
@@ -298,7 +299,7 @@ BEGIN
 		);
 
     INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
-    VALUES (CURRENT_TIMESTAMP, author_id, FALSE, NULL, NEW.user_id, NULL, NULL, 'FEEDBACK');
+    VALUES (CURRENT_TIMESTAMP, author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
 
     RETURN NULL;
 END
@@ -312,29 +313,33 @@ CREATE TRIGGER feedback_content
 
 -----------------------------------------
 
--- Trigger to remove like/dislike of a content when feedback on it is removed and to update authenticated user reputation
+-- Trigger to remove like/dislike of a content when feedback on it is removed and to update authenticated user reputation, as well as its areas of expertise
 CREATE FUNCTION remove_feedback() RETURNS TRIGGER AS
 $BODY$
+DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = OLD.content_id);
+DECLARE feedback_value INTEGER = -1;
 BEGIN
-    IF (OLD.is_like) THEN
-        UPDATE "content" SET likes = likes - 1 WHERE id = OLD.content_id;
-
-        UPDATE "authenticated_user" SET reputation = reputation - 1 
-            WHERE id = (
-                SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id)
-                    WHERE content.id = OLD.content_id
-                );
-
-    ELSE 
-        UPDATE "authenticated_user" SET reputation = reputation + 1 
-            WHERE id = (
-                SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id)
-                    WHERE content.id = OLD.content_id
-              );
-        
-        UPDATE "content" SET dislikes = dislikes - 1
-        WHERE id = OLD.content_id;
+    IF (NOT OLD.is_like)
+        THEN feedback_value = 1;
     END IF;
+
+    IF (OLD.is_like) THEN
+        UPDATE content SET likes = likes - 1 WHERE id = OLD.content_id;
+    ELSE 
+        UPDATE content SET dislikes = dislikes - 1 WHERE id = OLD.content_id;
+    END IF;
+    
+    UPDATE authenticated_user SET reputation = reputation + feedback_value
+    WHERE id = author_id;
+
+    UPDATE area_of_expertise SET reputation = reputation + feedback_value
+    WHERE 
+        user_id = author_id AND 
+        tag_id IN (
+			SELECT tag_id FROM article_tag
+    		WHERE article_id=OLD.content_id
+		);
+
     RETURN NULL;
 END
 $BODY$

@@ -1,22 +1,25 @@
+SET search_path TO lbaw2111;
+
 INSERT INTO "country" (code,name)
 VALUES
-  ('lacus.','Chile'),
-  ('ante','Poland'),
-  ('vel','Canada'),
-  ('Sed','Costa Rica'),
-  ('orci','South Korea'),
-  ('est','Spain'),
-  ('dui','Vietnam'),
-  ('egestas.','New Zealand'),
-  ('ad','Ireland'),
-  ('ipsum.','Netherlands'),
-  ('feugiat','Indonesia'),
-  ('placerat,','Italy'),
-  ('velit','Peru'),
-  ('pellentesque','India'),
-  ('iaculis','Austria'),
-  ('vestibulum.','Nigeria'),
-  ('non','United States');
+  ('NG','Nigeria'),
+  ('PH','Philippines'),
+  ('CN','China'),
+  ('PL','Poland'),
+  ('UA','Ukraine'),
+  ('AL','Albania'),
+  ('BG','Bulgaria'),
+  ('CZ','Czech Republic'),
+  ('CU','Cuba'),
+  ('FM','Micronesia'),
+  ('PT','Portugal'),
+  ('SY','Syria'),
+  ('LU','Luxembourg'),
+  ('ID','Indonesia'),
+  ('GR','Greece'),
+  ('US','United States'),
+  ('SV', 'El Salvador');
+
   
   
 INSERT INTO "authenticated_user" (name,email,birth_date,admin,description,password,avatar,city,is_suspended,reputation,country_id)
@@ -42,7 +45,7 @@ VALUES
   ('Natalie Perez','ornare.elit.elit@aol.couk',TO_TIMESTAMP('1979-11-04', 'YYYY-MM-DD'),false,'Phasellus fermentum convallis ligula. Donec luctus aliquet odio. Etiam ligula','egestas','volutpat ornare, facilisis','Stevenage',true,310,2),
   ('Althea Michael','pede.nunc.sed@aol.edu',TO_TIMESTAMP('1978-05-03', 'YYYY-MM-DD'),false,'mauris id sapien. Cras dolor dolor, tempus non, lacinia at,','risus.','non nisi. Aenean','Sakhalin',true,711,5);
 
-  
+ 
 INSERT INTO "suspension" (reason,start_time,end_time,admin_id,user_id)
 VALUES
   ('vel lectus. Cum sociis natoque',TO_TIMESTAMP('2019-04-23', 'YYYY-MM-DD'),TO_TIMESTAMP('2021-07-13', 'YYYY-MM-DD'),2,3),
@@ -50,7 +53,8 @@ VALUES
   ('Aliquam rutrum lorem ac risus.',TO_TIMESTAMP('2019-05-19', 'YYYY-MM-DD'),TO_TIMESTAMP('2020-06-27', 'YYYY-MM-DD'),1,8),
   ('Etiam ligula tortor, dictum eu,',TO_TIMESTAMP('2019-08-06', 'YYYY-MM-DD'),TO_TIMESTAMP('2021-10-30', 'YYYY-MM-DD'),2,12);
 
-  INSERT INTO "report" (reason,reported_at,is_closed,reported_id,reporter_id)
+
+INSERT INTO "report" (reason,reported_at,is_closed,reported_id,reporter_id)
 VALUES
   ('sit amet metus. Aliquam erat',TO_TIMESTAMP('2019-08-11', 'YYYY-MM-DD'),false,18,6),
   ('aliquet, sem ut cursus luctus,',TO_TIMESTAMP('2019-10-08', 'YYYY-MM-DD'),false,15,5),
@@ -77,72 +81,72 @@ VALUES
 INSERT INTO "tag" (name,proposed_at,state,user_id)
 VALUES
   ('Dominique Bishop',TO_TIMESTAMP('2019-08-27', 'YYYY-MM-DD'),'PENDING',13),
-  ('Kai Gilmore',TO_TIMESTAMP('2019-06-28', 'YYYY-MM-DD'),'ACCEPTED',14),
+  ('Kai Gilmore',TO_TIMESTAMP('2019-06-28', 'YYYY-MM-DD'),'ACCEPTED',14), 
   ('Berk Mccall',TO_TIMESTAMP('2019-09-21', 'YYYY-MM-DD'),'REJECTED',19),
-  ('Emmanuel Dickson',TO_TIMESTAMP('2019-02-03', 'YYYY-MM-DD'),'ACCEPTED',9),
-  ('Chandler Stuart',TO_TIMESTAMP('2019-08-31', 'YYYY-MM-DD'),'ACCEPTED',4),
+  ('Emmanuel Dickson',TO_TIMESTAMP('2019-02-03', 'YYYY-MM-DD'),'ACCEPTED',9), 
+  ('Chandler Stuart',TO_TIMESTAMP('2019-08-31', 'YYYY-MM-DD'),'ACCEPTED',4), 
   ('Noelani Knapp',TO_TIMESTAMP('2019-05-28', 'YYYY-MM-DD'),'PENDING',15),
-  ('Isabelle Johnson',TO_TIMESTAMP('2019-05-22', 'YYYY-MM-DD'),'REJECTED',11),
+  ('Isabelle Johnson',TO_TIMESTAMP('2019-05-22', 'YYYY-MM-DD'),'REJECTED',11), 
   ('Marsden Lloyd',TO_TIMESTAMP('2019-03-14', 'YYYY-MM-DD'),'PENDING',16),
-  ('Indigo Alston',TO_TIMESTAMP('2019-05-14', 'YYYY-MM-DD'),'ACCEPTED',18),
+  ('Indigo Alston',TO_TIMESTAMP('2019-05-14', 'YYYY-MM-DD'),'ACCEPTED',18), 
   ('Tamekah Dyer',TO_TIMESTAMP('2019-07-17', 'YYYY-MM-DD'),'REJECTED',7),
-  ('Brent Glass',TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD'),'PENDING',5),
-  ('Roth Bates',TO_TIMESTAMP('2019-03-02', 'YYYY-MM-DD'),'REJECTED',2),
-  ('Illiana Hoover',TO_TIMESTAMP('2019-03-17', 'YYYY-MM-DD'),'PENDING',19),
-  ('Dean Macdonald',TO_TIMESTAMP('2019-09-08', 'YYYY-MM-DD'),'REJECTED',16),
-  ('Hector Giles',TO_TIMESTAMP('2019-09-29', 'YYYY-MM-DD'),'REJECTED',8),
-  ('Mufutau Fisher',TO_TIMESTAMP('2019-03-09', 'YYYY-MM-DD'),'PENDING',19),
-  ('Avye Wolfe',TO_TIMESTAMP('2019-05-11', 'YYYY-MM-DD'),'REJECTED',10),
-  ('Noah Holt',TO_TIMESTAMP('2019-11-15', 'YYYY-MM-DD'),'PENDING',5),
-  ('Olga Aguirre',TO_TIMESTAMP('2019-04-04', 'YYYY-MM-DD'),'PENDING',1),
-  ('Hector Richard',TO_TIMESTAMP('2019-10-28', 'YYYY-MM-DD'),'PENDING',8);
+  ('Brent Glass',TO_TIMESTAMP('2019-06-01', 'YYYY-MM-DD'),'PENDING',5), 
+  ('Roth Bates',TO_TIMESTAMP('2019-03-02', 'YYYY-MM-DD'),'REJECTED',2), 
+  ('Illiana Hoover',TO_TIMESTAMP('2019-03-17', 'YYYY-MM-DD'),'PENDING',19), 
+  ('Dean Macdonald',TO_TIMESTAMP('2019-09-08', 'YYYY-MM-DD'),'ACCEPTED',16),
+  ('Hector Giles',TO_TIMESTAMP('2019-09-29', 'YYYY-MM-DD'),'REJECTED',8), 
+  ('Mufutau Fisher',TO_TIMESTAMP('2019-03-09', 'YYYY-MM-DD'),'ACCEPTED',19), 
+  ('Avye Wolfe',TO_TIMESTAMP('2019-05-11', 'YYYY-MM-DD'),'REJECTED',10),  
+  ('Noah Holt',TO_TIMESTAMP('2019-11-15', 'YYYY-MM-DD'),'ACCEPTED',5), 
+  ('Olga Aguirre',TO_TIMESTAMP('2019-04-04', 'YYYY-MM-DD'),'PENDING',1), 
+  ('Hector Richard',TO_TIMESTAMP('2019-10-28', 'YYYY-MM-DD'),'PENDING',8); 
 
 
 INSERT INTO "area_of_expertise" (user_id,tag_id,reputation)
 VALUES
-  (6,12,43),
+  (6,2,43),
   (3,9,77),
-  (18,10,77),
+  (18,14,77),
   (20,9,81),
-  (12,15,63),
-  (1,11,53),
-  (13,20,90),
-  (4,3,92),
+  (12,16,63),
+  (1,16,53),
+  (13,18,90),
+  (4,2,92),
   (13,14,81),
-  (7,11,29),
-  (15,13,86),
-  (10,17,14),
+  (7,2,29),
+  (15,14,86),
+  (10,18,14),
   (3,14,65),
-  (4,2,87),
-  (8,20,31),
+  (4,4,87),
+  (8,18,31),
   (6,9,76),
   (10,4,82),
-  (3,13,19),
-  (3,6,93),
+  (3,18,19),
+  (3,5,93),
   (2,4,29);
 
 
 INSERT INTO "favorite_tag" (user_id,tag_id)
 VALUES
-  (20,6),
-  (16,20),
-  (5,3),
-  (19,17),
-  (11,10),
-  (14,20),
+  (20,2),
+  (16,18),
+  (5,4),
+  (19,16),
+  (11,9),
+  (14,18),
   (20,14),
-  (6,8),
+  (6,5),
   (11,14),
-  (15,1),
-  (7,1),
-  (17,12),
+  (15,2),
+  (7,4),
+  (17,14),
   (17,16),
-  (17,3),
-  (4,13),
+  (17,2),
+  (4,14),
   (18,14),
-  (15,6),
-  (13,17),
-  (9,15),
+  (15,5),
+  (13,18),
+  (9,18),
   (20,4);
 
 
@@ -274,19 +278,20 @@ VALUES
   (4,4),
   (2,4),
   (6,2),
-  (5,13),
+  (5,14),
   (2,18),
   (8,4),
-  (8,12),
-  (1,12),
+  (8,14),
+  (1,14),
   (10,5),
   (7,14),
   (8,16),
-  (6,3),
+  (6,4),
   (10,4),
   (4,2),
-  (3,13),
-  (3,15),
+  (3,14),
+  (3,16),
   (9,4),
   (6,16),
-  (5,11);
+  (5,18);
+
