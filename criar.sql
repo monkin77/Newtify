@@ -298,8 +298,8 @@ BEGIN
     		WHERE article_id=NEW.content_id
 		);
 
-    INSERT INTO "notification"(date, receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
-    VALUES (CURRENT_TIMESTAMP, author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
+    INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
+    VALUES (author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
 
     RETURN NULL;
 END
@@ -383,8 +383,8 @@ BEGIN
     IF (NEW.is_read) THEN
         DELETE FROM "notification" WHERE msg = NEW.id;
     ELSE 
-        INSERT INTO "notification"(receiver_id, date, is_read, msg, fb_giver, rated_content, new_comment, type) 
-            VALUES (NEW.receiver_id, NEW.published_at, FALSE, NEW.id, NULL, NULL, NULL, 'MESSAGE');
+        INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
+            VALUES (NEW.receiver_id, FALSE, NEW.id, NULL, NULL, NULL, 'MESSAGE');
     END IF;
     RETURN NULL;
 END
@@ -585,3 +585,31 @@ CREATE TRIGGER is_suspended_flag_true
     FOR EACH ROW
     EXECUTE PROCEDURE is_suspended_flag_true();
 
+
+-----------------------------------------
+
+-- Trigger to create a notification when a comment is created
+
+CREATE FUNCTION create_comment_notification() RETURNS TRIGGER AS
+$BODY$
+DECLARE article_author INTEGER = (
+  SELECT id FROM "content" WHERE id = NEW.article_id
+);
+DECLARE parent_author INTEGER = (
+  SELECT id FROM "content" WHERE id = NEW.parent_comment_id
+);
+BEGIN
+  IF IS NULL parent_author THEN
+    INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
+        VALUES (article_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'MESSAGE');
+  ELSE
+    INSERT INTO "notification"(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
+        VALUES (parent_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'MESSAGE');
+END
+$BODY$
+
+LANGUAGE plpgsql;
+CREATE TRIGGER create_comment_notification
+    AFTER INSERT ON "comment"
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_comment_notification();
