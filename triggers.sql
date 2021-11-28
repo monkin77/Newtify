@@ -1,6 +1,6 @@
 -- Trigger to update likes/dislikes of a content when feedback is given, 
--- creates a notification on that feedback and update user reputation
-CREATE FUNCTION feedback_content() RETURNS TRIGGER AS
+-- creates a notification on that feedback and update user reputation, as well as its areas of expertise
+CREATE OR REPLACE FUNCTION feedback_content() RETURNS TRIGGER AS
 $BODY$
 DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = NEW.content_id);
 DECLARE feedback_value INTEGER = 1;
@@ -54,8 +54,8 @@ INSERT INTO "feedback"(user_id, content_id, is_like) VALUES (2, 1, False);
 ------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
 
--- Trigger to remove like/dislike of a content when feedback on it is removed and to update authenticated user reputation
-CREATE FUNCTION remove_feedback() RETURNS TRIGGER AS
+-- Trigger to remove like/dislike of a content when feedback on it is removed and to update authenticated user reputation, as well as its areas of expertise
+CREATE OR REPLACE FUNCTION remove_feedback() RETURNS TRIGGER AS
 $BODY$
 DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = OLD.content_id);
 DECLARE feedback_value INTEGER = -1;
