@@ -58,19 +58,30 @@ INSERT INTO "feedback"(user_id, content_id, is_like) VALUES (2, 1, False);
 -- Trigger to remove like/dislike of a content when feedback on it is removed and to update authenticated user reputation
 CREATE OR REPLACE FUNCTION remove_feedback() RETURNS TRIGGER AS
 $BODY$
+DECLARE author_id authenticated_user.id%type = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = OLD.content_id);
+DECLARE feedback_value INTEGER = -1;
 BEGIN
-    IF (OLD.is_like) THEN
-        UPDATE "content" SET likes = likes - 1 WHERE id = OLD.content_id;
-        
-        UPDATE "authenticated_user" SET reputation = reputation - 1 
-            WHERE id = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = OLD.content_id);
-
-    ELSE 
-        UPDATE "authenticated_user" SET reputation = reputation + 1 
-            WHERE id = (SELECT author_id FROM content INNER JOIN authenticated_user ON (content.author_id = authenticated_user.id) WHERE content.id = OLD.content_id);
-        
-        UPDATE "content" SET dislikes = dislikes - 1 WHERE id = OLD.content_id;
+    IF (NOT OLD.is_like)
+        THEN feedback_value = 1;
     END IF;
+
+    IF (OLD.is_like) THEN
+        UPDATE content SET likes = likes - 1 WHERE id = OLD.content_id;
+    ELSE 
+        UPDATE content SET dislikes = dislikes - 1 WHERE id = OLD.content_id;
+    END IF;
+    
+    UPDATE authenticated_user SET reputation = reputation + feedback_value
+    WHERE id = author_id;
+
+    UPDATE area_of_expertise SET reputation = reputation + feedback_value
+    WHERE 
+        user_id = author_id AND 
+        tag_id IN (
+			SELECT tag_id FROM article_tag
+    		WHERE article_id=OLD.content_id
+		);
+
     RETURN NULL;
 END
 $BODY$
