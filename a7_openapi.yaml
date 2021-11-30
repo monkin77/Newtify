@@ -1,0 +1,17 @@
+openapi: 3.0.0
+
+info:
+ version: '1.0'
+ title: 'LBAW Newtify API'
+ description: 'Web Resources Specification (A7) for Newtify'
+
+servers:
+- url: http://lbaw.fe.up.pt
+ description: Production server
+
+externalDocs:
+ description: Find more info here.
+ url: https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111/-/wikis/home
+
+tags:
+ - name: 'M01:'
