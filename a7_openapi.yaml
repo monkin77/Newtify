@@ -42,13 +42,13 @@ paths:
             schema:
               type: object
               properties:
-                username:
+                name:
                   type: string
                 password:
                   type: string
                   format: password
               required:
-                - username
+                - name
                 - password
 
       responses:
@@ -62,5 +62,85 @@ paths:
                 302Success:
                   description: 'Successful login. Redirect to homepage.'
                   value: '/'
-                302Error:
+                302Failure:
                   description: 'Failed login. Redirect to login form.'
+                  value: '/login'
+
+  /logout:
+    post:
+      operationId: R102
+      summary: 'R102: Logout Action'
+      description: 'Logout the current authenticated user. Access: USR'
+      tags:
+        - 'M01: Authentication'
+
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to homepage.'
+                  value: '/'
+
+  /signup:
+    get:
+      operationId: 'R103'
+      summary: 'R103: Sign-up Form'
+      description: 'Provide form for new users. Access: PUB'
+      tags:
+       - 'M01: Authentication'
+
+      responses:
+        '200':
+          description: 'Ok. Show sign-up form (UI03)'
+
+    post:
+      operationId: 'R104'
+      summary: 'R104: Sign-up Action'
+      description: 'Processes the new user sign-up form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication'
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                birthDate:
+                  type: string
+                  format: date
+                avatar:
+                  type: string
+                  format: binary
+                country:
+                  type: string
+              required:
+                - name
+                - email
+                - birthDate
+                - country
+
+      responses:
+        '302':
+          description: 'Redirect after processing the new user sign-up form.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful registration. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed registration. Redirect to sign-up form.'
