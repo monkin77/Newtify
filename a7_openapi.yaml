@@ -225,17 +225,22 @@ paths:
                   format: binary
                 body:
                   type: string
+                tag_ids:
+                  type: array
+                  minLength: 1
+                  maxLength: 3
               required:
                 - title
                 - body
+                - tag_ids
       
       responses:
         '302':
           description: 'Redirect after processing the create article form.'
           headers:
             Location:
-              schema:
-                type: string
+              schema:       # CHECK IF THE SCHEMA IS CORRECT. SHOULDN'T IT BE AN OBJECT?
+                type: string  
               examples:
                 302Success:
                   description: 'Successful article creation. Redirect to Article Page.'
@@ -362,6 +367,61 @@ paths:
         '404':
           description: 'Article not found'
   
+  # M04 : Comments
+  /comment:
+    get:
+      operationId: R401
+      summary: '401 : Create comment form'
+      description: 'Provide new comment creation form. Access: USR'
+      tags:
+        - 'M04: Comments'
+
+      responses:
+        '200':
+          description: 'OK. Show Create Comment form (part of UI13)'
+        '401':
+          description: 'Unauthorized. Must be authenticated.'
+    
+    post:
+      operationId: R402
+      summary: 'R402 : Create comment action'
+      description: 'Processes the new comment creation form. Access: USR'
+      tags:
+        - 'M04: Comments'
+
+      requestBody:
+        required: true
+        content:
+           application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                article_id:
+                  type: integer
+                parent_coment_id:
+                  type: integer
+              required:
+                - body
+                - article_id
+      
+      responses:
+        '200':
+          description: 'Successful comment creation. Return created comment'
+        '400':
+          description: 'Failed to create comment. Bad request'
+        '401':
+          description: 'Unauthorized. Must be authenticated.'
+        '404':
+          description: 'Article or parent Comment id not found.'  # CHECK IF WE SHOULD SPECIFIY EACH CASE?
+  
+  # TO DO:
+  # edit comment
+  # delete comment
+  # fetch comments of an article
+
+
 
 
 
