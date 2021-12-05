@@ -306,14 +306,11 @@ paths:
               properties:
                 reason:
                   type: string
-                reporter_id:
-                  type: integer
                 reported_at:
                   type: string
                   format: date
               required:
                 - reason
-                - reporter_id
 
       responses:
         '200':
