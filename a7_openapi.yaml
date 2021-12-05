@@ -30,7 +30,7 @@ paths:
   /login:
     post:
       operationId: R101
-      summary: 'R101: Login Action'
+      summary: 'R101: Login action'
       description: 'Processes the login form submission. Access: PUB'
       tags:
         - 'M01: Authentication'
@@ -42,13 +42,14 @@ paths:
             schema:
               type: object
               properties:
-                username:
+                email:
                   type: string
+                  format: email
                 password:
                   type: string
                   format: password
               required:
-                - username
+                - email
                 - password
 
       responses:
@@ -62,5 +63,488 @@ paths:
                 302Success:
                   description: 'Successful login. Redirect to homepage.'
                   value: '/'
-                302Error:
+                302Failure:
                   description: 'Failed login. Redirect to login form.'
+                  value: '/login'
+
+  /logout:
+    post:
+      operationId: R102
+      summary: 'R102: Logout action'
+      description: 'Logout the current authenticated user. Access: USR'
+      tags:
+        - 'M01: Authentication'
+
+      responses:
+        '302':
+          description: 'Redirect after processing logout.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful logout. Redirect to homepage.'
+                  value: '/'
+
+  /signup:
+    get:
+      operationId: 'R103'
+      summary: 'R103: Sign-up Form'
+      description: 'Provide form for new users. Access: PUB'
+      tags:
+       - 'M01: Authentication'
+
+      responses:
+        '200':
+          description: 'Ok. Show sign-up form (UI03)'
+
+    post:
+      operationId: 'R104'
+      summary: 'R104: Sign-up action'
+      description: 'Processes the new user sign-up form submission. Access: PUB'
+      tags:
+        - 'M01: Authentication'
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                birthDate:
+                  type: string
+                  format: date
+                avatar:
+                  type: string
+                  format: binary
+                country:
+                  type: string
+              required:
+                - name
+                - email
+                - birthDate
+                - country
+                - password
+
+      responses:
+        '302':
+          description: 'Redirect after processing the new user sign-up form.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful registration. Redirect to user profile.'
+                  value: '/users/{id}'
+                302Failure:
+                  description: 'Failed registration. Redirect to sign-up form.'
+                  value: '/signup'
+
+  # M02: Profile and User Information
+
+  /user/{id}:
+    get:
+      operationId: R201
+      summary: 'R201: View user profile'
+      description: 'Show the individual user profile. Access: PUB'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. Show user profile (UI20)'
+        '404':
+          description: 'User not found'
+
+    put:
+      operationId: R202
+      summary: 'R202: Edit user profile action'
+      description: 'Processes the user edit profile form submission. Access: OWN'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                avatar:
+                  type: string
+                  format: binary
+                country:
+                  type: string
+                description:
+                  type: string
+                city:
+                  type: string
+
+      responses:
+        '302':
+          description: 'Redirect after processing the user updated information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful profile edition. Redirect to user profile.'
+                  value: '/user/{id}'
+                302Failure:
+                  description: 'Failed profile edition. Redirect to edit profile form.'
+                  value: '/user/{id}/edit'
+
+  # User deletion is hidden behind /api to prevent accidents
+  /api/user/{id}:
+    delete:
+      operationId: R203
+      summary: 'R203: Delete user account action'
+      description: 'Processes a request to delete a user account. Access: OWN'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '302':
+          description: 'Redirect after deleting user account.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful user account deletion. Redirect to homepage.'
+                  value: '/'
+                302Failure:
+                  description: 'Failed to delete user account. Redirect to user profile.'
+                  value: '/user/{id}'
+
+  /user/{id}/edit:
+    get:
+      operationId: R204
+      summary: 'R204: User profile edition form'
+      description: 'Provide form for user profile edition. Access: OWN'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. Show user profile edition form (UI21)'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '403':
+          description: 'Forbidden. Must be owner of the profile'
+        '404':
+          description: 'User not found'
+
+  /user/{id}/report:
+    post:
+      operationId: R205
+      summary: 'R205: Report user action'
+      description: 'Processes a report made on a user. Access: USR'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                reported_at:
+                  type: string
+                  format: date
+              required:
+                - reason
+
+      responses:
+        '200':
+          description: 'Successful user report'
+        '400':
+          description: 'Failed to report user. Bad request'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '404':
+          description: 'User not found'
+
+  /api/user/{id}/suspension:
+    get:
+      operationId: R206
+      summary: 'R206: Suspension information'
+      description: 'Provides information about the user suspension. Access: SUR OWN, ADM'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+                  end_date:
+                    type: string
+                    format: date
+                example:
+                  reason: 'The user was disrespectful in many occasions.'
+                  end_date: '2023-12-04'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '403':
+          description: 'Forbidden. Must be owner of the account or administrator'
+        '404':
+          description: 'User not found'
+        '409':
+          description: 'User not suspended'
+
+  /user/{id}/followed:
+    get:
+      operationId: R207
+      summary: 'R207: Followed users'
+      description: 'Provides a page with the list of users that a given user follows. Access: OWN'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success. Show list of followed users (UI23)'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '403':
+          description: 'Forbidden. Must be owner of the profile'
+        '404':
+          description: 'User not found'
+
+  /user/{id}/articles:
+    get:
+      operationId: R208
+      summary: 'R208: User articles'
+      description: 'Provides a page component with a list of articles written by a given user, in chronological order. Access: PUB'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+          required: false # returns all articles if not specified
+
+      responses:
+        '200':
+          description: 'Success. Show a list of articles written by the user (UI22)'
+        '404':
+          description: 'User not found'
+
+  /api/user/{id}/expertise:
+    get:
+      operationId: R209
+      summary: "R209: User's areas of expertise"
+      description: "Provides a list of the user's best areas of expertise. Access: PUB"
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag_id:
+                      type: integer
+                    tag_name:
+                      type: string
+                    reputation:
+                      type: integer
+                maxItems: 5
+                example:
+                  - tag_id: 2
+                    tag_name: 'Sports'
+                    reputation: 245
+
+                  - tag_id: 7
+                    tag_name: 'Science'
+                    reputation: -25
+        '404':
+          description: 'User not found'
+
+  /user/{id}/follow:
+    post:
+      operationId: R210
+      summary: 'R210: Follow user action'
+      description: 'Processes a request to follow another user. Access: USR'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '404':
+          description: 'User not found'
+
+  /user/{id}/unfollow:
+    delete:
+      operationId: R211
+      summary: 'R211: Unfollow user action'
+      description: 'Processes a request to unfollow another user. Access: USR'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '404':
+          description: 'User not found'
+        '409':
+          description: 'Conflict. User not followed'
+
+  /user/search:
+    get:
+      operationId: R212
+      summary: 'R212 : User search'
+      description: 'Provides a page component with a list of users, according to the parameters. Access: PUB'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: query
+          name: value
+          description: 'string used for full-text search'
+          schema: 
+            type: string
+          required: true
+        - in: query
+          name: offset
+          description: 'value used to fetch results starting at a certain value'
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          description: 'value used to limit the number of results'
+          schema:
+            type: integer
+            minimum: 1
+          required: false  # returns all users if not specified
+
+      responses:
+        '200':
+          description: 'OK. Show a list of users that fit the criteria (part of UI19)'
