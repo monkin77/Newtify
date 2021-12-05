@@ -231,6 +231,56 @@ paths:
         content:
           # since we want to upload binary files (avatar)
           multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                thumbnail:
+                  type: string
+                  format: binary
+                body:
+                  type: string
+      
+      responses:
+        '302':
+          description: 'Redirect after processing the article updated information'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful article edition. Redirect to the article page.'
+                  value: '/article/{id}'
+                302Failure:
+                  description: 'Failed article edition. Redirect to the edit article page.'
+                  value: '/article/{id}/edit'
+    
+  /article/{id}/edit:
+    get:
+      operationId: R307
+      summary: 'R307 : Article edition form'
+      description: 'Provide a form for article edition. Access: OWN'
+      tags:
+        - 'M03: Articles'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      
+      responses:
+        '200':
+          description: 'OK. Show article edition form (UI14)'
+        '401':
+          description: 'Unauthorized. Must be the owner of the article'
+        '404':
+          description: 'Article not found'
+    
+                
 
 
   
