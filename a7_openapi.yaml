@@ -42,13 +42,14 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                email:
                   type: string
+                  format: email
                 password:
                   type: string
                   format: password
               required:
-                - name
+                - email
                 - password
 
       responses:
@@ -148,6 +149,7 @@ paths:
                   value: '/users/{id}'
                 302Failure:
                   description: 'Failed registration. Redirect to sign-up form.'
+                  value: '/signup'
 
   # M02: Profile and User Information
 
@@ -169,6 +171,8 @@ paths:
       responses:
         '200':
           description: 'Ok. Show user profile (UI20)'
+        '404':
+          description: 'User not found'
 
     put:
       operationId: R202
@@ -273,6 +277,10 @@ paths:
       responses:
         '200':
           description: 'Ok. Show user profile edition form (UI21)'
+        '401':
+          description: 'Unauthorized. Must be owner of the profile'
+        '404':
+          description: 'User not found'
 
   /user/{id}/report:
     post:
@@ -309,15 +317,17 @@ paths:
 
       responses:
         '200':
-          description: 'Successful user report.'
+          description: 'Successful user report'
         '400':
-          description: 'Failed to report user. Bad request.'
+          description: 'Failed to report user. Bad request'
+        '404':
+          description: 'User not found'
 
-  /user/{id}/suspension:
+  /api/user/{id}/suspension:
     get:
       operationId: R206
       summary: 'R206: Suspension information'
-      description: 'Provides information about the user suspension'
+      description: 'Provides information about the user suspension. Access: SUR OWN'
       tags:
         - 'M02: Profile and User Information'
 
@@ -344,12 +354,16 @@ paths:
                 example:
                   reason: 'The user was disrespectful in many occasions.'
                   end_date: '2023-12-04'
+        '401':
+          description: 'Unauthorized. Must be owner of the account'
+        '404':
+          description: 'User not found'
 
   /user/{id}/followed:
     get:
       operationId: R207
       summary: 'R207: Followed users'
-      description: 'Provides a list of users that a given user follows'
+      description: 'Provides a page with the list of users that a given user follows. Access: OWN'
       tags:
         - 'M02: Profile and User Information'
 
@@ -362,35 +376,17 @@ paths:
 
       responses:
         '200':
-          description: 'Success.'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    avatar:
-                      type: string
-                      format: binary
-                example:
-                  - id: 1
-                    name: 'Pinguim Voador'
-                    avatar: 'placeholder_img1_png'
-
-                  - id: 16
-                    name: 'Águia Terrestre'
-                    avatar: 'placeholder_img16_png'
+          description: 'Success. Show list of followed users (UI23)'
+        '401':
+          description: 'Unauthorized. Must be owner of the account'
+        '404':
+          description: 'User not found'
 
   /user/{id}/articles:
     get:
       operationId: R208
       summary: 'R208: User articles'
-      description: 'Provides a list of articles written by a given user'
+      description: 'Provides a page component with a list of articles written by a given user, in chronological order. Access: PUB'
       tags:
         - 'M02: Profile and User Information'
 
@@ -400,59 +396,31 @@ paths:
           schema:
             type: integer
           required: true
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+          required: false # returns all articles if not specified
 
       responses:
         '200':
-          description: 'Success.'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    thumbnail:
-                      type: string
-                      format: binary
-                    body:
-                      type: string
-                    published_at:
-                      type: string
-                      format: date
-                    is_edited:
-                      type: boolean
-                    likes:
-                      type: integer
-                    dislikes:
-                      type: integer
-                example:
-                  - id: 3
-                    title: 'Porto vence Benfica 5-0'
-                    thumbnail: 'placeholder_thmb3_png'
-                    body: 'O último jogo no Dragão foi muito azul.'
-                    published_at: '2011-08-30'
-                    is_edited: false
-                    likes: 245
-                    dislikes: 129
+          description: 'Success. Show a list of articles written by the user (UI22)'
+        '404':
+          description: 'User not found'
 
-                  - id: 19
-                    title: 'Um litro de água por dia não sabes o bem que te fazia'
-                    thumbnail: 'placeholder_thmb19_png'
-                    body: 'Estudos recentes provam que apenas um litro de água por dia pode melhorar a sua saúde em 87%. Não se acredita? Experimente por si mesmo'
-                    published_at: '2021-11-327'
-                    is_edited: true
-                    likes: 1432
-                    dislikes: 15
-
-  /user/{id}/expertise:
+  /api/user/{id}/expertise:
     get:
       operationId: R209
       summary: "R209: User's areas of expertise"
-      description: "Provides a list of the user's areas of expertise"
+      description: "Provides a list of the user's best areas of expertise. Access: PUB"
       tags:
         - 'M02: Profile and User Information'
 
@@ -488,7 +456,5 @@ paths:
                   - tag_id: 7
                     tag_name: 'Science'
                     reputation: -25
-
-# ver melhor as respostas
-# se calhar estas cenas têm de ser paginas e nao listas (ou nao sao precisam pq fazem parte de outra pagina,
-# tbm e possivel serem da api interna)
+        '404':
+          description: 'User not found'
