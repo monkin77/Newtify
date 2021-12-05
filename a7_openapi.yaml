@@ -278,7 +278,9 @@ paths:
         '200':
           description: 'Ok. Show user profile edition form (UI21)'
         '401':
-          description: 'Unauthorized. Must be owner of the profile'
+          description: 'Unauthorized. Must be authenticated'
+        '403':
+          description: 'Forbidden. Must be owner of the profile'
         '404':
           description: 'User not found'
 
@@ -317,6 +319,8 @@ paths:
           description: 'Successful user report'
         '400':
           description: 'Failed to report user. Bad request'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
         '404':
           description: 'User not found'
 
@@ -324,7 +328,7 @@ paths:
     get:
       operationId: R206
       summary: 'R206: Suspension information'
-      description: 'Provides information about the user suspension. Access: SUR OWN'
+      description: 'Provides information about the user suspension. Access: SUR OWN, ADM'
       tags:
         - 'M02: Profile and User Information'
 
@@ -352,9 +356,13 @@ paths:
                   reason: 'The user was disrespectful in many occasions.'
                   end_date: '2023-12-04'
         '401':
-          description: 'Unauthorized. Must be owner of the account'
+          description: 'Unauthorized. Must be authenticated'
+        '403':
+          description: 'Forbidden. Must be owner of the account or administrator'
         '404':
           description: 'User not found'
+        '409':
+          description: 'User not suspended'
 
   /user/{id}/followed:
     get:
@@ -375,7 +383,9 @@ paths:
         '200':
           description: 'Success. Show list of followed users (UI23)'
         '401':
-          description: 'Unauthorized. Must be owner of the account'
+          description: 'Unauthorized. Must be authenticated'
+        '403':
+          description: 'Forbidden. Must be owner of the profile'
         '404':
           description: 'User not found'
 
@@ -430,7 +440,7 @@ paths:
 
       responses:
         '200':
-          description: 'Success.'
+          description: 'Success'
           content:
             application/json:
               schema:
@@ -455,3 +465,86 @@ paths:
                     reputation: -25
         '404':
           description: 'User not found'
+
+  /user/{id}/follow:
+    post:
+      operationId: R210
+      summary: 'R210: Follow user action'
+      description: 'Processes a request to follow another user. Access: USR'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '404':
+          description: 'User not found'
+
+  /user/{id}/unfollow:
+    delete:
+      operationId: R211
+      summary: 'R211: Unfollow user action'
+      description: 'Processes a request to unfollow another user. Access: USR'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success'
+        '401':
+          description: 'Unauthorized. Must be authenticated'
+        '404':
+          description: 'User not found'
+        '409':
+          description: 'Conflict. User not followed'
+
+  /user/search:
+    get:
+      operationId: R212
+      summary: 'R212 : User search'
+      description: 'Provides a page component with a list of users, according to the parameters. Access: PUB'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: query
+          name: value
+          description: 'string used for full-text search'
+          schema: 
+            type: string
+          required: true
+        - in: query
+          name: offset
+          description: 'value used to fetch results starting at a certain value'
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          description: 'value used to limit the number of results'
+          schema:
+            type: integer
+            minimum: 1
+          required: false  # returns all users if not specified
+
+      responses:
+        '200':
+          description: 'OK. Show a list of users that fit the criteria (part of UI19)'
