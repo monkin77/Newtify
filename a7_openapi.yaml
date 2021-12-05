@@ -67,11 +67,11 @@ paths:
 
 
   # M03 : Articles
-  /home: 
+  /: 
     get:
       operationId: R301
       summary: 'R301: Get Home Page'
-      description: 'R301: Fetch Home Page of the application that depends on the user. Access: PUB'
+      description: 'Fetch Home Page of the application that depends on the user. Access: PUB'
       tags:
         - 'M03: Articles'
       
@@ -191,10 +191,63 @@ paths:
         '200':
           description: 'OK. Show filter results'
 
-  /article/{id}:
+  /article:
     get:
       operationId: R305
-      summary: 'R305 : View Article Page'
+      summary: 'R305 : Create article form'
+      description: 'Provide new article creation form. Access: USR'
+      tags:
+        - 'M03: Articles'
+
+      responses:
+        '200':
+          description: 'OK. Show Create Article form (UI17)'
+    
+    post:
+      operationId: R306
+      summary: 'R306 : Create article action'
+      description: 'Processes the new article creation form. Access: USR'
+      tags:
+        - 'M03: Articles'
+
+      requestBody:
+        required: true
+        content:
+           # since we want to upload binary files (thumbnail)
+           multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                thumbnail:
+                  type: string
+                  format: binary
+                body:
+                  type: string
+              required:
+                - title
+                - body
+      
+      responses:
+        '302':
+          description: 'Redirect after processing the create article form.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful article creation. Redirect to Article Page.'
+                  value: '/article/{id}'
+                302Failure:
+                  description: 'Failed article creation. Redirect to Create Article form.'
+                  value: '/article'
+
+  /article/{id}:
+    get:
+      operationId: R307
+      summary: 'R307 : View Article Page'
       description: 'View an Article Page. Access: PUB'
       tags:
         - 'M03: Articles'
@@ -213,8 +266,8 @@ paths:
           description: 'Article not found'
 
     put:
-      operationId: R306
-      summary: 'R306 : Edit article action'
+      operationId: R308
+      summary: 'R308 : Edit article action'
       description: 'Processes the user edit profile form submission. Access: OWN'
       tags:
         - 'M03: Articles'
@@ -229,7 +282,7 @@ paths:
       requestBody:
         required: true
         content:
-          # since we want to upload binary files (avatar)
+          # since we want to upload binary files (thumbnail)
           multipart/form-data:
             schema:
               type: object
@@ -257,10 +310,39 @@ paths:
                   description: 'Failed article edition. Redirect to the edit article page.'
                   value: '/article/{id}/edit'
     
+    delete:
+      operationId: R309
+      summary: 'R309 : Delete article action'
+      description: 'Processes a request to delete an article. Access: OWN'
+      tags:
+        - 'M03: Articles'
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      
+      responses:
+        302:
+          description: 'Redirect after deleting article.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful article deletion. Redirect to homepage.'
+                  value: '/'
+                302Failure:
+                  description: 'Failed to delete article. Redirect to article page'
+                  value: '/article/{id}'
+
   /article/{id}/edit:
     get:
-      operationId: R307
-      summary: 'R307 : Article edition form'
+      operationId: R310
+      summary: 'R310 : Article edition form'
       description: 'Provide a form for article edition. Access: OWN'
       tags:
         - 'M03: Articles'
@@ -279,8 +361,8 @@ paths:
           description: 'Unauthorized. Must be the owner of the article'
         '404':
           description: 'Article not found'
-    
-                
+  
+
 
 
   
