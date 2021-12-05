@@ -64,3 +64,182 @@ paths:
                   value: '/'
                 302Error:
                   description: 'Failed login. Redirect to login form.'
+
+
+  # M03 : Articles
+  /home: 
+    get:
+      operationId: R301
+      summary: 'R301: Get Home Page'
+      description: 'R301: Fetch Home Page of the application that depends on the user. Access: PUB'
+      tags:
+        - 'M03: Articles'
+      
+      # requestBody = session cookie?
+      responses:
+        '200':
+          description: 'OK. Show home page feed (UI01)'
+
+  /search:
+    get:
+      operationId: R302
+      summary: 'R302 : Search Page'
+      description: 'Show Search Page given a search type and value. Access: PUB'
+      tags:
+        - 'M02: Profile and User Information'
+        - 'M03: Articles'
+
+      parameters:
+        - in: query
+          name: type
+          description: 'Search type'
+          schema: 
+            type: string
+            enum:
+              - 'articles'
+              - 'users'
+          required: true
+        - in: query
+          name: query
+          description: 'string used for full-text search'
+          schema: 
+            type: string
+          required: false
+      
+      responses:
+        '200':
+          description: 'OK. Show Search Page (UI19)'
+
+  /article/search:
+    get:
+      operationId: R303
+      summary: 'R303 : Returns articles according to given parameters'
+      description: 'Returns search results according to user parameters. Access: PUB'
+      tags:
+        - 'M03: Articles'
+
+      parameters:
+        - in: query
+          name: query
+          description: 'string used for full-text search'
+          schema: 
+            type: string
+          required: false
+        - in: query
+          name: offset
+          description: 'value used to fetch results starting at a certain value'
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          description: 'value used to limit the number of results'
+          schema:
+            type: integer
+            minimum: 1
+          required: false  # returns all articles if not specified
+      
+      responses:
+        '200':
+          description: 'OK. Show a list of articles that fit the criteria'
+
+  /article/filter:
+    get:
+      operationId: R304
+      summary: 'R304 : Return articles according to certain filters'
+      description: 'Show filtered articles by certain criteria. Access: PUB'
+      tags:
+        - 'M03: Articles'
+
+      parameters:
+        - in: query
+          name: type
+          description: 'feed type'
+          schema: 
+            type: string
+            default: 'trending' # Check if this should be default
+            enum:
+              - 'trending'
+              - 'recommended'
+              - 'recent'
+          required: false
+        - in: query
+          name: tag
+          description: 'filter articles by tag'
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: offset
+          description: 'value used to fetch results starting at a certain value'
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          description: 'value used to limit the number of results'
+          schema:
+            type: integer
+            minimum: 1
+          required: false  # returns all articles if not specified
+      
+      responses:
+        '200':
+          description: 'OK. Show filter results'
+
+  /article/{id}:
+    get:
+      operationId: R305
+      summary: 'R305 : View Article Page'
+      description: 'View an Article Page. Access: PUB'
+      tags:
+        - 'M03: Articles'
+
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: integer
+          required: true
+      
+      responses:
+        '200':
+          description: 'OK. Show Article Page (UI13)'
+        '404':
+          description: 'Article not found'
+
+    put:
+      operationId: R306
+      summary: 'R306 : Edit article action'
+      description: 'Processes the user edit profile form submission. Access: OWN'
+      tags:
+        - 'M03: Articles'
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (avatar)
+          multipart/form-data:
+
+
+  
+
+
+            
+
+
+  
+
+      
+
