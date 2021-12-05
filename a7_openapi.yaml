@@ -316,7 +316,7 @@ paths:
   /user/{id}/suspension:
     get:
       operationId: R206
-      summary: 'R205: Suspension information'
+      summary: 'R206: Suspension information'
       description: 'Provides information about the user suspension'
       tags:
         - 'M02: Profile and User Information'
@@ -345,6 +345,150 @@ paths:
                   reason: 'The user was disrespectful in many occasions.'
                   end_date: '2023-12-04'
 
+  /user/{id}/followed:
+    get:
+      operationId: R207
+      summary: 'R207: Followed users'
+      description: 'Provides a list of users that a given user follows'
+      tags:
+        - 'M02: Profile and User Information'
 
-# obter tempo de suspensao
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    avatar:
+                      type: string
+                      format: binary
+                example:
+                  - id: 1
+                    name: 'Pinguim Voador'
+                    avatar: 'placeholder_img1_png'
+
+                  - id: 16
+                    name: 'Águia Terrestre'
+                    avatar: 'placeholder_img16_png'
+
+  /user/{id}/articles:
+    get:
+      operationId: R208
+      summary: 'R208: User articles'
+      description: 'Provides a list of articles written by a given user'
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    thumbnail:
+                      type: string
+                      format: binary
+                    body:
+                      type: string
+                    published_at:
+                      type: string
+                      format: date
+                    is_edited:
+                      type: boolean
+                    likes:
+                      type: integer
+                    dislikes:
+                      type: integer
+                example:
+                  - id: 3
+                    title: 'Porto vence Benfica 5-0'
+                    thumbnail: 'placeholder_thmb3_png'
+                    body: 'O último jogo no Dragão foi muito azul.'
+                    published_at: '2011-08-30'
+                    is_edited: false
+                    likes: 245
+                    dislikes: 129
+
+                  - id: 19
+                    title: 'Um litro de água por dia não sabes o bem que te fazia'
+                    thumbnail: 'placeholder_thmb19_png'
+                    body: 'Estudos recentes provam que apenas um litro de água por dia pode melhorar a sua saúde em 87%. Não se acredita? Experimente por si mesmo'
+                    published_at: '2021-11-327'
+                    is_edited: true
+                    likes: 1432
+                    dislikes: 15
+
+  /user/{id}/expertise:
+    get:
+      operationId: R209
+      summary: "R209: User's areas of expertise"
+      description: "Provides a list of the user's areas of expertise"
+      tags:
+        - 'M02: Profile and User Information'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag_id:
+                      type: integer
+                    tag_name:
+                      type: string
+                    reputation:
+                      type: integer
+                maxItems: 5
+                example:
+                  - tag_id: 2
+                    tag_name: 'Sports'
+                    reputation: 245
+
+                  - tag_id: 7
+                    tag_name: 'Science'
+                    reputation: -25
+
 # ver melhor as respostas
+# se calhar estas cenas têm de ser paginas e nao listas (ou nao sao precisam pq fazem parte de outra pagina,
+# tbm e possivel serem da api interna)
