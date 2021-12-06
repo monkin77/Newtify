@@ -363,6 +363,8 @@ paths:
         '200':
           description: 'OK. Show article edition form (UI14)'
         '401':
+          description: 'Unauthorized. Must be authenticated.'
+        '403':
           description: 'Unauthorized. Must be the owner of the article'
         '404':
           description: 'Article not found'
@@ -416,10 +418,103 @@ paths:
         '404':
           description: 'Article or parent Comment id not found.'  # CHECK IF WE SHOULD SPECIFIY EACH CASE?
   
-  # TO DO:
-  # edit comment
-  # delete comment
-  # fetch comments of an article
+  /comment/{id}:
+    put:  # Do we need a form endpoint to edit the comment? I believe it could be in the HTML already returned by the article. However, I've added one to create a comment and maybe it's the same logic
+      operationId: R403
+      summary: 'R403 : Edit comment action'
+      description: 'Processes a comment edition. Access: OWN'
+      tags:
+        - 'M04: Comments'
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+      
+      responses:
+        '200':
+          description: 'Successful comment update. Return updated comment'
+        '400':
+          description: 'Failed to update comment. Bad request'
+        '401':
+          description: 'Unauthorized. Must be authenticated.'
+        '403':
+          description: 'Forbidden. Must be the owner of the comment.'
+        '404':
+          description: 'Comment id not found.'
+    
+    delete:
+      operationId: R404
+      summary: 'R404 : Delete comment action'
+      description: 'Processes a request to delete a comment. Access: OWN'
+      tags:
+        - 'M04: Comments'
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      
+      responses:
+        '200':
+          description: 'Successful comment deletion. Return deleted comment'
+        '401':
+          description: 'Unauthorized. Must be authenticated.'
+        '403':
+          description: 'Forbidden. Must be the owner of the comment.'
+        '404':
+          description: 'Comment id not found.'
+
+  /comment/article/{id}:
+    get:
+      operationId: R405
+      summary: 'R405 : Comments of a given article'
+      description: 'Returns comments of a given article according to user parameters. Access: PUB'
+      tags:
+        - 'M04: Comments'
+      parameters:
+        - in: path
+          name: id
+          description: 'article id'
+          schema: 
+            type: integer
+          required: true
+        - in: query
+          name: offset
+          description: 'value used to fetch results starting at a certain value'
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          description: 'value used to limit the number of results'
+          schema:
+            type: integer
+            minimum: 1
+          required: false  # returns all articles if not specified
+      
+      responses:
+        '200':
+          description: 'OK. Return a list of comments that fit the criteria'
+        '404':
+          description: 'Article id not found.'
+
 
 
 
