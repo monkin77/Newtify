@@ -997,17 +997,409 @@ paths:
           description: 'Article id not found.'
 
 
+  # M05: Tags
 
+  /tags:
+    get:
+      operationId: R501
+      summary: 'R501: List Accepted Tags'
+      description: 'Show the list of accepted tags. Access: PUB'
+      tags:
+        - 'M05: Tags'
 
+      responses:
+        '200':
+          description: 'Ok. Show accepted tags list'
+        '400':
+          description: 'Bad request.'
+        '404':
+          description: 'Not found'
 
-
-  
-
-
-            
-
-
-  
-
+  /tags/{tag_id}/accept:
+    put:
+      operationId: 'R502'
+      summary: 'R502: Accept a Tag'
+      description: 'Change the state of a tag to accepted. Access: ADM'
+      tags:
+        - 'M05: Tags'
       
+      parameters:
+        - in: path
+          name: tag_id
+          schema:
+            type: integer
+          required: true
 
+      responses:
+        '200':
+          description: 'Ok. Tag is now accepted'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found' 
+
+  /tags/{tag_id}/reject:
+    put:
+      operationId: 'R503'
+      summary: 'R503: Reject a Tag'
+      description: 'Change the state of a tag to rejected. Access: ADM'
+      tags:
+        - 'M05: Tags'
+
+      parameters:
+        - in: path
+          name: tag_id
+          schema:
+            type: integer
+          required: true     
+
+      responses:
+        '200':
+          description: 'Ok. Tag was rejected successfully'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'  
+
+  /user/{id}/favourite_tags:
+    get:
+      operationId: R504
+      summary: 'R504: View User Favourite Tags'
+      description: 'Show user favourite tags. Access: OWN'
+      tags:
+        - 'M05: Tags'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. Show favourite tags'
+        '400':
+          description: 'Bad request.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+    put:
+      operationId: R505
+      summary: 'R505: Edit User Favourite Tags'
+      description: 'Processes the favourite tag edition form submission. Access: OWN'
+      tags:
+        - 'M05: Tags'
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                type: string
+              example: 
+                  - 'Anime'
+                  - 'Nature'                
+
+      responses:
+        '302':
+          description: 'Redirect after processing the user new information.'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful favourite tag edition. Redirect to favourite tags page.'
+                  value: '/user/{id}/favourite_tags'
+                302Failure:
+                  description: 'Failed to edit. Redirect to edit favourite tags form.'
+                  value: '/user/{id}/favourite_tags/edit'
+
+
+  /user/{id}/favourite_tags/edit:
+    get:
+      operationId: 'R506'
+      summary: 'R506: Favourite Tag edition form'
+      description: 'Provide form to edit user favourite tags. Access: OWN'
+      tags:
+        - 'M05: Tags'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      
+      responses:
+        '200':
+          description: 'Ok. Show favourite tags edition form'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+
+  /tags/{tag_state}:
+    get:
+      operationId: R507
+      summary: 'R507: Filter Tags'
+      description: 'Show list of tags by state. Access: ADM'
+      tags:
+        - 'M05: Tags'
+
+      parameters:
+        - in: query
+          name: state
+          description: (ACCEPTED, REJECTED, PENDING)
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: 'Ok. Show tag list'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found' 
+
+  /tags/{tag_id}:
+    delete:
+      operationId: R508
+      summary: 'R508: Remove tag'
+      description: 'Processes the delete tag request. Access: ADM'
+      tags:
+        - 'M05: Tags'
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. Tag was deleted successfully'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+  /tags/new:
+    get:
+      operationId: R509
+      summary: 'R509: Propose New Tag'
+      description: 'Show the tag creation form. Access: USR'
+      tags:
+        - 'M05: Tags'
+
+      responses:
+        '200':
+          description: 'Ok. Show Propose Tag Form (UI18)'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '404':
+          description: 'Not found' 
+
+    post:
+      operationId: R510'
+      summary: 'R510: Propose New Tag'
+      description: 'Processes the new tag form submission. Access: USR'
+      tags:
+        - 'M05: Tags'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                tag_name:
+                  type: string
+              required:
+                - tag_name
+      responses:
+        '302':
+          description: 'Redirect after processing the proposed tag information'
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: 'Successful proposed tag. Redirect to the homepage.'
+                  value: '/tags/new'
+                302Failure:
+                  description: 'Failed to propose tag. Redirect to homepage.'
+                  value: '/tags/new'
+
+
+  # M06: Messages and Notifications
+
+  /messages:
+    get:
+      operationId: R601
+      summary: 'R601: View Messages Inbox'
+      description: 'Show the Message Inbox of an user. Access: OWN'
+      tags:
+        - 'M06: Messages and Notifications'
+      
+      parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+      
+      responses:
+        '200':
+          description: 'Ok. Show Message Inbox (UI25)'
+        '400':
+          description: 'Bad request.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+  /message/user/{id}:
+    get:
+      operationId: R602
+      summary: 'R602: Search Message Thread User'
+      description: 'Show messages thread between users. Access: OWN'
+      tags:
+        - 'M06: Messages and Notifications'
+      
+      parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+      
+      responses:
+        '200':
+          description: 'Ok. Show Message Thread (UI26)'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+    post:
+      operationId: R603
+      summary: 'R603: Create Message'
+      description: 'Create a message to send. Access: OWN'
+      tags:
+        - 'M06: Messages and Notifications'
+      
+      parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+      
+      responses:
+        '200': 
+          description: 'Ok. Message sent.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+  
+    put:
+      operationId: R604
+      summary: 'R604: Mark Messages as Read'
+      description: 'Mark Message with a user as Read. Access: OWN'
+      tags:
+        - 'M06: Messages and Notifications'
+      
+      parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+      
+      responses:
+        '200':
+          description: Success'
+
+  /notifications:
+    get:
+      operationId: R605
+      summary: 'R605: View Notifications'
+      description: 'Show user notifications. Access: OWN'
+      tags:
+        - 'M06: Messages and Notifications'
+      
+      responses:
+        '200':
+          description: 'Ok. Show Notifications'
+        '400':
+          description: 'Bad request.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+    put:
+      operationId: R606
+      summary: 'R606: Mark Notifications as Read'
+      description: 'Mark notification as read. Access: OWN'
+      tags:
+        - 'M06: Messages and Notifications'
+      
+      responses:
+        '200':
+          description: 'Ok. Show Notifications'
+        '400':
+          description: 'Bad request.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
