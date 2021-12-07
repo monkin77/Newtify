@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Stop execution if a step fails
-set -e
+#set -e # deactivated because of weird erros
 
 DOCKER_USERNAME=newtify # Replace by your docker hub username
 IMAGE_NAME=lbaw2111                 # Replace with your group's image name

@@ -294,6 +294,10 @@ You can test locally the image, just published in the Docker Hub, by running:
 docker run -it -p 8000:80 -e DB_DATABASE="lbaw21gg" -e DB_USERNAME="lbaw21gg" -e DB_PASSWORD="PASSWORD" <DOCKER_USERNAME>/lbaw21gg
 ```
 
+```
+docker run -it -p 8000:80 -e DB_DATABASE="lbaw2111" -e DB_USERNAME="lbaw2111" -e DB_PASSWORD="iROcBrWt" newtify/lbaw2111
+```
+
 The above command exposes your application on http://localhost:8000.
 The `-e` argument creates environment variables inside the container, used to provide Laravel with the required database configurations.
 
