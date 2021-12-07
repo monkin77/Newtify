@@ -1403,3 +1403,225 @@ paths:
           description: 'Forbidden. No permissions'
         '404':
           description: 'Not found'
+
+
+  # M07: User Administration
+
+  /admin:
+    get:  
+      operationId: 'R701'
+      summary: 'R701: Administration Panel'
+      description: 'Administration Central Page. Access: ADM'
+      tags:
+        - 'M07: User Administration'
+
+      responses:
+        '200':
+          description: 'Ok. Access to administration central page (UI05)' 
+        '400':
+          description: 'Bad request.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'   
+
+  /users/suspended:
+    get:  
+      operationId: 'R702'
+      summary: 'R702: View suspended users'
+      description: 'Page with information about the suspended users. Access: ADM'
+      tags:
+        - 'M07: User Administration'
+
+      responses:
+        '200':
+          description: 'Ok. Show suspended users (UI07)'
+        '400':
+          description: 'Bad request.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+  /users/{user_id}/suspend:
+    post:
+      operationId: 'R703'
+      summary: 'R703: Suspend User'
+      description: 'Processes a suspension made on a user. Access: ADM'
+      tags:
+        - 'M07: User Administration'
+
+      parameters:
+        - in: path 
+          name: user_id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                start_time:
+                  type: string
+                  format: date
+                end_time:
+                  type: string
+                  format: date
+              required:
+                - reason
+                - end_time
+      
+      responses:
+        '200':
+          description: 'Successfully add suspension to user'
+        '400':
+          description: 'Bad request.'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+  /users/{user_id}/unsuspend:
+    put:
+      operationId: 'R704'
+      summary: 'R704: Unsuspend User'
+      description: 'Processes the unsuspension of an user. Access: ADM'
+      tags:
+        - 'M07: User Administration'
+      
+      parameters:
+        - in: path  
+          name: user_id
+          schema:
+            type: integer
+          required: true
+      
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                end_time:
+                  type: string
+                  format: date
+              required:
+                - end_time
+            
+      responses:
+        '200':
+          description: 'Successfully removed suspension from a user'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found'
+
+  /admin/reports/:
+    get:
+      operationId: 'R705'
+      summary: 'R705: View all the reports'
+      description: 'Page with information about all the reports. Access: ADM'
+      tags:
+        - 'M07: User Administration'
+
+      responses:
+        '200':
+          description: 'Ok. Show all the reports (UI06)'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found' 
+
+  /admin/reports/{report_id}/close:
+    put: 
+      operationId: 'R706'
+      summary: 'R706: Close a report'
+      description: 'Processes a report and closes it'
+      tags:
+        - 'M07: User Administration'
+      
+      parameters:
+        - in: path  
+          name: report_id
+          schema:
+            type: integer
+          required: true
+
+      responses:
+        '200':
+          description: 'Ok. Report closed successfully.' 
+
+  /admin/tags:
+    get:
+      operationId: 'R707'
+      summary: 'R707: Manage Tags'
+      description: 'Page to manage the tags of the system. Access: ADM'
+      tags:
+        - 'M07: User Administration'
+
+      responses:
+        '200':
+          description: 'Ok. Provide Manage Tags page (UI09)'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found' 
+
+
+  # M08: Static Pages
+
+  /about: 
+    get:
+      operationId: 'R801'
+      summary: 'R801: About Page'
+      description: 'Page with information about application and its developers. Access: PUB'
+      tags:
+       - 'M08: Static Pages'
+
+      responses:
+        '200':
+          description: 'Ok. Show About Page (UI11)'
+  
+  /faq:
+    get: 
+      operationId: 'R802'
+      summary: 'R802: FAQ Page'
+      description: 'Page with most frequently asked questions. Access: PUB'
+      tags:
+       - 'M08: Static Pages'
+      
+      responses:
+        '200':
+          description: 'Ok. Show FAQ Page (UI10)'
+
+
+  /guidelines:
+    get: 
+      operationId: 'R803'
+      summary: 'R803: Guidelines'
+      description: 'Page with guidelines of the system. Access: PUB'
+      tags:
+        - 'M08: Static Pages'
+      
+      responses:
+        '200':
+          description: 'Ok. Show Guidelines Page (UI12)'
