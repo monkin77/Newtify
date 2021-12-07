@@ -1010,10 +1010,6 @@ paths:
       responses:
         '200':
           description: 'Ok. Show accepted tags list'
-        '400':
-          description: 'Bad request.'
-        '404':
-          description: 'Not found'
 
   /tags/{tag_id}/accept:
     put:
@@ -1083,8 +1079,6 @@ paths:
       responses:
         '200':
           description: 'Ok. Show favourite tags'
-        '400':
-          description: 'Bad request.'
         '401':
           description: 'Unauthorized. Not logged in'
         '403':
@@ -1111,12 +1105,15 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: array
-              items:
-                type: string
-              example: 
-                  - 'Anime'
-                  - 'Nature'                
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example: 
+                    - 'Anime'
+                    - 'Nature'             
 
       responses:
         '302':
@@ -1127,37 +1124,11 @@ paths:
                 type: string
               examples:
                 302Success:
-                  description: 'Successful favourite tag edition. Redirect to favourite tags page.'
-                  value: '/user/{id}/favourite_tags'
+                  description: 'Successful favourite tag edition. Redirect to user profile.'
+                  value: '/user/{id}'
                 302Failure:
                   description: 'Failed to edit. Redirect to edit favourite tags form.'
                   value: '/user/{id}/favourite_tags/edit'
-
-
-  /user/{id}/favourite_tags/edit:
-    get:
-      operationId: 'R506'
-      summary: 'R506: Favourite Tag edition form'
-      description: 'Provide form to edit user favourite tags. Access: OWN'
-      tags:
-        - 'M05: Tags'
-
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-      
-      responses:
-        '200':
-          description: 'Ok. Show favourite tags edition form'
-        '401':
-          description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
-        '404':
-          description: 'Not found'
 
 
   /tags/{tag_state}:
@@ -1250,7 +1221,7 @@ paths:
     get:
       operationId: R601
       summary: 'R601: View Messages Inbox'
-      description: 'Show the Message Inbox of an user. Access: OWN'
+      description: 'Show the Message Inbox of an user. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
       
@@ -1260,7 +1231,7 @@ paths:
             schema:
               type: integer
             required: true
-      
+
       responses:
         '200':
           description: 'Ok. Show Message Inbox (UI25)'
@@ -1268,16 +1239,14 @@ paths:
           description: 'Bad request.'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
         '404':
           description: 'Not found'
 
-  /message/user/{id}:
+  /message/{user_id}:
     get:
       operationId: R602
-      summary: 'R602: Search Message Thread User'
-      description: 'Show messages thread between users. Access: OWN'
+      summary: 'R602: User Message Thread'
+      description: 'Show messages thread between users. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
       
@@ -1293,15 +1262,13 @@ paths:
           description: 'Ok. Show Message Thread (UI26)'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
         '404':
           description: 'Not found'
 
     post:
       operationId: R603
       summary: 'R603: Create Message'
-      description: 'Create a message to send. Access: OWN'
+      description: 'Create a message to send to a user. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
       
@@ -1311,7 +1278,7 @@ paths:
             schema:
               type: integer
             required: true
-      
+
       requestBody:
         required: true
         content:
@@ -1327,8 +1294,6 @@ paths:
           description: 'Ok. Message sent.'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
         '404':
           description: 'Not found'
   
@@ -1354,40 +1319,32 @@ paths:
     get:
       operationId: R605
       summary: 'R605: View Notifications'
-      description: 'Show user notifications. Access: OWN'
+      description: 'Show user notifications. Access: PUB'
       tags:
         - 'M06: Messages and Notifications'
-      
+
       responses:
         '200':
           description: 'Ok. Show Notifications'
-        '400':
-          description: 'Bad request.'
         '401':
           description: 'Unauthorized. Not logged in'
         '403':
           description: 'Forbidden. No permissions'
-        '404':
-          description: 'Not found'
 
     put:
       operationId: R606
       summary: 'R606: Mark Notifications as Read'
-      description: 'Mark notification as read. Access: OWN'
+      description: 'Mark notification as read. Access: PUB'
       tags:
         - 'M06: Messages and Notifications'
       
       responses:
         '200':
           description: 'Ok. Show Notifications'
-        '400':
-          description: 'Bad request.'
         '401':
           description: 'Unauthorized. Not logged in'
         '403':
           description: 'Forbidden. No permissions'
-        '404':
-          description: 'Not found'
 
 
   # M07: User Administration
