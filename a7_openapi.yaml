@@ -1211,21 +1211,6 @@ paths:
           description: 'Not found'
 
   /tags/new:
-    get:
-      operationId: R509
-      summary: 'R509: Propose New Tag'
-      description: 'Show the tag creation form. Access: USR'
-      tags:
-        - 'M05: Tags'
-
-      responses:
-        '200':
-          description: 'Ok. Show Propose Tag Form (UI18)'
-        '401':
-          description: 'Unauthorized. Not logged in'
-        '404':
-          description: 'Not found' 
-
     post:
       operationId: R510'
       summary: 'R510: Propose New Tag'
