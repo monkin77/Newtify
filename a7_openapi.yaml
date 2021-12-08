@@ -555,8 +555,7 @@ paths:
       description: 'Fetch Home Page of the application that depends on the user. Access: PUB'
       tags:
         - 'M03: Articles'
-      
-      # requestBody = session cookie?
+
       responses:
         '200':
           description: 'OK. Show home page feed (UI01)'
@@ -640,7 +639,7 @@ paths:
           description: 'feed type'
           schema: 
             type: string
-            default: 'trending' # Check if this should be default
+            default: 'trending'
             enum:
               - 'trending'
               - 'recommended'
@@ -683,7 +682,7 @@ paths:
       responses:
         '200':
           description: 'OK. Show Create Article form (UI17)'
-    
+
     post:
       operationId: R306
       summary: 'R306 : Create article action'
@@ -720,7 +719,7 @@ paths:
           description: 'Redirect after processing the create article form.'
           headers:
             Location:
-              schema:       # CHECK IF THE SCHEMA IS CORRECT. SHOULDN'T IT BE AN OBJECT?
+              schema:
                 type: string  
               examples:
                 302Success:
@@ -757,7 +756,7 @@ paths:
       description: 'Processes the user edit profile form submission. Access: OWN'
       tags:
         - 'M03: Articles'
-      
+
       parameters:
         - in: path
           name: id
@@ -795,21 +794,21 @@ paths:
                 302Failure:
                   description: 'Failed article edition. Redirect to the edit article page.'
                   value: '/article/{id}/edit'
-    
+
     delete:
       operationId: R309
       summary: 'R309 : Delete article action'
       description: 'Processes a request to delete an article. Access: OWN, ADM'
       tags:
         - 'M03: Articles'
-      
+
       parameters:
         - in: path
           name: id
           schema:
             type: integer
           required: true
-      
+
       responses:
         302:
           description: 'Redirect after deleting article.'
@@ -839,7 +838,7 @@ paths:
           schema:
             type: integer
           required: true
-      
+
       responses:
         '200':
           description: 'OK. Show article edition form (UI14)'
@@ -864,7 +863,7 @@ paths:
           description: 'OK. Show Create Comment form (part of UI13)'
         '401':
           description: 'Unauthorized. Must be authenticated.'
-    
+
     post:
       operationId: R402
       summary: 'R402 : Create comment action'
@@ -883,7 +882,7 @@ paths:
                   type: string
                 article_id:
                   type: integer
-                parent_coment_id:
+                parent_comment_id:
                   type: integer
               required:
                 - body
@@ -897,7 +896,7 @@ paths:
         '401':
           description: 'Unauthorized. Must be authenticated.'
         '404':
-          description: '[Article | Parent Comment] id not found.'  # CHECK IF WE SHOULD SPECIFIY EACH CASE?
+          description: '[Article | Parent Comment] id not found.'
   
   /comment/{id}:
     put:  # Do we need a form endpoint to edit the comment? I believe it could be in the HTML already returned by the article. However, I've added one to create a comment and maybe it's the same logic
@@ -906,14 +905,14 @@ paths:
       description: 'Processes a comment edition. Access: OWN'
       tags:
         - 'M04: Comments'
-      
+
       parameters:
         - in: path
           name: id
           schema:
             type: integer
           required: true
-      
+
       requestBody:
         required: true
         content:
@@ -935,7 +934,7 @@ paths:
           description: 'Forbidden. Must be the owner of the comment.'
         '404':
           description: 'Comment id not found.'
-    
+
     delete:
       operationId: R404
       summary: 'R404 : Delete comment action'
@@ -1018,7 +1017,7 @@ paths:
       description: 'Change the state of a tag to accepted. Access: ADM'
       tags:
         - 'M05: Tags'
-      
+
       parameters:
         - in: path
           name: tag_id
@@ -1078,7 +1077,7 @@ paths:
 
       responses:
         '200':
-          description: 'Ok. Show favourite tags'
+          description: 'Ok. Show favourite tags (Part of UI20)'
         '401':
           description: 'Unauthorized. Not logged in'
         '403':
@@ -1133,8 +1132,8 @@ paths:
 
   /tags/{tag_state}:
     get:
-      operationId: R507
-      summary: 'R507: Filter Tags'
+      operationId: R506
+      summary: 'R506: Filter Tags'
       description: 'Show list of tags by state. Access: ADM'
       tags:
         - 'M05: Tags'
@@ -1148,7 +1147,7 @@ paths:
           required: true
       responses:
         '200':
-          description: 'Ok. Show tag list'
+          description: 'Ok. Show tag list (UI09)'
         '401':
           description: 'Unauthorized. Not logged in'
         '403':
@@ -1158,8 +1157,8 @@ paths:
 
   /tags/{tag_id}:
     delete:
-      operationId: R508
-      summary: 'R508: Remove tag'
+      operationId: R507
+      summary: 'R507: Remove tag'
       description: 'Processes the delete tag request. Access: ADM'
       tags:
         - 'M05: Tags'
@@ -1183,8 +1182,8 @@ paths:
 
   /tags/new:
     post:
-      operationId: R510'
-      summary: 'R510: Propose New Tag'
+      operationId: R508'
+      summary: 'R508: Propose New Tag'
       description: 'Processes the new tag form submission. Access: USR'
       tags:
         - 'M05: Tags'
@@ -1200,19 +1199,10 @@ paths:
               required:
                 - tag_name
       responses:
-        '302':
-          description: 'Redirect after processing the proposed tag information'
-          headers:
-            Location:
-              schema:
-                type: string
-              examples:
-                302Success:
-                  description: 'Successful proposed tag. Redirect to the homepage.'
-                  value: '/tags/new'
-                302Failure:
-                  description: 'Failed to propose tag. Redirect to homepage.'
-                  value: '/tags/new'
+        '200':
+          description: 'Ok. Tag was successfully proposed'
+        '401':
+          description: 'Unauthorized. Not logged in'
 
 
   # M06: Messages and Notifications
@@ -1224,35 +1214,24 @@ paths:
       description: 'Show the Message Inbox of an user. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
-      
-      parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
 
       responses:
         '200':
           description: 'Ok. Show Message Inbox (UI25)'
-        '400':
-          description: 'Bad request.'
         '401':
           description: 'Unauthorized. Not logged in'
-        '404':
-          description: 'Not found'
 
-  /message/{user_id}:
+  /messages/{user_id}:
     get:
       operationId: R602
       summary: 'R602: User Message Thread'
       description: 'Show messages thread between users. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
-      
+
       parameters:
           - in: path
-            name: id
+            name: user_id
             schema:
               type: integer
             required: true
@@ -1271,10 +1250,10 @@ paths:
       description: 'Create a message to send to a user. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
-      
+
       parameters:
           - in: path
-            name: id
+            name: user_id
             schema:
               type: integer
             required: true
@@ -1288,7 +1267,7 @@ paths:
               properties:
                 body:
                   type: string
-      
+
       responses:
         '200': 
           description: 'Ok. Message sent.'
@@ -1296,11 +1275,11 @@ paths:
           description: 'Unauthorized. Not logged in'
         '404':
           description: 'Not found'
-  
+
     put:
       operationId: R604
       summary: 'R604: Mark Messages as Read'
-      description: 'Mark Message with a user as Read. Access: OWN'
+      description: 'Mark Messages with a user as Read. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
       
@@ -1314,12 +1293,16 @@ paths:
       responses:
         '200':
           description: Success'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '404':
+          description: 'Not found'
 
   /notifications:
     get:
       operationId: R605
       summary: 'R605: View Notifications'
-      description: 'Show user notifications. Access: PUB'
+      description: 'Show user notifications. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
 
@@ -1328,23 +1311,19 @@ paths:
           description: 'Ok. Show Notifications'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
 
     put:
       operationId: R606
       summary: 'R606: Mark Notifications as Read'
-      description: 'Mark notification as read. Access: PUB'
+      description: 'Mark notification as read. Access: USR'
       tags:
         - 'M06: Messages and Notifications'
-      
+
       responses:
         '200':
           description: 'Ok. Show Notifications'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
 
 
   # M07: User Administration
