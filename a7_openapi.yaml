@@ -1060,7 +1060,7 @@ paths:
         '404':
           description: 'Not found'  
 
-  /user/{id}/favourite_tags:
+  /favourite_tags:
     get:
       operationId: R504
       summary: 'R504: View User Favourite Tags'
@@ -1084,56 +1084,61 @@ paths:
           description: 'Forbidden. No permissions'
         '404':
           description: 'Not found'
-
+  
+  /tags/{tag_id}/add_favourite:
     put:
       operationId: R505
-      summary: 'R505: Edit User Favourite Tags'
-      description: 'Processes the favourite tag edition form submission. Access: OWN'
+      summary: 'R505: Add a Tag to Favourites'
+      description: 'Processes the addition of favourite tag. Access: OWN'
       tags:
         - 'M05: Tags'
       
       parameters:
         - in: path
-          name: id
+          name: tag_id
           schema:
             type: integer
-          required: true
-
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                tags:
-                  type: array
-                  items:
-                    type: string
-                  example: 
-                    - 'Anime'
-                    - 'Nature'             
+          required: true          
 
       responses:
-        '302':
-          description: 'Redirect after processing the user new information.'
-          headers:
-            Location:
-              schema:
-                type: string
-              examples:
-                302Success:
-                  description: 'Successful favourite tag edition. Redirect to user profile.'
-                  value: '/user/{id}'
-                302Failure:
-                  description: 'Failed to edit. Redirect to edit favourite tags form.'
-                  value: '/user/{id}/favourite_tags/edit'
+        '200':
+          description: 'Ok. Tag is now in favourites'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found' 
 
+  /tags/{tag_id}/remove_favourite:
+    put:
+      operationId: R506
+      summary: 'R506: Remove a Tag from Favourites'
+      description: 'Processes the removal of favourite tag. Access: OWN'
+      tags:
+        - 'M05: Tags'
+      
+      parameters:
+        - in: path
+          name: tag_id
+          schema:
+            type: integer
+          required: true          
+
+      responses:
+        '200':
+          description: 'Ok. Tag is now removed from favourites'
+        '401':
+          description: 'Unauthorized. Not logged in'
+        '403':
+          description: 'Forbidden. No permissions'
+        '404':
+          description: 'Not found' 
 
   /tags/{tag_state}:
     get:
-      operationId: R506
-      summary: 'R506: Filter Tags'
+      operationId: R507
+      summary: 'R507: Filter Tags'
       description: 'Show list of tags by state. Access: ADM'
       tags:
         - 'M05: Tags'
@@ -1157,8 +1162,8 @@ paths:
 
   /tags/{tag_id}:
     delete:
-      operationId: R507
-      summary: 'R507: Remove tag'
+      operationId: R508
+      summary: 'R508: Remove tag'
       description: 'Processes the delete tag request. Access: ADM'
       tags:
         - 'M05: Tags'
@@ -1182,8 +1187,8 @@ paths:
 
   /tags/new:
     post:
-      operationId: R508'
-      summary: 'R508: Propose New Tag'
+      operationId: R509'
+      summary: 'R509: Propose New Tag'
       description: 'Processes the new tag form submission. Access: USR'
       tags:
         - 'M05: Tags'
