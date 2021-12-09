@@ -1064,32 +1064,21 @@ paths:
     get:
       operationId: R504
       summary: 'R504: View User Favourite Tags'
-      description: 'Show user favourite tags. Access: OWN'
+      description: 'Show user favourite tags. Access: USR'
       tags:
         - 'M05: Tags'
-
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
 
       responses:
         '200':
           description: 'Ok. Show favourite tags (Part of UI20)'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
-        '404':
-          description: 'Not found'
-  
+
   /tags/{tag_id}/add_favourite:
     put:
       operationId: R505
       summary: 'R505: Add a Tag to Favourites'
-      description: 'Processes the addition of favourite tag. Access: OWN'
+      description: 'Processes the addition of favourite tag. Access: USR'
       tags:
         - 'M05: Tags'
       
@@ -1105,8 +1094,6 @@ paths:
           description: 'Ok. Tag is now in favourites'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
         '404':
           description: 'Not found' 
 
@@ -1114,7 +1101,7 @@ paths:
     put:
       operationId: R506
       summary: 'R506: Remove a Tag from Favourites'
-      description: 'Processes the removal of favourite tag. Access: OWN'
+      description: 'Processes the removal of favourite tag. Access: USR'
       tags:
         - 'M05: Tags'
       
@@ -1130,10 +1117,10 @@ paths:
           description: 'Ok. Tag is now removed from favourites'
         '401':
           description: 'Unauthorized. Not logged in'
-        '403':
-          description: 'Forbidden. No permissions'
         '404':
-          description: 'Not found' 
+          description: 'Not found'
+        '409':
+          description: 'Conflict. Tag is not a favourite'
 
   /tags/{tag_state}:
     get:
