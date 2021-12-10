@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{--@extends('layouts.app')
 
 @section('title', 'Cards')
 
@@ -13,4 +13,6 @@
   </article>
 </section>
 
-@endsection
+@endsection--}}
+
+<h1>Ez Login</h1>

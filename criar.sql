@@ -36,7 +36,7 @@ CREATE TABLE authenticated_user(
   name TEXT NOT NULL, 
   email VALID_EMAIL UNIQUE, 
   birth_date TIMESTAMP NOT NULL CHECK (CURRENT_TIMESTAMP >= birth_date),
-  admin BOOLEAN DEFAULT false,
+  is_admin BOOLEAN DEFAULT false,
   description TEXT, 
   password TEXT NOT NULL, 
   avatar TEXT, 
