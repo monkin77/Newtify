@@ -37,6 +37,14 @@ class User extends Authenticatable
         return $this->belongsTo(Country::class);
     }
 
+    public function followers() {
+        return $this->belongsToMany(User::class, 'follow', 'followed_id', 'follower_id');
+    }
+
+    public function following() {
+        return $this->belongsToMany(User::class, 'follow', 'follower_id', 'followed_id');
+    }
+
     // verify if foreign key is right (default should be 'model_id')
     public function suspensions() {
         return $this->hasMany(Suspension::class);
@@ -66,5 +74,13 @@ class User extends Authenticatable
 
     public function favoriteTags() {
         return $this->belongsToMany(Tag::class, 'favorite_tag');
+    }
+
+    public function sentMessages() {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages() {
+        return $this->hasMany(Message::class, 'receiver_id');
     }
 }
