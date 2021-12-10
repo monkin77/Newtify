@@ -36,4 +36,21 @@ class User extends Authenticatable
     public function country() {
         return $this->belongsTo(Country::class);
     }
+
+    public function suspensions() {
+        return $this->hasMany(Suspension::class);
+    }
+
+    // QUESTION: Only if it's an admin. Should it still be like this?
+    public function givenSuspensions() {
+        return $this->hasMany(Suspension::class);
+    }
+
+    public function reports() {
+        return $this->hasMany(Report::class);
+    }
+
+    public function givenReports() {
+        return $this->hasMany(Report::class);
+    }
 }
