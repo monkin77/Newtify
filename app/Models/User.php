@@ -88,4 +88,8 @@ class User extends Authenticatable
         // TODO: Test this
         return $this->hasMany(Comment::class, 'author_id');
     }
+
+    public function feedback() {
+        return $this->belongsToMany(Content::class, 'feedback')->withPivot('is_like');
+    }
 }

@@ -31,4 +31,8 @@ class Article extends Content
     public function content() {
       return $this->belongsTo(Content::class);
     }
+
+    public function article_tags() {
+      return $this->belongsToMany(Tag::class);
+    }
 }

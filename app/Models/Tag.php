@@ -30,4 +30,8 @@ class Tag extends Model
     public function favoriteUsers() {
         return $this->belongsToMany(User::class, 'favorite_tag');
     }
+
+    public function article_tags() {
+        return $this->belongsToMany(Article::class, 'article_tag');
+    }
 }
