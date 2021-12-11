@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class Notification extends Model
 {
     public $timestamps  = false;
 
-    protected $table = 'message';
+    protected $table = 'notification';
 
     /**
      * The attributes that are mass assignable.
@@ -16,18 +16,15 @@ class Message extends Model
      * @var array
      */
     protected $fillable = [
-        'body', 'published_at', 'receiver_id',
+        'reveiver_id', 'date',
     ];
-
-    public function sender() {
-        return $this->belongsTo(User::class);
-    }
 
     public function receiver() {
         return $this->belongsTo(User::class);
     }
-
-    public function notification() {
-        return $this->hasOne(MessageNotification::class, 'msg');
-    }
 }
+
+/*
+TODO: Restrictions on the notification parameters between the different models
+Maybe use policies
+*/

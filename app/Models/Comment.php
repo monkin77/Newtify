@@ -29,4 +29,8 @@ class Comment extends Content
     public function content() {
       return $this->belongsTo(Content::class);
     }
+
+    public function notification() {
+      return $this->hasOne(CommentNotification::class, 'new_comment');
+    }
 }

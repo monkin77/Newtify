@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Abilities\HasParentModel;
 
-class Admin extends User
+class MessageNotification extends Notification
 {
-    use HasParentModel; // keeps the table id as user_id
+    use HasParentModel; // keeps the table id as notification id
 
     public static function boot()
     {
@@ -15,11 +15,11 @@ class Admin extends User
 
         // All the queries are the same as User but only for admins
         static::addGlobalScope(function ($query) {
-            $query->where('is_admin', true);
+            $query->where('type', 'MESSAGE');
         });
     }
 
-    public function givenSuspensions() {
-        return $this->hasMany(Suspension::class, 'admin_id');
+    public function message() {
+      return $this->belongsTo(Message::class, 'msg');
     }
 }

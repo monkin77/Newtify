@@ -26,4 +26,9 @@ class Content extends Model
     public function feedback() {
         return $this->belongsToMany(User::class, 'feedback')->withPivot('is_like');
     }
+
+    // Notifications caused by feedback on this content
+    public function feedback_notifications() {
+        return $this->hasMany(FeedbackNotification::class, 'rated_content');
+    }
 }
