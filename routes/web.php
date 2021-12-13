@@ -33,3 +33,5 @@ Route::post('register', 'Auth\RegisterController@register');
 
 // Articles
 Route::get('articles', 'ArticleController@index');
+Route::post('article', 'ArticleController@create');
+Route::get('article/{id}', 'ArticleController@show');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -23,10 +25,38 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // not authenticated so redirect to create article form
+        if (Auth::guest()) {
+            return redirect('/article');
+        }
+
+        // testar isto quando tivermos front end i guess (?)
+        // nao sei fazer no postman por ser um post
+        $validator = Validator::make($request -> all(),
+            [
+                'body' => 'required|string',
+                'title' => 'required|string',
+            ]
+            );
+
+        if ( $validator->fails() ) {
+            return redirect()->back()->withErrors($validator);
+        }
+        
+        $content = new Content;
+        $content->body = $request->body;
+        $content->author_id = Auth::id();
+        $content->save();
+
+        $article = new Article;
+        $article->content_id = $content->id;
+        $article->save();
+
+        return redirect('/article/'.$article->content_id);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -48,7 +78,7 @@ class ArticleController extends Controller
     public function show($id)//Article $article)
     {
         $article = Article::find($id);
-        return article;
+        return view('partials.article', ['article' => $article]);
     }
 
     /**
