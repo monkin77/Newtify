@@ -92,7 +92,7 @@ class User extends Authenticatable
     }
 
     // Notifications caused by the user's feedback
-    public function feedback_notifications() {
+    public function feedbackNotifications() {
         return $this->hasMany(FeedbackNotification::class, 'fb_giver');
     }
 
