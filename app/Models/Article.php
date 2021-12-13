@@ -8,6 +8,8 @@ class Article extends Content
 {
   protected $table = 'article';
 
+  protected $primaryKey = 'content_id';
+
     /**
      * The attributes that are mass assignable.
      *

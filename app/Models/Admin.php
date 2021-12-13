@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Abilities\HasParentModel;
 
 class Admin extends User
 {
-    use HasParentModel; // keeps the table id as user_id
-
     public static function boot()
     {
         parent::boot();

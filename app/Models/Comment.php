@@ -8,6 +8,8 @@ class Comment extends Content
 {
   protected $table = 'comment';
 
+  protected $primaryKey = 'content_id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +23,6 @@ class Comment extends Content
 
         // All the queries are joined with the content table
         static::addGlobalScope(function ($query) {
-            // TODO: Try with Content::class instead of 'content'
             $query->join('content', 'content_id', '=', 'id');
         });
     }

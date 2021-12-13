@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     // verify if foreign key is right (default should be '<Model>_id')
     public function suspensions() {
-        return $this->hasMany(Suspension::class);
+        return $this->hasMany(Suspension::class, 'user_id');
     }
 
     public function reports() {
@@ -59,16 +59,16 @@ class User extends Authenticatable
     }
 
     public function proposedTags() {
-        return $this->hasMany(Tag::class);
+        return $this->hasMany(Tag::class, 'user_id');
     }
 
     // Access area of expertise with area->pivot
     public function areasExpertise() {
-        return $this->belongsToMany(Tag::class, 'area_of_expertise')->withPivot('reputation');
+        return $this->belongsToMany(Tag::class, 'area_of_expertise', 'user_id')->withPivot('reputation');
     }
 
     public function favoriteTags() {
-        return $this->belongsToMany(Tag::class, 'favorite_tag');
+        return $this->belongsToMany(Tag::class, 'favorite_tag', 'user_id');
     }
 
     public function sentMessages() {
@@ -84,7 +84,7 @@ class User extends Authenticatable
     }
 
     public function feedback() {
-        return $this->belongsToMany(Content::class, 'feedback')->withPivot('is_like');
+        return $this->belongsToMany(Content::class, 'feedback', 'user_id')->withPivot('is_like');
     }
 
     public function notifications() {

@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Abilities\HasParentModel;
 
 class FeedbackNotification extends Notification
 {
-    use HasParentModel; // keeps the table id as notification id
 
     public static function boot()
     {
