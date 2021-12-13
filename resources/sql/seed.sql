@@ -36,7 +36,7 @@ CREATE TABLE authenticated_user(
   name TEXT NOT NULL, 
   email VALID_EMAIL UNIQUE, 
   birth_date TIMESTAMP NOT NULL CHECK (CURRENT_TIMESTAMP >= birth_date),
-  admin BOOLEAN DEFAULT false,
+  is_admin BOOLEAN DEFAULT false,
   description TEXT, 
   password TEXT NOT NULL, 
   avatar TEXT, 
@@ -614,8 +614,6 @@ CREATE TRIGGER create_comment_notification
     FOR EACH ROW
     EXECUTE PROCEDURE create_comment_notification();
 
-SET search_path TO lbaw2111;
-
 INSERT INTO country (code,name)
 VALUES
   ('NG','Nigeria'),
@@ -638,9 +636,9 @@ VALUES
 
   
   
-INSERT INTO authenticated_user (name,email,birth_date,admin,description,password,avatar,city,is_suspended,country_id)
+INSERT INTO authenticated_user (name,email,birth_date,is_admin,description,password,avatar,city,is_suspended,country_id)
 VALUES
-  ('Rui Alves', 'rui@gmail.com', TO_TIMESTAMP('2003-03-23', 'YYYY-MM-DD'), true, 'o maior debugger', '1234567', 'https://rui-image.com', 'Tchabes', false, 11),
+  ('Rui Alves', 'rui@gmail.com', TO_TIMESTAMP('2003-03-23', 'YYYY-MM-DD'), true, 'o maior debugger', '$2a$12$R7eIoU2USu.eQinxW65F6.nX4WTh274CP5jQruGGpGzV0YzerD4gS', 'https://rui-image.com', 'Tchabes', false, 11),
   ('Jackson Hatrue','penatibus.et@protonmail.org',TO_TIMESTAMP('1970-02-04', 'YYYY-MM-DD'),true,'purus mauris a nunc. In at pede. Cras vulputate velit','neque','risus. Donec egestas.','Huntly',false,1),
   ('Tatyana Hunter','duis.a@icloud.ca',TO_TIMESTAMP('2014-10-29', 'YYYY-MM-DD'),true,'dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus','Integer','torquent per conubia','Bad Neuenahr-Ahrweiler',false,3),
   ('Sigourney Garcia','cras.lorem.lorem@outlook.edu',TO_TIMESTAMP('2007-05-03', 'YYYY-MM-DD'),false,'bibendum. Donec felis orci, adipiscing falsen, luctus sit amet, faucibus','ut','eu odio tristique','Galway',true,4),
