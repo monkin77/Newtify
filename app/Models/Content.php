@@ -28,7 +28,7 @@ class Content extends Model
     }
 
     // Notifications caused by feedback on this content
-    public function feedback_notifications() {
+    public function feedbackNotifications() {
         return $this->hasMany(FeedbackNotification::class, 'rated_content');
     }
 }
