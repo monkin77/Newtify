@@ -23,7 +23,6 @@ class Article extends Content
 
         // All the queries are joined with the content table
         static::addGlobalScope(function ($query) {
-            // TODO: Try with Content::class instead of 'content'
             $query->join('content', 'content_id', '=', 'id');
         });
     }

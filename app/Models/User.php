@@ -79,14 +79,8 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
-    public function articles() {
-        // TODO: Test this
-        return $this->hasMany(Article::class, 'author_id');
-    }
-
-    public function comments() {
-        // TODO: Test this
-        return $this->hasMany(Comment::class, 'author_id');
+    public function content() {
+        return $this->hasMany(Content::class, 'author_id');
     }
 
     public function feedback() {
@@ -100,5 +94,13 @@ class User extends Authenticatable
     // Notifications caused by the user's feedback
     public function feedback_notifications() {
         return $this->hasMany(FeedbackNotification::class, 'fb_giver');
+    }
+
+    public function articles() {
+        return Article::where('author_id', $this->id)->get();
+    }
+
+    public function comments() {
+        return Comment::where('author_id', $this->id)->get();
     }
 }

@@ -259,6 +259,11 @@ php artisan cache:clear
 php artisan config:clear
 ```
 
+To clear route cache:
+```bash
+php artisan route:clear
+```
+
 ## Publishing your image
 
 You should keep your git master branch always functional and frequently build and deploy your code.
