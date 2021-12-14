@@ -103,4 +103,9 @@ class User extends Authenticatable
     public function comments() {
         return Comment::where('author_id', $this->id)->get();
     }
+
+    public function isFollowing($userId) {
+        $followList = $this->following->where('id', $userId);
+        return !empty($followList);
+    }
 }
