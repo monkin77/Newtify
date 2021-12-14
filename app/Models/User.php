@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'areas_expertise'
     ];
 
     public function country() {
@@ -106,6 +106,16 @@ class User extends Authenticatable
 
     public function isFollowing($userId) {
         $followList = $this->following->where('id', $userId);
-        return !empty($followList);
+        return count($followList) > 0;
+    }
+
+    public function topAreasExpertise() {
+        return $this->areasExpertise->map(function ($area) {
+            return [
+                'tag_id' => $area->id,
+                'tag_name' => $area->name,
+                'reputation' => $area->pivot->reputation,
+            ];
+        })->sortByDesc('reputation')->take(3);
     }
 }
