@@ -295,7 +295,7 @@ Once your Docker is authenticated, configure the `upload_image.sh` script with y
 Example configuration:
 
 ```bash
-IMAGE_NAME=git.fe.up.pt:5050/lbaw/lbaw2122/lbaw21XX # Replace with your group's image name
+IMAGE_NAME=git.fe.up.pt:5050/lbaw/lbaw2122/lbaw211
 ```
 
 You can now build and upload the docker image by executing that script from the project root folder:
@@ -307,11 +307,7 @@ You can now build and upload the docker image by executing that script from the 
 You can test locally the image by running:
 
 ```
-docker run -it -p 8000:80 --name=lbaw21XX -e DB_DATABASE="lbaw21XX" -e DB_SCHEMA="lbaw21XX" -e DB_USERNAME="lbaw21XX" -e DB_PASSWORD="PASSWORD" git.fe.up.pt:5050/lbaw/lbaw2122/lbaw21XX # Replace with your group's image name
-```
-
-```
-docker run -it -p 8000:80 -e DB_DATABASE="lbaw2111" -e DB_USERNAME="lbaw2111" -e DB_PASSWORD="iROcBrWt" newtify/lbaw2111
+docker run -it -p 8000:80 --name=lbaw211 -e DB_DATABASE="lbaw2111" -e DB_SCHEMA="lbaw2111" -e DB_USERNAME="lbaw2111" -e DB_PASSWORD="PASSWORD" git.fe.up.pt:5050/lbaw/lbaw2122/lbaw2111
 ```
 
 The above command exposes your application on http://localhost:8000.
@@ -322,7 +318,7 @@ Your database configuration will be provided as an environment variable to your 
 While running your container, you can use another terminal to run a shell inside the container by executing:
 
 ```bash
-docker exec -it lbaw21XX bash
+docker exec -it lbaw2111 bash
 ```
 
 Inside the container you may, for example, see the content of the Web server logs by executing:
