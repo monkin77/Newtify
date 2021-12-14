@@ -31,9 +31,7 @@ class ArticleController extends Controller
         if (Auth::guest()) {
             return redirect('/article');
         }
-
-        // testar isto quando tivermos front end i guess (?)
-        // nao sei fazer no postman por ser um post
+        
         $validator = Validator::make($request -> all(),
             [
                 'body' => 'required|string',

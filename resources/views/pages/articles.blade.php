@@ -2,14 +2,10 @@
 
 @section('title', 'Articles')
 
-@section('articles')
+@section('content')
 
 <section id="articles">
   @each('partials.article', $articles, 'article')
 </section>
 
 @endsection
-
-<h1>@yield('title')</h1>
-
-@yield('articles')
