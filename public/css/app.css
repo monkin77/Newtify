@@ -155,3 +155,17 @@ input[type=email]:focus,
 input[type=password]:focus {
   border-color: #9b4dca;
 }
+
+/* HomePage */
+#homepage .createArticleContainer {
+  background-color: lightgray;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+}
+
+#homepage #createArticle .addIcon {
+  position: absolute;
+  top: 10%;
+  left: -30%;
+  font-size: large; /* fontSize impacts the icon size */
+  }
