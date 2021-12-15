@@ -41,7 +41,7 @@ CREATE TABLE authenticated_user(
   password TEXT NOT NULL, 
   avatar TEXT, 
   city TEXT, 
-  is_suspended BOOLEAN NOT NULL,
+  is_suspended BOOLEAN NOT NULL DEFAULT FALSE,
   reputation INTEGER NOT NULL DEFAULT 0,
   country_id INTEGER REFERENCES country(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
