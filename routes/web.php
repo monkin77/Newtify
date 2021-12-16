@@ -33,3 +33,6 @@ Route::post('signup', 'Auth\RegisterController@register');
 
 // User
 Route::get('/user/{id}', 'UserController@show');
+Route::get('/user/{id}/edit', 'UserController@edit');
+Route::put('/user/{id}', 'UserController@update');
+Route::delete('/api/user/{id}', 'UserController@destroy');

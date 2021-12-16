@@ -277,7 +277,7 @@ DB_PORT=5432
 DB_SCHEMA=lbaw2111
 DB_DATABASE=lbaw2111
 DB_USERNAME=lbaw2111
-DB_PASSWORD=iROcBrWt
+DB_PASSWORD=PASSWORD
 ```
 
 This demo repository is available at http://template-laravel.lbaw.fe.up.pt/. To view it make sure you are inside FEUP's network or are using the VPN.

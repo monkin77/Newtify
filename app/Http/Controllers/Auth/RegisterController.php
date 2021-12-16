@@ -54,7 +54,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'birthDate' => 'required|string|date_format:d-m-Y|before:'.date('d-m-Y'), // before today
             'country' => 'required|string|exists:country,name',
-            'avatar' => 'nullable|string|max:10000', // max 10MB
+            'avatar' => 'nullable|file|max:5000', // max 5MB
             // TODO: File upload
         ]);
     }
@@ -67,8 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        $countryId = Country::where('name', $data['country'])->first()->id;
+        $countryId = Country::getIdByName($data['country']);
         $timestamp = strtotime($data['birthDate']);
 
         return User::create([

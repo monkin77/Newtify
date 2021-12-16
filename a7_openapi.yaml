@@ -225,6 +225,8 @@ paths:
                 302Failure:
                   description: 'Failed profile edition. Redirect to edit profile form.'
                   value: '/user/{id}/edit'
+        '404':
+          description: 'User not found'
 
   # User deletion is hidden behind /api to prevent accidents
   /api/user/{id}:

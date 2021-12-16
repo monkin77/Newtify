@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     /**
-     * Display the specified resource.
+     * Display the User profile.
      *
      * @param  $id Id of the user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $user = User::find($id);
         if (is_null($user))
@@ -64,14 +66,18 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the user profile.
      *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(int $id)
     {
-        //
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found, id: '.$id);
+
+        return view('pages.edit_profile');
     }
 
     /**
@@ -79,21 +85,66 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, int $id) : RedirectResponse
     {
-        //
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found, id: '.$id);
+
+        $validator = Validator::make($request->all(),[
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:authenticated_user',
+            'password' => 'required|string|password',
+            'new_password' => 'nullable|string|min:6|confirmed',
+            'birthDate' => 'nullable|string|date_format:d-m-Y|before:'.date('d-m-Y'), // before today
+            'country' => 'nullable|string|exists:country,name',
+            'avatar' => 'nullable|file|max:5000', // max 5MB
+            // TODO: File upload
+            'description' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:100'
+        ]);
+
+        if ($validator->fails()) {
+            // Go back to form and refill it
+            return redirect()->back()->withInput();
+        }
+
+        if (isset($request->name)) $user->name = $request->name;
+        if (isset($request->email)) $user->email = $request->email;
+        if (isset($request->new_password)) $user->password = $request->new_password;
+        if (isset($request->birthDate)) $user->birth_date = $request->birthDate;
+        if (isset($request->country)) $user->country_id = Country::getIdByName($request->country);
+        if (isset($request->description)) $user->description = $request->description;
+        if (isset($request->city)) $user->city = $request->city;
+
+        $user->save();
+        return redirect("/user/${id}");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Deletes a user account.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, int $id) : RedirectResponse
     {
-        //
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found, id: '.$id);
+
+        $validator = Validator::make($request->all(),[
+            'password' => 'required|string|password'
+        ]);
+
+        if ($validator->fails()) return redirect()->back();
+
+        $deleted = $user->delete();
+        if ($deleted)
+            return redirect('/');
+        else
+            return redirect("user/${id}/edit");
     }
 }
