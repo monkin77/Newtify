@@ -12,7 +12,7 @@ $tagline = 'Que rego amiguinho'
             <h1> Create Your Own Articles </h1>
             <h3> {{$tagline}} </h3>
             <div class="addIcon"> 
-                <i class="fas fa-plus-circle fa-4x"></i>
+                <i class="fas fa-plus-circle fa-4x" onclick="console.log('Clicked')"></i>
             </div>   
         </div>
     </div>
