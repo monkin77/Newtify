@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+// TODO: Check headers for redirects
 class UserController extends Controller
 {
     /**
@@ -91,7 +93,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (is_null($user))
-            return abort(404, 'User not found, id: '.$id);
+            return redirect()->back()->withErrors(['user' => 'User not found, id: '.$id]);
 
         $validator = Validator::make($request->all(),[
             'name' => 'nullable|string|max:255',
@@ -108,7 +110,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             // Go back to form and refill it
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
         if (isset($request->name)) $user->name = $request->name;
@@ -133,18 +135,54 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (is_null($user))
-            return abort(404, 'User not found, id: '.$id);
+            return redirect()->back()->withErrors(['user' => 'User not found, id: '.$id]);
 
         $validator = Validator::make($request->all(),[
             'password' => 'required|string|password'
         ]);
 
-        if ($validator->fails()) return redirect()->back();
+        if ($validator->fails())
+            return redirect()->back()->withErrors($validator->errors());
 
         $deleted = $user->delete();
         if ($deleted)
             return redirect('/');
         else
-            return redirect("user/${id}/edit");
+            return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
+    }
+
+    public function report(Request $request, int $id)
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+            $validator = Validator::make($request->all(),[
+                'reason' => 'required|string|min:5|max:200',
+            ]);
+
+        if ($validator->fails())
+            return response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to report user. Bad request',
+                'errors' => $validator->errors(),
+            ], 400);
+
+        $report = new Report();
+        $report->reason = $request->reason;
+        $report->reported_id = $id;
+        $report->reporter_id = Auth::id();
+        $report->reported_at = gmdate('Y-m-d H:i:s');
+        $report->save();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Successful user report',
+            'id' => $report->id
+        ], 200);
     }
 }
