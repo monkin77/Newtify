@@ -349,7 +349,7 @@ paths:
                     format: date
                 example:
                   reason: 'The user was disrespectful in many occasions.'
-                  end_date: '2023-12-04'
+                  end_date: '04-12-2023'
         '401':
           description: 'Unauthorized. Must be authenticated'
         '403':

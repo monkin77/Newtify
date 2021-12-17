@@ -185,4 +185,24 @@ class UserController extends Controller
             'id' => $report->id
         ], 200);
     }
+
+    public function suspension(int $id)
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+        if (!$user->is_suspended)
+            return response()->json([
+                'status' => 'Conflict',
+                'msg' => 'User is not suspended, id: '.$id,
+                'errors' => ['user' => 'User is not suspended, id: '.$id]
+            ], 409);
+
+        return $user->suspensionEndInfo();
+    }
 }

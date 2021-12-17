@@ -118,4 +118,14 @@ class User extends Authenticatable
             ];
         })->sortByDesc('reputation')->take(3);
     }
+
+    // Gets the info on the suspension with the farthest end_time
+    public function suspensionEndInfo() {
+        $suspension = $this->suspensions->sortByDesc('end_time')->first();
+
+        return [
+            'reason' => $suspension->reason,
+            'end_date' => gmdate('d-m-Y', strtotime($suspension->end_time)),
+        ];
+    }
 }

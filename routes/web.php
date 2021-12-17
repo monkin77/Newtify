@@ -37,3 +37,4 @@ Route::get('/user/{id}/edit', 'UserController@edit');
 Route::put('/user/{id}', 'UserController@update');
 Route::delete('/api/user/{id}', 'UserController@destroy');
 Route::post('/user/{id}/report', 'UserController@report');
+Route::get('api/user/{id}/suspension', 'UserController@suspension');
