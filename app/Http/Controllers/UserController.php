@@ -300,4 +300,53 @@ class UserController extends Controller
             'articles' => $articles
         ]);
     }
+
+    public function follow(int $id)
+    {
+        $userToFollow = User::find($id);
+        if (is_null($userToFollow))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+        if (Auth::user()->isFollowing($id))
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'User already followed, id: '.$id,
+            ], 200);
+
+        $userToFollow->followers()->attach(Auth::id());
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Successful user follow, id: '.$id,
+        ], 200);
+    }
+
+    public function unfollow(int $id)
+    {
+        $userToUnfollow = User::find($id);
+        if (is_null($userToUnfollow))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+        if (!Auth::user()->isFollowing($id))
+            return response()->json([
+                'status' => 'Conflict',
+                'msg' => 'User not followed, id: '.$id,
+                'errors' => ['user' => 'User not followed, id: '.$id]
+            ], 409);
+
+        $userToUnfollow->followers()->detach(Auth::id());
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Successful user unfollow, id: '.$id,
+        ], 200);
+    }
 }
