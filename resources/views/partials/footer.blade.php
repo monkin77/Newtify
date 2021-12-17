@@ -1,40 +1,30 @@
-<footer class="bg-light text-center text-lg-start">
-    <!-- Grid container -->
-    <div class="container p-4">
-        <!--Grid row-->
-        <div class="row">
-            <!--Grid column-->
-            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Footer text</h5>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
-                </p>
-            </div>
-            <!--Grid column-->
-
-            <!--Grid column-->
-            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase">Footer text</h5>
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-                    molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-                    aliquam voluptatem veniam, est atque cumque eum delectus sint!
-                </p>
-            </div>
-            <!--Grid column-->
+<footer class="bg-dark text-center text-lg-start py-4">
+    <!--Grid row-->
+    <div class="m-0 p-0 row">
+        <!--Grid column-->
+        <div class="col-3 ps-5">
+            <h5 class="text-uppercase">Newtify Logo</h5>
         </div>
-        <!--Grid row-->
+        <div class="col-2">
+            <a class="text-uppercase link-secondary" onclick="console.log('cliked')">About Us</a>
+        </div>
+        <div class="col-2">
+            <a class="text-uppercase link-secondary" onclick="console.log('cliked')">Guidelines</a>
+        </div>
+        <div class="col-2">
+            <a class="text-uppercase link-secondary" onclick="console.log('cliked')">FAQ</a>
+        </div>
+        <div class="col-3">
+            <i class="fa fa-facebook me-5 fa-1x" onclick="console.log('cliked')"></i>
+            <i class=" fa fa-twitter me-5 fa-1x" onclick="console.log('cliked')"></i>
+            <i class=" fa fa-instagram me-5 fa-1x" onclick="console.log('cliked')"></i>
+        </div>
     </div>
-    <!-- Grid container -->
 
     <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    <div class=" text-center p-5" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2021 Copyright:
+        <a class="text-reset" href="{{ url('/') }}">LBAW</a>
     </div>
     <!-- Copyright -->
 </footer>

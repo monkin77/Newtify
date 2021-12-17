@@ -1,17 +1,17 @@
 body {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 /* HomePage */
 #homepage .createArticleContainer {
-  background-color: lightgray;
-  padding-top: 5vh;
-  padding-bottom: 5vh;
+    background-color: lightgray;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
 }
 
 #homepage #createArticle .addIcon {
-  position: absolute;
-  top: 10%;
-  left: -30%;
-  font-size: large; /* fontSize impacts the icon size */
+    position: absolute;
+    top: 10%;
+    left: -30%;
+    font-size: large; /* fontSize impacts the icon size */
 }
