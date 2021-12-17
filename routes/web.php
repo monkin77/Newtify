@@ -32,6 +32,13 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 // Articles
-Route::get('articles', 'ArticleController@index');
-Route::post('article', 'ArticleController@create');
-Route::get('article/{id}', 'ArticleController@show');
+Route::get('articles', 'ArticleController@index')->name('articles');
+Route::get('article/{id}', 'ArticleController@show')->name('article');
+Route::post('article', 'ArticleController@create');  //is this route ok? 
+Route::get('article/{id}/edit', 'ArticleController@edit');
+Route::put('article/{id}', 'ArticleController@update');
+Route::delete('article/{id}', 'ArticleController@destroy');
+
+// route and ArticleController function to show creation article form?
+// we don't have this in openapi, should we put it?
+
