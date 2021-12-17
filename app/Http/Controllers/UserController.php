@@ -205,4 +205,27 @@ class UserController extends Controller
 
         return $user->suspensionEndInfo();
     }
+
+    public function followed(int $id)
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return abort(404, 'User not found, id: '.$id);
+
+        $followedUsers = $user->following->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'avatar' => $user->avatar,
+                'country' => $user->country,
+                'city' => $user->city,
+                'reputation' => $user->reputation,
+                'isSuspended' => $user->is_suspended
+            ];
+        });
+
+        return view('pages.followedUsers', [
+            'users' => $followedUsers,
+        ]);
+    }
 }
