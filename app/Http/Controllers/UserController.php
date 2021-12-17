@@ -16,8 +16,8 @@ class UserController extends Controller
     /**
      * Display the User profile.
      *
-     * @param  $id Id of the user
-     * @return \Illuminate\Http\Response
+     * @param  int $id Id of the user
+     * @return View
      */
     public function show(int $id)
     {
@@ -70,8 +70,8 @@ class UserController extends Controller
     /**
      * Show the form for editing the user profile.
      *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return View
      */
     public function edit(int $id)
     {
@@ -86,7 +86,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, int $id) : RedirectResponse
@@ -128,7 +128,8 @@ class UserController extends Controller
     /**
      * Deletes a user account.
      *
-     * @param  \App\Models\User  $user
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, int $id) : RedirectResponse
@@ -151,6 +152,13 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['user' => 'Failed to delete user account. Try again later']);
     }
 
+    /**
+     * Reports a user account.
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function report(Request $request, int $id)
     {
         $user = User::find($id);
@@ -161,9 +169,9 @@ class UserController extends Controller
                 'errors' => ['user' => 'User not found, id: '.$id]
             ], 404);
 
-            $validator = Validator::make($request->all(),[
-                'reason' => 'required|string|min:5|max:200',
-            ]);
+        $validator = Validator::make($request->all(),[
+            'reason' => 'required|string|min:5|max:200',
+        ]);
 
         if ($validator->fails())
             return response()->json([
@@ -186,6 +194,12 @@ class UserController extends Controller
         ], 200);
     }
 
+    /**
+     * Information on the user's suspension
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function suspension(int $id)
     {
         $user = User::find($id);
@@ -206,6 +220,12 @@ class UserController extends Controller
         return $user->suspensionEndInfo();
     }
 
+    /**
+     * Display the given user's followed users
+     * 
+     * @param int $id
+     * @return View
+     */
     public function followed(int $id)
     {
         $user = User::find($id);
@@ -224,8 +244,60 @@ class UserController extends Controller
             ];
         });
 
-        return view('pages.followedUsers', [
+        return view('pages.followed_users', [
             'users' => $followedUsers,
+        ]);
+    }
+
+    /**
+     * Return html with the user's written articles
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id
+     * @return \Illuminate\Http\Response|View
+     */
+    public function articles(Request $request, int $id)
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+        $validator = Validator::make($request->all(),[
+            'offset' => 'nullable|integer|min:0',
+            'limit' => 'nullable|integer|min:1',
+        ]);
+
+        if ($validator->fails())
+            return response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to fetch user\'s articles. Bad request',
+                'errors' => $validator->errors(),
+            ], 400);
+
+        $userArticles = $user->articles()->map(function ($article) {
+            return [
+                'title' => $article->title,
+                'thumbnail' => $article->thumbnail,
+                'body' => $article->body,
+                'published_at' => $article->published_at,
+                'likes' => $article->likes,
+                'dislikes' => $article->dislikes
+            ];
+        })->sortByDesc('published_at');
+
+        if (!isset($request->offset)) $request->offset = 0;
+
+        if (isset($request->limit))
+            $articles = $userArticles->slice($request->offset, $request->limit);
+        else
+            $articles = $userArticles->slice($request->offset);
+
+        return view('partials.user_articles', [
+            'articles' => $articles
         ]);
     }
 }

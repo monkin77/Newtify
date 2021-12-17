@@ -39,3 +39,4 @@ Route::delete('/api/user/{id}', 'UserController@destroy');
 Route::post('/user/{id}/report', 'UserController@report');
 Route::get('/api/user/{id}/suspension', 'UserController@suspension');
 Route::get('/user/{id}/followed', 'UserController@followed');
+Route::get('user/{id}/articles', 'UserController@articles');
