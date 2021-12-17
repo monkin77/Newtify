@@ -35,7 +35,7 @@ Route::post('signup', 'Auth\RegisterController@register');
 Route::get('user/{id}', 'UserController@show');
 Route::get('user/{id}/edit', 'UserController@edit');
 Route::put('user/{id}', 'UserController@update');
-Route::delete('api/user/{id}', 'UserController@destroy');
+Route::delete('api/user/{id}', 'UserController@delete');
 Route::post('user/{id}/report', 'UserController@report');
 Route::get('api/user/{id}/suspension', 'UserController@suspension');
 Route::get('user/{id}/followed', 'UserController@followed');
