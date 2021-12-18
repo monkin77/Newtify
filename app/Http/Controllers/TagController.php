@@ -9,20 +9,23 @@ use Illuminate\Support\Facades\Auth;
 class TagController extends Controller
 {
     /**
-     * Display a listing of Accepted Tags.
+     * Returns a list of Accepted Tags
      *
-     * @return View
+     * @return List of accepted tags
      */
-    public function index()
+    public function listAcceptedTags()
     {
-        $tags = Tag::where('state', 'ACCEPTED')->get();
-        return view('pages.tagsList', [
-            'tags' => $tags,
-        ]);
+        $tags = Tag::where('state', 'ACCEPTED')->get()->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name
+            ];
+        });
+        return $tags;
     }
 
     /**
-     * Show User favorite tags.
+     * Show Page that contains all the tags and the user's favorite tags highlighted.
      *
      * @return View
      */
@@ -33,10 +36,39 @@ class TagController extends Controller
             return redirect('/login');  // This is returning a 401 Unauthorized in the openAPI. Should we change it?
         }
 
-        $tags = Auth::user()->favoriteTags;
+        $userTags = Auth::user()->favoriteTags->map(function ($tag) {
+            return [
+                'id' => $tag->id
+            ];
+        });
+
+        $tags = $this->listAcceptedTags();
+
         return view('pages.tagsList', [
             'tags' => $tags,
+            'userTags' => $userTags
         ]);
+    }
+
+    /**
+     * Accept a Tag
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function accept(int $tag_id)
+    {
+        $this->authorize('accept', Tag::class);
+
+        $tag = Tag::find($tag_id);
+        if (is_null($tag)) return Response()->json([
+            'status' => 'NOT FOUND',
+            'tag_id' => $tag_id
+        ], 404);
+
+        return Response()->json([
+            'status' => 'OK',
+            'tag_id' => $tag_id
+        ], 200);
     }
 
     /**

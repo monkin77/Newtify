@@ -44,5 +44,6 @@ Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
 
 // Tag
-Route::get('tags', 'TagController@index');
+Route::get('tags', 'TagController@listAcceptedTags');
 Route::get('favorite_tags', 'TagController@showUserFavorites');
+Route::put('tags/{tag_id}/accept', 'TagController@accept');
