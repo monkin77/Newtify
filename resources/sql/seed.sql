@@ -607,7 +607,7 @@ VALUES
   ('SV', 'El Salvador');
 
   
-  
+
 INSERT INTO authenticated_user (name,email,birth_date,is_admin,description,password,avatar,city,is_suspended,country_id)
 VALUES
   ('Rui Alves', 'rui@gmail.com', TO_TIMESTAMP('2003-03-23', 'YYYY-MM-DD'), true, 'o maior debugger', '$2a$12$R7eIoU2USu.eQinxW65F6.nX4WTh274CP5jQruGGpGzV0YzerD4gS', 'https://rui-image.com', 'Tchabes', false, 11),

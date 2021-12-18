@@ -179,14 +179,14 @@ class ArticleController extends Controller
         $owner_id = $content->author_id;
 
         $has_feedback = ($content->likes != 0 || $content->dislikes != 0);
-        $has_comments = $article->comments()->isEmpty();
+        $has_comments = !$article->comments()->isEmpty();
 
-        // cannot delete if is not admin and it has feedback and comments
-        /*if (($has_feedback || $has_comments) || !$user->is_admin){
+        // cannot delete if is not admin or it has feedback and comments
+        if (($has_feedback || $has_comments) && !$user->is_admin){
             return redirect()->back()->withErrors(['content' => "You can't delete an article with likes/dislikes"]);
-        } else if ($user->id != $owner_id || !$user->is_admin) {
+        } else if ($user->id != $owner_id && !$user->is_admin) {
             return redirect()->back()->withErrors(['user' => "You are not the owner of the article so you can't delete it"]);
-        } */
+        } 
 
         $deleted = $article->delete();
         if ($deleted) 
