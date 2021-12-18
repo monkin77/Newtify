@@ -399,31 +399,6 @@ CREATE TRIGGER message_sent_notification
 
 -----------------------------------------
 
--- Trigger to prevent user from deleting a comment or article (content) with likes, dislikes or subcomments
-CREATE FUNCTION check_content_delete() RETURNS TRIGGER AS
-$BODY$
-BEGIN 
-    IF (OLD.likes != 0 or OLD.dislikes != 0) THEN
-        RAISE EXCEPTION 'You cannot delete a content that has likes/dislikes';
-    END IF; 
-    IF (OLD.id in (SELECT article_id FROM comment) OR 
-        OLD.id in (SELECT parent_comment_id FROM comment ))
-        -- it's an article with comments or a comment with sub comments
-        THEN RAISE EXCEPTION 'You cannot delete a content that has comments';
-    END IF;
-    RETURN OLD;
-END
-$BODY$
-
-LANGUAGE plpgsql;
-
-CREATE TRIGGER check_content_delete
-    BEFORE DELETE ON content
-    FOR EACH ROW
-    EXECUTE PROCEDURE check_content_delete();
-
------------------------------------------
-
 /*
 Trigger to delete all the information about an article that was deleted
 it just needs to delete the content represented by that article 

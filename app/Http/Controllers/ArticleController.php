@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Content;
 use App\Models\Admin;   // Delete this, im just using it while i dont put policy to delete Article
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,7 +23,6 @@ class ArticleController extends Controller
      */
     public function index()
     {   
-        
         $articles = Article::orderBy('id')->get();
         return view('pages.articles', ['articles' => $articles]);
     }
@@ -45,8 +45,8 @@ class ArticleController extends Controller
     /**
      * Creates a new Article instance.
      *
-     * @param array $data
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -56,8 +56,8 @@ class ArticleController extends Controller
         
         $validator = Validator::make($request -> all(),
             [
-                'body' => 'required|string',
-                'title' => 'required|string',
+                'body' => 'required|string|min:10',
+                'title' => 'required|string|min:1|max:255',
                 'thumbnail' => 'nullable|file|max:5000'
             ]
             );
@@ -87,7 +87,7 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)//Article $article)
+    public function show(int $id)
     {
         $article = Article::find($id);
         if (is_null($article)) 
@@ -134,8 +134,8 @@ class ArticleController extends Controller
 
         $validator = Validator::make($request -> all(),
         [
-            'body' => 'nullable|string',
-            'title' => 'nullable|string',
+            'body' => 'nullable|string|min:10',
+            'title' => 'nullable|string|min:1|max:255',
             'thumbnail' => 'nullable|file|max:5000'
         ]);
 
@@ -147,8 +147,7 @@ class ArticleController extends Controller
         $content = Content::find($article->content_id);
 
         if (is_null($content)) 
-            return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
-
+            return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
@@ -157,7 +156,7 @@ class ArticleController extends Controller
         $content->save();
         $article->save();
         
-        return redirect("article/${id}");
+        return redirect("/article/${id}");
     }
 
 
@@ -172,18 +171,23 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
         if(is_null($article))
-            return abort(404, 'Article not found, id: '.$id);
+            return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
 
         $content = Content::find($article->content_id);
 
-        $admin = Admin::find($id);
+        $user = Auth::user();
+        $owner_id = $content->author_id;
 
-        // this must be in policy
-        // its not the owner neither an Admin so it can't delete it
-        /*
-        if ($content->author_id != Auth::id() || is_null($admin)) 
-            return redirect()->back();
-        */
+        $has_feedback = ($content->likes != 0 || $content->dislikes != 0);
+        $has_comments = $article->comments()->isEmpty();
+
+        // cannot delete if is not admin and it has feedback and comments
+        /*if (($has_feedback || $has_comments) || !$user->is_admin){
+            return redirect()->back()->withErrors(['content' => "You can't delete an article with likes/dislikes"]);
+        } else if ($user->id != $owner_id || !$user->is_admin) {
+            return redirect()->back()->withErrors(['user' => "You are not the owner of the article so you can't delete it"]);
+        } */
+
         $deleted = $article->delete();
         if ($deleted) 
             return redirect('/articles');
