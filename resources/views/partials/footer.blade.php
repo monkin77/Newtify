@@ -1,9 +1,9 @@
 <footer class="bg-dark text-center text-lg-start py-4">
     <!--Grid row-->
-    <div class="m-0 p-0 row">
+    <div class="row m-0 p-0 w-100">
         <!--Grid column-->
         <div class="col-3 ps-5">
-            <h5 class="text-uppercase">Newtify Logo</h5>
+            <h5 class="text-uppercase ps-1">Newtify Logo</h5>
         </div>
         <div class="col-2">
             <a class="text-uppercase link-secondary" onclick="console.log('cliked')">About Us</a>
