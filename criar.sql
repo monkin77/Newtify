@@ -406,12 +406,12 @@ BEGIN
     IF (OLD.likes != 0 or OLD.dislikes != 0) THEN
         RAISE EXCEPTION 'You cannot delete a content that has likes/dislikes';
     ELSE 
-        IF (OLD.id in (SELECT article_id FROM comment WHERE comment.content_id = OLD.id) OR 
-            OLD.id in (SELECT parent_comment_id FROM comment WHERE comment.parent_comment_id = OLD.id))
+        IF (OLD.content_id in (SELECT article_id FROM comment WHERE comment.content_id = OLD.content_id) OR 
+            OLD.content_id in (SELECT parent_comment_id FROM comment WHERE comment.parent_comment_id = OLD.content_id))
             -- it's an article with comments or a comment with sub comments
             THEN RAISE EXCEPTION 'You cannot delete a content that has comments';
         ELSE 
-            DELETE FROM content WHERE content.id = OLD.id;
+            DELETE FROM content WHERE content.id = OLD.content_id;
         END IF;
     END IF;
     RETURN NULL;
