@@ -1,0 +1,21 @@
+0000000000000000000000000000000000000000 67dd52cf0762b5b97dfb535be1a37c63c3f4705e rui <rui@rui-VirtualBox.(none)> 1638980489 +0000	clone: from https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111.git
+67dd52cf0762b5b97dfb535be1a37c63c3f4705e 83d2f6b00b99ba76ffdf63207f00260e0eefd67a rui <rui@rui-VirtualBox.(none)> 1639324039 +0000	pull: Fast-forward
+83d2f6b00b99ba76ffdf63207f00260e0eefd67a 83d2f6b00b99ba76ffdf63207f00260e0eefd67a rui <rui@rui-VirtualBox.(none)> 1639324051 +0000	checkout: moving from main to modelLaravel
+83d2f6b00b99ba76ffdf63207f00260e0eefd67a 1245eefd278098d277e935137238b75615a48e2a rui <rui@rui-VirtualBox.(none)> 1639324079 +0000	pull origin modelLaravel: Fast-forward
+1245eefd278098d277e935137238b75615a48e2a 83d2f6b00b99ba76ffdf63207f00260e0eefd67a rui <rui@rui-VirtualBox.(none)> 1639406163 +0000	checkout: moving from modelLaravel to main
+83d2f6b00b99ba76ffdf63207f00260e0eefd67a 1245eefd278098d277e935137238b75615a48e2a rui <rui@rui-VirtualBox.(none)> 1639406184 +0000	checkout: moving from main to modelLaravel
+1245eefd278098d277e935137238b75615a48e2a 1245eefd278098d277e935137238b75615a48e2a rui <rui@rui-VirtualBox.(none)> 1639410453 +0000	checkout: moving from modelLaravel to adminController
+1245eefd278098d277e935137238b75615a48e2a a8b460e40aadbe3479882406819bf30b3ca41528 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639416730 +0000	commit: Displaying all articles title from articleController
+a8b460e40aadbe3479882406819bf30b3ca41528 0000000000000000000000000000000000000000 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639416793 +0000	Branch: renamed refs/heads/adminController to refs/heads/articleController
+0000000000000000000000000000000000000000 a8b460e40aadbe3479882406819bf30b3ca41528 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639416793 +0000	Branch: renamed refs/heads/adminController to refs/heads/articleController
+a8b460e40aadbe3479882406819bf30b3ca41528 a8b460e40aadbe3479882406819bf30b3ca41528 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639417886 +0000	reset: moving to HEAD
+a8b460e40aadbe3479882406819bf30b3ca41528 1245eefd278098d277e935137238b75615a48e2a Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639417893 +0000	checkout: moving from articleController to modelLaravel
+1245eefd278098d277e935137238b75615a48e2a 83d2f6b00b99ba76ffdf63207f00260e0eefd67a Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639418000 +0000	checkout: moving from modelLaravel to main
+83d2f6b00b99ba76ffdf63207f00260e0eefd67a 98b6d33120bef904e4fce24f3ee41c7bd7a2ac2b Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639418015 +0000	checkout: moving from main to modelLaravel
+98b6d33120bef904e4fce24f3ee41c7bd7a2ac2b a8b460e40aadbe3479882406819bf30b3ca41528 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639418037 +0000	checkout: moving from modelLaravel to articleController
+a8b460e40aadbe3479882406819bf30b3ca41528 98b6d33120bef904e4fce24f3ee41c7bd7a2ac2b Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639418044 +0000	rebase: checkout modelLaravel
+98b6d33120bef904e4fce24f3ee41c7bd7a2ac2b 26f6fa20a79cad4dad343ccfc0c043b30cf32f00 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639418044 +0000	rebase: Displaying all articles title from articleController
+26f6fa20a79cad4dad343ccfc0c043b30cf32f00 26f6fa20a79cad4dad343ccfc0c043b30cf32f00 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639418044 +0000	rebase finished: returning to refs/heads/articleController
+26f6fa20a79cad4dad343ccfc0c043b30cf32f00 a82fd911065aa5765de3784177d1063eb8dab227 Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639422649 +0000	commit: changed route to default and post action to create an article
+a82fd911065aa5765de3784177d1063eb8dab227 9e9821f82e4bfbba26b94998a28ea1c125e9524c Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639484301 +0000	commit: Added header to /articles page
+9e9821f82e4bfbba26b94998a28ea1c125e9524c 15c0fcf8694a88a8e524208e040c36c95471ba9d Rui Filipe Teixeira Alves <up201905853@fe.up.pt> 1639741258 +0000	commit: Some routes added to article's management
