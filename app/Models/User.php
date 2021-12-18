@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'birth_date',
+        'name', 'email', 'password', 'birth_date', 'country_id', 'avatar', 'city', 'description'
     ];
 
     /**
@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'areas_expertise'
     ];
 
     public function country() {
@@ -92,7 +92,7 @@ class User extends Authenticatable
     }
 
     // Notifications caused by the user's feedback
-    public function feedback_notifications() {
+    public function feedbackNotifications() {
         return $this->hasMany(FeedbackNotification::class, 'fb_giver');
     }
 
@@ -102,5 +102,30 @@ class User extends Authenticatable
 
     public function comments() {
         return Comment::where('author_id', $this->id)->get();
+    }
+
+    public function isFollowing($userId) {
+        $followList = $this->following->where('id', $userId);
+        return count($followList) > 0;
+    }
+
+    public function topAreasExpertise() {
+        return $this->areasExpertise->map(function ($area) {
+            return [
+                'tag_id' => $area->id,
+                'tag_name' => $area->name,
+                'reputation' => $area->pivot->reputation,
+            ];
+        })->sortByDesc('reputation')->take(3);
+    }
+
+    // Gets the info on the suspension with the farthest end_time
+    public function suspensionEndInfo() {
+        $suspension = $this->suspensions->sortByDesc('end_time')->first();
+
+        return [
+            'reason' => $suspension->reason,
+            'end_date' => gmdate('d-m-Y', strtotime($suspension->end_time)),
+        ];
     }
 }

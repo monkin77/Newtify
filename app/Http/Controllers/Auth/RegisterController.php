@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Country;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/cards';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -51,6 +52,10 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:authenticated_user',
             'password' => 'required|string|min:6|confirmed',
+            'birthDate' => 'required|string|date_format:d-m-Y|before:'.date('d-m-Y'), // before today
+            'country' => 'required|string|exists:country,name',
+            'avatar' => 'nullable|file|max:5000', // max 5MB
+            // TODO: File upload
         ]);
     }
 
@@ -62,10 +67,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $countryId = Country::getIdByName($data['country']);
+        $timestamp = strtotime($data['birthDate']);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'birth_date' => gmdate('Y-m-d H:i:s', $timestamp),
+            'country_id' => $countryId,
+            'avatar' => 'https://picsum.photos/200/200'
         ]);
     }
 }

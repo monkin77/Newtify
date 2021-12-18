@@ -22,4 +22,8 @@ class Country extends Model
     public function citizens() {
         return $this->hasMany(User::class);
     }
+
+    public static function getIdByName($name) {
+        return Country::where('name', $name)->first()->id;
+    }
 }

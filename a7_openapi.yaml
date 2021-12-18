@@ -306,9 +306,6 @@ paths:
               properties:
                 reason:
                   type: string
-                reported_at:
-                  type: string
-                  format: date
               required:
                 - reason
 
@@ -352,7 +349,7 @@ paths:
                     format: date
                 example:
                   reason: 'The user was disrespectful in many occasions.'
-                  end_date: '2023-12-04'
+                  end_date: '04-12-2023'
         '401':
           description: 'Unauthorized. Must be authenticated'
         '403':
@@ -421,53 +418,10 @@ paths:
         '404':
           description: 'User not found'
 
-  /api/user/{id}/expertise:
-    get:
-      operationId: R209
-      summary: "R209: User's areas of expertise"
-      description: "Provides a list of the user's best areas of expertise. Access: PUB"
-      tags:
-        - 'M02: Profile and User Information'
-
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-
-      responses:
-        '200':
-          description: 'Success'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    tag_id:
-                      type: integer
-                    tag_name:
-                      type: string
-                    reputation:
-                      type: integer
-                maxItems: 5
-                example:
-                  - tag_id: 2
-                    tag_name: 'Sports'
-                    reputation: 245
-
-                  - tag_id: 7
-                    tag_name: 'Science'
-                    reputation: -25
-        '404':
-          description: 'User not found'
-
   /user/{id}/follow:
     post:
-      operationId: R210
-      summary: 'R210: Follow user action'
+      operationId: R209
+      summary: 'R209: Follow user action'
       description: 'Processes a request to follow another user. Access: USR'
       tags:
         - 'M02: Profile and User Information'
@@ -489,8 +443,8 @@ paths:
 
   /user/{id}/unfollow:
     delete:
-      operationId: R211
-      summary: 'R211: Unfollow user action'
+      operationId: R210
+      summary: 'R210: Unfollow user action'
       description: 'Processes a request to unfollow another user. Access: USR'
       tags:
         - 'M02: Profile and User Information'
@@ -512,10 +466,10 @@ paths:
         '409':
           description: 'Conflict. User not followed'
 
-  /user/search:
+  /search/users:
     get:
-      operationId: R212
-      summary: 'R212 : User search'
+      operationId: R211
+      summary: 'R211 : User search'
       description: 'Provides a page component with a list of users, according to the parameters. Access: PUB'
       tags:
         - 'M02: Profile and User Information'
