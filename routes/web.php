@@ -42,3 +42,7 @@ Route::get('user/{id}/followed', 'UserController@followed');
 Route::get('user/{id}/articles', 'UserController@articles');
 Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
+
+// Tag
+Route::get('tags', 'TagController@index');
+Route::get('favorite_tags', 'TagController@showUserFavorites');
