@@ -274,10 +274,10 @@ You should keep your git master branch always functional and frequently build an
 DB_CONNECTION=pgsql
 DB_HOST=db.fe.up.pt
 DB_PORT=5432
-DB_SCHEMA=lbaw21XX
-DB_DATABASE=lbaw21XX
-DB_USERNAME=lbaw21XX
-DB_PASSWORD=password
+DB_SCHEMA=lbaw2111
+DB_DATABASE=lbaw2111
+DB_USERNAME=lbaw2111
+DB_PASSWORD=PASSWORD
 ```
 
 This demo repository is available at http://template-laravel.lbaw.fe.up.pt/. To view it make sure you are inside FEUP's network or are using the VPN.
