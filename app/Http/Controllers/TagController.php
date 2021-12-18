@@ -9,22 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class TagController extends Controller
 {
     /**
-     * Returns a list of Accepted Tags
-     *
-     * @return List of accepted tags
-     */
-    public function listAcceptedTags()
-    {
-        $tags = Tag::where('state', 'ACCEPTED')->get()->map(function ($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name
-            ];
-        });
-        return $tags;
-    }
-
-    /**
      * Show Page that contains all the tags and the user's favorite tags highlighted.
      *
      * @return View
@@ -42,7 +26,7 @@ class TagController extends Controller
             ];
         });
 
-        $tags = $this->listAcceptedTags();
+        $tags = Tag::listAcceptedTags();
 
         return view('pages.tagsList', [
             'tags' => $tags,
@@ -65,8 +49,19 @@ class TagController extends Controller
             'tag_id' => $tag_id
         ], 404);
 
+        if ($tag->state == 'ACCEPTED')
+            return Response()->json([
+                'status' => 'OK',
+                'msg' => 'Tag was already accepted',
+                'tag_id' => $tag_id
+            ], 200);
+
+        $tag->state = 'ACCEPTED';
+        $tag->save();
+
         return Response()->json([
             'status' => 'OK',
+            'msg' => 'Successfuly accepted tag',
             'tag_id' => $tag_id
         ], 200);
     }

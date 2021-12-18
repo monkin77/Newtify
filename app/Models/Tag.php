@@ -19,19 +19,39 @@ class Tag extends Model
         'state',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function areasExpertise() {
+    public function areasExpertise()
+    {
         return $this->belongsToMany(User::class, 'area_of_expertise')->withPivot('reputation');
     }
 
-    public function favoriteUsers() {
+    public function favoriteUsers()
+    {
         return $this->belongsToMany(User::class, 'favorite_tag');
     }
 
-    public function articleTags() {
+    public function articleTags()
+    {
         return $this->belongsToMany(Article::class, 'article_tag', 'tag_id', 'article_id');
+    }
+
+    /**
+     * Returns a list of Accepted Tags
+     *
+     * @return List of accepted tags
+     */
+    public static function listAcceptedTags()
+    {
+        $tags = Tag::where('state', 'ACCEPTED')->get()->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name
+            ];
+        });
+        return $tags;
     }
 }
