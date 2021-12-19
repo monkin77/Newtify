@@ -198,6 +198,39 @@ class TagController extends Controller
         ]);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(int $id)
+    {
+        $this->authorize('destroy', Tag::class);
+
+        $tag = Tag::find($id);
+
+        if (is_null($tag))
+            return Response()->json([
+                'status' => 'NOT FOUND',
+                'tag_id' => $id
+            ], 404);
+
+        $deleted = $tag->delete();
+        if (!$deleted)
+            return Response()->json([
+                'status' => 'Internal Server Error',
+                'msg' => 'There was an error deleting the tag with id ' . $id,
+            ], 500);
+
+        return Response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfuly removed tag',
+            'tag_id' => $id,
+        ], 200);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -250,17 +283,6 @@ class TagController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tag $tag)
     {
         //
     }
