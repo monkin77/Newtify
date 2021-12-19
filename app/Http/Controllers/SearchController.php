@@ -6,9 +6,38 @@ use App\Models\User;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class SearchController extends Controller
 {
+    public function show(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'type' => ['required', 'string', Rule::in(['articles', 'users'])],
+            'query' => 'required|string',
+        ]);
+
+        /* 
+        Errors are handled inside the search page
+        See https://stackoverflow.com/questions/49451167/laravel-5-get-the-http-status-code-from-blade-view
+        */
+        if ($validator->fails())
+            return response()->view('pages.search', [
+                'errors' => $validator->errors()
+            ])->setStatusCode(400);
+
+        if ($request->type === 'articles')
+            $results = $this->getArticleSearch($request->input('query'), 0, 10);
+        else if ($request->type === 'users')
+            $results = $this->getUserSearch($request->input('query'), 0, 10);
+
+        return view('pages.search', [
+            'type' => $request->type,
+            'query' => $request->query,
+            'results' => $results,
+        ]);
+    }
+
     public function searchUsers(Request $request)
     {
         $validator = Validator::make($request->all(), [
