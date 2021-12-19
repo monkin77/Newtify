@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
+    const tagStates = [
+        'accepted' => 'ACCEPTED',
+        'rejected' => 'REJECTED',
+        'pending' => 'PENDING'
+    ];
+
     /**
      * Show Page that contains all the tags and the user's favorite tags highlighted.
      *
@@ -26,7 +32,12 @@ class TagController extends Controller
             ];
         });
 
-        $tags = Tag::listAcceptedTags();
+        $tags = Tag::listTagsByState(self::tagStates['accepted'])->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name
+            ];
+        });
 
         return view('pages.tagsList', [
             'tags' => $tags,
@@ -98,6 +109,10 @@ class TagController extends Controller
         ], 200);
     }
 
+    /**
+     * Add a tag to the currently authenticated user's favorite tags
+     * @return \Illuminate\Http\Response 
+     */
     public function addUserFavorite($tag_id)
     {
         $this->authorize('addFavorite', Tag::class);
@@ -127,6 +142,10 @@ class TagController extends Controller
         ], 200);
     }
 
+    /**
+     * Add a tag to the currently authenticated user's favorite tags
+     * @return \Illuminate\Http\Response 
+     */
     public function removeUserFavorite($tag_id)
     {
         $this->authorize('removeFavorite', Tag::class);
@@ -156,7 +175,28 @@ class TagController extends Controller
         ], 200);
     }
 
+    public function showFilteredTags($tag_state)
+    {
+        $this->authorize('showFilteredTags', Tag::class);
 
+        $tags = Tag::listTagsByState(self::tagStates[$tag_state])->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'proposed_at' => $tag->proposed_at,
+                'state' => $tag->state,
+                'user' => [
+                    'id' => $tag->user_id,
+                    'name' => $tag->user->name,
+                    'avatar' => $tag->user->avatar
+                ]
+            ];
+        });
+
+        return view('partials.tagsList', [
+            'tags' => $tags,
+        ]);
+    }
 
 
     /**

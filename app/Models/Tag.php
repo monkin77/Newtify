@@ -40,19 +40,13 @@ class Tag extends Model
     }
 
     /**
-     * Returns a list of Accepted Tags
+     * Returns the list of tags in a certain state
      *
-     * @return List of accepted tags
+     * @return List of tags
      */
-    public static function listAcceptedTags()
+    public static function listTagsByState($tag_state)
     {
-        $tags = Tag::where('state', 'ACCEPTED')->get()->map(function ($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name
-            ];
-        });
-        return $tags;
+        return Tag::where('state', $tag_state)->get();
     }
 
     /**
@@ -62,6 +56,7 @@ class Tag extends Model
     public function isFavorite($user_id)
     {
         $favoriteList = $this->favoriteUsers->where('id', $user_id);
+        echo $favoriteList;
         return count($favoriteList) > 0;
     }
 }

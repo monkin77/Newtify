@@ -49,6 +49,11 @@ class TagPolicy
         return Auth::check();
     }
 
+    public function showFilteredTags(User $user)
+    {
+        return $user->is_admin;
+    }
+
 
 
 

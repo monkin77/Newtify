@@ -44,9 +44,10 @@ Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
 
 // Tag
-Route::get('tags', 'TagController@listAcceptedTags');
+// Route::get('tags', 'TagController@listAcceptedTags');    I don't think we need this since tags are only shown to users either on homepage or by the next endpoint 'showUserFavorites'
 Route::get('favorite_tags', 'TagController@showUserFavorites');
 Route::put('tags/{tag_id}/accept', 'TagController@accept');
 Route::put('tags/{tag_id}/reject', 'TagController@reject');
 Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite');
 Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');
+Route::get('tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
