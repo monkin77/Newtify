@@ -47,3 +47,4 @@ Route::post('user/{id}/unfollow', 'UserController@unfollow');
 Route::get('tags', 'TagController@listAcceptedTags');
 Route::get('favorite_tags', 'TagController@showUserFavorites');
 Route::put('tags/{tag_id}/accept', 'TagController@accept');
+Route::put('tags/{tag_id}/reject', 'TagController@reject');

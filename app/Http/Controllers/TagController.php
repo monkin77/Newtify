@@ -67,6 +67,39 @@ class TagController extends Controller
     }
 
     /**
+     * Reject a Tag
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reject(int $tag_id)
+    {
+        $this->authorize('reject', Tag::class);
+
+        $tag = Tag::find($tag_id);
+        if (is_null($tag)) return Response()->json([
+            'status' => 'NOT FOUND',
+            'tag_id' => $tag_id
+        ], 404);
+
+        if ($tag->state == 'REJECTED')
+            return Response()->json([
+                'status' => 'OK',
+                'msg' => 'Tag was already rejected',
+                'tag_id' => $tag_id
+            ], 200);
+
+        $tag->state = 'REJECTED';
+        $tag->save();
+
+        return Response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfuly rejected tag',
+            'tag_id' => $tag_id
+        ], 200);
+    }
+
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

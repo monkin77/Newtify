@@ -23,6 +23,17 @@ class TagPolicy
     }
 
     /**
+     * Determine whether the user can reject a tag.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reject(User $user)
+    {
+        return $user->is_admin;
+    }
+
+    /**
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
