@@ -48,3 +48,5 @@ Route::get('tags', 'TagController@listAcceptedTags');
 Route::get('favorite_tags', 'TagController@showUserFavorites');
 Route::put('tags/{tag_id}/accept', 'TagController@accept');
 Route::put('tags/{tag_id}/reject', 'TagController@reject');
+Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite');
+Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');

@@ -34,6 +34,25 @@ class TagPolicy
     }
 
     /**
+     * Determine whether the user can add a tag to its favorites
+     */
+    public function addFavorite(User $user)
+    {
+        return Auth::check();
+    }
+
+    /**
+     * Determine whether the user can add a tag to its favorites
+     */
+    public function removeFavorite(User $user)
+    {
+        return Auth::check();
+    }
+
+
+
+
+    /**
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user

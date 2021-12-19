@@ -98,6 +98,66 @@ class TagController extends Controller
         ], 200);
     }
 
+    public function addUserFavorite($tag_id)
+    {
+        $this->authorize('addFavorite', Tag::class);
+
+        $tag = Tag::find($tag_id);
+        if (is_null($tag)) return Response()->json([
+            'status' => 'NOT FOUND',
+            'tag_id' => $tag_id
+        ], 404);
+
+        $user = Auth::user();
+
+        if ($tag->isFavorite($user->id))
+            return Response()->json([
+                'status' => 'OK',
+                'msg' => 'Tag already added to favorites, id: ' . $tag_id,
+            ], 200);
+
+
+
+        $tag->favoriteUsers()->attach($user->id);
+
+        return Response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfuly added tag to user favorites',
+            'tag_id' => $tag_id,
+        ], 200);
+    }
+
+    public function removeUserFavorite($tag_id)
+    {
+        $this->authorize('removeFavorite', Tag::class);
+
+        $tag = Tag::find($tag_id);
+        if (is_null($tag)) return Response()->json([
+            'status' => 'NOT FOUND',
+            'tag_id' => $tag_id
+        ], 404);
+
+        $user = Auth::user();
+
+        if (!$tag->isFavorite($user->id))
+            return Response()->json([
+                'status' => 'OK',
+                'msg' => 'Tag was not a favorite, id: ' . $tag_id,
+            ], 200);
+
+
+
+        $tag->favoriteUsers()->detach($user->id);
+
+        return Response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfuly removed tag from user favorites',
+            'tag_id' => $tag_id,
+        ], 200);
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.

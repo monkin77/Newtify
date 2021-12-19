@@ -54,4 +54,14 @@ class Tag extends Model
         });
         return $tags;
     }
+
+    /**
+     * Checks if a user already has a tag as favorite
+     * @return Bool
+     */
+    public function isFavorite($user_id)
+    {
+        $favoriteList = $this->favoriteUsers->where('id', $user_id);
+        return count($favoriteList) > 0;
+    }
 }
