@@ -29,6 +29,10 @@ class Article extends Content
         });
     }
 
+    public function comments() {
+      return $this->hasMany(Comment::class, 'article_id');
+    }
+
     public function content() {
       return $this->belongsTo(Content::class);
     }

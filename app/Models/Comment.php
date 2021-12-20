@@ -27,6 +27,10 @@ class Comment extends Content
         });
     }
 
+    public function article() {
+      return $this->belongsTo(Article::class, 'article_id');
+    }
+
     public function content() {
       return $this->belongsTo(Content::class);
     }
