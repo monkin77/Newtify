@@ -155,7 +155,7 @@ class ArticleController extends Controller
                 'authorName' => $author->name,
                 'authorAvatar' => $author->avatar,  
             ];
-        })->sortByDesc('published_at')->take(5);
+        })->sortByDesc('published_at')->take(10);
 
         $tags = $article->articleTags()->get()->map(function($tag){
             return [
@@ -211,8 +211,8 @@ class ArticleController extends Controller
             'body' => 'nullable|string|min:10',
             'title' => 'nullable|string|min:1|max:255',
             'thumbnail' => 'nullable|file|max:5000',
-            'tags' => 'required|array|min:1|max:3',
-            'tags.*' => 'required|integer|min:0',
+            'tags' => 'nullable|array|min:1|max:3',
+            'tags.*' => 'nullable|integer|min:0',
         ]);
 
         if ( $validator->fails() ) {
@@ -220,12 +220,31 @@ class ArticleController extends Controller
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
+        
+
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
         if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
-
+        
+        $content->body = $request->body;
+        $content->author_id = Auth::id();
         $content->save();
+        
+        $article->content_id = $content->id;
+        $article->title = $request->title;
         $article->save();
+
+        if (isset($request->tags)) {
+            foreach($request->tags as $tag) {
+                $checkTag = Tag::find($tag);
+                //check if is valid tag
+                if (!$checkTag) {
+                    return redirect()->back()->withInput()->withErrors($request);
+                }
+            }
+            $article->articleTags()->sync($request->tags);
+        }
+
         
         return redirect("/article/${id}");
     }
