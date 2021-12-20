@@ -19,7 +19,6 @@
     </script>
     <script type="text/javascript" src={{ asset('js/app.js') }} defer>
     </script>
-    @include('partials.header')
   </head>
 
   <body>

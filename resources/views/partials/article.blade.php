@@ -1,2 +1,1 @@
-<p> {{ $article->title }} <b> {{ $article->content_id }} </b> </p>
-
+<p> {{ $article['title'] }} <b> {{ $article['body'] }} </b> </p>

@@ -634,19 +634,18 @@ paths:
         - 'M03: Articles'
 
       responses:
+        '200':
+          description: 'Ok. Show Create Article Form (UI17)'
         '302':
-          description: 'Redirect to create article form.'
+          description: 'Redirect after trying to get Create Article Form'
           headers:
             Location:
               schema:
                 type: string  
               examples:
-                302Success:
-                  description: 'You can create an Article. Show Create Article form (UI17)'
-                  value: '/article'
                 302Failure:
-                  description: 'You aren't logged in, so you can't create an Article. Redirect to Login page.'
-                  value: '/login'
+                  description: 'You are not logged in. Failed article creation. Redirect to login Page.'
+                  value: '/login' 
 
     post:
       operationId: R306

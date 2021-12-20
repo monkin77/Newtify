@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Admin;   // Delete this, im just using it while i dont put policy to delete Article
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +24,23 @@ class ArticleController extends Controller
      */
     public function index()
     {   
-        $articles = Article::orderBy('id')->get();
-        return view('pages.articles', ['articles' => $articles]);
+        //$articles = Article::orderBy('id')->get();
+        $articles = Article::get();
+        
+        // Should i check if its the owner and send information about that
+        // in order to place an edit button in the blade page?
+        $articlesInfo = $articles->map(function ($article) {
+            return [
+            'title' => $article->title,
+            'thumbnail' => $article->thumbnail,
+            'body' => $article->body,
+            'published_at' => $article->published_at,
+            'likes' => $article->likes,
+            'dislikes' => $article->dislikes,
+            ];
+        })->sortByDesc('published_at')->take(5);
+
+        return view('pages.articles', ['articles' => $articlesInfo]);
     }
 
     /**
@@ -70,12 +86,13 @@ class ArticleController extends Controller
         $content = new Content;
         $content->body = $request->body;
         $content->author_id = Auth::id();
-        $content->save();
 
         $article = new Article;
         
         $article->content_id = $content->id;
         $article->title = $request->title;
+
+        $content->save();
         $article->save();
 
         return redirect("/article/$article->content_id");
@@ -95,9 +112,48 @@ class ArticleController extends Controller
 
         // Should i check if its the owner and send information about that
         // in order to place an edit button in the blade page?
+        $articleInfo = [
+            'title' => $article->title,
+            'thumbnail' => $article->thumbnail,
+            'body' => $article->body,
+            'published_at' => $article->published_at,
+            'likes' => $article->likes,
+            'dislikes' => $article->dislikes,
+            'tags' => $article->articleTags(),
+        ];
+
+        $author = $article->author()->first();
+        $authorInfo = [
+            'id' => $author->id,
+            'name' => $author->name,
+            'avatar' => $author->avatar,
+            'country' => $author->country,
+            'city' => $author->city,
+            'isAdmin' => $author->is_admin,
+            'description' => $author->description,
+            'isSuspended' => $author->is_suspended,
+            'reputation' => $author->reputation,
+            'topAreasExpertise' => $author->topAreasExpertise(),
+        ];
+
+        // we could do the "load more" thing for comments to?
+        $comments = $article->comments()->map(function ($comment) {
+            $author = $comment->author()->first();
+            return [
+                'body' => $comment->body,
+                'likes' => $comment->likes,
+                'dislikes' => $comment->dislikes,
+                'authorId' => $author->id,  //for edit key
+                'authorName' => $author->name,
+                'authorAvatar' => $author->avatar,  
+            ];
+        })->sortByDesc('published_at')->take(5);
+
 
         return view('pages.article', [
-            'article' => $article
+            'article' => $articleInfo,
+            'author' => $authorInfo,
+            'comments' => $comments
         ]);
     }
 
@@ -132,6 +188,10 @@ class ArticleController extends Controller
         if (is_null($article)) 
             return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
 
+        $content = Content::find($article->content_id);
+        if (is_null($content)) 
+            return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
+
         $validator = Validator::make($request -> all(),
         [
             'body' => 'nullable|string|min:10',
@@ -143,11 +203,6 @@ class ArticleController extends Controller
             // go back to form and refill it
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
-
-        $content = Content::find($article->content_id);
-
-        if (is_null($content)) 
-            return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
@@ -174,6 +229,8 @@ class ArticleController extends Controller
             return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
 
         $content = Content::find($article->content_id);
+        if (is_null($content)) 
+            return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
         $user = Auth::user();
         $owner_id = $content->author_id;
