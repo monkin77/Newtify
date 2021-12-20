@@ -65,7 +65,7 @@ class ArticleController extends Controller
     public function create(Request $request)
     {
         if (Auth::guest()) {
-            return redirect('/articles');
+            return redirect('/article/1');
         }
         
         $validator = Validator::make($request -> all(),
@@ -74,7 +74,7 @@ class ArticleController extends Controller
                 'title' => 'required|string|min:1|max:255',
                 'thumbnail' => 'nullable|file|max:5000',
                 'tags' => 'required|array|min:1|max:3',
-                'tags.*' => 'required|integer|min:0',
+                'tags.*' => 'required|integer|distinct|min:0',
             ]
             );
 
@@ -86,7 +86,7 @@ class ArticleController extends Controller
         foreach($request->tags as $tag) {
             $checkTag = Tag::find($tag);
             //check if is valid tag
-            if ($checkTag->isEmpty()) {
+            if (!$checkTag) {
                 return redirect()->back()->withInput()->withErrors($request);
             }
         }
@@ -94,15 +94,15 @@ class ArticleController extends Controller
         $content = new Content;
         $content->body = $request->body;
         $content->author_id = Auth::id();
+        $content->save();
 
         $article = new Article;
         
         $article->content_id = $content->id;
         $article->title = $request->title;
-        $article->articleTags()->sync($request->tags);
-
-        $content->save();
         $article->save();
+
+        $article->articleTags()->sync($request->tags);
 
         return redirect("/article/$article->content_id");
     }
@@ -161,8 +161,7 @@ class ArticleController extends Controller
             return [
                 'name' => $tag->name,
             ];
-        })->sortByDesc('name');
-
+        })->sortBy('name');
 
         return view('pages.article', [
             'article' => $articleInfo,
