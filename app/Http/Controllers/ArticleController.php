@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Content;
-use App\Models\Admin;   // Delete this, im just using it while i dont put policy to delete Article
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -16,9 +16,7 @@ class ArticleController extends Controller
 {
 
     /**
-     * Gets all the articles by id.
-     * Probably change this in order to get just a few articles
-     * Order by a filter.
+     * Gets all the articles.
      * 
      * @return \Illuminate\Http\Response
      */
@@ -74,13 +72,23 @@ class ArticleController extends Controller
             [
                 'body' => 'required|string|min:10',
                 'title' => 'required|string|min:1|max:255',
-                'thumbnail' => 'nullable|file|max:5000'
+                'thumbnail' => 'nullable|file|max:5000',
+                'tags' => 'required|array|min:1|max:3',
+                'tags.*' => 'required|integer|min:0',
             ]
             );
 
         if ( $validator->fails() ) {
             // go back to form and refill it
             return redirect()->back()->withInput()->withErrors($request);
+        }
+
+        foreach($request->tags as $tag) {
+            $checkTag = Tag::find($tag);
+            //check if is valid tag
+            if ($checkTag->isEmpty()) {
+                return redirect()->back()->withInput()->withErrors($request);
+            }
         }
         
         $content = new Content;
@@ -91,6 +99,7 @@ class ArticleController extends Controller
         
         $article->content_id = $content->id;
         $article->title = $request->title;
+        $article->articleTags()->sync($request->tags);
 
         $content->save();
         $article->save();
@@ -119,7 +128,6 @@ class ArticleController extends Controller
             'published_at' => $article->published_at,
             'likes' => $article->likes,
             'dislikes' => $article->dislikes,
-            'tags' => $article->articleTags(),
         ];
 
         $author = $article->author()->first();
@@ -149,11 +157,18 @@ class ArticleController extends Controller
             ];
         })->sortByDesc('published_at')->take(5);
 
+        $tags = $article->articleTags()->get()->map(function($tag){
+            return [
+                'name' => $tag->name,
+            ];
+        })->sortByDesc('name');
+
 
         return view('pages.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
-            'comments' => $comments
+            'comments' => $comments,
+            'tags' => $tags,
         ]);
     }
 
@@ -196,7 +211,9 @@ class ArticleController extends Controller
         [
             'body' => 'nullable|string|min:10',
             'title' => 'nullable|string|min:1|max:255',
-            'thumbnail' => 'nullable|file|max:5000'
+            'thumbnail' => 'nullable|file|max:5000',
+            'tags' => 'required|array|min:1|max:3',
+            'tags.*' => 'required|integer|min:0',
         ]);
 
         if ( $validator->fails() ) {

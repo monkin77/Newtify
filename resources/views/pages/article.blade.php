@@ -6,3 +6,7 @@
 @foreach ($comments as $comment)
     <p> Comentario: {{ $comment['body'] }} </p>
 @endforeach
+
+@foreach ($tags as $tag)
+    <p> Tag: {{ $tag['name'] }} </p>
+@endforeach
