@@ -145,7 +145,7 @@ class ArticleController extends Controller
         $is_author = $author->id == Auth::id() ? true : false;
 
         // we could do the "load more" thing for comments to?
-        $comments = $article->comments()->map(function ($comment) {
+        $comments = $article->comments->map(function ($comment) {
             $author = $comment->author()->first();
             return [
                 'body' => $comment->body,

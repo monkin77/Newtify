@@ -37,10 +37,6 @@ class Article extends Content
       return $this->belongsTo(Content::class);
     }
 
-    public function comments() {
-      return Comment::where('article_id', $this->content_id)->get();
-    }
-
     public function articleTags() {
       return $this->belongsToMany(Tag::class, 'article_tag', 'article_id', 'tag_id');
     }
