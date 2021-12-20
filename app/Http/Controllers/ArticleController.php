@@ -93,9 +93,10 @@ class ArticleController extends Controller
         $content->save();
 
         $article = new Article;
-        
+        if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
         $article->content_id = $content->id;
         $article->title = $request->title;
+
         $article->save();
 
         $article->articleTags()->sync($request->tags);
