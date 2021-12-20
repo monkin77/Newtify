@@ -22,11 +22,8 @@ class ArticleController extends Controller
      */
     public function index()
     {   
-        //$articles = Article::orderBy('id')->get();
         $articles = Article::get();
         
-        // Should i check if its the owner and send information about that
-        // in order to place an edit button in the blade page?
         $articlesInfo = $articles->map(function ($article) {
             return [
             'title' => $article->title,
@@ -48,7 +45,6 @@ class ArticleController extends Controller
      */
     public function createForm() 
     {
-        // do this in policy (?)
         if (Auth::guest()) {
             return redirect('/login');
         }
@@ -142,7 +138,7 @@ class ArticleController extends Controller
             'topAreasExpertise' => $author->topAreasExpertise(),
         ];
 
-        $is_author = $author->id == Auth::id() ? true : false;
+        $is_author = $author->id === Auth::id() ? true : false;
 
         // we could do the "load more" thing for comments to?
         $comments = $article->comments->map(function ($comment) {
@@ -184,6 +180,8 @@ class ArticleController extends Controller
         if (is_null($article)) 
             return abort(404, 'Article not found, id: '.$id);
 
+        $this->authorize('update', $article);
+
         $articleInfo = [
             'content_id' => $article->content_id,
             'title' => $article->title,
@@ -213,6 +211,8 @@ class ArticleController extends Controller
         if (is_null($content)) 
             return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
+        $this->authorize('update', $article);
+
         $validator = Validator::make($request -> all(),
         [
             'body' => 'nullable|string|min:10',
@@ -231,7 +231,6 @@ class ArticleController extends Controller
         if (isset($request->title)) $article->title = $request->title;
         if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
         
-        $content->body = $request->body;
         $content->author_id = Auth::id();
         $content->save();
         
@@ -249,7 +248,6 @@ class ArticleController extends Controller
             }
             $article->articleTags()->sync($request->tags);
         }
-
         
         return redirect("/article/${id}");
     }
@@ -271,6 +269,8 @@ class ArticleController extends Controller
         $content = Content::find($article->content_id);
         if (is_null($content)) 
             return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
+
+        $this->authorize('delete', $article);
 
         $user = Auth::user();
         $owner_id = $content->author_id;
