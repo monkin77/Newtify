@@ -119,8 +119,6 @@ class ArticleController extends Controller
         if (is_null($article)) 
             return abort(404, 'Article not found, id: '.$id);
 
-        // Should i check if its the owner and send information about that
-        // in order to place an edit button in the blade page?
         $articleInfo = [
             'title' => $article->title,
             'thumbnail' => $article->thumbnail,
@@ -143,6 +141,8 @@ class ArticleController extends Controller
             'reputation' => $author->reputation,
             'topAreasExpertise' => $author->topAreasExpertise(),
         ];
+
+        $is_author = $author->id == Auth::id() ? true : false;
 
         // we could do the "load more" thing for comments to?
         $comments = $article->comments()->map(function ($comment) {
@@ -168,6 +168,7 @@ class ArticleController extends Controller
             'author' => $authorInfo,
             'comments' => $comments,
             'tags' => $tags,
+            'is_author' => $is_author,
         ]);
     }
 
@@ -183,9 +184,15 @@ class ArticleController extends Controller
         if (is_null($article)) 
             return abort(404, 'Article not found, id: '.$id);
 
-        // should we check if the user is the owner here?
+        $articleInfo = [
+            'content_id' => $article->content_id,
+            'title' => $article->title,
+            'thumbnail' => $article->thumbnail,
+            'body' => $article->body,
+        ];
+
         return view('pages.edit_article', [
-            'article' => $article
+            'article' => $articleInfo
         ]);
     }
 
@@ -219,8 +226,6 @@ class ArticleController extends Controller
             // go back to form and refill it
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
-
-        
 
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
@@ -275,9 +280,9 @@ class ArticleController extends Controller
 
         // cannot delete if is not admin or it has feedback and comments
         if (($has_feedback || $has_comments) && !$user->is_admin){
-            return redirect()->back()->withErrors(['content' => "You can't delete an article with likes/dislikes"]);
+            return redirect()->back()->withErrors(['content' => "You can't delete an article with feedback"]);
         } else if ($user->id != $owner_id && !$user->is_admin) {
-            return redirect()->back()->withErrors(['user' => "You are not the owner of the article so you can't delete it"]);
+            return redirect()->back()->withErrors(['user' => "Only the owner of the article can delete it"]);
         } 
 
         $deleted = $article->delete();
