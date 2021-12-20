@@ -235,7 +235,6 @@ class ArticleController extends Controller
         $content->save();
         
         $article->content_id = $content->id;
-        $article->title = $request->title;
         $article->save();
 
         if (isset($request->tags)) {
