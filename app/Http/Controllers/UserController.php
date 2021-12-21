@@ -79,6 +79,8 @@ class UserController extends Controller
         if (is_null($user))
             return abort(404, 'User not found, id: '.$id);
 
+        $this->authorize('update', $user);
+
         return view('pages.edit_profile');
     }
 
@@ -94,6 +96,8 @@ class UserController extends Controller
         $user = User::find($id);
         if (is_null($user))
             return redirect()->back()->withErrors(['user' => 'User not found, id: '.$id]);
+
+        $this->authorize('update', $user);
 
         $validator = Validator::make($request->all(),[
             'name' => 'nullable|string|max:255',
@@ -132,7 +136,7 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, int $id) : RedirectResponse
+    public function delete(Request $request, int $id) : RedirectResponse
     {
         $user = User::find($id);
         if (is_null($user))
@@ -144,6 +148,8 @@ class UserController extends Controller
 
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors());
+
+        
 
         $deleted = $user->delete();
         if ($deleted)
@@ -168,6 +174,8 @@ class UserController extends Controller
                 'msg' => 'User not found, id: '.$id,
                 'errors' => ['user' => 'User not found, id: '.$id]
             ], 404);
+
+        $this->authorize('report', $user);
 
         $validator = Validator::make($request->all(),[
             'reason' => 'required|string|min:5|max:200',
@@ -210,6 +218,8 @@ class UserController extends Controller
                 'errors' => ['user' => 'User not found, id: '.$id]
             ], 404);
 
+        $this->authorize('suspension', $user);
+
         if (!$user->is_suspended)
             return response()->json([
                 'status' => 'Conflict',
@@ -231,6 +241,8 @@ class UserController extends Controller
         $user = User::find($id);
         if (is_null($user))
             return abort(404, 'User not found, id: '.$id);
+
+        $this->authorize('followed', $user);
 
         $followedUsers = $user->following->map(function ($user) {
             return [
@@ -311,6 +323,8 @@ class UserController extends Controller
                 'errors' => ['user' => 'User not found, id: '.$id]
             ], 404);
 
+        $this->authorize('follow', $userToFollow);
+
         if (Auth::user()->isFollowing($id))
             return response()->json([
                 'status' => 'OK',
@@ -334,6 +348,8 @@ class UserController extends Controller
                 'msg' => 'User not found, id: '.$id,
                 'errors' => ['user' => 'User not found, id: '.$id]
             ], 404);
+
+        $this->authorize('unfollow', $userToUnfollow);
 
         if (!Auth::user()->isFollowing($id))
             return response()->json([
