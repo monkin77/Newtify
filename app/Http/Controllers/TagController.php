@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use \Illuminate\Database\QueryException;
 
 class TagController extends Controller
 {
@@ -230,60 +232,44 @@ class TagController extends Controller
         ], 200);
     }
 
-
-
     /**
-     * Show the form for creating a new resource.
+     * Propose a new Tag.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function propose(Request $request)
     {
-        //
-    }
+        $this->authorize('propose', Tag::class);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'tag_name' => 'required|string|min:2'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tag $tag)
-    {
-        //
-    }
+        if ($validator->fails()) {
+            return Response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to propose a new tag. Bad Request',
+            ], 400);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tag $tag)
-    {
-        //
-    }
+        $tag = new Tag;
+        $tag->name = $request->tag_name;
+        $tag->user_id = Auth::id();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tag $tag)
-    {
-        //
+        try {
+            $tag->save();
+        } catch (QueryException $ex) {
+            return Response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to propose a new tag. There is already a Tag with that name.',
+            ], 400);
+        }
+
+
+        return Response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfuly proposed tag',
+            'tag_name' => $request->tag_name,
+        ], 200);
     }
 }
