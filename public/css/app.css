@@ -15,3 +15,18 @@ body {
     left: -30%;
     font-size: large; /* fontSize impacts the icon size */
 }
+
+/* Partial Article, just putting here for now then we change */
+
+#articles .card-title i {
+    margin-left: 10px;
+    font-size: medium;
+}
+
+#articles .card {
+    margin-bottom: 15px;
+}
+
+#articles .card-block:hover {
+    background-color: lightgray;
+}

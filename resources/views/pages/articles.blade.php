@@ -2,7 +2,7 @@
 
 @section('title', 'Articles')
 
-@section('content')
+@section('articles')
 
 <section id="articles">
   @foreach($articles as $article)

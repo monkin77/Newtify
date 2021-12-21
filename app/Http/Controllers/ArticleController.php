@@ -67,7 +67,7 @@ class ArticleController extends Controller
         $validator = Validator::make($request -> all(),
             [
                 'body' => 'required|string|min:10',
-                'title' => 'required|string|min:1|max:255',
+                'title' => 'required|string|min:3|max:255',
                 'thumbnail' => 'nullable|file|max:5000',
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|integer|distinct|min:0',
