@@ -27,6 +27,8 @@
 
         @yield('articles')
 
+        @yield('load-more')
+
         @include('partials.footer')
     </main>
     

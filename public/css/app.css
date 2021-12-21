@@ -28,7 +28,10 @@ body {
     font-size: medium;
 }
 
-
 #articles .card:hover {
     background-color: lightgray;
+}
+
+#load-more {
+    text-align: center;
 }

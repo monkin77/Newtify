@@ -33,3 +33,12 @@ $tagline = 'Que rego amiguinho'
 
 </section>
 @endsection
+
+
+@section('load-more')
+<div id="load-more">
+
+    <button>Load more</button>
+
+</div>
+@endsection
