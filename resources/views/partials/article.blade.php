@@ -1,6 +1,6 @@
 <div class="card flex-row flex-wrap" >
     <div class="card-header border-0" style="width: 20%;">
-        <img src="{{ $article['thumbnail'] }}" class="card-img-top" style="width: 100%;">
+        <img src="{{ $article['thumbnail'] }}" style="width: 100%;">
     </div>
     
     <div class="card-block d-flex flex-column px-2" style="width: 80%;" >
