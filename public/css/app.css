@@ -18,16 +18,21 @@ body {
 
 /* Partial Article, just putting here for now then we change */
 
+<<<<<<< HEAD
 #articles .card {
     margin-bottom: 15px;
     border-radius: 1rem;
 }
 
 #articles .card .card-title i {
+=======
+#articles .card-title i {
+>>>>>>> Articles in homepage added
     margin-left: 10px;
     font-size: medium;
 }
 
+<<<<<<< HEAD
 #articles .card a {
     width: 80%;
     color: gray;
@@ -77,3 +82,12 @@ body {
     font-size: small;
     text-align: center;
 }
+=======
+#articles .card {
+    margin-bottom: 15px;
+}
+
+#articles .card-block:hover {
+    background-color: lightgray;
+}
+>>>>>>> Articles in homepage added

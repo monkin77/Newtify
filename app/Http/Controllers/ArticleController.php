@@ -93,7 +93,10 @@ class ArticleController extends Controller
         $content->save();
 
         $article = new Article;
+<<<<<<< HEAD
         if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
+=======
+>>>>>>> Articles in homepage added
         $article->content_id = $content->id;
         $article->title = $request->title;
 
