@@ -19,19 +19,44 @@ class Tag extends Model
         'state',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function areasExpertise() {
+    public function areasExpertise()
+    {
         return $this->belongsToMany(User::class, 'area_of_expertise')->withPivot('reputation');
     }
 
-    public function favoriteUsers() {
+    public function favoriteUsers()
+    {
         return $this->belongsToMany(User::class, 'favorite_tag');
     }
 
-    public function articleTags() {
+    public function articleTags()
+    {
         return $this->belongsToMany(Article::class, 'article_tag', 'tag_id', 'article_id');
+    }
+
+    /**
+     * Returns the list of tags in a certain state
+     *
+     * @return List of tags
+     */
+    public static function listTagsByState($tag_state)
+    {
+        return Tag::where('state', $tag_state)->get();
+    }
+
+    /**
+     * Checks if a user already has a tag as favorite
+     * @return Bool
+     */
+    public function isFavorite($user_id)
+    {
+        $favoriteList = $this->favoriteUsers->where('id', $user_id);
+        echo $favoriteList;
+        return count($favoriteList) > 0;
     }
 }
