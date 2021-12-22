@@ -276,7 +276,7 @@ class ArticleController extends Controller
         $owner_id = $content->author_id;
 
         $has_feedback = ($content->likes != 0 || $content->dislikes != 0);
-        $has_comments = !$article->comments()->isEmpty();
+        $has_comments = !$article->comments->isEmpty();
 
         // cannot delete if is not admin or it has feedback and comments
         if (($has_feedback || $has_comments) && !$user->is_admin){
