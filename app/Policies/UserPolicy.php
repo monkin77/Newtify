@@ -105,4 +105,15 @@ class UserPolicy
     {
         return $user->is_admin && !$userToSuspend->is_admin;
     }
+
+    /**
+     * Determine whether the user can unsuspend other users.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function unsuspendUser(User $user, User $userToUnsuspend)
+    {
+        return $user->is_admin && !$userToUnsuspend->is_admin;
+    }
 }

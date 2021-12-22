@@ -126,7 +126,6 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(),[
             'reason' => 'required|string|min:5|max:200',
-            'start_time' => 'nullable|string|date_format:d-m-Y H:i:s|after:'.date('d-m-Y H:i:s'),
             'end_time' => 'required|string|date_format:d-m-Y H:i:s',
         ]);
 
@@ -137,15 +136,14 @@ class AdminController extends Controller
                 'errors' => $validator->errors(),
             ], 400);
 
-        if (isset($request->start_time)) $start_timestamp = strtotime($request->start_time);
-        else $start_timestamp = time();
+        $start_timestamp = time();
         $end_timestamp = strtotime($request->end_time);
 
         if ($start_timestamp >= $end_timestamp)
             return response()->json([
                 'status' => 'Bad Request',
                 'msg' => 'Failed to suspend user. Bad request',
-                'errors' => ['end_time' => 'End time must be after start time'],
+                'errors' => ['end_time' => 'End time must be after now'],
             ], 400);
 
         $suspension = new Suspension();
@@ -164,6 +162,44 @@ class AdminController extends Controller
             'status' => 'OK',
             'msg' => 'Successful user suspension',
             'id' => $suspension->id,
+        ], 200);
+    }
+
+    /**
+     * Suspends a user
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function unsuspendUser(int $id)
+    {
+        $user = User::find($id);
+        if (is_null($user))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+        $this->authorize('suspendUser', $user);
+
+        if (!$user->is_suspended)
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'User was not suspended, id: '.$id,
+            ], 200);
+
+        Suspension::where('user_id', $id)
+            ->where('end_time', '>', gmdate('Y-m-d H:i:s'))
+            ->update(['end_time' => gmdate('Y-m-d H:i:s')]);
+
+        $user->is_suspended = false;
+        $user->save();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfully unsuspended user'
         ], 200);
     }
 }
