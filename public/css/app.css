@@ -23,9 +23,14 @@ body {
     border-radius: 1rem;
 }
 
-#articles .card-title i {
+#articles .card .card-title i {
     margin-left: 10px;
     font-size: medium;
+}
+
+#articles .card a {
+    color: gray;
+    text-decoration: none;
 }
 
 #articles .card:hover {
