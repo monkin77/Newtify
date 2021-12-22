@@ -1323,11 +1323,11 @@ paths:
         "404":
           description: "Not found"
 
-  /users/suspended:
+  /admin/suspensions:
     get:
       operationId: "R702"
-      summary: "R702: View suspended users"
-      description: "Page with information about the suspended users. Access: ADM"
+      summary: "R702: View suspended users and suspension history"
+      description: "Page with information about suspensions. Access: ADM"
       tags:
         - "M07: User Administration"
 
@@ -1343,7 +1343,7 @@ paths:
         "404":
           description: "Not found"
 
-  /users/{user_id}/suspend:
+  /user/{user_id}/suspend:
     post:
       operationId: "R703"
       summary: "R703: Suspend User"
@@ -1389,7 +1389,7 @@ paths:
         "404":
           description: "Not found"
 
-  /users/{user_id}/unsuspend:
+  /user/{user_id}/unsuspend:
     put:
       operationId: "R704"
       summary: "R704: Unsuspend User"
