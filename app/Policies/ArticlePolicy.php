@@ -19,7 +19,7 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        return !Auth::guest();
+        return Auth::check();
     }
 
     /**
