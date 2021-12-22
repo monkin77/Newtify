@@ -65,7 +65,7 @@ class ArticleController extends Controller
     public function create(Request $request)
     {
         if (Auth::guest()) {
-            return redirect('/article/1');
+            return redirect('/login');
         }
         
         $validator = Validator::make($request -> all(),
@@ -191,8 +191,16 @@ class ArticleController extends Controller
             'body' => $article->body,
         ];
 
+        $tagsInfo = $article->articleTags()->get()->map(function($tag){
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+            ];
+        })->sortBy('name');
+
         return view('pages.edit_article', [
-            'article' => $articleInfo
+            'article' => $articleInfo,
+            'tags' => $tagsInfo,
         ]);
     }
 
@@ -244,7 +252,7 @@ class ArticleController extends Controller
                 $checkTag = Tag::find($tag);
                 //check if is valid tag
                 if (!$checkTag) {
-                    return redirect()->back()->withInput()->withErrors($request);
+                    return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
                 }
             }
             $article->articleTags()->sync($request->tags);
