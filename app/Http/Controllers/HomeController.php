@@ -38,7 +38,7 @@ class HomeController extends Controller
             'title' => $article->title,
             'thumbnail' => $article->thumbnail,
             'body' => $article->body,
-            'published_at' => $article->published_at,
+            'published_at' => date('F j, Y', /*, g:i a',*/ strtotime($article->published_at)),
             'likes' => $article->likes,
             'dislikes' => $article->dislikes,
             ];
