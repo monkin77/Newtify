@@ -23,11 +23,7 @@
     <main>
         @include('partials.navbar')
 
-        @yield('create-article')
-
-        @yield('articles')
-
-        @yield('load-more')
+        @yield('content')
 
         @include('partials.footer')
     </main>

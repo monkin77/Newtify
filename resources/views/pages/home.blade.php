@@ -4,6 +4,7 @@
 $tagline = 'Que rego amiguinho'
 @endphp
 
+{{-- ------------------------------------------------------------------------------------ --}}
 @section('create-article')
 
 <div id="homepage" class="d-flex justify-content-center py-3">
@@ -20,6 +21,7 @@ $tagline = 'Que rego amiguinho'
  
 @endsection
 
+{{-- ------------------------------------------------------------------------------------ --}}
 
 @section('articles')
 <section id="articles">
@@ -34,6 +36,7 @@ $tagline = 'Que rego amiguinho'
 </section>
 @endsection
 
+{{-- ------------------------------------------------------------------------------------ --}}
 
 @section('load-more')
 <div id="load-more">
@@ -41,4 +44,14 @@ $tagline = 'Que rego amiguinho'
     <button>Load more</button>
 
 </div>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
+@section('content')
+
+    @yield('create-article')
+    @yield('articles')
+    @yield('load-more')    
+
 @endsection
