@@ -87,7 +87,7 @@ class ArticleController extends Controller
             $checkTag = Tag::find($tag);
             //check if is valid tag
             if (!$checkTag) {
-                return redirect()->back()->withInput()->withErrors($request);
+                return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
             }
         }
         
