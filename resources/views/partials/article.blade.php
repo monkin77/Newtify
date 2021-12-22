@@ -11,7 +11,14 @@
                 <i class="fa fa-thumbs-down"> {{ $article['dislikes'] }}</i>
             </h4>
 
-            <p class="card-text"> <i class="far fa-clock pe-2"> </i> {{ $article['published_at'] }} </p>
+            <p class="card-text"> 
+                <i class="far fa-clock pe-2"> 
+                    @php
+                        $time = date('F j, Y', /*, g:i a',*/ strtotime( $article['published_at'] ) )
+                    @endphp
+                    {{ $time }}
+                </i>
+            </p>
             
             <p class="card-text">{{ $article['body'] }} </p>
         </div>
