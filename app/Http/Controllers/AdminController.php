@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Suspension;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -41,7 +43,8 @@ class AdminController extends Controller
      *
      * @return View
      */
-    public function suspensions() {
+    public function suspensions()
+    {
         $this->authorize('suspensions', Admin::class);
 
         $suspendedUserList = User::where('is_suspended', true)->get();
@@ -100,5 +103,67 @@ class AdminController extends Controller
             'suspendedUsers' => $suspendedUsers,
             'suspensionHistory' => $suspensionHistory,
         ]);
+    }
+
+    /**
+     * Suspends a user
+     * 
+     * @param  Illuminate\Http\Request  $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function suspendUser(Request $request, int $id)
+    {  
+        $user = User::find($id);
+        if (is_null($user))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'User not found, id: '.$id,
+                'errors' => ['user' => 'User not found, id: '.$id]
+            ], 404);
+
+        $this->authorize('suspendUser', $user);
+
+        $validator = Validator::make($request->all(),[
+            'reason' => 'required|string|min:5|max:200',
+            'start_time' => 'nullable|string|date_format:d-m-Y H:i:s|after:'.date('d-m-Y H:i:s'),
+            'end_time' => 'required|string|date_format:d-m-Y H:i:s',
+        ]);
+
+        if ($validator->fails())
+            return response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to suspend user. Bad request',
+                'errors' => $validator->errors(),
+            ], 400);
+
+        if (isset($request->start_time)) $start_timestamp = strtotime($request->start_time);
+        else $start_timestamp = time();
+        $end_timestamp = strtotime($request->end_time);
+
+        if ($start_timestamp >= $end_timestamp)
+            return response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to suspend user. Bad request',
+                'errors' => ['end_time' => 'End time must be after start time'],
+            ], 400);
+
+        $suspension = new Suspension();
+        $suspension->reason = $request->reason;
+        $suspension->start_time = gmdate('Y-m-d H:i:s', $start_timestamp);
+        $suspension->end_time = gmdate('Y-m-d H:i:s', $end_timestamp);
+        $suspension->user_id = $id;
+        $suspension->admin_id = Auth::id();
+
+        $user->is_suspended = true;
+
+        $suspension->save();
+        $user->save();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Successful user suspension',
+            'id' => $suspension->id,
+        ], 200);
     }
 }

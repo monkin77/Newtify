@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Support\Facades\Auth;
 
 class AdminPolicy
 {
@@ -28,7 +27,8 @@ class AdminPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function suspensions(User $user) {
+    public function suspensions(User $user)
+    {
         return $user->is_admin;
     }
 }
