@@ -4,7 +4,7 @@
     </div>
     
     <a href="/article/{{ $article['id'] }}">
-        <div class="card-block d-flex flex-column px-2" style="width: 80%;" >
+        <div class="card-block d-flex flex-column px-2" >
             <h4 class="card-title">
                 {{ $article['title'] }} 
                 <i class="fa fa-thumbs-up"> {{ $article['likes'] }}</i>

@@ -29,6 +29,7 @@ body {
 }
 
 #articles .card a {
+    width: 80%;
     color: gray;
     text-decoration: none;
 }
