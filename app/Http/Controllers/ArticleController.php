@@ -139,7 +139,7 @@ class ArticleController extends Controller
             'topAreasExpertise' => $author->topAreasExpertise(),
         ];
 
-        $is_author = $author->id === Auth::id() ? true : false;
+        $is_author = $author->id === Auth::id();
 
         // we could do the "load more" thing for comments to?
         $comments = $article->comments->map(function ($comment) {
