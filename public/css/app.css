@@ -81,6 +81,10 @@ body {
     background-color: lightgray;
 }
 
+#userProfileContainer #userInfo #userGraphics {
+    height: 40%;
+}
+
 #userProfileContainer #userInfo #avatarImg {
     height: 100%;
     border-radius: 100em;
@@ -89,6 +93,10 @@ body {
 #userProfileContainer #userInfo #description {
     padding-left: 10%;
     width: 90%;
+}
+
+#userProfileContainer #userInfo #reportIcon {
+    color: darkred;
 }
 
 #userProfileContainer #userArticles #articlesTitle {

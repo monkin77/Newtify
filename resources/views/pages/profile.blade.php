@@ -8,7 +8,7 @@ $tagline = 'Que rego amiguinho';
 
     <div id="userProfileContainer" class="d-flex flex-column">
         <div class="container-fluid py-3" id="userInfo">
-            <div class="row w-100 mt-5" style="height: 40%">
+            <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex justify-content-center h-100">
                     <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" id="avatarImg" />
                 </div>
@@ -43,7 +43,11 @@ $tagline = 'Que rego amiguinho';
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     <div class="d-flex flex-column justify-content-center">
                         <div style="background-color: green; width: 15em; height: 1.5em; border-radius: 0.7em"> </div>
-                        <h6 class="my-0 py-0 pt-2 ">Reputation: 1500</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="my-0 py-0 pt-2 ">Reputation: 1500</h6>
+                            <i class="fa fa-exclamation-circle fa-1x" id="reportIcon" onclick="console.log('cliked')"></i>
+                        </div>
+
                     </div>
                 </div>
             </div>
