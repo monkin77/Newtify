@@ -43,9 +43,20 @@ body {
 }
 
 /* Full Article Page */
+#article-container h1,
+#article-container h2,
+#article-container h3,
+#article-container h4,
+#article-container p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 #author-container {
     background-color: #DBD7D2;
 }
+
 #author-container .row {
     margin-left: 0.1rem;
 }
