@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Admin;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -52,5 +53,16 @@ class AdminPolicy
     public function tags(User $user)
     {
         return $user->is_admin;
+    }
+
+    /**
+     * Determine whether the user can close reports.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function closeReport(User $user, Report $report)
+    {
+        return $user->is_admin && $report->reported_id !== $user->id;
     }
 }

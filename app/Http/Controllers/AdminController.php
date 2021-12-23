@@ -280,4 +280,31 @@ class AdminController extends Controller
             'tags' => $tags,
         ]);
     }
+
+    public function closeReport(int $id)
+    {
+        $report = Report::find($id);
+        if (is_null($report))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'Report not found, id: '.$id,
+                'errors' => ['report' => 'Report not found, id: '.$id]
+            ], 404);
+
+        $this->authorize('closeReport', $report);
+
+        if ($report->is_closed)
+            return response()->json([
+                'status' => 'OK',
+                'msg' => 'Report was already closed, id: '.$id,
+            ], 200);
+
+        $report->is_closed = true;
+        $report->save();
+
+        return response()->json([
+            'status' => 'OK',
+            'msg' => 'Report was successfully closed, id: '.$id,
+        ], 200);
+    }
 }
