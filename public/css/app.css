@@ -79,3 +79,13 @@ body {
 #userProfileContainer #userInfo {
     height: 40vh;
 }
+
+#userProfileContainer #avatarImg {
+    height: 50%;
+    border-radius: 100em;
+}
+
+#userProfileContainer #description {
+    padding-left: 10%;
+    width: 80%;
+}
