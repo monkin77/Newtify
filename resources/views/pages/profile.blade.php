@@ -2,6 +2,11 @@
 
 @php
 $tagline = 'Que rego amiguinho';
+$areas_of_expertise = [
+    'anime' => 1000,
+    'science' => 100,
+    'sports' => 10,
+];
 @endphp
 
 @section('content')
@@ -12,11 +17,20 @@ $tagline = 'Que rego amiguinho';
                 <div class="col-6 d-flex justify-content-center h-100">
                     <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" id="avatarImg" />
                 </div>
-                <div class="col-6 d-flex justify-content-center h-100">
-                    <div class="position-relative">
-                        <h4 style="position: absolute; top: -1.5em;"> Areas of Expertise </h4>
-                        <img src="https://depictdatastudio.com/wp-content/uploads/2017/01/Depict-Data-Studio_Bar-Charts_Vertical-or-Horizontal_Horizontal-1.jpg"
-                            class="h-100" />
+                <div class="col-6 d-flex flex-column align-items-center h-100">
+                    <h4>Areas of Expertise</h4>
+                    {{-- <img src="https://depictdatastudio.com/wp-content/uploads/2017/01/Depict-Data-Studio_Bar-Charts_Vertical-or-Horizontal_Horizontal-1.jpg"
+                            class="h-100" /> --}}
+                    <div class="d-flex flex-column h-100 justify-content-evenly" style="width: 50%; background-color: gray">
+                        <div class="d-flex align-items-center ms-3">
+                            <p class="my-0 py-0">Anime</p>
+                        </div>
+                        <div class="d-flex align-items-center ms-3">
+                            <p class="my-0 py-0">Anime</p>
+                        </div>
+                        <div class="d-flex align-items-center ms-3">
+                            <p class="my-0 py-0">Anime</p>
+                        </div>
                     </div>
                 </div>
             </div>
