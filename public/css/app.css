@@ -77,15 +77,20 @@ body {
     font-size: small;
     text-align: center;
 #userProfileContainer #userInfo {
-    height: 40vh;
+    height: 60vh;
+    background-color: lightgray;
 }
 
-#userProfileContainer #avatarImg {
-    height: 50%;
+#userProfileContainer #userInfo #avatarImg {
+    height: 100%;
     border-radius: 100em;
 }
 
-#userProfileContainer #description {
+#userProfileContainer #userInfo #description {
     padding-left: 10%;
-    width: 80%;
+    width: 90%;
+}
+
+#userProfileContainer #userArticles #articlesTitle {
+    width: 20%;
 }
