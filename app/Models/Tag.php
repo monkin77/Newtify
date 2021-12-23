@@ -56,7 +56,6 @@ class Tag extends Model
     public function isFavorite($user_id)
     {
         $favoriteList = $this->favoriteUsers->where('id', $user_id);
-        echo $favoriteList;
         return count($favoriteList) > 0;
     }
 }

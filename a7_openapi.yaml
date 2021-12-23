@@ -1013,7 +1013,7 @@ paths:
         "404":
           description: "Not found"
 
-  /favourite_tags:
+  /favorite_tags:
     get:
       operationId: R504
       summary: "R504: View User Favourite Tags"
@@ -1024,8 +1024,16 @@ paths:
       responses:
         "200":
           description: "Ok. Show favourite tags (Part of UI20)"
-        "401":
-          description: "Unauthorized. Not logged in"
+        "302":
+          description: "Redirect if user is not logged in."
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Failure:
+                  description: "User is not logged in. Redirect to login form."
+                  value: "/login"
 
   /tags/{tag_id}/add_favourite:
     put:
