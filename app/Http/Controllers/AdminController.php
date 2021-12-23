@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Suspension;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,6 +71,7 @@ class AdminController extends Controller
                 'name' => $user->name,
                 'avatar' => $user->avatar,
                 'country' => $user->country,
+                'is_admin' => $user->is_admin,
                 'history' => $history,
                 // The admin could select the user and see his history or see all suspensions
             ];
@@ -88,6 +90,7 @@ class AdminController extends Controller
                 'name' => $user->name,
                 'avatar' => $user->avatar,
                 'country' => $user->country,
+                'is_admin' => $user->is_admin,
             ];
 
             return [
@@ -201,5 +204,46 @@ class AdminController extends Controller
             'status' => 'OK',
             'msg' => 'Successfully unsuspended user'
         ], 200);
+    }
+
+    /**
+     * Page with information about all the reports
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function reports() {
+        $this->authorize('reports', Admin::class);
+
+        $reportsInfo = Report::orderByDesc('reported_at')->get()
+            ->map(function ($report) {
+
+                $reportedInfo = [
+                    'id' => $report->reported_id,
+                    'name' => $report->reported->name,
+                    'avatar' => $report->reported->avatar,
+                    'country' => $report->reported->country,
+                    'is_admin' => $report->reported->is_admin,
+                ];
+
+                if (isset($report->reporter))
+                    $reporterInfo = [
+                        'id' => $report->reporter_id,
+                        'name' => $report->reporter->name,
+                    ];
+                else $reporterInfo = null;
+
+                return [
+                    'id' => $report->id,
+                    'reason' => $report->reason,
+                    'reported_at' => $report->reported_at,
+                    'is_closed' => $report->is_closed,
+                    'reported' => $reportedInfo,
+                    'reporter' => $reporterInfo,
+                ];
+            });
+
+        return view('pages.reports', [
+            'reports' => $reportsInfo,
+        ]);
     }
 }

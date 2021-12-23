@@ -46,6 +46,7 @@ Route::get('admin', 'AdminController@show');
 Route::get('admin/suspensions', 'AdminController@suspensions');
 Route::post('user/{id}/suspend', 'AdminController@suspendUser');
 Route::put('user/{id}/unsuspend', 'AdminController@unsuspendUser');
+Route::get('admin/reports', 'AdminController@reports');
 
 // Tag
 // Route::get('tags', 'TagController@listAcceptedTags');    I don't think we need this since tags are only shown to users either on homepage or by the next endpoint 'showUserFavorites'

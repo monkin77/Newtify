@@ -31,4 +31,15 @@ class AdminPolicy
     {
         return $user->is_admin;
     }
+
+    /**
+     * Determine whether the user can view the list of reports.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reports(User $user)
+    {
+        return $user->is_admin;
+    }
 }

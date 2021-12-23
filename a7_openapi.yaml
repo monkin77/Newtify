@@ -1411,7 +1411,7 @@ paths:
         "404":
           description: "Not found"
 
-  /admin/reports/:
+  /admin/reports:
     get:
       operationId: "R705"
       summary: "R705: View all the reports"
