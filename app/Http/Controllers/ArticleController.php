@@ -148,6 +148,7 @@ class ArticleController extends Controller
                 'body' => $comment->body,
                 'likes' => $comment->likes,
                 'dislikes' => $comment->dislikes,
+                'published_at' =>$comment->published_at,
                 'authorId' => $author->id,  //for edit key
                 'authorName' => $author->name,
                 'authorAvatar' => $author->avatar,  

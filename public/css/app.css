@@ -65,7 +65,15 @@ body {
     margin: 0;
 }
 
-.container #author-container #avatar {
+.container #author-container #authorAvatar {
     border-radius: 50%; 
 }  
 
+.container #comments-section .commentHeader {
+    margin: 0;
+    padding: 0;
+    height: 5em;
+    width: 5em;
+    font-size: small;
+    text-align: center;
+}
