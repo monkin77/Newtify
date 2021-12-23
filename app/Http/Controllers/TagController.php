@@ -23,9 +23,8 @@ class TagController extends Controller
      */
     public function showUserFavorites()
     {
-        // Could be a policy?
         if (Auth::guest()) {
-            return redirect('/login');  // This is returning a 401 Unauthorized in the openAPI. Should we change it?
+            return redirect('/login');
         }
 
         $userTags = Auth::user()->favoriteTags->map(function ($tag) {
@@ -59,6 +58,7 @@ class TagController extends Controller
         $tag = Tag::find($tag_id);
         if (is_null($tag)) return Response()->json([
             'status' => 'NOT FOUND',
+            'msg' => 'There is no Tag with id' . $tag_id,
             'tag_id' => $tag_id
         ], 404);
 
@@ -91,6 +91,7 @@ class TagController extends Controller
         $tag = Tag::find($tag_id);
         if (is_null($tag)) return Response()->json([
             'status' => 'NOT FOUND',
+            'msg' => 'There is no Tag with id' . $tag_id,
             'tag_id' => $tag_id
         ], 404);
 
@@ -122,6 +123,7 @@ class TagController extends Controller
         $tag = Tag::find($tag_id);
         if (is_null($tag)) return Response()->json([
             'status' => 'NOT FOUND',
+            'msg' => 'There is no Tag with id' . $tag_id,
             'tag_id' => $tag_id
         ], 404);
 
@@ -145,7 +147,7 @@ class TagController extends Controller
     }
 
     /**
-     * Add a tag to the currently authenticated user's favorite tags
+     * Remove a tag from the currently authenticated user's favorite tags
      * @return \Illuminate\Http\Response 
      */
     public function removeUserFavorite($tag_id)
@@ -155,6 +157,7 @@ class TagController extends Controller
         $tag = Tag::find($tag_id);
         if (is_null($tag)) return Response()->json([
             'status' => 'NOT FOUND',
+            'msg' => 'There is no Tag with id' . $tag_id,
             'tag_id' => $tag_id
         ], 404);
 
@@ -215,6 +218,7 @@ class TagController extends Controller
         if (is_null($tag))
             return Response()->json([
                 'status' => 'NOT FOUND',
+                'msg' => 'There is no Tag with id' . $id,
                 'tag_id' => $id
             ], 404);
 
@@ -242,7 +246,7 @@ class TagController extends Controller
         $this->authorize('propose', Tag::class);
 
         $validator = Validator::make($request->all(), [
-            'tag_name' => 'required|string|min:2'
+            'tag_name' => 'required|string|min:2|unique:tag,name'
         ]);
 
         if ($validator->fails()) {
@@ -255,16 +259,7 @@ class TagController extends Controller
         $tag = new Tag;
         $tag->name = $request->tag_name;
         $tag->user_id = Auth::id();
-
-        try {
-            $tag->save();
-        } catch (QueryException $ex) {
-            return Response()->json([
-                'status' => 'Bad Request',
-                'msg' => 'Failed to propose a new tag. There is already a Tag with that name.',
-            ], 400);
-        }
-
+        $tag->save();
 
         return Response()->json([
             'status' => 'OK',
