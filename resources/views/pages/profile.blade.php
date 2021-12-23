@@ -25,8 +25,10 @@ $tagline = 'Que rego amiguinho';
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-comment-dots me-3 fa-2x" onclick="console.log('cliked')"></i>
-                    <h3 class="text-center my-0 py-0">Follow</h3>
+                    <i class="fa fa-comment-dots me-3 fa-2x" onclick="console.log('clicked')"></i>
+                    <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3">Follow</button>
+                    <i class="fa fa-users fa-1x me-3" onclick="console.log('cliked')"></i>
+                    <p class="h5 py-0 my-0">1739</p>
                 </div>
             </div>
             <div class="row w-100 my-2">
