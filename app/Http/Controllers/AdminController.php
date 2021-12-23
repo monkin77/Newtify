@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Suspension;
 use App\Models\Report;
 use App\Models\User;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -209,9 +210,10 @@ class AdminController extends Controller
     /**
      * Page with information about all the reports
      * 
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function reports() {
+    public function reports()
+    {
         $this->authorize('reports', Admin::class);
 
         $reportsInfo = Report::orderByDesc('reported_at')->get()
@@ -244,6 +246,38 @@ class AdminController extends Controller
 
         return view('pages.reports', [
             'reports' => $reportsInfo,
+        ]);
+    }
+
+    /**
+     * Page with information about all the reports
+     * 
+     * @return View
+     */
+    public function tags()
+    {
+        $this->authorize('tags', Admin::class);
+
+        $tags = Tag::listTagsByState('PENDING')->map(function ($tag) {
+            if (isset($tag->user))
+                $userInfo = [
+                    'id' => $tag->user_id,
+                    'name' => $tag->user->name,
+                    'avatar' => $tag->user->avatar
+                ];
+            else $userInfo = null;
+
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'proposed_at' => $tag->proposed_at,
+                'state' => $tag->state,
+                'user' => $userInfo
+            ];
+        });
+
+        return view('pages.tags', [
+            'tags' => $tags,
         ]);
     }
 }

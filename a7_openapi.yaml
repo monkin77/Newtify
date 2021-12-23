@@ -1122,7 +1122,7 @@ paths:
           required: true
       responses:
         "200":
-          description: "Ok. Show tag list (UI09)"
+          description: "Ok. Show tag list (Part of UI09)"
         "401":
           description: "Unauthorized. Not logged in"
         "403":

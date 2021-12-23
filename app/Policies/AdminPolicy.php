@@ -42,4 +42,15 @@ class AdminPolicy
     {
         return $user->is_admin;
     }
+
+    /**
+     * Determine whether the user can manage tags.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function tags(User $user)
+    {
+        return $user->is_admin;
+    }
 }
