@@ -466,7 +466,7 @@ paths:
         "409":
           description: "Conflict. User not followed"
 
-  /search/users:
+  /api/search/users:
     get:
       operationId: R211
       summary: "R211 : User search"
@@ -544,7 +544,7 @@ paths:
         "200":
           description: "OK. Show Search Page (UI19)"
 
-  /article/search:
+  /api/search/articles:
     get:
       operationId: R303
       summary: "R303 : Returns articles according to given parameters"

@@ -303,10 +303,7 @@ class UserController extends Controller
 
         if (!isset($request->offset)) $request->offset = 0;
 
-        if (isset($request->limit))
-            $articles = $userArticles->slice($request->offset, $request->limit);
-        else
-            $articles = $userArticles->slice($request->offset);
+        $articles = $userArticles->slice($request->offset, $request->limit);
 
         return view('partials.user_articles', [
             'articles' => $articles

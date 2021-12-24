@@ -53,3 +53,7 @@ Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');
 Route::get('tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
 Route::delete('tags/{tag_id}', 'TagController@destroy');
 Route::post('tags/new', 'TagController@propose');
+// Search
+Route::get('search', 'SearchController@show');
+Route::get('api/search/users', 'SearchController@searchUsers');
+Route::get('api/search/articles', 'SearchController@searchArticles');
