@@ -35,6 +35,14 @@ class Comment extends Content
       return $this->belongsTo(Content::class);
     }
 
+    public function parent_comment() {
+      return $this->belongsTo(Comment::class, 'parent_comment_id');
+    } 
+
+    public function child_comments() {
+      return $this->hasMany(Comment::class, 'parent_comment_id');
+    }
+
     public function notification() {
       return $this->hasOne(CommentNotification::class, 'new_comment');
     }

@@ -43,6 +43,15 @@ Route::get('user/{id}/articles', 'UserController@articles');
 Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
 
+// Articles
+Route::get('articles', 'ArticleController@index')->name('articles');
+Route::get('article', 'ArticleController@createForm')->name('newArticlePage');
+Route::post('article', 'ArticleController@create');
+Route::get('article/{id}', 'ArticleController@show')->name('article');
+Route::get('article/{id}/edit', 'ArticleController@edit');
+Route::put('article/{id}', 'ArticleController@update');
+Route::delete('article/{id}', 'ArticleController@destroy');
+
 // Tag
 // Route::get('tags', 'TagController@listAcceptedTags');    I don't think we need this since tags are only shown to users either on homepage or by the next endpoint 'showUserFavorites'
 Route::get('favorite_tags', 'TagController@showUserFavorites');

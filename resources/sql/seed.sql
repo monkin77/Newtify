@@ -399,34 +399,6 @@ CREATE TRIGGER message_sent_notification
 
 -----------------------------------------
 
--- Trigger to prevent user from deleting a comment or article (content) with likes, dislikes or subcomments
-CREATE FUNCTION check_content_delete() RETURNS TRIGGER AS
-$BODY$
-BEGIN 
-    IF (OLD.likes != 0 or OLD.dislikes != 0) THEN
-        RAISE EXCEPTION 'You cannot delete a content that has likes/dislikes';
-    ELSE 
-        IF (OLD.id in (SELECT article_id FROM comment WHERE comment.content_id = OLD.id) OR 
-            OLD.id in (SELECT parent_comment_id FROM comment WHERE comment.parent_comment_id = OLD.id))
-            -- it's an article with comments or a comment with sub comments
-            THEN RAISE EXCEPTION 'You cannot delete a content that has comments';
-        ELSE 
-            DELETE FROM content WHERE content.id = OLD.id;
-        END IF;
-    END IF;
-    RETURN NULL;
-END
-$BODY$
-
-LANGUAGE plpgsql;
-
-CREATE TRIGGER check_content_delete
-    BEFORE DELETE ON content
-    FOR EACH ROW
-    EXECUTE PROCEDURE check_content_delete();
-
------------------------------------------
-
 /*
 Trigger to delete all the information about an article that was deleted
 it just needs to delete the content represented by that article 
@@ -635,7 +607,7 @@ VALUES
   ('SV', 'El Salvador');
 
   
-  
+
 INSERT INTO authenticated_user (name,email,birth_date,is_admin,description,password,avatar,city,is_suspended,country_id)
 VALUES
   ('Rui Alves', 'rui@gmail.com', TO_TIMESTAMP('2003-03-23', 'YYYY-MM-DD'), true, 'o maior debugger', '$2a$12$R7eIoU2USu.eQinxW65F6.nX4WTh274CP5jQruGGpGzV0YzerD4gS', 'https://rui-image.com', 'Tchabes', false, 11),
