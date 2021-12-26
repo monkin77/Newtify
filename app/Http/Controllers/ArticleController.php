@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Tag;
@@ -47,7 +46,7 @@ class ArticleController extends Controller
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|integer|distinct|min:0',
             ]
-            );
+        );
 
         if ( $validator->fails() ) {
             // go back to form and refill it
@@ -220,24 +219,21 @@ class ArticleController extends Controller
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
         if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
-        
-        $content->author_id = Auth::id();
-        $content->save();
-        
-        $article->content_id = $content->id;
-        $article->save();
 
         if (isset($request->tags)) {
+            // Check if tags are valid
             foreach($request->tags as $tag) {
                 $checkTag = Tag::find($tag);
-                //check if is valid tag
                 if (!$checkTag) {
                     return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
                 }
             }
             $article->articleTags()->sync($request->tags);
         }
-        
+
+        $content->save();
+        $article->save();
+
         return redirect("/article/${id}");
     }
 
@@ -267,12 +263,14 @@ class ArticleController extends Controller
         $has_feedback = ($content->likes != 0 || $content->dislikes != 0);
         $has_comments = !$article->comments->isEmpty();
 
-        // cannot delete if is not admin or it has feedback and comments
-        if (($has_feedback || $has_comments) && !$user->is_admin){
-            return redirect()->back()->withErrors(['content' => "You can't delete an article with feedback"]);
-        } else if ($user->id != $owner_id && !$user->is_admin) {
+        if ($user->id != $owner_id && !$user->is_admin) {
             return redirect()->back()->withErrors(['user' => "Only the owner of the article can delete it"]);
-        } 
+        }
+
+        if (($has_feedback || $has_comments) && !$user->is_admin) {
+            // cannot delete if is not admin or it has feedback and comments
+            return redirect()->back()->withErrors(['content' => "You can't delete an article with feedback"]);
+        }
 
         $deleted = $article->delete();
         if ($deleted) 
