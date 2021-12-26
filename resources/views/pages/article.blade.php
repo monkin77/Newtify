@@ -80,6 +80,25 @@
                 <h3 class="m-0">Comments</h3>
             </div>
 
+            <div class="h-50 mx-0">
+                <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
+                    <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
+                        
+                        {{-- buscar o User autenticado e meter a foto --}}
+                        <img src="https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg">
+                        You
+                    </div>
+                    <div class="flex-column m-0 p-0 w-100">
+                        <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
+                            <textarea class="flex-column m-0 p-0" placeholder="Type here"></textarea>
+                            <button type="button">
+                                Comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="h-50">
                 @foreach ($comments as $comment)
 
@@ -106,21 +125,9 @@
                     </div>
 
                 @endforeach
+
             </div>
 
-            <div class="h-50">
-                <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
-                    <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-                        
-                        {{-- buscar o User autenticado e meter a foto --}}
-                        <img src="https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg">
-                        You
-                    </div>
-                    <div class="flex-column m-0 p-0 w-100">
-                        <textarea class="flex-column m-0 p-0" placeholder="Type here"></textarea>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
