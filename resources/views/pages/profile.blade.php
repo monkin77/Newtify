@@ -18,19 +18,23 @@ $areas_of_expertise = [
                     <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" id="avatarImg" />
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
-                    <h4>Areas of Expertise</h4>
-                    {{-- <img src="https://depictdatastudio.com/wp-content/uploads/2017/01/Depict-Data-Studio_Bar-Charts_Vertical-or-Horizontal_Horizontal-1.jpg"
-                            class="h-100" /> --}}
-                    <div class="d-flex flex-column h-100 justify-content-evenly" style="width: 50%; background-color: gray">
-                        <div class="d-flex align-items-center ms-3">
-                            <p class="my-0 py-0">Anime</p>
+                    <div class="h-100 text-dark" id="graphContainer">
+                        <h4 class="text-center pt-3 pb-0 my-0">Areas of Expertise</h4>
+                        <div class="d-flex flex-column h-100 justify-content-evenly pb-5">
+                            <div class="d-flex align-items-center ms-3">
+                                <p class="my-0 py-0 pe-3 tagName">Anime</p>
+                                <div class="tagBar"> </div>
+                            </div>
+                            <div class="d-flex align-items-center ms-3">
+                                <p class="my-0 py-0 pe-3 tagName">Anime</p>
+                                <div class="tagBar"> </div>
+                            </div>
+                            <div class="d-flex align-items-center ms-3">
+                                <p class="my-0 py-0 pe-3 tagName">Anime</p>
+                                <div class="tagBar"> </div>
+                            </div>
                         </div>
-                        <div class="d-flex align-items-center ms-3">
-                            <p class="my-0 py-0">Anime</p>
-                        </div>
-                        <div class="d-flex align-items-center ms-3">
-                            <p class="my-0 py-0">Anime</p>
-                        </div>
+
                     </div>
                 </div>
             </div>

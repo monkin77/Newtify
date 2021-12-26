@@ -85,9 +85,28 @@ body {
     height: 40%;
 }
 
-#userProfileContainer #userInfo #avatarImg {
+#userProfileContainer #userInfo #userGraphics #avatarImg {
     height: 100%;
     border-radius: 100em;
+}
+
+#userProfileContainer #userInfo #userGraphics #graphContainer {
+    width: 50%;
+    border-width: 0.2em;
+    border-style: solid;
+    border-color: gray;
+    border-radius: 1.5em;
+    background-color: #95a5a6;
+}
+
+#userProfileContainer #userInfo #userGraphics #graphContainer .tagName {
+    width: 20%;
+}
+
+#userProfileContainer #userInfo #userGraphics #graphContainer .tagBar {
+    background-color: red;
+    width: 75%;
+    height: 1em;
 }
 
 #userProfileContainer #userInfo #description {
