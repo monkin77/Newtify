@@ -11,6 +11,7 @@
                         {{ $article['title'] }} 
                         @if ($is_author)
                             <i class="iconify" style="width: 0.8em; height: 0.7em;" data-icon="bi:pencil-fill"></i>
+                            <i class="iconify" style="width: 0.8em; height: 0.7em" data-icon="bi:trash-fill"></i>
                         @endif
                     </h1>
                     @php
@@ -61,7 +62,6 @@
                 </div>
 
                 <div class="flex-row my-3">
-                    <p>Description: </p>
                     <p>{{ $author['description'] }}</p>
                 </div>
 
@@ -91,9 +91,7 @@
                         </div>
                         
                         <div class="flex-column m-0 p-0 w-100">
-                            <textarea readonly style="resize: none;" class="flex-column m-0 p-0">
-                                {{ $comment['body'] }}
-                            </textarea>
+                            <textarea readonly style="resize: none;" class="flex-column m-0 px-3">{{ $comment['body'] }}</textarea>
                             
                             <i class="fa fa-thumbs-up "> {{ $comment['likes'] }}</i>
                             <i class="fa fa-thumbs-down ps-3 pe-3"> {{ $comment['dislikes'] }}</i>
