@@ -84,7 +84,7 @@ class User extends Authenticatable
     }
 
     public function feedback() {
-        return $this->belongsToMany(Content::class, 'feedback', 'user_id')->withPivot('is_like');
+        return $this->hasMany(Feedback::class);
     }
 
     public function notifications() {

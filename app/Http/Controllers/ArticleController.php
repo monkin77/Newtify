@@ -38,7 +38,7 @@ class ArticleController extends Controller
         if (Auth::guest()) {
             return redirect('/login');
         }
-        
+
         $validator = Validator::make($request -> all(),
             [
                 'body' => 'required|string|min:10',
@@ -61,7 +61,7 @@ class ArticleController extends Controller
                 return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
             }
         }
-        
+
         $content = new Content;
         $content->body = $request->body;
         $content->author_id = Auth::id();
@@ -100,49 +100,54 @@ class ArticleController extends Controller
             'dislikes' => $article->dislikes,
         ];
 
-        $author = $article->author()->first();
-        $authorInfo = [
-            'id' => $author->id,
-            'name' => $author->name,
-            'avatar' => $author->avatar,
-            'country' => $author->country,
-            'city' => $author->city,
-            'isAdmin' => $author->is_admin,
-            'description' => $author->description,
-            'isSuspended' => $author->is_suspended,
-            'reputation' => $author->reputation,
-            'topAreasExpertise' => $author->topAreasExpertise(),
-        ];
+        $author = $article->author;
 
-        $is_author = $author->id === Auth::id();
+        if (isset($author))
+            $authorInfo = [
+                'id' => $author->id,
+                'name' => $author->name,
+                'avatar' => $author->avatar,
+                'country' => $author->country,
+                'city' => $author->city,
+                'isAdmin' => $author->is_admin,
+                'description' => $author->description,
+                'isSuspended' => $author->is_suspended,
+                'reputation' => $author->reputation,
+                'topAreasExpertise' => $author->topAreasExpertise(),
+            ];
+        else $authorInfo = null; // Anonymous, account deleted
 
-        // we could do the "load more" thing for comments to?
+        $is_author = isset($author) ? $author->id === Auth::id() : false;
+
+        // TODO: "load more" thing for comments too
         $comments = $article->comments->map(function ($comment) {
-            $author = $comment->author()->first();
+            $commentAuthor = $comment->author;
             return [
                 'body' => $comment->body,
                 'likes' => $comment->likes,
                 'dislikes' => $comment->dislikes,
                 'published_at' =>$comment->published_at,
-                'authorId' => $author->id,  //for edit key
-                'authorName' => $author->name,
-                'authorAvatar' => $author->avatar,  
+                'author' => isset($commentAuthor) ? [
+                    'id' => $commentAuthor->id,
+                    'name' => $commentAuthor->name,
+                    'avatar' => $commentAuthor->avatar,
+                ] : null,
             ];
-        })->sortByDesc('published_at')->take(10);
+        })->sortByDesc('likes')->take(10);
 
-        $tags = $article->articleTags()->get()->map(function($tag){
+        $tags = $article->articleTags->map(function($tag) {
             return [
                 'name' => $tag->name,
             ];
         })->sortBy('name');
 
-        return view('pages.article', [
+        return [
             'article' => $articleInfo,
             'author' => $authorInfo,
             'comments' => $comments,
             'tags' => $tags,
             'is_author' => $is_author,
-        ]);
+        ];
     }
 
     /**

@@ -149,8 +149,6 @@ class UserController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors());
 
-        
-
         $deleted = $user->delete();
         if ($deleted)
             return redirect('/');
