@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:authenticated_user',
             'password' => 'required|string|min:6|confirmed',
-            'birthDate' => 'required|string|date_format:d-m-Y|before:'.date('d-m-Y'), // before today
+            'birthDate' => 'required|string|date_format:Y-m-d|before:'.date('Y-m-d'), // before today
             'country' => 'required|string|exists:country,name',
             'avatar' => 'nullable|file|max:5000', // max 5MB
             // TODO: File upload

@@ -36,12 +36,27 @@
         <label for="password">Confirm Password</label>
         <input name="password_confirmation" class="bg-white w-50" type="password" id="password-confirm" placeholder="Confirm Password" required>
 
+
+
+
         <label for="birthDate">Birth Date</label>
         <input name="birthDate" type="date" id="birthDate" required>
+        @if ($errors->has('birthDate'))
+        <br>
+        <span class="text-danger error">
+            {{ $errors->first('birthDate') }}
+        </span>
+        @endif
 
         <label for="country">Country</label>
         <input name="country" class="bg-white w-50" type="text" id="country" placeholder="Country" required>
-        
+        @if ($errors->has('country'))
+        <br>
+        <span class="text-danger error">
+            {{ $errors->first('country') }}
+        </span>
+        @endif
+
         <label for="avatar">Choose avatar</label>
         <input name="avatar" type="file" id="avatar">
         <br>
