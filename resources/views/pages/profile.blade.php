@@ -1,12 +1,23 @@
 @extends('layouts.app')
 
 @php
-$tagline = 'Que rego amiguinho';
-$areas_of_expertise = [
-    'anime' => 1000,
-    'science' => 100,
-    'sports' => 10,
-];
+function calculateExpertiseLevel($reputation)
+{
+    $step = 13;
+    if ($reputation == 0) {
+        return 0;
+    } elseif ($reputation < 5) {
+        return $step * 1;
+    } elseif ($reputation < 10) {
+        return $step * 2;
+    } elseif ($reputation < 20) {
+        return $step * 3;
+    } elseif ($reputation < 40) {
+        return $step * 4;
+    } else {
+        return $step * 5;
+    }
+}
 @endphp
 
 @section('content')
@@ -22,16 +33,22 @@ $areas_of_expertise = [
                         <h4 class="text-center pt-3 pb-0 my-0">Areas of Expertise</h4>
                         <div class="d-flex flex-column h-100 justify-content-evenly pb-5">
                             <div class="d-flex align-items-center ms-3">
-                                <p class="my-0 py-0 pe-3 tagName">Anime</p>
-                                <div class="tagBar"> </div>
+                                <p class="my-0 py-0 pe-3 tagName">{{ $topAreasExpertise[0]['tag_name'] }}</p>
+                                <div class="tagBar"
+                                    style="width: {{ calculateExpertiseLevel($topAreasExpertise[0]['reputation']) . '%' }}">
+                                </div>
                             </div>
                             <div class="d-flex align-items-center ms-3">
-                                <p class="my-0 py-0 pe-3 tagName">Anime</p>
-                                <div class="tagBar"> </div>
+                                <p class="my-0 py-0 pe-3 tagName">{{ $topAreasExpertise[1]['tag_name'] }}</p>
+                                <div class="tagBar"
+                                    style="width: {{ calculateExpertiseLevel($topAreasExpertise[1]['reputation']) . '%' }}">
+                                </div>
                             </div>
                             <div class="d-flex align-items-center ms-3">
-                                <p class="my-0 py-0 pe-3 tagName">Anime</p>
-                                <div class="tagBar"> </div>
+                                <p class="my-0 py-0 pe-3 tagName">{{ $topAreasExpertise[2]['tag_name'] }}</p>
+                                <div class="tagBar"
+                                    style="width: {{ calculateExpertiseLevel($topAreasExpertise[2]['reputation']) . '%' }}">
+                                </div>
                             </div>
                         </div>
 
