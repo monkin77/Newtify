@@ -90,7 +90,7 @@
                     </div>
                     <div class="flex-column m-0 p-0 w-100">
                         <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
-                            <textarea class="flex-column m-0 p-0" placeholder="Type here"></textarea>
+                            <textarea class="flex-column m-0 p-2" placeholder="Type here"></textarea>
                             <button type="button">
                                 Comment
                             </button>
