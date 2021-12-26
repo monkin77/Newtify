@@ -18,6 +18,8 @@ function calculateExpertiseLevel($reputation)
         return $step * 5;
     }
 }
+$birthDate = date('F j, Y', strtotime($user['birthDate']));
+$age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->format('%y');
 @endphp
 
 @section('content')
@@ -60,21 +62,27 @@ function calculateExpertiseLevel($reputation)
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-comment-dots me-3 fa-2x" onclick="console.log('clicked')"></i>
-                    <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3">Follow</button>
-                    <i class="fa fa-users fa-1x me-3" onclick="console.log('cliked')"></i>
-                    <p class="h5 py-0 my-0">1739</p>
+                    <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
+                    @if ($follows)
+                        <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3"
+                            onclick="console.log('clicked')">Unfollow</button>
+                    @else
+                        <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3"
+                            onclick="console.log('clicked')">Follow</button>
+                    @endif
+                    <i class="fa fa-users fa-1x me-3 text-dark"></i>
+                    <p class="h5 py-0 my-0">{{ $followerCount }}</p>
                 </div>
             </div>
             <div class="row w-100 my-2">
                 <div class="col-6 d-flex flex-column align-items-center">
                     <div class="d-flex align-items-center mb-3">
                         <i class="fa fa-birthday-cake me-3 fa-1x" onclick="console.log('cliked')"></i>
-                        <h5 class="mb-0">April 1st 2001 (20 yo)</h5>
+                        <h5 class="mb-0">{{ $birthDate . ' (' . $age . ')' }}</h5>
                     </div>
                     <div class="d-flex align-items-center mb-3">
                         <i class="fa fa-flag me-3 fa-1x" onclick="console.log('cliked')"></i>
-                        <h5 class="mb-0">Porto, Portugal</h5>
+                        <h5 class="mb-0">{{ $user['city'] . ', ' . $user['country']['name'] }}</h5>
                     </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
