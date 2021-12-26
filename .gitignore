@@ -13,3 +13,4 @@ yarn-error.log
 trigger.sql
 *.vscode
 *.local
+*.git-old
