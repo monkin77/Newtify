@@ -633,7 +633,9 @@ paths:
 
       responses:
         "200":
-          description: "OK. Show filter results"
+          description: "OK. Show filter results (Part of UI01)"
+        "400":
+          description: "Failed to filter articles. Bad Request"
 
   /article:
     get:
