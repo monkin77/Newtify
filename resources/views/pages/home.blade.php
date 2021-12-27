@@ -21,20 +21,6 @@ $tagline = 'Que rego amiguinho'
  
 @endsection
 
-{{-- ------------------------------------------------------------------------------------ --}}
-
-@section('articles')
-<section id="articles">
-
-    <div class="container">
-        @foreach($articles as $article)
-            @include('partials.article', ['article' => $article])
-        @endforeach
-        </div>
-    </div>
-
-</section>
-@endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
@@ -44,6 +30,11 @@ $tagline = 'Que rego amiguinho'
     <button>Load more</button>
 
 </div>
+@endsection
+
+
+@section('articles')
+    @include('partials.content.articles', ['articles' => $articles])
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}
