@@ -12,7 +12,7 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
         <div class="container-fluid py-3">
             <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex justify-content-center h-100">
-                    <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" id="avatarImg" />
+                    <img src={{ $user['avatar'] }} id="avatarImg" />
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
                     @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])
