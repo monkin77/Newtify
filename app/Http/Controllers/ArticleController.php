@@ -140,13 +140,13 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
-        return [
+        return view('pages.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
             'comments' => $comments,
             'tags' => $tags,
             'is_author' => $is_author,
-        ];
+        ]);
     }
 
     /**
