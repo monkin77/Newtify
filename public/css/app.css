@@ -17,7 +17,6 @@ body {
 }
 
 /* Partial Article, just putting here for now then we change */
-
 #articles .card {
     margin-bottom: 15px;
     border-radius: 1rem;
@@ -43,6 +42,21 @@ body {
 }
 
 /* Full Article Page */
+.bootstrap-tagsinput { 
+    white-space: nowrap;
+    font-size: large;
+    background-color: transparent;
+}
+
+.bootstrap-tagsinput input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+    width: auto;
+    max-width: inherit;
+}
+
 #article-container h1,
 #article-container h2,
 #article-container h3,
