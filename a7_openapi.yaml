@@ -579,7 +579,7 @@ paths:
         "200":
           description: "OK. Show a list of articles that fit the criteria"
 
-  /article/filter:
+  /api/article/filter:
     get:
       operationId: R304
       summary: "R304 : Return articles according to certain filters"
@@ -600,12 +600,6 @@ paths:
               - "recent"
           required: false
         - in: query
-          name: tag
-          description: "filter articles by tag"
-          schema:
-            type: string
-          required: false
-        - in: query
           name: offset
           description: "value used to fetch results starting at a certain value"
           schema:
@@ -620,6 +614,22 @@ paths:
             type: integer
             minimum: 1
           required: false # returns all articles if not specified
+
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                minDate:
+                  type: string
+                  format: date
+                maxDate:
+                  type: string
+                  format: date
 
       responses:
         "200":

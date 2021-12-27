@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -16,33 +17,12 @@ class HomeController extends Controller
      */
     public function show()
     {
-        $numArticles = 5;
-        $articles = $this->getArticles($numArticles);
+        $type = Auth::check() ? 'recommended' : 'trending';
+        $articles = $this->filterByType($type, 0, 5);
 
         return view('pages.home', [
             'articles' => $articles,
-
         ]);
-    }
-
-    public function getArticles($numArticles) {
-        $articles = Article::get();
-        
-        // Should i check if its the owner and send information about that
-        // in order to place an edit button in the blade page?
-        $articlesInfo = $articles->map(function ($article) {
-            return [
-            'id' => $article->id,
-            'title' => $article->title,
-            'thumbnail' => $article->thumbnail,
-            'body' => $article->body,
-            'published_at' => $article->published_at,
-            'likes' => $article->likes,
-            'dislikes' => $article->dislikes,
-            ];
-        })->sortByDesc('published_at')->take($numArticles);
-
-        return $articlesInfo;
     }
 
     /**
@@ -56,7 +36,12 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(),[
             'type' => ['nullable', 'string', Rule::in(['trending', 'recent', 'recommended'])],
             'tags' => 'nullable|array',
-            'tags.*' => 'integer|min:0',
+            'tags.*' => [
+                'string',
+                Rule::exists('tag', 'name')->where('state', 'ACCEPTED')
+            ],
+            'minDate' => 'nullable|string|date_format:Y-m-d|before:'.date('Y-m-d'),
+            'maxDate' => 'nullable|string|date_format:Y-m-d|before:'.date('Y-m-d'),
             'offset' => 'nullable|integer|min:0',
             'limit' => 'nullable|integer|min:1',
         ]);
@@ -68,6 +53,62 @@ class HomeController extends Controller
                 'errors' => $validator->errors(),
             ], 400);
 
-        
+        if (isset($request->minDate)) $minTimestamp = strtotime($request->minDate);
+        if (isset($request->maxDate)) $maxTimestamp = strtotime($request->maxDate);
+
+        if (isset($request->minDate) && isset($request->maxDate) && $maxTimestamp < $minTimestamp)
+            return response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to filter articles. Bad request',
+                'errors' => ['maxDate' => 'Max date cannot be after Min date'],
+            ], 400);
+
+        $articles = Article::all();
+
+        if (isset($request->tags)) {
+            $articles = $articles->filter(function ($article) use ($request) {
+                $tags = $article->articleTags;
+                foreach ($tags as $tag) {
+                    if (in_array($tag->name, $request->tags)) return true;
+                }
+                return false;
+            });
+        }
+
+        if (isset($request->minDate))
+            $articles = $articles->filter(function ($article) use ($minTimestamp) {
+                $timestamp = strtotime($article->published_at);
+                return $timestamp >= $minTimestamp;
+            });
+
+        if (isset($request->maxDate))
+            $articles = $articles->filter(function ($article) use ($maxTimestamp) {
+                $timestamp = strtotime($article->published_at);
+                return $timestamp <= $maxTimestamp;
+            });
+
+        $articles = $this->filterByType($request->type, $request->offset, $request->limit, $articles);
+        return view('partials.articles', [
+            'articles' => $articles
+        ]);
+    }
+
+    private function filterByType(string $type, $offset = 0, $limit = null, $articles = null)
+    {
+        if (is_null($articles))
+            $articles = Article::all();
+
+        // TODO: Implement recommended articles
+        if ($type === 'trending' || $type === 'recommended')
+            $sortedArticles = $articles->sortByDesc(function ($article) {
+                return $article->likes - $article->dislikes;
+            });
+
+        else if ($type === 'recent')
+            $sortedArticles = $articles->sortByDesc('published_at');
+
+        else $sortedArticles = $articles;
+
+        return $sortedArticles->slice($offset, $limit);
     }
 }

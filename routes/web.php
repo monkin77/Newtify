@@ -12,6 +12,7 @@
 */
 // Home
 Route::get('/', 'HomeController@show');
+Route::get('/api/article/filter', 'HomeController@filter');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
