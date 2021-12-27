@@ -5,10 +5,11 @@ $birthDate = date('F j, Y', strtotime($user['birthDate']));
 $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->format('%y');
 @endphp
 
-@section('content')
+{{-- ------------------------------------------------------------------------------------ --}}
 
-    <div id="userProfileContainer" class="d-flex flex-column">
-        <div class="container-fluid py-3" id="userInfo">
+@section('userInfo')
+    <section id="userInfo">
+        <div class="container-fluid py-3">
             <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex justify-content-center h-100">
                     <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" id="avatarImg" />
@@ -54,9 +55,27 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
                 <h5>{{ $user['description'] }}</h5>
             </div>
         </div>
+    </section>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
+@section('articles')
+    <section id="articles">
         <div class="container-fluid w-100 d-flex justify-content-center my-5" id="userArticles">
             <h2 class="border-bottom border-2 border-dark text-center pb-1" id="articlesTitle">Articles</h2>
         </div>
-    </div>
+        <div class="container">
+            @foreach ($articles as $article)
+                @include('partials.article', ['article' => $article])
+            @endforeach
+        </div>
+    </section>
+@endsection
 
+@section('content')
+    <div id="userProfileContainer" class="d-flex flex-column">
+        @yield('userInfo')
+        @yield('articles')
+    </div>
 @endsection

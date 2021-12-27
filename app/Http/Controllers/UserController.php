@@ -50,6 +50,7 @@ class UserController extends Controller
 
         $articles = $user->articles()->map(function ($article) {
             return [
+                'id' => $article->content_id,
                 'title' => $article->title,
                 'thumbnail' => $article->thumbnail,
                 'body' => $article->body,

@@ -92,7 +92,7 @@ body {
     border-radius: 100em;
 }
 
-#userProfileContainer #userInfo #userGraphics #graphContainer {
+#graphContainer {
     width: 50%;
     border-width: 0.2em;
     border-style: solid;
