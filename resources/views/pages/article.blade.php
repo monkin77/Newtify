@@ -42,7 +42,7 @@
                         isset($article['thumbnail']) ?
                         $article['thumbnail']
                         :
-                        "https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg"
+                        $articleImgPHolder
                     }}>
                 </div>
         
@@ -64,7 +64,7 @@
                                 isset($author['thumbnail']) ?
                                 $author['thumbnail']
                                 :
-                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                                $userImgPHolder
                             }}>
                         </div>
                         <div class="flex-col w-75" id="author-header" style="padding-bottom: 0;">
@@ -95,7 +95,7 @@
                 @else
                     <div class="d-flex flex-row mb-3">
                         <div class="flex-col w-25" style="margin-right: 1em;">
-                            <img id="authorAvatar" class="h-100" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                            <img id="authorAvatar" class="h-100" src={{ $userImgPHolder }}>
                         </div>
                         <div class="flex-col w-75" id="author-header" style="padding-top: 1em;">
                             <h4 class="mb-2"><i>Anonymous</i></h4>
@@ -119,13 +119,12 @@
                 @if (Auth::check())
                 <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
                     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-                        {{-- buscar o User autenticado e meter a foto --}}
-                        <img src=
-                        @if (isset(Auth::user()->avatar))
-                            {{ Auth::user()->avatar }}
-                        @else
-                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                        @endif
+                        <img src= {{
+                            isset(Auth::user()->avatar) ?
+                            Auth::user()->avatar
+                            :
+                            $userImgPHolder
+                        }}
                         >
                         You
                     </div>

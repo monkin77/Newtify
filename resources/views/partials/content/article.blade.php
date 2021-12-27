@@ -1,11 +1,11 @@
 <div class="card flex-row flex-wrap" >
     <div class="card-header border-0" style="width: 20%;">
-        <img src=
-        @if (isset($article['thumbnail']))
-            {{ $article['thumbnail'] }}
-        @else
-            "https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg"
-        @endif
+        <img src= {{
+            isset($article['thumbnail']) ?
+            $article['thumbnail']
+            :
+            $articleImgPHolder
+        }}
         style="width: 100%;">
     </div>
 
