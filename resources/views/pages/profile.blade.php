@@ -4,7 +4,7 @@
 function calculateExpertiseLevel($reputation)
 {
     $step = 13;
-    if ($reputation == 0) {
+    if ($reputation <= 0) {
         return 0;
     } elseif ($reputation < 5) {
         return $step * 1;
@@ -18,6 +18,19 @@ function calculateExpertiseLevel($reputation)
         return $step * 5;
     }
 }
+
+function calculateReputationLevel($reputation)
+{
+    $isPositive = $reputation >= 0;
+    $absReputation = abs($reputation);
+
+    if ($absReputation <= 90) {
+        return 10 + $absReputation;
+    }
+
+    return 100;
+}
+
 $birthDate = date('F j, Y', strtotime($user['birthDate']));
 $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->format('%y');
 @endphp
@@ -87,9 +100,15 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     <div class="d-flex flex-column justify-content-center">
-                        <div style="background-color: green; width: 15em; height: 1.5em; border-radius: 0.7em"> </div>
+                        <div class="position-relative"
+                            style="background-color: gray; width: 15em; height: 1.5em; border-radius: 0.7em">
+                            <div class="position-absolute"
+                                style="background-color: {{ $user['reputation'] >= 0 ? 'green' : 'red' }}; width: {{ calculateReputationLevel($user['reputation']) . '%' }}; height: 1.5em; border-radius: 0.7em">
+                            </div>
+                        </div>
+
                         <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="my-0 py-0 pt-2 ">Reputation: 1500</h6>
+                            <h6 class="my-0 py-0 pt-2 ">Reputation: {{ $user['reputation'] }}</h6>
                             <i class="fa fa-exclamation-circle fa-1x" id="reportIcon" onclick="console.log('cliked')"></i>
                         </div>
 
