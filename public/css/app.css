@@ -101,11 +101,11 @@ body {
     background-color: #95a5a6;
 }
 
-#userProfileContainer #userInfo #userGraphics #graphContainer .tagName {
+#graphContainer .tagName {
     width: 22%;
 }
 
-#userProfileContainer #userInfo #userGraphics #graphContainer .tagBar {
+#graphContainer .tagBar {
     background-color: orange;
     height: 1.2em;
 }
@@ -115,8 +115,15 @@ body {
     width: 90%;
 }
 
-#userProfileContainer #userInfo #reportIcon {
+#reputationBar #reportIcon {
     color: darkred;
+}
+
+#reputationBar #bar {
+    background-color: gray;
+    width: 15em;
+    height: 1.5em;
+    border-radius: 0.7em;
 }
 
 #userProfileContainer #userArticles #articlesTitle {

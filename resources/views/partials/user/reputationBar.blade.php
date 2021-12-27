@@ -12,10 +12,10 @@ function calculateReputationLevel($reputation)
 }
 @endphp
 
-<div class="d-flex flex-column justify-content-center">
-    <div class="position-relative" style="background-color: gray; width: 15em; height: 1.5em; border-radius: 0.7em">
-        <div class="position-absolute"
-            style="background-color: {{ $user['reputation'] >= 0 ? 'green' : 'red' }}; width: {{ calculateReputationLevel($user['reputation']) . '%' }}; height: 1.5em; border-radius: 0.7em">
+<div class="d-flex flex-column justify-content-center" id="reputationBar">
+    <div class="position-relative" id="bar">
+        <div class="position-absolute h-100"
+            style="background-color: {{ $user['reputation'] >= 0 ? 'green' : 'red' }}; width: {{ calculateReputationLevel($user['reputation']) . '%' }}; border-radius: 0.7em">
         </div>
     </div>
 
