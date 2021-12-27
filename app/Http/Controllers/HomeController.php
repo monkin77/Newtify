@@ -31,10 +31,7 @@ class HomeController extends Controller
         // in order to place an edit button in the blade page?
         $articlesInfo = $articles->map(function ($article) {
             return [
-<<<<<<< HEAD
             'id' => $article->id,
-=======
->>>>>>> Articles in homepage added
             'title' => $article->title,
             'thumbnail' => $article->thumbnail,
             'body' => $article->body,
