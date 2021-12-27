@@ -1,36 +1,6 @@
 @extends('layouts.app')
 
 @php
-function calculateExpertiseLevel($reputation)
-{
-    $step = 13;
-    if ($reputation <= 0) {
-        return 0;
-    } elseif ($reputation < 5) {
-        return $step * 1;
-    } elseif ($reputation < 10) {
-        return $step * 2;
-    } elseif ($reputation < 20) {
-        return $step * 3;
-    } elseif ($reputation < 40) {
-        return $step * 4;
-    } else {
-        return $step * 5;
-    }
-}
-
-function calculateReputationLevel($reputation)
-{
-    $isPositive = $reputation >= 0;
-    $absReputation = abs($reputation);
-
-    if ($absReputation <= 90) {
-        return 10 + $absReputation;
-    }
-
-    return 100;
-}
-
 $birthDate = date('F j, Y', strtotime($user['birthDate']));
 $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->format('%y');
 @endphp
@@ -44,30 +14,7 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
                     <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" id="avatarImg" />
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
-                    <div class="h-100 text-dark" id="graphContainer">
-                        <h4 class="text-center pt-3 pb-0 my-0">Areas of Expertise</h4>
-                        <div class="d-flex flex-column h-100 justify-content-evenly pb-5">
-                            <div class="d-flex align-items-center ms-3">
-                                <p class="my-0 py-0 pe-3 tagName">{{ $topAreasExpertise[0]['tag_name'] }}</p>
-                                <div class="tagBar"
-                                    style="width: {{ calculateExpertiseLevel($topAreasExpertise[0]['reputation']) . '%' }}">
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center ms-3">
-                                <p class="my-0 py-0 pe-3 tagName">{{ $topAreasExpertise[1]['tag_name'] }}</p>
-                                <div class="tagBar"
-                                    style="width: {{ calculateExpertiseLevel($topAreasExpertise[1]['reputation']) . '%' }}">
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center ms-3">
-                                <p class="my-0 py-0 pe-3 tagName">{{ $topAreasExpertise[2]['tag_name'] }}</p>
-                                <div class="tagBar"
-                                    style="width: {{ calculateExpertiseLevel($topAreasExpertise[2]['reputation']) . '%' }}">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])
                 </div>
             </div>
             <div class="row w-100 mt-5 mb-4">
@@ -99,20 +46,7 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
                     </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <div class="d-flex flex-column justify-content-center">
-                        <div class="position-relative"
-                            style="background-color: gray; width: 15em; height: 1.5em; border-radius: 0.7em">
-                            <div class="position-absolute"
-                                style="background-color: {{ $user['reputation'] >= 0 ? 'green' : 'red' }}; width: {{ calculateReputationLevel($user['reputation']) . '%' }}; height: 1.5em; border-radius: 0.7em">
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="my-0 py-0 pt-2 ">Reputation: {{ $user['reputation'] }}</h6>
-                            <i class="fa fa-exclamation-circle fa-1x" id="reportIcon" onclick="console.log('cliked')"></i>
-                        </div>
-
-                    </div>
+                    @include('partials.user.reputationBar', ['user' => $user])
                 </div>
             </div>
 
