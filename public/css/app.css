@@ -54,7 +54,7 @@ body {
 }
 
 #author-container {
-    background-color: #DBD7D2;
+    background-color: #dbd7d2;
 }
 
 #author-container .row {
@@ -66,8 +66,8 @@ body {
 }
 
 .container #author-container #authorAvatar {
-    border-radius: 50%; 
-}  
+    border-radius: 50%;
+}
 
 .container #comments-section .commentHeader {
     margin: 0;
@@ -76,6 +76,8 @@ body {
     width: 5em;
     font-size: small;
     text-align: center;
+}
+
 #userProfileContainer #userInfo {
     height: 60vh;
     background-color: lightgray;
