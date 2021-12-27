@@ -34,7 +34,8 @@ Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
 
 // Articles
-Route::get('article', 'ArticleController@createForm')->name('newArticlePage');
+Route::get('articles', 'ArticleController@index')->name('articles');
+Route::get('article', 'ArticleController@createForm')->name('createArticle');
 Route::post('article', 'ArticleController@create');
 Route::get('article/{id}', 'ArticleController@show')->name('article');
 Route::get('article/{id}/edit', 'ArticleController@edit');
