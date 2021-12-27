@@ -1,8 +1,14 @@
 <div class="card flex-row flex-wrap" >
     <div class="card-header border-0" style="width: 20%;">
-        <img src="{{ $article['thumbnail'] }}" style="width: 100%;">
+        <img src=
+        @if (isset($article['thumbnail']))
+            {{ $article['thumbnail'] }}
+        @else
+            "https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg"
+        @endif
+        style="width: 100%;">
     </div>
-    
+
     <a href="/article/{{ $article['id'] }}">
         <div class="card-block d-flex flex-column px-2">
             <h4 class="card-title">
@@ -19,8 +25,8 @@
                     {{ $time }}
                 </i>
             </p>
-            
-            <p class="card-text">{{ $article['body'] }} </p>
+
+            <p class="card-text">{{ mb_strimwidth($article['body'], 0, 150, "...") }} </p>
         </div>
     </a>
     
