@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Tag;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -14,30 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
 {
-
-    /**
-     * Gets all the articles.
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {   
-        $articles = Article::get();
-        
-        $articlesInfo = $articles->map(function ($article) {
-            return [
-            'title' => $article->title,
-            'thumbnail' => $article->thumbnail,
-            'body' => $article->body,
-            'published_at' => $article->published_at,
-            'likes' => $article->likes,
-            'dislikes' => $article->dislikes,
-            ];
-        })->sortByDesc('published_at')->take(5);
-
-        return view('pages.articles', ['articles' => $articlesInfo]);
-    }
-
     /**
      * Display Create Article Form
      * 
