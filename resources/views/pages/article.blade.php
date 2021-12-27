@@ -106,7 +106,7 @@
                 </div>
                 
                 @foreach ($comments as $comment)
-                    @include('partials.comment', ['comment' => $comment])
+                    @include('partials.content.comment', ['comment' => $comment])
                 @endforeach
             
             </div>

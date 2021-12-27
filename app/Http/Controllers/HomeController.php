@@ -88,7 +88,7 @@ class HomeController extends Controller
             });
 
         $articles = $this->filterByType($request->type, $request->offset, $request->limit, $articles);
-        return view('partials.articles', [
+        return view('partials.content.articles', [
             'articles' => $articles
         ]);
     }
@@ -109,6 +109,17 @@ class HomeController extends Controller
 
         else $sortedArticles = $articles;
 
-        return $sortedArticles->slice($offset, $limit);
+        return $sortedArticles->slice($offset, $limit)
+            ->map(function ($article) {
+                return [
+                    'id' => $article->id,
+                    'title' => $article->title,
+                    'thumbnail' => $article->thumbnail,
+                    'body' => $article->body,
+                    'published_at' => $article->published_at,
+                    'likes' => $article->likes,
+                    'dislikes' => $article->dislikes,
+                ];
+            });
     }
 }
