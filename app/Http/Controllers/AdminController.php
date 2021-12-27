@@ -250,7 +250,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Page with information about all the reports
+     * Page where the admin can accept or refuse tags
      * 
      * @return View
      */
