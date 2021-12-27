@@ -117,12 +117,7 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
             </div>
 
             <div class="mt-5" id="description">
-                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at consequat odio. Nullam quis urna
-                    commodo, scelerisque massa vulputate, facilisis enim. Mauris facilisis rutrum orci, sed congue enim
-                    tempus sed. Ut dignissim odio in leo mattis, iaculis venenatis nisi ornare. In pellentesque, quam
-                    vitae
-                    commodo vestibulum, ex magna vulputate massa, quis tincidunt velit metus et magna. Sed a augue urna.
-                    Mauris ac elementum orci. Cras a posuere libero.</h5>
+                <h5>{{ $user['description'] }}</h5>
             </div>
         </div>
         <div class="container-fluid w-100 d-flex justify-content-center my-5" id="userArticles">
