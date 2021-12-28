@@ -10,24 +10,24 @@
 
                 <form class="flex-row w-75 h-100">
                     <div class="flex-row">
+                        <label for="input-title">Article's Title</label>
                         <h2 class="m-0"> 
                             <input type="text" class="h-100" id="input-title" name="input-title" placeholder="Insert Title">
-                            {{-- input para titulo do artigo--}}
                         </h2>
                     </div>
 
                     <div class="flex-row mt-3 mb-5"> 
-                        {{-- inputs para 3 tags --}}
+                        <label for="input-tags">Article's Tags</label>
                         <input class="px-3 mx-3" type="text" id="input-tags" name="input-tags" data-role="tagsinput" placeholder="Insert Tags">
                     </div>
                     
                     <div class="flex-row">
-                        <input type="file" id="thumbnail" name="thumbnail" accept="image/png, image/jpeg, image/jpg">
-                        {{-- input para $article['thumbnail']--}}
+                        <label for="input-thumbnail">Article's Thumbnail</label>
+                        <input type="file" id="input-thumbnail" name="input-thumbnail" accept="image/png, image/jpeg, image/jpg">
                     </div>
                                     
                     <div class="flex-row h-100">
-                        {{-- input para $article['body']--}}
+                        <label for="input-body">Article's Body</label>
                         <textarea id="input-body" name="input-body" rows="15" class="h-100" placeholder="Insert Body"></textarea>
                     </div>
 
