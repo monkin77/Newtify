@@ -54,8 +54,7 @@ CREATE TABLE suspension(
   reason TEXT NOT NULL,
   start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   end_time TIMESTAMP NOT NULL CHECK (end_time >= start_time),
-  -- Sera que devia ser ON DELETE SET NULL no admin_id?
-  admin_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  admin_id INTEGER REFERENCES authenticated_user(id) ON DELETE SET NULL ON UPDATE CASCADE,
   user_id INTEGER NOT NULL REFERENCES authenticated_user(id) ON DELETE CASCADE ON UPDATE CASCADE
   CONSTRAINT diff_entities CHECK (admin_id != user_id)
 );
