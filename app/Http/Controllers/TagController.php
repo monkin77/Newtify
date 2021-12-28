@@ -6,7 +6,6 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use \Illuminate\Database\QueryException;
 
 class TagController extends Controller
 {
@@ -190,11 +189,11 @@ class TagController extends Controller
                 'name' => $tag->name,
                 'proposed_at' => $tag->proposed_at,
                 'state' => $tag->state,
-                'user' => [
+                'user' => isset($tag->user) ? [
                     'id' => $tag->user_id,
                     'name' => $tag->user->name,
                     'avatar' => $tag->user->avatar
-                ]
+                ] : null,
             ];
         });
 

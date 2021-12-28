@@ -36,12 +36,16 @@
                     
                     <i class="iconify ms-5" data-icon="bi:share-fill"></i>
                 </p>
-                
+
                 <div class="flex-row h-50 mb-5">
-                    {{-- {{ $article['thumbnail'] }} --}}
-                    <img class="h-100 w-50" src="https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg">
+                    <img class="h-100 w-50" src={{
+                        isset($article['thumbnail']) ?
+                        $article['thumbnail']
+                        :
+                        $articleImgPHolder
+                    }}>
                 </div>
-                                
+        
                 <div class="flex-row h-75">
                     {{ $article['body'] }}
                 </div>
@@ -52,32 +56,56 @@
                 <div class="flex-row mt-1">
                     <h2>Author</h2>
                 </div>
-                
-                <div class="d-flex flex-row mb-3">
-                    <div class="flex-col w-25" style="margin-right: 1em;">
-                        {{-- {{ $author['thumbnail'] }} --}}
-                        <img id="authorAvatar" class="h-100" src="https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg">
+
+                @if (isset($author))
+                    <div class="d-flex flex-row mb-3">
+                        <div class="flex-col w-25" style="margin-right: 1em;">
+                            <img id="authorAvatar" class="h-100" src={{
+                                isset($author['thumbnail']) ?
+                                $author['thumbnail']
+                                :
+                                $userImgPHolder
+                            }}>
+                        </div>
+                        <div class="flex-col w-75" id="author-header" style="padding-bottom: 0;">
+                            <h4 class="mb-2"> {{ $author['name'] }} </h4>
+                            <p> @if (isset($author['city']))
+                                    {{ $author['city'] }}, {{ $author['country']->name }}
+                                @else
+                                    {{ $author['country']->name }}
+                                @endif
+                            </p>
+                        </div>
                     </div>
-                    <div class="flex-col w-75" id="author-header" style="padding-bottom: 0;">
-                        <h4 class="mb-2"> {{ $author['name'] }} </h4>
-                        <p> {{ $author['city'] }}, {{ $author['country']->name }} </p>
+
+                    <div class="flex-row mb-1">
+                        <p class="text-secondary">Reputation: {{ $author['reputation'] }} </p>
                     </div>
-                </div>
 
-                <div class="flex-row mb-1">
-                    <p class="text-secondary">Reputation: {{ $author['reputation'] }} </p>
-                </div>
+                    <div class="flex-row my-3">
+                        <p>{{ $author['description'] }}</p>
+                    </div>
+ 
+                    <div class="flex-row my-5">
+                        <h3>Areas of Expertise </h3>
+                        @foreach ($author['topAreasExpertise'] as $areaExpertise) 
+                            <p>{{ $areaExpertise['tag_name'] }} </p>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="d-flex flex-row mb-3">
+                        <div class="flex-col w-25" style="margin-right: 1em;">
+                            <img id="authorAvatar" class="h-100" src={{ $userImgPHolder }}>
+                        </div>
+                        <div class="flex-col w-75" id="author-header" style="padding-top: 1em;">
+                            <h4 class="mb-2"><i>Anonymous</i></h4>
+                        </div>
+                    </div>
 
-                <div class="flex-row my-3">
-                    <p>{{ $author['description'] }}</p>
-                </div>
-
-                <div class="flex-row my-5">
-                    <h3>Areas of Expertise </h3>
-                    @foreach ($author['topAreasExpertise'] as $areaExpertise) 
-                        <p>{{ $areaExpertise['tag_name'] }} </p>
-                    @endforeach
-                </div>
+                    <div class="flex-row my-3" style="padding-top: 50%">
+                        <p>The author has deleted his account</p>
+                    </div>
+                @endif
             </div>
 
         </div>
@@ -88,10 +116,16 @@
             </div>
 
             <div class="h-50">
+                @if (Auth::check())
                 <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
                     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-                        {{-- buscar o User autenticado e meter a foto --}}
-                        <img src="https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg">
+                        <img src= {{
+                            isset(Auth::user()->avatar) ?
+                            Auth::user()->avatar
+                            :
+                            $userImgPHolder
+                        }}
+                        >
                         You
                     </div>
 
@@ -104,7 +138,8 @@
                         </form>
                     </div>
                 </div>
-                
+                @endif
+
                 @foreach ($comments as $comment)
                     @include('partials.content.comment', ['comment' => $comment])
                 @endforeach

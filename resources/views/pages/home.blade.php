@@ -18,7 +18,7 @@ $tagline = 'Que rego amiguinho'
         </div>
     </div>
 </div>
- 
+
 @endsection
 
 

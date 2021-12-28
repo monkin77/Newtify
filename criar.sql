@@ -43,7 +43,7 @@ CREATE TABLE authenticated_user(
   city TEXT, 
   is_suspended BOOLEAN NOT NULL DEFAULT FALSE,
   reputation INTEGER NOT NULL DEFAULT 0,
-  country_id INTEGER REFERENCES country(id) ON DELETE CASCADE ON UPDATE CASCADE
+  country_id INTEGER NOT NULL REFERENCES country(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -150,10 +150,10 @@ CREATE TABLE comment(
 -----------------------------------------
 
 CREATE TABLE feedback(
+  id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES authenticated_user(id) ON DELETE SET NULL ON UPDATE CASCADE, 
-  content_id INTEGER REFERENCES content(id) ON DELETE CASCADE ON UPDATE CASCADE, 
-  is_like BOOLEAN NOT NULL,
-  PRIMARY KEY (user_id, content_id)
+  content_id INTEGER NOT NULL REFERENCES content(id) ON DELETE CASCADE ON UPDATE CASCADE, 
+  is_like BOOLEAN NOT NULL
 );
 
 -----------------------------------------

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Tag;
@@ -38,7 +37,7 @@ class ArticleController extends Controller
         if (Auth::guest()) {
             return redirect('/login');
         }
-        
+
         $validator = Validator::make($request -> all(),
             [
                 'body' => 'required|string|min:10',
@@ -47,7 +46,7 @@ class ArticleController extends Controller
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|integer|distinct|min:0',
             ]
-            );
+        );
 
         if ( $validator->fails() ) {
             // go back to form and refill it
@@ -61,7 +60,7 @@ class ArticleController extends Controller
                 return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
             }
         }
-        
+
         $content = new Content;
         $content->body = $request->body;
         $content->author_id = Auth::id();
@@ -100,37 +99,42 @@ class ArticleController extends Controller
             'dislikes' => $article->dislikes,
         ];
 
-        $author = $article->author()->first();
-        $authorInfo = [
-            'id' => $author->id,
-            'name' => $author->name,
-            'avatar' => $author->avatar,
-            'country' => $author->country,
-            'city' => $author->city,
-            'isAdmin' => $author->is_admin,
-            'description' => $author->description,
-            'isSuspended' => $author->is_suspended,
-            'reputation' => $author->reputation,
-            'topAreasExpertise' => $author->topAreasExpertise(),
-        ];
+        $author = $article->author;
 
-        $is_author = $author->id === Auth::id();
+        if (isset($author))
+            $authorInfo = [
+                'id' => $author->id,
+                'name' => $author->name,
+                'avatar' => $author->avatar,
+                'country' => $author->country,
+                'city' => $author->city,
+                'isAdmin' => $author->is_admin,
+                'description' => $author->description,
+                'isSuspended' => $author->is_suspended,
+                'reputation' => $author->reputation,
+                'topAreasExpertise' => $author->topAreasExpertise(),
+            ];
+        else $authorInfo = null; // Anonymous, account deleted
 
-        // we could do the "load more" thing for comments to?
+        $is_author = isset($author) ? $author->id === Auth::id() : false;
+
+        // TODO: "load more" thing for comments too
         $comments = $article->comments->map(function ($comment) {
-            $author = $comment->author()->first();
+            $commentAuthor = $comment->author;
             return [
                 'body' => $comment->body,
                 'likes' => $comment->likes,
                 'dislikes' => $comment->dislikes,
                 'published_at' =>$comment->published_at,
-                'authorId' => $author->id,  //for edit key
-                'authorName' => $author->name,
-                'authorAvatar' => $author->avatar,  
+                'author' => isset($commentAuthor) ? [
+                    'id' => $commentAuthor->id,
+                    'name' => $commentAuthor->name,
+                    'avatar' => $commentAuthor->avatar,
+                ] : null,
             ];
-        })->sortByDesc('published_at')->take(10);
+        })->sortByDesc('likes')->take(10);
 
-        $tags = $article->articleTags()->get()->map(function($tag){
+        $tags = $article->articleTags->map(function($tag) {
             return [
                 'name' => $tag->name,
             ];
@@ -215,24 +219,21 @@ class ArticleController extends Controller
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
         if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
-        
-        $content->author_id = Auth::id();
-        $content->save();
-        
-        $article->content_id = $content->id;
-        $article->save();
 
         if (isset($request->tags)) {
+            // Check if tags are valid
             foreach($request->tags as $tag) {
                 $checkTag = Tag::find($tag);
-                //check if is valid tag
                 if (!$checkTag) {
                     return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
                 }
             }
             $article->articleTags()->sync($request->tags);
         }
-        
+
+        $content->save();
+        $article->save();
+
         return redirect("/article/${id}");
     }
 
@@ -262,12 +263,14 @@ class ArticleController extends Controller
         $has_feedback = ($content->likes != 0 || $content->dislikes != 0);
         $has_comments = !$article->comments->isEmpty();
 
-        // cannot delete if is not admin or it has feedback and comments
-        if (($has_feedback || $has_comments) && !$user->is_admin){
-            return redirect()->back()->withErrors(['content' => "You can't delete an article with feedback"]);
-        } else if ($user->id != $owner_id && !$user->is_admin) {
+        if ($user->id != $owner_id && !$user->is_admin) {
             return redirect()->back()->withErrors(['user' => "Only the owner of the article can delete it"]);
-        } 
+        }
+
+        if (($has_feedback || $has_comments) && !$user->is_admin) {
+            // cannot delete if is not admin or it has feedback and comments
+            return redirect()->back()->withErrors(['content' => "You can't delete an article with feedback"]);
+        }
 
         $deleted = $article->delete();
         if ($deleted) 
