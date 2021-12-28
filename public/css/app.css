@@ -57,11 +57,11 @@ body {
     max-width: inherit;
 }
 
-#article-container h1,
-#article-container h2,
-#article-container h3,
-#article-container h4,
-#article-container p {
+.article-container h1,
+.article-container h2,
+.article-container h3,
+.article-container h4,
+.article-container p {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -90,4 +90,10 @@ body {
     width: 5em;
     font-size: small;
     text-align: center;
+}
+
+
+.article-container #article-header i {
+    width: 0.8em; 
+    height: 0.7em;
 }

@@ -8,13 +8,13 @@
             
             <div class="d-flex flex-column w-75 p-3 mb-0 text-dark" >
 
-                <div class="flex-row" >
+                <div class="flex-row" id="article-header">
 
                     <h1 class="m-0"> 
                         {{ $article['title'] }} 
                         @if ($is_author)
-                            <i class="iconify" style="width: 0.8em; height: 0.7em;" data-icon="bi:pencil-fill"></i>
-                            <i class="iconify" style="width: 0.8em; height: 0.7em" data-icon="bi:trash-fill"></i>
+                            <i class="iconify" data-icon="bi:pencil-fill"></i>
+                            <i class="iconify" data-icon="bi:trash-fill"></i>
                         @endif
                     </h1>
 
@@ -25,7 +25,7 @@
 
                 </div>
 
-                <p class="flex-row mt-3 mb-1"> 
+                <p class="flex-row mt-3 mb-1 h-25"> 
 
                     @foreach ($tags as $tag)
                         @include('partials.tag', ['tag' => $tag ])
@@ -38,7 +38,6 @@
                 </p>
                 
                 <div class="flex-row h-50 mb-5">
-                    {{-- {{ $article['thumbnail'] }} --}}
                     <img class="h-100 w-50" src="https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg">
                 </div>
                                 
@@ -54,11 +53,11 @@
                 </div>
                 
                 <div class="d-flex flex-row mb-3">
-                    <div class="flex-col w-25" style="margin-right: 1em;">
+                    <div class="flex-col w-25 me-3">
                         {{-- {{ $author['thumbnail'] }} --}}
                         <img id="authorAvatar" class="h-100" src="https://i.pinimg.com/originals/e4/34/2a/e4342a4e0e968344b75cf50cf1936c09.jpg">
                     </div>
-                    <div class="flex-col w-75" id="author-header" style="padding-bottom: 0;">
+                    <div class="flex-col w-75 pb-0">
                         <h4 class="mb-2"> {{ $author['name'] }} </h4>
                         <p> {{ $author['city'] }}, {{ $author['country']->name }} </p>
                     </div>
