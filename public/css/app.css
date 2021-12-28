@@ -42,26 +42,10 @@ body {
 }
 
 /* Full Article Page */
-.bootstrap-tagsinput { 
-    white-space: nowrap;
-    font-size: large;
-    background-color: transparent;
-}
-
-.bootstrap-tagsinput input {
-    border: none;
-    box-shadow: none;
-    outline: none;
-    background-color: transparent;
-    width: auto;
-    max-width: inherit;
-}
-
 .article-container h1,
 .article-container h2,
 .article-container h3,
-.article-container h4,
-.article-container p {
+.article-container h4 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -96,4 +80,34 @@ body {
 .article-container #article-header i {
     width: 0.8em; 
     height: 0.7em;
+}
+
+/* Article Form */
+#article-form {
+    position: relative;
+    min-height: 76vh;
+}
+
+
+.bootstrap-tagsinput { 
+    white-space: nowrap;
+    font-size: large;
+    background-color: transparent;
+}
+
+.bootstrap-tagsinput .tag {
+    background: #99badd;
+    border: 1px solid #0892d0;
+    padding: 0 6px;
+    margin-right: 2px;
+    border-radius: 4px;
+}
+
+.bootstrap-tagsinput input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    width: auto;
+    max-width: inherit;
+    color: black;
 }
