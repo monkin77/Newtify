@@ -38,7 +38,7 @@ Route::get('articles', 'ArticleController@index')->name('articles');
 Route::get('article', 'ArticleController@createForm')->name('createArticle');
 Route::post('article', 'ArticleController@create');
 Route::get('article/{id}', 'ArticleController@show')->name('article');
-Route::get('article/{id}/edit', 'ArticleController@edit');
+Route::get('article/{id}/edit', 'ArticleController@edit')->name('editArticle');
 Route::put('article/{id}', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
 
