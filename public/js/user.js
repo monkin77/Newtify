@@ -1,5 +1,4 @@
 const followUser = (id) => {
-    // UPDATE FOLLOWERS COUNT
     fetch(`/user/${id}/follow`, {
         method: 'POST'
     }).then(data => data.json()).then(res => {
