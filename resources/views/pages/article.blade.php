@@ -8,13 +8,13 @@
             
             <div class="d-flex flex-column w-75 p-3 mb-0 text-dark" >
 
-                <div class="flex-row" >
+                <div class="flex-row" id="article-header">
 
                     <h1 class="m-0"> 
                         {{ $article['title'] }} 
                         @if ($is_author)
-                            <i class="iconify" style="width: 0.8em; height: 0.7em;" data-icon="bi:pencil-fill"></i>
-                            <i class="iconify" style="width: 0.8em; height: 0.7em" data-icon="bi:trash-fill"></i>
+                            <i class="iconify" data-icon="bi:pencil-fill"></i>
+                            <i class="iconify" data-icon="bi:trash-fill"></i>
                         @endif
                     </h1>
 
@@ -25,7 +25,7 @@
 
                 </div>
 
-                <p class="flex-row mt-3 mb-1"> 
+                <p class="flex-row mt-3 mb-1 h-25"> 
 
                     @foreach ($tags as $tag)
                         @include('partials.tag', ['tag' => $tag ])
