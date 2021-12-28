@@ -352,10 +352,9 @@ class UserController extends Controller
 
         if (!Auth::user()->isFollowing($id))
             return response()->json([
-                'status' => 'Conflict',
-                'msg' => 'User not followed, id: ' . $id,
-                'errors' => ['user' => 'User not followed, id: ' . $id]
-            ], 409);
+                'status' => 'OK',
+                'msg' => 'User already not followed, id: ' . $id,
+            ], 200);
 
         $userToUnfollow->followers()->detach(Auth::id());
 

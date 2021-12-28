@@ -5,6 +5,26 @@ $birthDate = date('F j, Y', strtotime($user['birthDate']));
 $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->format('%y');
 @endphp
 
+<script>
+    const followUser = (id) => {
+        fetch(`/user/${id}/follow`, {
+            method: 'POST'
+        }).then(data => data.json()).then(res => {
+            console.log(res);
+            window.location.reload();
+        });
+    }
+
+    const unfollowUser = (id) => {
+        fetch(`/user/${id}/unfollow`, {
+            method: 'POST'
+        }).then(data => data.json()).then(res => {
+            console.log(res);
+            window.location.reload();
+        });
+    }
+</script>
+
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('userInfo')
@@ -26,10 +46,10 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
                     <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
                     @if ($follows)
                         <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3"
-                            onclick="console.log('clicked')">Unfollow</button>
+                            onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
                     @else
                         <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3"
-                            onclick="console.log('clicked')">Follow</button>
+                            onclick="followUser({{ $user['id'] }})">Follow</button>
                     @endif
                     <i class="fa fa-users fa-1x me-3 text-dark"></i>
                     <p class="h5 py-0 my-0">{{ $followerCount }}</p>
