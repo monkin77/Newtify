@@ -76,6 +76,7 @@ body {
     text-align: center;
 }
 
+<<<<<<< HEAD
 .article-container #article-header i {
     width: 0.8em; 
     height: 0.7em;
@@ -91,6 +92,8 @@ body {
     position: relative;
     min-height: 70vh;
 }
+=======
+>>>>>>> Starting edit article form
 
 
 .bootstrap-tagsinput { 
