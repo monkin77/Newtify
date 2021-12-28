@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+$guest = !Auth::check();
+@endphp
+
 <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
 {{-- TO-DO:
@@ -28,13 +32,15 @@
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
-                    @if ($follows)
-                        <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3" id="followBtn"
-                            onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
-                    @else
-                        <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3" id="followBtn"
-                            onclick="followUser({{ $user['id'] }})">Follow</button>
+                    @if (!$guest)
+                        <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
+                        @if ($follows)
+                            <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3" id="followBtn"
+                                onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
+                        @else
+                            <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3" id="followBtn"
+                                onclick="followUser({{ $user['id'] }})">Follow</button>
+                        @endif
                     @endif
                     <i class="fa fa-users fa-1x me-3 text-dark"></i>
                     <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
