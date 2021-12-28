@@ -51,7 +51,6 @@ Route::get('admin/tags', 'AdminController@tags');
 Route::put('admin/reports/{id}/close', 'AdminController@closeReport');
 
 // Tag
-// Route::get('tags', 'TagController@listAcceptedTags');    I don't think we need this since tags are only shown to users either on homepage or by the next endpoint 'showUserFavorites'
 Route::get('favorite_tags', 'TagController@showUserFavorites');
 Route::put('tags/{tag_id}/accept', 'TagController@accept');
 Route::put('tags/{tag_id}/reject', 'TagController@reject');
@@ -60,6 +59,7 @@ Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');
 Route::get('tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
 Route::delete('tags/{tag_id}', 'TagController@destroy');
 Route::post('tags/new', 'TagController@propose');
+
 // Search
 Route::get('search', 'SearchController@show');
 Route::get('api/search/users', 'SearchController@searchUsers');
