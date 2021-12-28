@@ -7,7 +7,6 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
 
 <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
-{{-- ------------------------------------------------------------------------------------ --}}
 {{-- TO-DO:
     - Use sendAjaxRequest method from App.js
     - Disable Follow, Message, Report Buttons For guests
@@ -15,6 +14,8 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
     - Improve Areas of Expertise Graph
     - Improve Tags Badge
     - Include Country Flag? --}}
+
+{{-- ------------------------------------------------------------------------------------ --}}
 @section('userInfo')
     <section id="userInfo">
         <div class="container-fluid py-3">
@@ -77,6 +78,8 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
         @include('partials.content.articles', ['articles' => $articles])
     </section>
 @endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
 
 @section('content')
     <div id="userProfileContainer" class="d-flex flex-column">
