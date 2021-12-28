@@ -8,7 +8,13 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
 <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
 {{-- ------------------------------------------------------------------------------------ --}}
-
+{{-- TO-DO:
+    - Use sendAjaxRequest method from App.js
+    - Disable Follow, Message, Report Buttons For guests
+    - Add Report AJAX
+    - Improve Areas of Expertise Graph
+    - Improve Tags Badge
+    - Include Country Flag? --}}
 @section('userInfo')
     <section id="userInfo">
         <div class="container-fluid py-3">
@@ -45,7 +51,8 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
                     </div>
                     <div class="d-flex align-items-center mb-3">
                         <i class="fa fa-flag me-3 fa-1x" onclick="console.log('cliked')"></i>
-                        <h5 class="mb-0">{{ $user['city'] . ', ' . $user['country']['name'] }}</h5>
+                        <h5 class="mb-0">
+                            {{ (is_null($user['city']) ? '' : $user['city'] . ', ') . $user['country']['name'] }}</h5>
                     </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
