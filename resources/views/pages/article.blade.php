@@ -10,13 +10,18 @@
 
                 <div class="flex-row" id="article-header">
 
-                    <h1 class="m-0"> 
-                        {{ $article['title'] }} 
-                        @if ($is_author)
-                            <i class="iconify" data-icon="bi:pencil-fill"></i>
-                            <i class="iconify" data-icon="bi:trash-fill"></i>
-                        @endif
-                    </h1>
+                    <div class="d-flex flex-row w-100">
+                        <h1 class="flex-column m-0 w-75"> 
+                            {{ $article['title'] }}  jdioewjdiwajswioa dwioajdwaiojswa dwjoiasjiwaoi dwaoijswa
+                        </h1>
+
+                        <h2 class="flex-column mx-3">
+                            @if ($is_author)
+                                <i class="iconify" data-icon="bi:pencil-fill"></i>
+                                <i class="iconify" data-icon="bi:trash-fill"></i>
+                            @endif
+                        <h2>
+                    </div>
 
                     @php
                         $article_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $article['published_at'] ) )   
