@@ -67,11 +67,7 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
         <div class="container-fluid w-100 d-flex justify-content-center my-5" id="userArticles">
             <h2 class="border-bottom border-2 border-dark text-center pb-1" id="articlesTitle">Articles</h2>
         </div>
-        <div class="container">
-            @foreach ($articles as $article)
-                @include('partials.article', ['article' => $article])
-            @endforeach
-        </div>
+        @include('partials.content.articles', ['articles' => $articles])
     </section>
 @endsection
 
