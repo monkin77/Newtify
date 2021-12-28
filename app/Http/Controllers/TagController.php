@@ -39,7 +39,7 @@ class TagController extends Controller
             ];
         });
 
-        return view('pages.tagsList', [
+        return view('pages.tags_list', [
             'tags' => $tags,
             'userTags' => $userTags
         ]);
@@ -184,20 +184,24 @@ class TagController extends Controller
         $this->authorize('showFilteredTags', Tag::class);
 
         $tags = Tag::listTagsByState(self::tagStates[$tag_state])->map(function ($tag) {
+            if (isset($tag->user))
+                $userInfo = [
+                    'id' => $tag->user_id,
+                    'name' => $tag->user->name,
+                    'avatar' => $tag->user->avatar
+                ];
+            else $userInfo = null;
+
             return [
                 'id' => $tag->id,
                 'name' => $tag->name,
                 'proposed_at' => $tag->proposed_at,
                 'state' => $tag->state,
-                'user' => isset($tag->user) ? [
-                    'id' => $tag->user_id,
-                    'name' => $tag->user->name,
-                    'avatar' => $tag->user->avatar
-                ] : null,
+                'user' => $userInfo
             ];
         });
 
-        return view('partials.tagsList', [
+        return view('partials.tags_list', [
             'tags' => $tags,
         ]);
     }

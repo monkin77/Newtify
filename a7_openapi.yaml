@@ -1122,7 +1122,7 @@ paths:
           required: true
       responses:
         "200":
-          description: "Ok. Show tag list (UI09)"
+          description: "Ok. Show tag list (Part of UI09)"
         "401":
           description: "Unauthorized. Not logged in"
         "403":
@@ -1323,11 +1323,11 @@ paths:
         "404":
           description: "Not found"
 
-  /users/suspended:
+  /admin/suspensions:
     get:
       operationId: "R702"
-      summary: "R702: View suspended users"
-      description: "Page with information about the suspended users. Access: ADM"
+      summary: "R702: View suspended users and suspension history"
+      description: "Page with information about suspensions. Access: ADM"
       tags:
         - "M07: User Administration"
 
@@ -1343,7 +1343,7 @@ paths:
         "404":
           description: "Not found"
 
-  /users/{user_id}/suspend:
+  /user/{user_id}/suspend:
     post:
       operationId: "R703"
       summary: "R703: Suspend User"
@@ -1367,9 +1367,6 @@ paths:
               properties:
                 reason:
                   type: string
-                start_time:
-                  type: string
-                  format: date
                 end_time:
                   type: string
                   format: date
@@ -1389,7 +1386,7 @@ paths:
         "404":
           description: "Not found"
 
-  /users/{user_id}/unsuspend:
+  /user/{user_id}/unsuspend:
     put:
       operationId: "R704"
       summary: "R704: Unsuspend User"
@@ -1404,19 +1401,6 @@ paths:
             type: integer
           required: true
 
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                end_time:
-                  type: string
-                  format: date
-              required:
-                - end_time
-
       responses:
         "200":
           description: "Successfully removed suspension from a user"
@@ -1427,7 +1411,7 @@ paths:
         "404":
           description: "Not found"
 
-  /admin/reports/:
+  /admin/reports:
     get:
       operationId: "R705"
       summary: "R705: View all the reports"
