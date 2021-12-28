@@ -8,7 +8,6 @@ $guest = !Auth::check();
 
 {{-- TO-DO:
     - Use sendAjaxRequest method from App.js
-    - Disable Follow, Message, Report Buttons For guests
     - Add Report Request
     - Improve Areas of Expertise Graph
     - Improve Tags Badge
