@@ -8,6 +8,7 @@ const followUser = (id) => {
             button.className = "btn btn-secondary px-5 my-0 py-0 me-3";
             button.innerHTML = 'Unfollow';
             button.onclick = () => unfollowUser(id);
+            $('#followersCount').innerHTML++;
         }
     });
 }
@@ -21,6 +22,7 @@ const unfollowUser = (id) => {
             button.className = "btn btn-primary px-5 my-0 py-0 me-3";
             button.innerHTML = 'Follow';
             button.onclick = () => followUser(id);
+            $('#followersCount').innerHTML--;
         }
     });
 }

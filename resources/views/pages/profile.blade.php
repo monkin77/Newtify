@@ -5,6 +5,8 @@ $birthDate = date('F j, Y', strtotime($user['birthDate']));
 $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->format('%y');
 @endphp
 
+<script type="text/javascript" src={{ asset('js/user.js') }}></script>
+
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('userInfo')
@@ -32,7 +34,7 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
                             onclick="followUser({{ $user['id'] }})">Follow</button>
                     @endif
                     <i class="fa fa-users fa-1x me-3 text-dark"></i>
-                    <p class="h5 py-0 my-0">{{ $followerCount }}</p>
+                    <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
                 </div>
             </div>
             <div class="row w-100 my-2">
