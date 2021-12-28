@@ -329,14 +329,16 @@ class UserController extends Controller
         if (Auth::user()->isFollowing($id))
             return response()->json([
                 'status' => 'OK',
-                'msg' => 'User already followed, id: ' . $id,
+                'msg' => 'User already followed',
+                'id' => $id,
             ], 200);
 
         $userToFollow->followers()->attach(Auth::id());
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Successful user follow, id: ' . $id,
+            'msg' => 'Successful user follow',
+            'id' => $id,
         ], 200);
     }
 
@@ -355,14 +357,16 @@ class UserController extends Controller
         if (!Auth::user()->isFollowing($id))
             return response()->json([
                 'status' => 'OK',
-                'msg' => 'User already not followed, id: ' . $id,
+                'msg' => 'User already not followed',
+                'id' => $id,
             ], 200);
 
         $userToUnfollow->followers()->detach(Auth::id());
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Successful user unfollow, id: ' . $id,
+            'msg' => 'Successful user unfollow',
+            'id' => $id,
         ], 200);
     }
 }
