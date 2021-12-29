@@ -37,9 +37,29 @@
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
+@section('load-more')
+<div id="load-more">
+
+    <button>Load more</button>
+
+</div>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
 @section('content')
 
     @yield('searchInfo')
     @yield('results')
 
+    @if ($canLoadMore)
+        @yield('load-more')
+    @endif
+
 @endsection
+
+{{--
+- Handle de erros (mostrar ao user)
+- Load more com AJAX
+- Ativar o butao de search
+--}}
