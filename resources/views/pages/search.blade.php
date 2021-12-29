@@ -1,6 +1,25 @@
 @extends('layouts.app')
 
 {{-- ------------------------------------------------------------------------------------ --}}
+
+@section('error-handler')
+    <div class="alert alert-danger mb-0 text-center" role="alert">
+        @foreach ($errors->all() as $error)
+            <h4 class="my-3">{{ $error }}</h4 class="my-3">
+        @endforeach
+    </div>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
+@if ($errors->any())
+    @section('content')
+        @yield('error-handler')
+    @endsection
+@else
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
 @section('searchInfo')
 
 @if ($results->isEmpty())
@@ -48,7 +67,6 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('content')
-
     @yield('searchInfo')
     @yield('results')
 
@@ -57,9 +75,9 @@
     @endif
 
 @endsection
+@endif
 
 {{--
-- Handle de erros (mostrar ao user)
 - Load more com AJAX
 - Ativar o butao de search
 --}}
