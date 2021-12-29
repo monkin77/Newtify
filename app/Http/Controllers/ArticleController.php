@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Tag;
@@ -23,7 +24,24 @@ class ArticleController extends Controller
             return redirect('/login');
         }
 
-        return view('pages.create_article');
+        $user = User::find(Auth::id());
+        if (is_null($user)) 
+            return redirect('/login');
+
+        $authorInfo = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'avatar' => $user->avatar,
+            'country' => $user->country,
+            'city' => $user->city,
+            'isAdmin' => $user->is_admin,
+            'description' => $user->description,
+            'isSuspended' => $user->is_suspended,
+            'reputation' => $user->reputation,
+            'topAreasExpertise' => $user->topAreasExpertise(),
+        ];
+
+        return view('pages.create_article', ['author' => $authorInfo]);
     }
 
     /**
@@ -37,6 +55,7 @@ class ArticleController extends Controller
         if (Auth::guest()) {
             return redirect('/login');
         }
+
 
         $validator = Validator::make($request -> all(),
             [
@@ -121,6 +140,7 @@ class ArticleController extends Controller
         // TODO: "load more" thing for comments too
         $comments = $article->comments->map(function ($comment) {
             $commentAuthor = $comment->author;
+
             return [
                 'body' => $comment->body,
                 'likes' => $comment->likes,

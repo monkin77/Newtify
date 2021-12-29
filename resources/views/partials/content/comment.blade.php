@@ -1,3 +1,7 @@
+@php
+    $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) )   
+@endphp
+
 <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
         <img src={{
@@ -24,9 +28,6 @@
             <span class="px-3">Reply</span>
         @endif
 
-        @php
-            $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) )   
-        @endphp
         <span class="px-3">{{ $comment_published_at }} </span>
     </div>
 

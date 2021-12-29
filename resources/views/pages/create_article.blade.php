@@ -6,9 +6,9 @@
 
         <div class="d-flex flex-row my-2 h-100">
 
-            <div class="d-flex flex-column w-100 my-2 p-3 h-100">
+            <div class="d-flex flex-column w-75 my-2 p-3 h-100">
 
-                <form class="flex-row w-75 h-100">
+                <form class="flex-row h-100">
                     <div class="flex-row">
                         <label for="input-title">Article's Title</label>
                         <h2 class="m-0"> 
@@ -34,6 +34,10 @@
                     <button type="button" class="">Create Article</button>
                 </form>
 
+            </div>
+
+            <div class="flex-col w-25 ms-5 p-3 text-dark" id="author-container">
+                @include('partials.authorInfo', ['author' => $author])
             </div>
 
         </div>
