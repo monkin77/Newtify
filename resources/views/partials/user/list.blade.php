@@ -1,9 +1,4 @@
-<section id="users">
+@foreach($users as $user)
+    @include('partials.user.card', ['user' => $user])
+@endforeach
 
-    <div class="container   ">
-        @foreach($users as $user)
-            @include('partials.user.card', ['user' => $user])
-        @endforeach
-    </div>
-
-</section>

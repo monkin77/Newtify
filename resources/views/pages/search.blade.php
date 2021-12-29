@@ -31,7 +31,7 @@
 @else
 
     <div class="alert alert-secondary search-nfo my-3 text-center" role="alert">
-        <h3 class="mb-0">Displaying {{ $type }} results for: <i>{{$query}}</i> </h3>
+        <h3 class="mb-0">Displaying {{ $type }} results for: <i>{{ $query }}</i> </h3>
     </div>
 
 @endif
@@ -44,11 +44,15 @@
 
 @if ($type === 'article')
 
-    @include('partials.content.articles', ['articles' => $results])
+    <section id="articles" class="container">
+        @include('partials.content.articles', ['articles' => $results])
+    </section>
 
 @else {{-- Users --}}
 
-    @include('partials.user.list', ['users' => $results])
+    <section id="users" class="container">
+        @include('partials.user.list', ['users' => $results])
+    </section>
 
 @endif
 
@@ -59,7 +63,7 @@
 @section('load-more')
 <div id="load-more">
 
-    <button>Load more</button>
+    <button onclick="loadMore('{{ $type }}', '{{ $query }}')">Load more</button>
 
 </div>
 @endsection
@@ -76,8 +80,3 @@
 
 @endsection
 @endif
-
-{{--
-- Load more com AJAX
-- Ativar o butao de search
---}}

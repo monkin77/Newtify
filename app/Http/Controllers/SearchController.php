@@ -56,10 +56,10 @@ class SearchController extends Controller
 
         $search = $this->getUserSearch($request->value, $request->offset, $request->limit);
 
-        return view('partials.user.list', [
-            'users' => $search['results'],
+        return response()->json([
+            'html' => view('partials.user.list', [ 'users' => $search['results'] ])->render(),
             'canLoadMore' => $search['canLoadMore']
-        ]);
+        ], 200);
     }
 
     public function searchArticles(Request $request)
@@ -79,10 +79,10 @@ class SearchController extends Controller
 
         $search = $this->getArticleSearch($request->value, $request->offset, $request->limit);
 
-        return view('partials.content.articles', [
-            'articles' => $search['results'],
+        return response()->json([
+            'html' => view('partials.content.articles', [ 'articles' => $search['results'] ])->render(),
             'canLoadMore' => $search['canLoadMore']
-        ]);
+        ], 200);
     }
 
     private function getUserSearch(string $value, $offset = 0, $limit = null)
