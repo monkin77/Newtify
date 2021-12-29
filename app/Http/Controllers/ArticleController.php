@@ -41,7 +41,7 @@ class ArticleController extends Controller
             'topAreasExpertise' => $user->topAreasExpertise(),
         ];
 
-        return view('pages.create_article', ['author' => $authorInfo]);
+        return view('pages.article.create_article', ['author' => $authorInfo]);
     }
 
     /**
@@ -60,9 +60,9 @@ class ArticleController extends Controller
             [
                 'body' => 'required|string|min:10',
                 'title' => 'required|string|min:3|max:255',
-                'thumbnail' => 'nullable|file|max:5000',
+                'thumbnail' => 'nullable|file|max:50000',
                 'tags' => 'required|array|min:1|max:3',
-                'tags.*' => 'required|integer|distinct|min:0',
+                'tags.*' => 'required|string|distinct|min:1',
             ]
         );
 
@@ -71,12 +71,16 @@ class ArticleController extends Controller
             return redirect()->back()->withInput()->withErrors($request);
         }
 
+        $tagsIds = [];
+
         foreach($request->tags as $tag) {
-            $checkTag = Tag::find($tag);
+            $checkTag = Tag::where('name', $tag)->first();
+
             //check if is valid tag
-            if (!$checkTag) {
-                return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
+            if (!$checkTag || $checkTag->state != 'ACCEPTED') {
+                return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$checkTag->name]); 
             }
+            array_push($tagsIds, $checkTag->id);
         }
 
         $content = new Content;
@@ -91,7 +95,7 @@ class ArticleController extends Controller
 
         $article->save();
 
-        $article->articleTags()->sync($request->tags);
+        $article->articleTags()->sync($tagsIds);
 
         return redirect("/article/$article->content_id");
     }
@@ -159,7 +163,7 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
-        return view('pages.article', [
+        return view('pages.article.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
             'comments' => $comments,
@@ -196,7 +200,7 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
-        return view('pages.edit_article', [
+        return view('pages.article.edit_article', [
             'article' => $articleInfo,
             'tags' => $tagsInfo,
         ]);
