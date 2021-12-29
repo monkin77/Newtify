@@ -22,12 +22,7 @@
                 {{ $errors->first('password') }}
             </span>
         @endif
-        
-        <div class="checkbox mb-3">
-            <label>
-            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-            </label>
-        </div>
+
         <button type="submit" class="btn btn-secondary w-50 fw-bold">
         Login
         </button>
