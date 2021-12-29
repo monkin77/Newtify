@@ -54,7 +54,7 @@ body {
 }
 
 #author-container {
-    background-color: #DBD7D2;
+    background-color: #dbd7d2;
 }
 
 #author-container .row {
@@ -66,8 +66,8 @@ body {
 }
 
 .container #author-container #authorAvatar {
-    border-radius: 50%; 
-}  
+    border-radius: 50%;
+}
 
 .container #comments-section .commentHeader {
     margin: 0;
@@ -76,4 +76,57 @@ body {
     width: 5em;
     font-size: small;
     text-align: center;
+}
+
+#userProfileContainer #userInfo {
+    height: 60vh;
+    background-color: lightgray;
+}
+
+#userProfileContainer #userInfo #userGraphics {
+    height: 40%;
+}
+
+#userProfileContainer #userInfo #userGraphics #avatarImg {
+    height: 100%;
+    aspect-ratio: 1;
+    border-radius: 100em;
+}
+
+#graphContainer {
+    width: 50%;
+    border-width: 0.2em;
+    border-style: solid;
+    border-color: gray;
+    border-radius: 1.5em;
+    background-color: #95a5a6;
+}
+
+#graphContainer .tagName {
+    width: 22%;
+}
+
+#graphContainer .tagBar {
+    background-color: orange;
+    height: 1.2em;
+}
+
+#userProfileContainer #userInfo #description {
+    padding-left: 10%;
+    width: 90%;
+}
+
+#reputationBar #reportIcon {
+    color: darkred;
+}
+
+#reputationBar #bar {
+    background-color: gray;
+    width: 15em;
+    height: 1.5em;
+    border-radius: 0.7em;
+}
+
+#userProfileContainer #userArticles #articlesTitle {
+    width: 20%;
 }

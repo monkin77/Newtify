@@ -177,4 +177,6 @@ function createItem(item) {
   return new_item;
 }
 
+const $ = (selector) => document.querySelector(selector);
+
 addEventListeners();

@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (is_null($user))
-            return abort(404, 'User not found, id: '.$id);
+            return abort(404, 'User not found, id: ' . $id);
 
         $userInfo = [
             'id' => $id,
@@ -45,10 +45,12 @@ class UserController extends Controller
         }
 
         $areasExpertise = $user->topAreasExpertise();
+
         $followerCount = count($user->followers);
 
         $articles = $user->articles()->map(function ($article) {
             return [
+                'id' => $article->content_id,
                 'title' => $article->title,
                 'thumbnail' => $article->thumbnail,
                 'body' => $article->body,
@@ -64,6 +66,8 @@ class UserController extends Controller
             'topAreasExpertise' => $areasExpertise,
             'followerCount' => $followerCount,
             'articles' => $articles,
+            'birthDate' => date('F j, Y', strtotime($userInfo['birthDate'])),
+            'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y')
         ]);
     }
 
@@ -77,7 +81,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (is_null($user))
-            return abort(404, 'User not found, id: '.$id);
+            return abort(404, 'User not found, id: ' . $id);
 
         $this->authorize('update', $user);
 
@@ -91,20 +95,20 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $id) : RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
         $user = User::find($id);
         if (is_null($user))
-            return redirect()->back()->withErrors(['user' => 'User not found, id: '.$id]);
+            return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
 
         $this->authorize('update', $user);
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:authenticated_user',
             'password' => 'required|string|password',
             'new_password' => 'nullable|string|min:6|confirmed',
-            'birthDate' => 'nullable|string|date_format:d-m-Y|before:'.date('d-m-Y'), // before today
+            'birthDate' => 'nullable|string|date_format:d-m-Y|before:' . date('d-m-Y'), // before today
             'country' => 'nullable|string|exists:country,name',
             'avatar' => 'nullable|file|max:5000', // max 5MB
             // TODO: File upload
@@ -136,15 +140,15 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Request $request, int $id) : RedirectResponse
+    public function delete(Request $request, int $id): RedirectResponse
     {
         $user = User::find($id);
         if (is_null($user))
-            return redirect()->back()->withErrors(['user' => 'User not found, id: '.$id]);
+            return redirect()->back()->withErrors(['user' => 'User not found, id: ' . $id]);
 
         $this->authorize('delete', $user);
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'password' => 'required|string|password'
         ]);
 
@@ -171,13 +175,13 @@ class UserController extends Controller
         if (is_null($user))
             return response()->json([
                 'status' => 'Not Found',
-                'msg' => 'User not found, id: '.$id,
-                'errors' => ['user' => 'User not found, id: '.$id]
+                'msg' => 'User not found, id: ' . $id,
+                'errors' => ['user' => 'User not found, id: ' . $id]
             ], 404);
 
         $this->authorize('report', $user);
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'reason' => 'required|string|min:5|max:200',
         ]);
 
@@ -214,8 +218,8 @@ class UserController extends Controller
         if (is_null($user))
             return response()->json([
                 'status' => 'Not Found',
-                'msg' => 'User not found, id: '.$id,
-                'errors' => ['user' => 'User not found, id: '.$id]
+                'msg' => 'User not found, id: ' . $id,
+                'errors' => ['user' => 'User not found, id: ' . $id]
             ], 404);
 
         $this->authorize('suspension', $user);
@@ -223,8 +227,8 @@ class UserController extends Controller
         if (!$user->is_suspended)
             return response()->json([
                 'status' => 'Conflict',
-                'msg' => 'User is not suspended, id: '.$id,
-                'errors' => ['user' => 'User is not suspended, id: '.$id]
+                'msg' => 'User is not suspended, id: ' . $id,
+                'errors' => ['user' => 'User is not suspended, id: ' . $id]
             ], 409);
 
         return $user->suspensionEndInfo();
@@ -240,7 +244,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (is_null($user))
-            return abort(404, 'User not found, id: '.$id);
+            return abort(404, 'User not found, id: ' . $id);
 
         $this->authorize('followed', $user);
 
@@ -274,11 +278,11 @@ class UserController extends Controller
         if (is_null($user))
             return response()->json([
                 'status' => 'Not Found',
-                'msg' => 'User not found, id: '.$id,
-                'errors' => ['user' => 'User not found, id: '.$id]
+                'msg' => 'User not found, id: ' . $id,
+                'errors' => ['user' => 'User not found, id: ' . $id]
             ], 404);
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'offset' => 'nullable|integer|min:0',
             'limit' => 'nullable|integer|min:1',
         ]);
@@ -316,8 +320,8 @@ class UserController extends Controller
         if (is_null($userToFollow))
             return response()->json([
                 'status' => 'Not Found',
-                'msg' => 'User not found, id: '.$id,
-                'errors' => ['user' => 'User not found, id: '.$id]
+                'msg' => 'User not found, id: ' . $id,
+                'errors' => ['user' => 'User not found, id: ' . $id]
             ], 404);
 
         $this->authorize('follow', $userToFollow);
@@ -325,14 +329,14 @@ class UserController extends Controller
         if (Auth::user()->isFollowing($id))
             return response()->json([
                 'status' => 'OK',
-                'msg' => 'User already followed, id: '.$id,
+                'msg' => 'User already followed, id: ' . $id,
             ], 200);
 
         $userToFollow->followers()->attach(Auth::id());
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Successful user follow, id: '.$id,
+            'msg' => 'Successful user follow, id: ' . $id,
         ], 200);
     }
 
@@ -342,24 +346,23 @@ class UserController extends Controller
         if (is_null($userToUnfollow))
             return response()->json([
                 'status' => 'Not Found',
-                'msg' => 'User not found, id: '.$id,
-                'errors' => ['user' => 'User not found, id: '.$id]
+                'msg' => 'User not found, id: ' . $id,
+                'errors' => ['user' => 'User not found, id: ' . $id]
             ], 404);
 
         $this->authorize('unfollow', $userToUnfollow);
 
         if (!Auth::user()->isFollowing($id))
             return response()->json([
-                'status' => 'Conflict',
-                'msg' => 'User not followed, id: '.$id,
-                'errors' => ['user' => 'User not followed, id: '.$id]
-            ], 409);
+                'status' => 'OK',
+                'msg' => 'User already not followed, id: ' . $id,
+            ], 200);
 
         $userToUnfollow->followers()->detach(Auth::id());
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Successful user unfollow, id: '.$id,
+            'msg' => 'Successful user unfollow, id: ' . $id,
         ], 200);
     }
 }
