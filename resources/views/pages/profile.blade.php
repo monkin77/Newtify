@@ -1,10 +1,5 @@
 @extends('layouts.app')
 
-@php
-$birthDate = date('F j, Y', strtotime($user['birthDate']));
-$age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->format('%y');
-@endphp
-
 <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
 {{-- TO-DO:
@@ -21,7 +16,8 @@ $age = date_diff(date_create($user['birthDate']), date_create(date('d-m-Y')))->f
         <div class="container-fluid py-3">
             <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex justify-content-center h-100">
-                    <img src={{ $user['avatar'] }} id="avatarImg" />
+                    <img src={{ $user['avatar'] }} id="avatarImg" alt='User Avatar'
+                        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'" />
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
                     @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])

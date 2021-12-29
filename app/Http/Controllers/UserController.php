@@ -66,6 +66,8 @@ class UserController extends Controller
             'topAreasExpertise' => $areasExpertise,
             'followerCount' => $followerCount,
             'articles' => $articles,
+            'birthDate' => date('F j, Y', strtotime($userInfo['birthDate'])),
+            'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y')
         ]);
     }
 
