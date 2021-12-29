@@ -1,11 +1,11 @@
 <div class="card user-card flex-row flex-wrap mb-3">
-    <div class="user-card-avatar">
+    <div class="user-card-avatar px-2 py-2">
         <a href="/user/{{ $user['id'] }}"> <img src= {{
             isset($user['avatar']) ?
             $user['avatar']
             :
             $userImgPHolder
-        }}> </a>
+        }} style="border-radius: 50%;"> </a>
     </div>
 
     <div class="card-block user-card-body d-flex flex-column px-4 py-4">

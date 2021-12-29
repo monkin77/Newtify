@@ -152,13 +152,12 @@ body {
 /* User Cards */
 
 .user-card {
-    background-color: #e2e3e5;
-    border-color: #d3d6d8;
+    border-color: #d3d6d854;
 }
 
 .user-card-avatar {
     width: 20%;
-    border-radius: 20%;
+    align-self: center;
 }
 
 .user-card-body {
