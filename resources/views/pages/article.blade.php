@@ -12,7 +12,7 @@
 
                     <div class="d-flex flex-row w-100">
                         <h1 class="flex-column m-0 w-75"> 
-                            {{ $article['title'] }}  jdioewjdiwajswioa dwioajdwaiojswa dwjoiasjiwaoi dwaoijswa
+                            {{ $article['title'] }}
                         </h1>
 
                         <h2 class="flex-column mx-3">

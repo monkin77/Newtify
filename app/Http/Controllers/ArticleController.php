@@ -56,7 +56,6 @@ class ArticleController extends Controller
             return redirect('/login');
         }
 
-
         $validator = Validator::make($request -> all(),
             [
                 'body' => 'required|string|min:10',
