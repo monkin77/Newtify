@@ -16,8 +16,8 @@
         <div class="container-fluid py-3">
             <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex justify-content-center h-100">
-                    <img src={{ $user['avatar'] }} id="avatarImg" alt='User Avatar'
-                        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'" />
+                    <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarImg"
+                        onerror="this.src='{{ $userImgPHolder }}'" />
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
                     @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])
