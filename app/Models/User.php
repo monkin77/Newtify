@@ -135,7 +135,7 @@ class User extends Authenticatable
                 'tag_name' => $area->name,
                 'reputation' => $area->pivot->reputation,
             ];
-        })->sortByDesc('reputation')->take(3);
+        })->sortByDesc('reputation')->take(3)->where('reputation', '>', '0');
     }
 
     // Gets the info on the suspension with the farthest end_time

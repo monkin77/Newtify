@@ -55,7 +55,7 @@ class SearchController extends Controller
 
         $users = $this->getUserSearch($request->value, $request->offset, $request->limit);
 
-        return view('partials.user_search', [
+        return view('partials.user.list', [
             'users' => $users
         ]);
     }
@@ -77,7 +77,7 @@ class SearchController extends Controller
 
         $articles = $this->getArticleSearch($request->value, $request->offset, $request->limit);
 
-        return view('partials.article_search', [
+        return view('partials.content.articles', [
             'articles' => $articles
         ]);
     }
@@ -97,6 +97,8 @@ class SearchController extends Controller
                 'country' => $user->country,
                 'city' => $user->city,
                 'reputation' => $user->reputation,
+                'isAdmin' => $user->is_admin,
+                'topAreasExpertise' => $user->topAreasExpertise(),
             ];
         });
     }

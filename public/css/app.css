@@ -138,7 +138,42 @@ body {
     color:rgb(137, 7, 218);
 }
 
-.searchInfo {
+.search-nfo {
     margin-left: 15%;
     margin-right: 15%;
+}
+
+/* Badges */
+
+.bg-custom {
+    background-color: #9b4dca;
+}
+
+/* User Cards */
+
+.user-card {
+    background-color: #e2e3e5;
+    border-color: #d3d6d8;
+}
+
+.user-card-avatar {
+    width: 20%;
+    border-radius: 20%;
+}
+
+.user-card-body {
+    width: 60%;
+}
+
+.user-card-location {
+    color: grey;
+    font-size: 0.9em;
+}
+
+.user-card-description {
+    color: #41464b;
+}
+
+.user-card-right {
+    width: 20%;
 }
