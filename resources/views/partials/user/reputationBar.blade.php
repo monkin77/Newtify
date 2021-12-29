@@ -23,7 +23,9 @@ $guest = !Auth::check();
     <div class="d-flex justify-content-between align-items-center">
         <h6 class="my-0 py-0 pt-2 ">Reputation: {{ $user['reputation'] }}</h6>
         @if (!$guest)
-            <i class="fa fa-exclamation-circle fa-1x" id="reportIcon" onclick="console.log('cliked')"></i>
+            <button class="btn p-0 m-0 reportIcon" onclick="console.log('Clicked')">
+                <i class="fa fa-exclamation-circle fa-2x" id="reportIcon"></i>
+            </button>
         @endif
     </div>
 
