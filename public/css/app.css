@@ -130,3 +130,15 @@ body {
 #userProfileContainer #userArticles #articlesTitle {
     width: 20%;
 }
+
+/* Alerts */
+
+.alert-custom {
+    background-color: #9a4dca91;
+    color:rgb(137, 7, 218);
+}
+
+.searchInfo {
+    margin-left: 15%;
+    margin-right: 15%;
+}
