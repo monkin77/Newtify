@@ -16,7 +16,7 @@
                     @csrf
 
                     <div class="flex-row">
-                        <label for="title">Article's Title</label>
+                        <label for="title">{{ "Article's Title" }}</label>
                         <h2 class="m-0"> 
                             <input type="text" required minlength="3" maxlength="100" class="h-100" id="title" name="title" placeholder="Insert Title">
                         </h2>
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="flex-row mt-3 mb-5"> 
-                        <label for="tags">Article's Tags</label>
+                        <label for="tags">{{ "Article's Tags" }}</label>
 
                         <select required id="tags" name="tags[]" class="" multiple>
                             @foreach($tags as $tag)
@@ -54,7 +54,7 @@
                     --}}
                                     
                     <div class="flex-row h-100">
-                        <label for="body">Article's Body</label>
+                        <label for="body">{{ "Article's Body" }}</label>
                         <textarea id="body" required name="body" minlength="10" rows="15" class="h-100" placeholder="Insert Body"></textarea>
                         @if ($errors->has('body'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
