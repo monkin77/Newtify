@@ -43,7 +43,8 @@ CREATE TABLE authenticated_user(
   city TEXT, 
   is_suspended BOOLEAN NOT NULL DEFAULT FALSE,
   reputation INTEGER NOT NULL DEFAULT 0,
-  country_id INTEGER NOT NULL REFERENCES country(id) ON DELETE CASCADE ON UPDATE CASCADE
+  country_id INTEGER NOT NULL REFERENCES country(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  remember_token TEXT -- Laravel's remember me functionality
 );
 
 
