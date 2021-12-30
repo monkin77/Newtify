@@ -3,18 +3,23 @@ body {
 }
 
 /* HomePage */
-#homepage .createArticleContainer {
+
+.home-section .home-container {
     background-color: lightgray;
     padding-top: 5vh;
     padding-bottom: 5vh;
 }
 
-#homepage #createArticle .addIcon {
+.home-section #createArticle .addIcon {
     position: absolute;
     top: 10%;
     left: -30%;
     font-size: large; /* fontSize impacts the icon size */
     color: inherit;
+}
+
+#tag-name {
+    background-color: white;
 }
 
 /* Partial Article */
@@ -28,6 +33,7 @@ body {
     text-overflow: ellipsis;
 }
 
+/* Partial Article, just putting here for now then we change */
 #articles .card {
     margin-bottom: 15px;
     border-radius: 1rem;

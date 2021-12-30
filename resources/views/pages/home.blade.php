@@ -7,8 +7,8 @@ $tagline = 'Others will decide your faith'
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('create-article')
 
-<div id="homepage" class="d-flex justify-content-center pb-3">
-    <div class="d-flex flex-grow-1 justify-content-center createArticleContainer">
+<div class="home-section d-flex justify-content-center pb-3">
+    <div class="d-flex flex-grow-1 justify-content-center home-container">
         <div id="createArticle" class="position-relative d-flex flex-column align-items-center" >
             <h1> Create Your Own Article </h1>
             <h3> {{ $tagline }} </h3>
@@ -40,6 +40,30 @@ $tagline = 'Others will decide your faith'
 </div>
 @endsection
 
+{{-- ------------------------------------------------------------------------------------ --}}
+
+@section('propose-tag')
+
+<div class="home-section d-flex justify-content-center pt-3">
+    <div class="d-flex flex-grow-1 justify-content-center home-container">
+        <div class="position-relative d-flex flex-column align-items-center" >
+            <h1 class="mb-2">
+                <i class="fa fa-tag fa-sm fa-flip-horizontal px-2"></i>
+                    Propose a new Tag
+                <i class="fa fa-tag fa-sm px-2"></i>
+            </h1>
+            <h4 class="mb-5"> Help us improve on getting more variety of content </h4>
+
+            <form class="d-flex flex-row mb-0" method="POST" action="{{ route('propose') }}">
+                <input id="tag-name" type="text" name="tagName" placeholder="Enter your tag" required>
+
+                <button class="mx-4" type="submit"> Propose </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
 
 @section('articles')
     @include('partials.content.articles', ['articles' => $articles])
@@ -54,6 +78,8 @@ $tagline = 'Others will decide your faith'
 
     @if ($canLoadMore)
         @yield('load-more')
-    @endif    
+    @endif
+
+    @yield('propose-tag')
 
 @endsection
