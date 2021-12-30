@@ -96,7 +96,8 @@ body {
 
 
 /* Select2 Tags */
-.select2-selection {
+
+.select2-selection--multiple {
     background-color: transparent !important;
 }
 
