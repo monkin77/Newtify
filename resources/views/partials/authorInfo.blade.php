@@ -14,11 +14,7 @@
         </div>
         <div class="flex-col w-75" id="author-header" style="padding-bottom: 0;">
             <h4 class="mb-2"> {{ $author['name'] }} </h4>
-            <p> @if (isset($author['city']))
-                    {{ $author['city'] }}, {{ $author['country']->name }}
-                @else
-                    {{ $author['country']->name }}
-                @endif
+            <p> {{ (isset($author['city']) ? ($author['city'] . ', ') : '') . $author['country']['name'] }}
             </p>
         </div>
     </div>
@@ -29,9 +25,7 @@
 
     <div class="flex-row my-3">
         <p>
-            @if (isset($author['description']))
-                {{ $author['description'] }}
-            @endif
+            {{ (isset($author['description']) ? $author['description'] : '') }}
         </p>
     </div>
 

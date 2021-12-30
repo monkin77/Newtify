@@ -17,8 +17,8 @@
 
                         <h2 class="flex-column mx-3">
                             @if ($is_author)
-                                <i class="iconify" data-icon="bi:pencil-fill"></i>
-                                <i class="iconify" data-icon="bi:trash-fill"></i>
+                                <i class="fas fa-thumbs-up"></i>
+                                <i class="fas fa-thumbs-down"></i>
                             @endif
                         <h2>
                     </div>
