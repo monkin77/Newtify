@@ -34,7 +34,7 @@
 
                         <select required id="tags" name="tags[]" multiple>
                             @foreach($tags as $tag)
-                                <option 
+                                <option class="m-0"
                                 @if ($articleTags->contains('name', $tag['name']))
                                     selected="selected"
                                 @endif
