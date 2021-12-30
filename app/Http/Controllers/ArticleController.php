@@ -72,7 +72,7 @@ class ArticleController extends Controller
         $validator = Validator::make($request -> all(),
             [
                 'tags' => 'required|array|min:1|max:3',
-                'tags.*' => 'required|string|distinct|min:1',
+                'tags.*' => 'required|string|min:1',
             ]
         );
         if ($validator->fails()) {
@@ -153,12 +153,13 @@ class ArticleController extends Controller
         // TODO: "load more" thing for comments too
         $comments = $article->comments->map(function ($comment) {
             $commentAuthor = $comment->author;
+            $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) ) ;  
 
             return [
                 'body' => $comment->body,
                 'likes' => $comment->likes,
                 'dislikes' => $comment->dislikes,
-                'published_at' =>$comment->published_at,
+                'published_at' =>$comment_published_at,
                 'author' => isset($commentAuthor) ? [
                     'id' => $commentAuthor->id,
                     'name' => $commentAuthor->name,

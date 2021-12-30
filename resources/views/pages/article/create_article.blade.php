@@ -42,7 +42,7 @@
                     {{--
                     <div class="flex-row">
                         <label for="thumbnail">Article's Thumbnail</label>
-                        <input type="file" id="thumbnail" name="thumbnail" accept="image/png, image/jpeg, image/jpg">
+                        <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
                     </div>
                     --}}
                                     
