@@ -59,7 +59,7 @@ class ArticleController extends Controller
         $validator = Validator::make($request -> all(),
             [
                 'body' => 'required|string|min:10',
-                'title' => 'required|string|min:3|max:255',
+                'title' => 'required|string|min:3|max:100',
                 'thumbnail' => 'nullable|file|max:50000',
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|string|distinct|min:1',
@@ -68,7 +68,7 @@ class ArticleController extends Controller
 
         if ( $validator->fails() ) {
             // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($request);
+            return redirect()->back()->withInput();
         }
 
         $tagsIds = [];
@@ -78,7 +78,7 @@ class ArticleController extends Controller
 
             //check if is valid tag
             if (!$checkTag || $checkTag->state != 'ACCEPTED') {
-                return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$checkTag->name]); 
+                return redirect()->back()->withInput()->withErrors(['tags' => 'Invalid Tag: '.$tag]); 
             }
             array_push($tagsIds, $checkTag->id);
         }

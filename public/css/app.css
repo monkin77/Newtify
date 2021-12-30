@@ -82,12 +82,16 @@ body {
     height: 0.7em;
 }
 
+/* Forms Errors */
+.error-container {
+    height: 10%;
+}
+
 /* Article Form */
 #article-form {
     position: relative;
     min-height: 70vh;
 }
-
 
 
 .bootstrap-tagsinput { 
