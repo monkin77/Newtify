@@ -31,14 +31,20 @@ $guest = !Auth::check();
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    @if (!$guest)
-                        <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
-                        @if ($follows)
-                            <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3" id="followBtn"
-                                onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
-                        @else
-                            <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3" id="followBtn"
-                                onclick="followUser({{ $user['id'] }})">Follow</button>
+                    @if ($isAuthor)
+                        <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
+                            <i class="fa fa-pencil fa-3x" style="color:orange" onclick="console.log('clicked')"></i>
+                        </button>
+                    @else
+                        @if (!$guest)
+                            <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
+                            @if ($follows)
+                                <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3" id="followBtn"
+                                    onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
+                            @else
+                                <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3" id="followBtn"
+                                    onclick="followUser({{ $user['id'] }})">Follow</button>
+                            @endif
                         @endif
                     @endif
                     <i class="fa fa-users fa-1x me-3 text-dark"></i>
@@ -58,7 +64,7 @@ $guest = !Auth::check();
                     </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    @include('partials.user.reputationBar', ['user' => $user])
+                    @include('partials.user.reputationBar', ['user' => $user, 'isAuthor' => $isAuthor])
                 </div>
             </div>
 

@@ -40,9 +40,12 @@ class UserController extends Controller
         ];
 
         $follows = false;
+        $isAuthor = false;
         if (Auth::check()) {
             $follows = Auth::user()->isFollowing($id);
+            $isAuthor = Auth::id() == $userInfo['id'];
         }
+
 
         $areasExpertise = $user->topAreasExpertise();
 
@@ -67,7 +70,8 @@ class UserController extends Controller
             'followerCount' => $followerCount,
             'articles' => $articles,
             'birthDate' => date('F j, Y', strtotime($userInfo['birthDate'])),
-            'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y')
+            'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y'),
+            'isAuthor' => $isAuthor,
         ]);
     }
 
