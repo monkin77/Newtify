@@ -29,12 +29,12 @@ function unfollowUserHandler() {
 }
 
 const toggleReportPopup = () => {
-    const reportContainer = $('#reportContainer');
+    const reportContainer = $('#reportElement');
     if (reportContainer.classList.contains('d-none')) {
         reportContainer.classList.remove('d-none');
-        reportContainer.classList.add('d-flex');
+        reportContainer.classList.add('d-block');
     } else {
-        reportContainer.classList.remove('d-flex');
+        reportContainer.classList.remove('d-block');
         reportContainer.classList.add('d-none');
     }
     

@@ -235,11 +235,18 @@ body {
 }
 
 /* Report Popup */
+
+#userProfileContainer #reportElement {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
 #userProfileContainer #reportContainer {
     position: absolute;
     width: 50%;
     height: 50%;
-    top: 30%;
+    top: 20%;
     right: 25%;
 }
 
@@ -253,4 +260,18 @@ body {
 #userProfileContainer #reportContainer #reason {
     width: 70%;
     height: 50%;
+}
+
+#userProfileContainer #reportContainer #closePopupBtn {
+    position: absolute;
+    right: 5em;
+    top: 3em;
+}
+
+#userProfileContainer #backdrop {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.75;
 }

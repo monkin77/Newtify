@@ -83,11 +83,17 @@ $guest = !Auth::check();
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('report')
-    <section id="reportContainer" class="d-flex flex-column align-items-center justify-content-center">
-        <div id="reportInsideContainer" class="d-flex flex-column align-items-center justify-content-evenly">
-            <h3 class="text-black">Give us a reason to report this user</h3>
-            <textarea id="reason" rows="10" placeholder="Insert report reason here"></textarea>
-            <button onclick="reportUser({{ $user['reputation'] }})">SUBMIT</button>
+    <section id="reportElement" class="d-none">
+        <div id="backdrop" onclick="toggleReportPopup()"></div>
+        <div id="reportContainer" class="d-flex flex-column align-items-center justify-content-center">
+            <div id="reportInsideContainer" class="d-flex flex-column align-items-center justify-content-evenly">
+                <h3 class="text-black">Give us a reason to report this user</h3>
+                <textarea id="reason" rows="10" placeholder="Insert report reason here"></textarea>
+                <button onclick="reportUser({{ $user['reputation'] }})">SUBMIT</button>
+                <button class="btn p-0 m-0 transparentButton" id="closePopupBtn" onclick="toggleReportPopup()">
+                    <i class="fa fa-times fa-3x" id="closeIcon"></i>
+                </button>
+            </div>
         </div>
     </section>
 @endsection
