@@ -24,10 +24,18 @@ $tagline = 'Que rego amiguinho'
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
+@section('articles')
+    <section id="articles" class="container">
+        @include('partials.content.articles', ['articles' => $articles])
+    </section>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
 @section('load-more')
 <div id="load-more">
 
-    <button>Load more</button>
+    <button onclick="loadMoreHome()">Load more</button>
 
 </div>
 @endsection
@@ -43,6 +51,9 @@ $tagline = 'Que rego amiguinho'
 
     @yield('create-article')
     @yield('articles')
-    @yield('load-more')    
+
+    @if ($canLoadMore)
+        @yield('load-more')
+    @endif    
 
 @endsection

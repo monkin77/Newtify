@@ -219,6 +219,7 @@ function loadMoreArticlesHandler () {
 const toggleElem = (elem) => {
   elem.classList.toggle('d-none');
 }
+const $ = (selector) => document.querySelector(selector);
 
 addEventListeners();
 

@@ -13,7 +13,7 @@ class SearchController extends Controller
     public function show(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'type' => ['required', 'string', Rule::in(['article', 'user'])],
+            'type' => ['required', 'string', Rule::in(['articles', 'users'])],
             'query' => 'required|string',
         ]);
 
@@ -26,9 +26,9 @@ class SearchController extends Controller
                 'errors' => $validator->errors()
             ])->setStatusCode(400);
 
-        if ($request->type === 'article')
+        if ($request->type === 'articles')
             $search = $this->getArticleSearch($request->input('query'), 0, 10);
-        else if ($request->type === 'user')
+        else if ($request->type === 'users')
             $search = $this->getUserSearch($request->input('query'), 0, 10);
 
         return view('pages.search', [
