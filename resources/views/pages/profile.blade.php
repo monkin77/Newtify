@@ -33,7 +33,7 @@ $guest = !Auth::check();
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     @if ($isAuthor)
                         <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
-                            <i class="fa fa-pencil fa-3x" style="color:orange" onclick="console.log('clicked')"></i>
+                            <a class="fa fa-pencil fa-3x" style="color:orange" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
                     @else
                         @if (!$guest)
