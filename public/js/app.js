@@ -1,5 +1,7 @@
+const $ = (selector) => document.querySelector(selector);
+
 function addEventListeners() {
-  let itemCheckers = document.querySelectorAll('article.card li.item input[type=checkbox]');
+  /*let itemCheckers = document.querySelectorAll('article.card li.item input[type=checkbox]');
   [].forEach.call(itemCheckers, function(checker) {
     checker.addEventListener('change', sendItemUpdateRequest);
   });
@@ -21,7 +23,7 @@ function addEventListeners() {
 
   let cardCreator = document.querySelector('article.card form.new_card');
   if (cardCreator != null)
-    cardCreator.addEventListener('submit', sendCreateCardRequest);
+    cardCreator.addEventListener('submit', sendCreateCardRequest);*/
 }
 
 function encodeForAjax(data) {
@@ -41,6 +43,23 @@ function sendAjaxRequest(method, url, data, handler) {
   request.send(encodeForAjax(data));
 }
 
+const createErrorMessage = (errors) => {
+  const msg = document.createElement('div');
+  msg.classList.add('error');
+
+  for (error of Object.values(errors)) {
+    const err = document.createElement('span');
+    err.classList.add('text-danger');
+    err.innerHTML = errors.tagName;
+    msg.appendChild(err);
+  }
+
+  return msg;
+}
+
+addEventListeners();
+
+/*
 function sendItemUpdateRequest() {
   let item = this.closest('li.item');
   let id = item.getAttribute('data-id');
@@ -223,3 +242,4 @@ const $ = (selector) => document.querySelector(selector);
 
 addEventListeners();
 
+*/

@@ -1,5 +1,4 @@
 loadMoreHandler = (containerId) => function () {
-    console.log(this.responseText);
     const container = $(`#${containerId}`);
     const json = JSON.parse(this.responseText);
     const html = json.html;
