@@ -41,5 +41,19 @@ const toggleReportPopup = () => {
 }
 
 const reportUser = (id) => {
-    console.log("Reporting user with id:", id);
+    const reportReason = $('textarea[id=reason]').value;
+    sendAjaxRequest('post', `/user/${id}/report`, {reason: reportReason}, reportUserHandler);
+}
+
+function reportUserHandler() {
+    const res = JSON.parse(this.responseText);
+    if (res.status == 'OK') {
+        console.log(res.msg);
+        toggleReportPopup();
+        $('textarea[id=reason]').value = '';
+    } else if (res.msg){
+        console.log(res.msg);
+    } else {
+        console.log("Error reporting user.")
+    }
 }
