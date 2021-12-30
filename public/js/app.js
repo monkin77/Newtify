@@ -177,8 +177,6 @@ function createItem(item) {
   return new_item;
 }
 
-const $ = (selector) => document.querySelector(selector);
-
 const loadMore = (type, value) => {
     let url;
 
@@ -220,6 +218,4 @@ function loadMoreArticlesHandler () {
 
 
 addEventListeners();
-
-const $ = (selector) => document.querySelector(selector);
 

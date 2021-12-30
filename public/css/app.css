@@ -76,24 +76,23 @@ body {
     text-align: center;
 }
 
-<<<<<<< HEAD
 .article-container #article-header i {
     width: 0.8em; 
     height: 0.7em;
 }
 
 /* Forms Errors */
+
 .error-container {
     height: 10%;
 }
 
 /* Article Form */
-#article-form {
+
+.article-form {
     position: relative;
     min-height: 70vh;
 }
-=======
->>>>>>> Starting edit article form
 
 
 .bootstrap-tagsinput { 

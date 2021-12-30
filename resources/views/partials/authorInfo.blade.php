@@ -28,7 +28,11 @@
     </div>
 
     <div class="flex-row my-3">
-        <p>{{ $author['description'] }}</p>
+        <p>
+            @if (isset($author['description']))
+                {{ $author['description'] }}
+            @endif
+        </p>
     </div>
 
     <div class="flex-row my-5">

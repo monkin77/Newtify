@@ -1,64 +1,89 @@
 @extends('layouts.app')
 
-{{-- ------------------------------------------------------------------ --}}
-
-@section('article-info')
-        
-    <div class="d-flex flex-column w-100 my-2 p-3 h-100">
-
-        <form class="flex-row w-75 h-100">
-            <div class="flex-row">
-                <label for="input-title">Edit article's Title</label>
-                <h2 class="m-0"> 
-                    <input type="text" 
-                        class="h-100" id="input-title" name="input-title" 
-                        placeholder="{{ $article['title'] }}">
-                </h2>
-            </div>
-
-            <div class="flex-row mt-3 mb-5"> 
-                <label for="input-tags">New article's Tags</label>
-                <input type="text" 
-                    class="px-3 mx-3" id="input-tags" name="input-tags" 
-                    value="
-                        @foreach($tags as $tag)
-                            {{ $tag['name'] }},
-                        @endforeach
-                    "
-                    data-role="tagsinput" placeholder="Add Tags">
-            </div>
-            
-            <div class="flex-row">
-                <label for="input-thumbnail">New article's thumbnail</label>
-                <input type="file" id="input-thumbnail" name="input-thumbnail" accept="image/png, image/jpeg, image/jpg">
-            </div>
-                            
-            <div class="flex-row h-100">
-                <label for="input-body">New article's Body</label>
-                <textarea 
-                    id="input-body" name="input-body" class="h-100"
-                    rows="15" 
-                    placeholder=" {{ $article['body'] }}"></textarea>
-            </div>
-
-            <button type="button" class="">Update Article</button>
-        </form>
-
-    </div>
-
+@section('scripts')
+    <script src=" {{ asset('js/input_tags.js') }}"> </script>
 @endsection
 
-{{-- ------------------------------------------------------------------ --}}
-
-
+{{-- ------------------------------------------------------ --}}
 @section('content')
 
-    <div class="container mb-3 bg-light" id="article-form">
+    <div class="container mb-3 bg-light" class="article-form">
 
         <div class="d-flex flex-row my-2 h-100">
 
-            @yield('article-info')
-            
+            <div class="d-flex flex-column w-75 my-2 p-3 h-100">
+
+                <form name="article-form" method="POST" action="{{ route('editArticle', ['id' => $article['content_id']]) }}" class="flex-row h-100">
+                    @method('put')
+                    @csrf
+                    
+                    <div class="flex-row">
+                        <label for="title">Edit article's Title</label>
+                        <h2 class="m-0"> 
+                            <input type="text" autofocus required minlength="3" maxlength="100" class="h-100" id="title" name="title" value="{{ $article['title'] }}">
+                        </h2>
+                        @if ($errors->has('title'))
+                            <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                <p class="mb-0">{{ $errors->first('title') }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="flex-row mt-3 mb-5"> 
+                        <label for="tags">Edit Article's Tags</label>
+
+                        <select required id="tags" name="tags[]" multiple>
+                            @foreach($tags as $tag)
+                                <option 
+                                @if ($articleTags->contains('name', $tag['name']))
+                                    selected="selected"
+                                @endif
+                                value="{{$tag['name']}}">{{ $tag['name'] }}</option>
+                            @endforeach
+                        </select>
+                        {{-- 
+                        <select required id="tags" name="tags[]" multiple>
+                            @foreach($tags as $tag)
+                                <option value="{{$tag['name']}}">{{ $tag['name'] }}</option>
+                            @endforeach
+                        </select>
+                        --}}
+                        @if ($errors->has('tags'))
+                            <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                <p class="mb-0">{{ $errors->first('tags') }}</p>
+                            </div>
+                        @endif
+                        {{--
+                            <input class="px-3 mx-3" required value="" min-tags="1" minlength="1" maxlength="3" type="text" id="tags" name="tags[]" data-role="tagsinput" placeholder="Insert Tags">
+                        --}}
+                    </div>
+
+                    {{--
+                    <div class="flex-row">
+                        <label for="thumbnail">Article's Thumbnail</label>
+                        <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+                    </div>
+                    --}}
+                                    
+                    <div class="flex-row h-100">
+                        <label for="body">Edit Article's Body</label>
+                        <textarea id="body" required name="body" minlength="10" rows="15" class="h-100">{{$article['body']}}</textarea>
+                        @if ($errors->has('body'))
+                            <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                <p class="mb-0">{{ $errors->first('body') }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <button type="submit" class="">Edit Article</button>
+                </form>
+
+            </div>
+
+            <div class="flex-col w-25 ms-5 p-3 text-dark" id="author-container">
+                @include('partials.authorInfo', ['author' => $author])
+            </div>
+
         </div>
 
     </div>
