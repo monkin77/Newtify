@@ -13,7 +13,7 @@
                     <div class="flex-row">
                         <label for="title">Article's Title</label>
                         <h2 class="m-0"> 
-                            <input type="text" onchange="formatTags()" autofocus required minlength="3" maxlength="100" class="h-100" id="title" name="title" placeholder="Insert Title">
+                            <input type="text" autofocus required minlength="3" maxlength="100" class="h-100" id="title" name="title" placeholder="Insert Title">
                         </h2>
                         @if ($errors->has('title'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
