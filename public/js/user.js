@@ -27,3 +27,19 @@ function unfollowUserHandler() {
             $('#followersCount').innerHTML--;
     }
 }
+
+const toggleReportPopup = () => {
+    const reportContainer = $('#reportContainer');
+    if (reportContainer.classList.contains('d-none')) {
+        reportContainer.classList.remove('d-none');
+        reportContainer.classList.add('d-flex');
+    } else {
+        reportContainer.classList.remove('d-flex');
+        reportContainer.classList.add('d-none');
+    }
+    
+}
+
+const reportUser = (id) => {
+    console.log("Reporting user with id:", id);
+}

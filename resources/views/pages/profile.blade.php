@@ -82,9 +82,22 @@ $guest = !Auth::check();
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
+@section('report')
+    <section id="reportContainer" class="d-flex flex-column align-items-center justify-content-center">
+        <div id="reportInsideContainer" class="d-flex flex-column align-items-center justify-content-evenly">
+            <h3 class="text-black">Give us a reason to report this user</h3>
+            <textarea id="reason" rows="10" placeholder="Insert report reason here"></textarea>
+            <button onclick="reportUser({{ $user['reputation'] }})">SUBMIT</button>
+        </div>
+    </section>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
 @section('content')
     <div id="userProfileContainer" class="d-flex flex-column">
         @yield('userInfo')
         @yield('articles')
+        @yield('report')
     </div>
 @endsection
