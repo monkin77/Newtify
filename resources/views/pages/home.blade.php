@@ -56,6 +56,14 @@
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
+@section('articles')
+    <section id="articles" class="container">
+        @include('partials.content.articles', ['articles' => $articles])
+    </section>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
 @section('load-more')
 <div id="load-more">
 
@@ -87,10 +95,6 @@
     </div>
 </section>
 
-@endsection
-
-@section('articles')
-    @include('partials.content.articles', ['articles' => $articles])
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}

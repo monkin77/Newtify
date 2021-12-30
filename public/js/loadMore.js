@@ -35,7 +35,6 @@ const loadMoreHome = () => {
     // TODO: Pass filter parameters when filter is implemented in interface
     const numArticles = $('#articles').childElementCount;
     const type = $('input[name="filterType"]:checked').id;
-    console.log(type);
 
     const url = `/api/article/filter?type=${type}&offset=${numArticles}&limit=5`;
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
