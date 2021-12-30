@@ -60,15 +60,25 @@ class ArticleController extends Controller
             [
                 'body' => 'required|string|min:10',
                 'title' => 'required|string|min:3|max:100',
-                'thumbnail' => 'nullable|file|max:50000',
+                'thumbnail' => 'nullable|file|max:5000',
+            ]
+        );
+        if ( $validator->fails() ) {
+            // go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($validator);//['tags' => 'You must have between 1 and 3 tags']);
+        }
+
+
+        $validator = Validator::make($request -> all(),
+            [
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|string|distinct|min:1',
             ]
         );
-
-        if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors([
+                'tags' => 'Article must have between 1 and 3 tags'
+            ]);
         }
 
         $tagsIds = [];

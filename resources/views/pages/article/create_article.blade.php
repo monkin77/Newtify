@@ -25,9 +25,9 @@
                     <div class="flex-row mt-3 mb-5"> 
                         <label for="tags">Article's Tags</label>
                         <select required id="tags" name="tags[]" multiple data-role="tagsinput">
-                            <option value=""></option>
-                            <option value=""></option>
-                            <option value=""></option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
                         </select>
                         @if ($errors->has('tags'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
@@ -35,14 +35,10 @@
                             </div>
                         @endif
                         {{--
-                            <input class="px-3 mx-3" autofocus required value="" min-tags="1" minlength="1" maxlength="3" type="text" id="tags" name="tags[]" data-role="tagsinput" placeholder="Insert Tags">
+                            <input class="px-3 mx-3" required value="" min-tags="1" minlength="1" maxlength="3" type="text" id="tags" name="tags[]" data-role="tagsinput" placeholder="Insert Tags">
                         --}}
-                        @if ($errors->has('tags'))
-                            <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                <p class="mb-0">{{ $errors->first('tags') }}</p>
-                            </div>
-                        @endif
                     </div>
+
                     {{--
                     <div class="flex-row">
                         <label for="thumbnail">Article's Thumbnail</label>
@@ -53,6 +49,11 @@
                     <div class="flex-row h-100">
                         <label for="body">Article's Body</label>
                         <textarea id="body" required name="body" minlength="10" rows="15" class="h-100" placeholder="Insert Body"></textarea>
+                        @if ($errors->has('body'))
+                            <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                <p class="mb-0">{{ $errors->first('body') }}</p>
+                            </div>
+                        @endif
                     </div>
 
                     <button type="submit" onclick="formatTags()" class="">Create Article</button>
