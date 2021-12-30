@@ -13,7 +13,7 @@ class SearchController extends Controller
     public function show(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'type' => ['required', 'string', Rule::in(['articles', 'users'])],
+            'type' => ['required', 'string', Rule::in(['article', 'user'])],
             'query' => 'required|string',
         ]);
 
@@ -26,15 +26,16 @@ class SearchController extends Controller
                 'errors' => $validator->errors()
             ])->setStatusCode(400);
 
-        if ($request->type === 'articles')
-            $results = $this->getArticleSearch($request->input('query'), 0, 10);
-        else if ($request->type === 'users')
-            $results = $this->getUserSearch($request->input('query'), 0, 10);
+        if ($request->type === 'article')
+            $search = $this->getArticleSearch($request->input('query'), 0, 10);
+        else if ($request->type === 'user')
+            $search = $this->getUserSearch($request->input('query'), 0, 10);
 
         return view('pages.search', [
             'type' => $request->type,
-            'query' => $request->query,
-            'results' => $results,
+            'query' => $request->input('query'),
+            'results' => $search['results'],
+            'canLoadMore' => $search['canLoadMore'],
         ]);
     }
 
@@ -53,11 +54,12 @@ class SearchController extends Controller
                 'errors' => $validator->errors(),
             ], 400);
 
-        $users = $this->getUserSearch($request->value, $request->offset, $request->limit);
+        $search = $this->getUserSearch($request->value, $request->offset, $request->limit);
 
-        return view('partials.user_search', [
-            'users' => $users
-        ]);
+        return response()->json([
+            'html' => view('partials.user.list', [ 'users' => $search['results'] ])->render(),
+            'canLoadMore' => $search['canLoadMore']
+        ], 200);
     }
 
     public function searchArticles(Request $request)
@@ -75,20 +77,24 @@ class SearchController extends Controller
                 'errors' => $validator->errors(),
             ], 400);
 
-        $articles = $this->getArticleSearch($request->value, $request->offset, $request->limit);
+        $search = $this->getArticleSearch($request->value, $request->offset, $request->limit);
 
-        return view('partials.article_search', [
-            'articles' => $articles
-        ]);
+        return response()->json([
+            'html' => view('partials.content.articles', [ 'articles' => $search['results'] ])->render(),
+            'canLoadMore' => $search['canLoadMore']
+        ], 200);
     }
 
     private function getUserSearch(string $value, $offset = 0, $limit = null)
     {
         $rawUsers = User::whereRaw('tsvectors @@ plainto_tsquery(\'english\', ?)', [$value])
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$value])
-            ->get()->slice($offset, $limit);
+            ->get()->skip($offset);
 
-        return $rawUsers->map(function ($user) {
+        $canLoadMore = $rawUsers->count() > $limit;
+        $rawUsers = $rawUsers->take($limit);
+
+        $users = $rawUsers->map(function ($user) {
             return [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -97,17 +103,27 @@ class SearchController extends Controller
                 'country' => $user->country,
                 'city' => $user->city,
                 'reputation' => $user->reputation,
+                'isAdmin' => $user->is_admin,
+                'topAreasExpertise' => $user->topAreasExpertise(),
             ];
         });
+
+        return [
+            'results' => $users,
+            'canLoadMore' => $canLoadMore,
+        ];
     }
 
     private function getArticleSearch(string $value, $offset = 0, $limit = null)
     {
         $rawArticles = Article::whereRaw('tsvectors @@ plainto_tsquery(\'english\', ?)', [$value])
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$value])
-            ->get()->slice($offset, $limit);
+            ->get()->skip($offset);
 
-        return $rawArticles->map(function ($article) {
+        $canLoadMore = $rawArticles->count() > $limit;
+        $rawArticles = $rawArticles->take($limit);
+
+        $articles = $rawArticles->map(function ($article) {
             return [
                 'id' => $article->id,
                 'title' => $article->title,
@@ -118,5 +134,10 @@ class SearchController extends Controller
                 'dislikes' => $article->dislikes
             ];
         });
+
+        return [
+            'results' => $articles,
+            'canLoadMore' => $canLoadMore,
+        ];
     }
 }

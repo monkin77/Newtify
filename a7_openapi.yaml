@@ -530,8 +530,8 @@ paths:
           schema:
             type: string
             enum:
-              - "articles"
-              - "users"
+              - "article"
+              - "user"
           required: true
         - in: query
           name: query

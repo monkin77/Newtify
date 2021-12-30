@@ -130,3 +130,49 @@ body {
 #userProfileContainer #userArticles #articlesTitle {
     width: 20%;
 }
+
+/* Alerts */
+
+.alert-custom {
+    background-color: #9a4dca91;
+    color:rgb(137, 7, 218);
+}
+
+.search-nfo {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+/* Badges */
+
+.bg-custom {
+    background-color: #9b4dca;
+}
+
+/* User Cards */
+
+.user-card {
+    border-color: #d3d6d854;
+}
+
+.user-card-avatar {
+    width: 20%;
+    align-self: center;
+}
+
+.user-card-body {
+    width: 60%;
+}
+
+.user-card-location {
+    color: grey;
+    font-size: 0.9em;
+}
+
+.user-card-description {
+    color: #41464b;
+}
+
+.user-card-right {
+    width: 20%;
+}
