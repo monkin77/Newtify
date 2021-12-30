@@ -41,21 +41,12 @@
                                 value="{{$tag['name']}}">{{ $tag['name'] }}</option>
                             @endforeach
                         </select>
-                        {{-- 
-                        <select required id="tags" name="tags[]" multiple>
-                            @foreach($tags as $tag)
-                                <option value="{{$tag['name']}}">{{ $tag['name'] }}</option>
-                            @endforeach
-                        </select>
-                        --}}
+
                         @if ($errors->has('tags'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
                                 <p class="mb-0">{{ $errors->first('tags') }}</p>
                             </div>
                         @endif
-                        {{--
-                            <input class="px-3 mx-3" required value="" min-tags="1" minlength="1" maxlength="3" type="text" id="tags" name="tags[]" data-role="tagsinput" placeholder="Insert Tags">
-                        --}}
                     </div>
 
                     {{--
@@ -64,7 +55,7 @@
                         <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
                     </div>
                     --}}
-                                    
+             
                     <div class="flex-row h-100">
                         <label for="body">Edit Article's Body</label>
                         <textarea id="body" required name="body" minlength="10" rows="15" class="h-100">{{$article['body']}}</textarea>

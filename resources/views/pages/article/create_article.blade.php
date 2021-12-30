@@ -41,9 +41,6 @@
                                 <p class="mb-0">{{ $errors->first('tags') }}</p>
                             </div>
                         @endif
-                        {{--
-                            <input class="px-3 mx-3" required value="" min-tags="1" minlength="1" maxlength="3" type="text" id="tags" name="tags[]" data-role="tagsinput" placeholder="Insert Tags">
-                        --}}
                     </div>
 
                     {{--
@@ -52,7 +49,7 @@
                         <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
                     </div>
                     --}}
-                                    
+      
                     <div class="flex-row h-100">
                         <label for="body">{{ "Article's Body" }}</label>
                         <textarea id="body" required name="body" minlength="10" rows="15" class="h-100" placeholder="Insert Body"></textarea>
