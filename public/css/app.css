@@ -17,7 +17,6 @@ body {
 }
 
 /* Partial Article, just putting here for now then we change */
-
 #articles .card {
     margin-bottom: 15px;
     border-radius: 1rem;
@@ -43,11 +42,10 @@ body {
 }
 
 /* Full Article Page */
-#article-container h1,
-#article-container h2,
-#article-container h3,
-#article-container h4,
-#article-container p {
+.article-container h1,
+.article-container h2,
+.article-container h3,
+.article-container h4 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -77,6 +75,48 @@ body {
     font-size: small;
     text-align: center;
 }
+
+.article-container #article-header i {
+    width: 0.8em; 
+    height: 0.7em;
+}
+
+/* Forms Errors */
+.error-container {
+    height: 10%;
+}
+
+/* Article Form */
+#article-form {
+    position: relative;
+    min-height: 70vh;
+}
+
+
+.bootstrap-tagsinput { 
+    white-space: nowrap;
+    font-size: large;
+    background-color: transparent;
+}
+
+.bootstrap-tagsinput .tag {
+    background: #99badd;
+    border: 1px solid #0892d0;
+    padding: 0 6px;
+    margin-right: 2px;
+    border-radius: 4px;
+}
+
+.bootstrap-tagsinput input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    width: auto;
+    max-width: inherit;
+    color: black;
+}
+
+/* User Profile */
 
 #userProfileContainer #userInfo {
     height: 60vh;
