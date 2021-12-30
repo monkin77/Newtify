@@ -177,6 +177,48 @@ function createItem(item) {
   return new_item;
 }
 
+const $ = (selector) => document.querySelector(selector);
+
+const loadMore = (type, value) => {
+    let url;
+
+    switch (type) {
+        case 'user':
+            const numUsers = $('#users').childElementCount;
+            url = `/api/search/users?value=${value}&offset=${numUsers}&limit=10`;
+            sendAjaxRequest('get', url, null, loadMoreUsersHandler);
+            break;
+        case 'article':
+            const numArticles = $('#articles').childElementCount;
+            url = `/api/search/articles?value=${value}&offset=${numArticles}&limit=10`;
+            sendAjaxRequest('get', url, null, loadMoreArticlesHandler);
+            break;
+        default:
+            return;
+    }
+};
+
+function loadMoreUsersHandler () {
+  const container = $('#users');
+  const json = JSON.parse(this.responseText);
+  const html = json.html;
+  const canLoadMore = json.canLoadMore;
+
+  container.insertAdjacentHTML('beforeend', html);
+  if (!canLoadMore) $('#load-more').remove();
+};
+
+function loadMoreArticlesHandler () {
+  const container = $('#articles');
+  const json = JSON.parse(this.responseText);
+  const html = json.html;
+  const canLoadMore = json.canLoadMore;
+
+  container.insertAdjacentHTML('beforeend', html);
+  if (!canLoadMore) $('#load-more').remove();
+};
+
+
 addEventListeners();
 
 const $ = (selector) => document.querySelector(selector);

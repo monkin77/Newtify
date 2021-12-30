@@ -52,7 +52,7 @@ body {
 }
 
 #author-container {
-    background-color: #DBD7D2;
+    background-color: #dbd7d2;
 }
 
 #author-container .row {
@@ -64,8 +64,8 @@ body {
 }
 
 .container #author-container #authorAvatar {
-    border-radius: 50%; 
-}  
+    border-radius: 50%;
+}
 
 .container #comments-section .commentHeader {
     margin: 0;
@@ -75,7 +75,6 @@ body {
     font-size: small;
     text-align: center;
 }
-
 
 .article-container #article-header i {
     width: 0.8em; 
@@ -115,4 +114,105 @@ body {
     width: auto;
     max-width: inherit;
     color: black;
+}
+
+/* User Profile */
+
+#userProfileContainer #userInfo {
+    height: 60vh;
+    background-color: lightgray;
+}
+
+#userProfileContainer #userInfo #userGraphics {
+    height: 40%;
+}
+
+#userProfileContainer #userInfo #userGraphics #avatarImg {
+    height: 100%;
+    aspect-ratio: 1;
+    border-radius: 100em;
+}
+
+#graphContainer {
+    width: 50%;
+    border-width: 0.2em;
+    border-style: solid;
+    border-color: gray;
+    border-radius: 1.5em;
+    background-color: #95a5a6;
+}
+
+#graphContainer .tagName {
+    width: 22%;
+}
+
+#graphContainer .tagBar {
+    background-color: orange;
+    height: 1.2em;
+}
+
+#userProfileContainer #userInfo #description {
+    padding-left: 10%;
+    width: 90%;
+}
+
+#reputationBar #reportIcon {
+    color: darkred;
+}
+
+#reputationBar #bar {
+    background-color: gray;
+    width: 15em;
+    height: 1.5em;
+    border-radius: 0.7em;
+}
+
+#userProfileContainer #userArticles #articlesTitle {
+    width: 20%;
+}
+
+/* Alerts */
+
+.alert-custom {
+    background-color: #9a4dca91;
+    color:rgb(137, 7, 218);
+}
+
+.search-nfo {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+/* Badges */
+
+.bg-custom {
+    background-color: #9b4dca;
+}
+
+/* User Cards */
+
+.user-card {
+    border-color: #d3d6d854;
+}
+
+.user-card-avatar {
+    width: 20%;
+    align-self: center;
+}
+
+.user-card-body {
+    width: 60%;
+}
+
+.user-card-location {
+    color: grey;
+    font-size: 0.9em;
+}
+
+.user-card-description {
+    color: #41464b;
+}
+
+.user-card-right {
+    width: 20%;
 }

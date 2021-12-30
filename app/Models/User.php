@@ -33,94 +33,114 @@ class User extends Authenticatable
         'password', 'remember_token', 'areas_expertise'
     ];
 
-    public function country() {
+    public function country()
+    {
         return $this->belongsTo(Country::class);
     }
 
-    public function followers() {
+    public function followers()
+    {
         return $this->belongsToMany(User::class, 'follow', 'followed_id', 'follower_id');
     }
 
-    public function following() {
+    public function following()
+    {
         return $this->belongsToMany(User::class, 'follow', 'follower_id', 'followed_id');
     }
 
     // verify if foreign key is right (default should be '<Model>_id')
-    public function suspensions() {
+    public function suspensions()
+    {
         return $this->hasMany(Suspension::class, 'user_id');
     }
 
-    public function reports() {
+    public function reports()
+    {
         return $this->hasMany(Report::class, 'reported_id');
     }
 
-    public function givenReports() {
+    public function givenReports()
+    {
         return $this->hasMany(Report::class, 'reporter_id');
     }
 
-    public function proposedTags() {
+    public function proposedTags()
+    {
         return $this->hasMany(Tag::class, 'user_id');
     }
 
     // Access area of expertise with area->pivot
-    public function areasExpertise() {
+    public function areasExpertise()
+    {
         return $this->belongsToMany(Tag::class, 'area_of_expertise', 'user_id')->withPivot('reputation');
     }
 
-    public function favoriteTags() {
+    public function favoriteTags()
+    {
         return $this->belongsToMany(Tag::class, 'favorite_tag', 'user_id');
     }
 
-    public function sentMessages() {
+    public function sentMessages()
+    {
         return $this->hasMany(Message::class, 'sender_id');
     }
 
-    public function receivedMessages() {
+    public function receivedMessages()
+    {
         return $this->hasMany(Message::class, 'receiver_id');
     }
 
-    public function content() {
+    public function content()
+    {
         return $this->hasMany(Content::class, 'author_id');
     }
 
-    public function feedback() {
+    public function feedback()
+    {
         return $this->hasMany(Feedback::class);
     }
 
-    public function notifications() {
+    public function notifications()
+    {
         return $this->hasMany(Notification::class, 'receiver_id');
     }
 
     // Notifications caused by the user's feedback
-    public function feedbackNotifications() {
+    public function feedbackNotifications()
+    {
         return $this->hasMany(FeedbackNotification::class, 'fb_giver');
     }
 
-    public function articles() {
+    public function articles()
+    {
         return Article::where('author_id', $this->id)->get();
     }
 
-    public function comments() {
+    public function comments()
+    {
         return Comment::where('author_id', $this->id)->get();
     }
 
-    public function isFollowing($userId) {
+    public function isFollowing($userId)
+    {
         $followList = $this->following->where('id', $userId);
         return count($followList) > 0;
     }
 
-    public function topAreasExpertise() {
+    public function topAreasExpertise()
+    {
         return $this->areasExpertise->map(function ($area) {
             return [
                 'tag_id' => $area->id,
                 'tag_name' => $area->name,
                 'reputation' => $area->pivot->reputation,
             ];
-        })->sortByDesc('reputation')->take(3);
+        })->sortByDesc('reputation')->take(3)->where('reputation', '>', '0');
     }
 
     // Gets the info on the suspension with the farthest end_time
-    public function suspensionEndInfo() {
+    public function suspensionEndInfo()
+    {
         $suspension = $this->suspensions->sortByDesc('end_time')->first();
 
         return [
