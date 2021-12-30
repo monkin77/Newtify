@@ -31,7 +31,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <a class="dropdown-item" href="{{ url('/user') }}">{{ Auth::user()->name }}</a>
+                                <a class="dropdown-item" href="{{ url('/user/'.Auth::id()) }}">{{ Auth::user()->name }}</a>
                                 <br>
                                 <li class="col text-center">
                                     <a class="btn btn-outline-secondary btn-lg" href="{{ url('/logout') }}"> Logout </a>
