@@ -220,6 +220,3 @@ function loadMoreArticlesHandler () {
 
 
 addEventListeners();
-
-const $ = (selector) => document.querySelector(selector);
-

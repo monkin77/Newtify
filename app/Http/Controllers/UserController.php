@@ -192,7 +192,7 @@ class UserController extends Controller
         if ($validator->fails())
             return response()->json([
                 'status' => 'Bad Request',
-                'msg' => 'Failed to report user. Bad request',
+                'msg' => 'Reason must have a number of characters between 5 and 200.',
                 'errors' => $validator->errors(),
             ], 400);
 
