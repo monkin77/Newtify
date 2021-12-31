@@ -30,7 +30,7 @@
                     <div class="flex-row mt-3 mb-5"> 
                         <label for="tags">{{ "Article's Tags" }}</label>
 
-                        <select required id="tags" name="tags[]" class="" multiple>
+                        <select required id="tags" name="tags[]" multiple>
                             @foreach($tags as $tag)
                                 <option value="{{$tag['id']}}">{{ $tag['name'] }}</option>
                             @endforeach
@@ -60,7 +60,7 @@
                         @endif
                     </div>
 
-                    <button type="submit" class="">Create Article</button>
+                    <button type="submit">Create Article</button>
                 </form>
 
             </div>

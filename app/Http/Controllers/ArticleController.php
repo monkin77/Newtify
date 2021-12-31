@@ -222,20 +222,18 @@ class ArticleController extends Controller
         })->sortBy('name');
         
         $author = $article->author;
-        if (isset($author))
-            $authorInfo = [
-                'id' => $author->id,
-                'name' => $author->name,
-                'avatar' => $author->avatar,
-                'country' => $author->country,
-                'city' => $author->city,
-                'isAdmin' => $author->is_admin,
-                'description' => $author->description,
-                'isSuspended' => $author->is_suspended,
-                'reputation' => $author->reputation,
-                'topAreasExpertise' => $author->topAreasExpertise(),
-            ];
-        else $authorInfo = null; // Anonymous, account deleted
+        $authorInfo = [
+            'id' => $author->id,
+            'name' => $author->name,
+            'avatar' => $author->avatar,
+            'country' => $author->country,
+            'city' => $author->city,
+            'isAdmin' => $author->is_admin,
+            'description' => $author->description,
+            'isSuspended' => $author->is_suspended,
+            'reputation' => $author->reputation,
+            'topAreasExpertise' => $author->topAreasExpertise(),
+        ];
 
         return view('pages.article.edit_article', [
             'article' => $articleInfo,
