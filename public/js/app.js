@@ -216,6 +216,9 @@ function loadMoreArticlesHandler () {
   if (!canLoadMore) $('#load-more').remove();
 };
 
+const toggleElem = (elem) => {
+  elem.classList.toggle('d-none');
+}
 
 addEventListeners();
 
