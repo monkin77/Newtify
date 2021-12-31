@@ -253,13 +253,14 @@ body {
 #userProfileContainer #reportContainer #reportInsideContainer {
     width: 100%;
     height: 100%;
-    background-color: gray;
+    background-color: lightgray;
     border-radius: 3em;
 }
 
 #userProfileContainer #reportContainer #reason {
     width: 70%;
     height: 50%;
+    border-color: black;
 }
 
 #userProfileContainer #reportContainer #closePopupBtn {
