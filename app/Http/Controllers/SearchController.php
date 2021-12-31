@@ -29,7 +29,7 @@ class SearchController extends Controller
         if ($request->type === 'articles')
             $search = $this->getArticleSearch($request->input('query'), 0, 10);
         else if ($request->type === 'users')
-            $search = $this->getUserSearch($request->input('query'), 0, 10);
+            $search = $this->getUserSearch($request->input('query'), 0, 1);
 
         return view('pages.search', [
             'type' => $request->type,

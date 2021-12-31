@@ -1,6 +1,23 @@
 loadMoreHandler = (containerId) => function () {
     const container = $(`#${containerId}`);
     const json = JSON.parse(this.responseText);
+
+    const previousError = $(`#${containerId} .error`);
+
+    if (this.status == 400) {
+        const error = createErrorMessage(json.errors);
+        error.classList.add('mb-2');
+
+        if (previousError)
+            previousError.replaceWith(error);
+        else
+            container.appendChild(error);
+
+        return;
+    }
+
+    if (previousError) previousError.remove();
+
     const html = json.html;
     const canLoadMore = json.canLoadMore;
   
@@ -17,6 +34,9 @@ const loadMoreSearch = (type, value) => {
 const loadMoreHome = () => {
     // TODO: Pass filter parameters when filter is implemented in interface
     const numArticles = $('#articles').childElementCount;
-    const url = `/api/article/filter?offset=${numArticles}&limit=5`;
+    const type = $('input[name="filterType"]:checked').id;
+    console.log(type);
+
+    const url = `/api/article/filter?type=${type}&offset=${numArticles}&limit=5`;
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
 };

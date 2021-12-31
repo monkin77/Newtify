@@ -29,6 +29,7 @@ function sendAjaxRequest(method, url, data, handler) {
 const createErrorMessage = (errors) => {
   const msg = document.createElement('div');
   msg.classList.add('error');
+  msg.classList.add('text-center');
 
   for (let error of Object.values(errors)) {
     const errorMsg = document.createElement('span');
@@ -42,6 +43,23 @@ const createErrorMessage = (errors) => {
 
 function replaceArticles() {
   const json = JSON.parse(this.responseText);
+  const previousError = $('#filterError');
+
+  if (this.status == 400) {
+    const error = createErrorMessage(json.errors);
+    error.id = 'filterError';
+    error.classList.add('mb-2');
+
+    if (previousError)
+        previousError.replaceWith(error);
+    else
+        $('#filterSection').after(error);
+
+    return;
+  }
+
+  if (previousError) previousError.remove();
+
   const html = json.html;
   const canLoadMore = json.canLoadMore;
 

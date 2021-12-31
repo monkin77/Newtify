@@ -10,7 +10,7 @@
         <div id="createArticle" class="position-relative d-flex flex-column align-items-center" >
             <h1> Create Your Own Article </h1>
             <h3> Others will decide your faith </h3>
-            <a class="addIcon btn" href="{{ route('newArticlePage') }}"> 
+            <a class="addIcon btn" href="{{ route('createArticle') }}"> 
                 <i class="fas fa-plus-circle fa-4x"></i>
             </a>   
         </div>

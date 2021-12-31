@@ -17,9 +17,10 @@ function proposeTagHandler() {
         return;
     }
 
+    const previousError = $('#proposeTag .error');
+
     if (this.status == 400) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
-        const previousError = $('#proposeTag .error');
 
         if (previousError)
             previousError.replaceWith(error);
@@ -28,6 +29,8 @@ function proposeTagHandler() {
 
         return;
     }
+
+    if (previousError) previousError.remove();
 
     const confirmation = document.createElement('h4');
     confirmation.classList.add('mb-0');
