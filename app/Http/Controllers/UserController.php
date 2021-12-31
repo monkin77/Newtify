@@ -40,10 +40,10 @@ class UserController extends Controller
         ];
 
         $follows = false;
-        $isAuthor = false;
+        $isOwner = false;
         if (Auth::check()) {
             $follows = Auth::user()->isFollowing($id);
-            $isAuthor = Auth::id() == $userInfo['id'];
+            $isOwner = Auth::id() == $userInfo['id'];
         }
 
 
@@ -71,7 +71,7 @@ class UserController extends Controller
             'articles' => $articles,
             'birthDate' => date('F j, Y', strtotime($userInfo['birthDate'])),
             'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y'),
-            'isAuthor' => $isAuthor,
+            'isOwner' => $isOwner,
         ]);
     }
 

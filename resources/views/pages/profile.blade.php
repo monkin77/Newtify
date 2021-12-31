@@ -6,13 +6,6 @@ $guest = !Auth::check();
 
 <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
-{{-- TO-DO:
-    - Use sendAjaxRequest method from App.js
-    - Add Report Request
-    - Improve Areas of Expertise Graph
-    - Improve Tags Badge
-    - Include Country Flag? --}}
-
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('userInfo')
     <section id="userInfo">
@@ -31,7 +24,7 @@ $guest = !Auth::check();
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    @if ($isAuthor)
+                    @if ($isOwner)
                         <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
                             <a class="fa fa-pencil fa-3x" style="color:orange" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
@@ -64,7 +57,7 @@ $guest = !Auth::check();
                     </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    @include('partials.user.reputationBar', ['user' => $user, 'isAuthor' => $isAuthor])
+                    @include('partials.user.reputationBar', ['user' => $user, 'isOwner' => $isOwner])
                 </div>
             </div>
 
