@@ -5,7 +5,7 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('create-article')
 
-<div class="home-section d-flex justify-content-center pb-3">
+<section class="home-section d-flex justify-content-center mb-3">
     <div class="d-flex flex-grow-1 justify-content-center home-container">
         <div id="createArticle" class="position-relative d-flex flex-column align-items-center" >
             <h1> Create Your Own Article </h1>
@@ -15,10 +15,36 @@
             </a>   
         </div>
     </div>
-</div>
+</section>
 
 @endsection
 
+{{-- ------------------------------------------------------------------------------------ --}}
+
+@section('filters')
+<section id="filterSection" class="d-flex flex-row border mb-3 py-2">
+    <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
+        <input type="radio" class="btn-check" name="filterType" id="trending" checked>
+        <label class="filter-button btn btn-outline-secondary ms-4 my-auto" for="trending">
+            <i class="fas fa-fire-alt mt-2"></i> <span class="mx-2">Trending</span>
+        </label>
+
+        <input type="radio" class="btn-check" name="filterType" id="recent">
+        <label class="filter-button btn btn-outline-secondary btn-lg ms-4 my-auto" for="recent">
+            <i class="fas fa-history mt-2"></i> <span class="mx-2">Recent</span>
+        </label>
+
+        @if (Auth::check())
+            <input type="radio" class="btn-check" name="filterType" id="recommended">
+            <label class="filter-button btn btn-outline-secondary btn-lg ms-4 my-auto" for="recommended">
+                <i class="far fa-star mt-2"></i> <span class="mx-2">Recommended</span>
+            </label>
+        @endif
+    </div>
+
+    <i class="fa fa-tag filter-tag mt-2 me-4"></i>
+</section>
+@endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
@@ -42,7 +68,7 @@
 
 @section('propose-tag')
 
-<div class="home-section d-flex justify-content-center pt-3">
+<section class="home-section d-flex justify-content-center mt-3">
     <div class="d-flex flex-grow-1 justify-content-center home-container">
         <div id="proposeTag" class="position-relative d-flex flex-column align-items-center" >
             <h1 class="mb-2">
@@ -59,7 +85,7 @@
             </form>
         </div>
     </div>
-</div>
+</section>
 
 @endsection
 
@@ -72,6 +98,7 @@
 @section('content')
 
     @yield('create-article')
+    @yield('filters')
     @yield('articles')
 
     @if ($canLoadMore)

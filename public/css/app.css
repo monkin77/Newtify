@@ -22,6 +22,22 @@ body {
     background-color: white;
 }
 
+#filterSection {
+    width: 59%;
+    margin-left: 20.5%;
+}
+
+.filter-button {
+    border-radius: 1em !important;
+    width: 10em;
+    font-size: 1.2em;
+    justify-content: center;
+}
+
+.filter-tag {
+    font-size: 2em;
+}
+
 /* Partial Article */
 
 #articles h1,
