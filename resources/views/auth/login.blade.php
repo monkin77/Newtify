@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="border text-center w-25 bg-light container">
+<div class="border text-center my-4 w-25 bg-light container">
     <h2 class="modal-titlemx-auto text-center fw-bold" id="exampleModalLabel">Sign In</h2>
     <form method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}

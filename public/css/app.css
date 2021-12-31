@@ -59,12 +59,24 @@ body {
     text-align: center;
 }
 
+/* Partial Author Information */
+#authorDescription {
+    height: 35%;
+}
+
+#authorAreaExpertise {
+    height: 40%;
+}
+
 /* Full Article Page */
-/*
-.article-container h1,
-.article-container h2,
-.article-container h3,
-.article-container h4 {
+#article-container {
+    width: 85%;
+}
+
+#article-container h1,
+#article-container h2,
+#article-container h3,
+#article-container h4 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -72,6 +84,7 @@ body {
 
 #author-container {
     background-color: #dbd7d2;
+    width: 30%;
 }
 
 #author-container .row {
@@ -82,11 +95,21 @@ body {
     margin: 0;
 }
 
-.container #author-container #authorAvatar {
+#author-container #authorAvatar {
     border-radius: 50%;
 }
 
-.container #comments-section .commentHeader {
+#article-container #article-header i {
+    width: 0.8em; 
+    height: 0.7em;
+}
+
+
+#articleInfoContainer {
+    width: 70%;
+}
+
+#comments-section .commentHeader {
     margin: 0;
     padding: 0;
     height: 5em;
@@ -95,10 +118,6 @@ body {
     text-align: center;
 }
 
-.article-container #article-header i {
-    width: 0.8em;
-    height: 0.7em;
-}
 
 /* Forms Errors */
 
