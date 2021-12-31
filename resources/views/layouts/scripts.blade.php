@@ -14,4 +14,6 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
 </script>
 
 <script type="text/javascript" src={{ asset('js/app.js') }}></script>
+
+
 @yield('scripts')

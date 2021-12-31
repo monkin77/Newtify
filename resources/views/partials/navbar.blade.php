@@ -31,9 +31,10 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li>
-                                    <a class="button" href="{{ url('/logout') }}"> Logout </a>
-                                    <span>{{ Auth::user()->name }}</span>
+                                <a class="dropdown-item" href="{{ url('/user/'.Auth::id()) }}">{{ Auth::user()->name }}</a>
+                                <br>
+                                <li class="col text-center">
+                                    <a class="btn btn-outline-secondary btn-lg" href="{{ url('/logout') }}"> Logout </a>
                                 </li>
                             @endif
                         </ul>
@@ -42,8 +43,4 @@
             </div>
         </div>
     </nav>
-
-    {{-- @if (Auth::check())
-    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-    @endif --}}
 </header>
