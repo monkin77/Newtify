@@ -71,30 +71,19 @@ class ArticleController extends Controller
                 'body' => 'required|string|min:10',
                 'title' => 'required|string|min:3|max:100',
                 'thumbnail' => 'nullable|file|max:5000',
-            ]
-        );
-        if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator);//['tags' => 'You must have between 1 and 3 tags']);
-        }
-
-
-        $validator = Validator::make($request -> all(),
-            [
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|string|min:1',
             ]
         );
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors([
-                'tags' => 'Article must have between 1 and 3 tags'
-            ]);
+        if ( $validator->fails() ) {
+            // go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($validator->errors());//['tags' => 'You must have between 1 and 3 tags']);
         }
 
         $tagsIds = [];
 
         foreach($request->tags as $tag) {
-            $checkTag = Tag::where('name', $tag)->first();
+            $checkTag = Tag::find($tag);
 
             //check if is valid tag
             if (!$checkTag || $checkTag->state != 'ACCEPTED') {
@@ -133,6 +122,7 @@ class ArticleController extends Controller
             return abort(404, 'Article not found, id: '.$id);
 
         $articleInfo = [
+            'id' => $article->content_id,
             'title' => $article->title,
             'thumbnail' => $article->thumbnail,
             'body' => $article->body,
@@ -166,6 +156,7 @@ class ArticleController extends Controller
             $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) ) ;  
 
             return [
+                'id' => $comment->content_id,
                 'body' => $comment->body,
                 'likes' => $comment->likes,
                 'dislikes' => $comment->dislikes,
@@ -279,6 +270,8 @@ class ArticleController extends Controller
             'body' => 'nullable|string|min:10',
             'title' => 'nullable|string|min:1|max:255',
             'thumbnail' => 'nullable|file|max:5000',
+            'tags' => 'required|array|min:1|max:3',
+            'tags.*' => 'required|string|min:1',
         ]);
 
         if ( $validator->fails() ) {
@@ -286,28 +279,14 @@ class ArticleController extends Controller
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
-        $validator = Validator::make($request -> all(),
-            [
-                'tags' => 'required|array|min:1|max:3',
-                'tags.*' => 'required|string|min:1',
-            ]
-        );
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors([
-                'tags' => 'Article must have between 1 and 3 tags'
-            ]);
-        }
-
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
         if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
 
-
-
         $tagsIds = [];
 
         foreach($request->tags as $tag) {
-            $checkTag = Tag::where('name', $tag)->first();
+            $checkTag = Tag::find($tag);
 
             //check if is valid tag
             if (!$checkTag || $checkTag->state != 'ACCEPTED') {

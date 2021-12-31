@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script src=" {{ asset('js/input_tags.js') }}"> </script>
+    <script src=" {{ asset('js/tags.js') }}"> </script>
 @endsection
 
 {{-- ------------------------------------------------------ --}}
@@ -32,7 +32,7 @@
 
                         <select required id="tags" name="tags[]" class="" multiple>
                             @foreach($tags as $tag)
-                                <option value="{{$tag['name']}}">{{ $tag['name'] }}</option>
+                                <option value="{{$tag['id']}}">{{ $tag['name'] }}</option>
                             @endforeach
                         </select>
 

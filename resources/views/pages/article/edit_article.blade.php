@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script src=" {{ asset('js/input_tags.js') }}"> </script>
+    <script src=" {{ asset('js/tags.js') }}"> </script>
 @endsection
 
 {{-- ------------------------------------------------------ --}}
@@ -38,7 +38,7 @@
                                 @if ($articleTags->contains('name', $tag['name']))
                                     selected="selected"
                                 @endif
-                                value="{{$tag['name']}}">{{ $tag['name'] }}</option>
+                                value="{{$tag['id']}}">{{ $tag['name'] }}</option>
                             @endforeach
                         </select>
 
