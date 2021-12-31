@@ -4,7 +4,9 @@
 
 @section('content')
     <section id="userInfo">
-        <div class="container-fluid py-3">
+        <form name="profileForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
+            class="container-fluid py-3">
+            @csrf
             <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex flex-column align-items-center justify-content-between h-100">
                     <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarPreview"
@@ -17,7 +19,8 @@
             </div>
             <div class="row w-100 mt-5 mb-4">
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
+                    <input type="text" value="{{ $user['name'] }}" class="text-center w-auto"
+                        style="border:black 1px solid" />
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     <i class="fa fa-users fa-1x me-3 text-dark"></i>
@@ -44,6 +47,6 @@
             <div class="mt-5" id="description">
                 <h5>{{ $user['description'] }}</h5>
             </div>
-        </div>
+        </form>
     </section>
 @endsection
