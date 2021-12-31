@@ -24,18 +24,18 @@
 @section('filters')
 <section id="filterSection" class="d-flex flex-row border mb-3 py-2">
     <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
-        <input type="radio" class="btn-check" name="filterType" id="trending" checked>
+        <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off" checked>
         <label class="filter-button btn btn-outline-secondary ms-4 my-auto" for="trending">
             <i class="fas fa-fire-alt mt-2"></i> <span class="mx-2">Trending</span>
         </label>
 
-        <input type="radio" class="btn-check" name="filterType" id="recent">
+        <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
         <label class="filter-button btn btn-outline-secondary btn-lg ms-4 my-auto" for="recent">
             <i class="fas fa-history mt-2"></i> <span class="mx-2">Recent</span>
         </label>
 
         @if (Auth::check())
-            <input type="radio" class="btn-check" name="filterType" id="recommended">
+            <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off">
             <label class="filter-button btn btn-outline-secondary btn-lg ms-4 my-auto" for="recommended">
                 <i class="far fa-star mt-2"></i> <span class="mx-2">Recommended</span>
             </label>

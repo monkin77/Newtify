@@ -5,7 +5,7 @@ loadMoreHandler = (containerId) => function () {
     const canLoadMore = json.canLoadMore;
   
     container.insertAdjacentHTML('beforeend', html);
-    if (!canLoadMore) $('#load-more').remove();
+    if (!canLoadMore) $('#load-more').style.display = "none";
   };
 
 const loadMoreSearch = (type, value) => {
