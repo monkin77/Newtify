@@ -63,7 +63,7 @@ class UserController extends Controller
             ];
         })->sortByDesc('published_at')->take(4);
 
-        return view('pages.profile', [
+        return view('pages.user.profile', [
             'user' => $userInfo,
             'follows' => $follows,
             'topAreasExpertise' => $areasExpertise,
@@ -89,7 +89,31 @@ class UserController extends Controller
 
         $this->authorize('update', $user);
 
-        return view('pages.edit_profile');
+        $userInfo = [
+            'id' => $id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'birthDate' => $user->birth_date,
+            'isAdmin' => $user->is_admin,
+            'description' => $user->description,
+            'avatar' => $user->avatar,
+            'country' => $user->country,
+            'city' => $user->city,
+            'isSuspended' => $user->is_suspended,
+            'reputation' => $user->reputation,
+        ];
+
+        $areasExpertise = $user->topAreasExpertise();
+
+        $followerCount = count($user->followers);
+
+        return view('pages.user.editProfile', [
+            'user' => $userInfo,
+            'topAreasExpertise' => $areasExpertise,
+            'followerCount' => $followerCount,
+            'birthDate' => date('F j, Y', strtotime($userInfo['birthDate'])),
+            'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y'),
+        ]);
     }
 
     /**
