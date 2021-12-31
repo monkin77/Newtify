@@ -141,7 +141,7 @@ body {
 /* Areas of expertise */
 
 #graphContainer {
-    width: 50%;
+    width: 100%;
     border-width: 0.2em;
     border-style: solid;
     border-color: gray;

@@ -16,7 +16,9 @@ $guest = !Auth::check();
                         onerror="this.src='{{ $userImgPHolder }}'" />
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
-                    @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])
+                    <div class="col-6 w-50 h-100">
+                        @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])
+                    </div>
                 </div>
             </div>
             <div class="row w-100 mt-5 mb-4">

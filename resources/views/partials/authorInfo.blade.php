@@ -19,8 +19,8 @@
         </div>
     </div>
 
-    <div class="flex-row mb-1">
-        <p class="text-secondary">Reputation: {{ $author['reputation'] }} </p>
+    <div class="flex-row d-flex justify-content-center align-items-center">
+        @include('partials.user.reputationBar', ['user' => $author])
     </div>
 
     <div class="flex-row my-3">
@@ -31,9 +31,9 @@
 
     <div class="flex-row my-5">
         <h3>Areas of Expertise </h3>
-        @foreach ($author['topAreasExpertise'] as $areaExpertise) 
-            <p>{{ $areaExpertise['tag_name'] }} </p>
-        @endforeach
+        <div class="col">
+            @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $author['topAreasExpertise']])
+        </div>
     </div>
 @else
     <div class="d-flex flex-row mb-3">
