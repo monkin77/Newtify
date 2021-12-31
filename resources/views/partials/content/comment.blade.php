@@ -24,10 +24,7 @@
             <span class="px-3">Reply</span>
         @endif
 
-        @php
-            $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) )   
-        @endphp
-        <span class="px-3">{{ $comment_published_at }} </span>
+        <span class="px-3">{{ $comment['published_at'] }} </span>
     </div>
 
 </div>

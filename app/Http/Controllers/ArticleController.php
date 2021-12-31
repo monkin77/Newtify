@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Tag;
@@ -23,7 +24,24 @@ class ArticleController extends Controller
             return redirect('/login');
         }
 
-        return view('pages.create_article');
+        $user = User::find(Auth::id());
+        if (is_null($user)) 
+            return redirect('/login');
+
+        $authorInfo = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'avatar' => $user->avatar,
+            'country' => $user->country,
+            'city' => $user->city,
+            'isAdmin' => $user->is_admin,
+            'description' => $user->description,
+            'isSuspended' => $user->is_suspended,
+            'reputation' => $user->reputation,
+            'topAreasExpertise' => $user->topAreasExpertise(),
+        ];
+
+        return view('pages.article.create_article', ['author' => $authorInfo]);
     }
 
     /**
@@ -41,24 +59,38 @@ class ArticleController extends Controller
         $validator = Validator::make($request -> all(),
             [
                 'body' => 'required|string|min:10',
-                'title' => 'required|string|min:3|max:255',
+                'title' => 'required|string|min:3|max:100',
                 'thumbnail' => 'nullable|file|max:5000',
-                'tags' => 'required|array|min:1|max:3',
-                'tags.*' => 'required|integer|distinct|min:0',
             ]
         );
-
         if ( $validator->fails() ) {
             // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($request);
+            return redirect()->back()->withInput()->withErrors($validator);//['tags' => 'You must have between 1 and 3 tags']);
         }
 
+
+        $validator = Validator::make($request -> all(),
+            [
+                'tags' => 'required|array|min:1|max:3',
+                'tags.*' => 'required|string|min:1',
+            ]
+        );
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors([
+                'tags' => 'Article must have between 1 and 3 tags'
+            ]);
+        }
+
+        $tagsIds = [];
+
         foreach($request->tags as $tag) {
-            $checkTag = Tag::find($tag);
+            $checkTag = Tag::where('name', $tag)->first();
+
             //check if is valid tag
-            if (!$checkTag) {
-                return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
+            if (!$checkTag || $checkTag->state != 'ACCEPTED') {
+                return redirect()->back()->withInput()->withErrors(['tags' => 'Invalid Tag: '.$tag]); 
             }
+            array_push($tagsIds, $checkTag->id);
         }
 
         $content = new Content;
@@ -73,7 +105,7 @@ class ArticleController extends Controller
 
         $article->save();
 
-        $article->articleTags()->sync($request->tags);
+        $article->articleTags()->sync($tagsIds);
 
         return redirect("/article/$article->content_id");
     }
@@ -121,11 +153,13 @@ class ArticleController extends Controller
         // TODO: "load more" thing for comments too
         $comments = $article->comments->map(function ($comment) {
             $commentAuthor = $comment->author;
+            $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) ) ;  
+
             return [
                 'body' => $comment->body,
                 'likes' => $comment->likes,
                 'dislikes' => $comment->dislikes,
-                'published_at' =>$comment->published_at,
+                'published_at' =>$comment_published_at,
                 'author' => isset($commentAuthor) ? [
                     'id' => $commentAuthor->id,
                     'name' => $commentAuthor->name,
@@ -140,7 +174,7 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
-        return view('pages.article', [
+        return view('pages.article.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
             'comments' => $comments,
@@ -177,7 +211,7 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
-        return view('pages.edit_article', [
+        return view('pages.article.edit_article', [
             'article' => $articleInfo,
             'tags' => $tagsInfo,
         ]);
