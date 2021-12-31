@@ -169,16 +169,16 @@ body {
 
 /* User Profile */
 
-#userProfileContainer #userInfo {
+#userInfo {
     height: 60vh;
     background-color: lightgray;
 }
 
-#userProfileContainer #userInfo #userGraphics {
+#userInfo #userGraphics {
     height: 40%;
 }
 
-#userProfileContainer #userInfo #userGraphics #avatarImg {
+#userInfo #userGraphics #avatarImg {
     height: 100%;
     aspect-ratio: 1;
     border-radius: 100em;
@@ -204,7 +204,7 @@ body {
     height: 1.2em;
 }
 
-#userProfileContainer #userInfo #description {
+#userInfo #description {
     padding-left: 10%;
     width: 90%;
 }
@@ -327,4 +327,11 @@ body {
     height: 100%;
     background-color: black;
     opacity: 0.75;
+}
+
+/* Edit Profile */
+#userInfo #userGraphics #avatarPreview {
+    height: 75%;
+    aspect-ratio: 1;
+    border-radius: 100em;
 }

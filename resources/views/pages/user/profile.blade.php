@@ -4,7 +4,7 @@
 $guest = !Auth::check();
 @endphp
 
-<script type="text/javascript" src={{ asset('js/user.js') }}></script>
+<script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
 
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('userInfo')

@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
-<script type="text/javascript" src={{ asset('js/user.js') }}></script>
+<script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
 
 @section('content')
     <section id="userInfo">
         <div class="container-fluid py-3">
             <div class="row w-100 mt-5" id="userGraphics">
-                <div class="col-6 d-flex justify-content-center h-100">
-                    <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarImg"
+                <div class="col-6 d-flex flex-column align-items-center justify-content-between h-100">
+                    <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarPreview"
                         onerror="this.src='{{ $userImgPHolder }}'" />
+                    <input type="file" accept="image/*" id="imgInput" />
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
                     @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])
