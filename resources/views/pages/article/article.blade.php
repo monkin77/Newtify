@@ -72,14 +72,13 @@
                 @if (Auth::check())
                 <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
                     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-                        <img src= {{
+                        <img src={{
                             isset(Auth::user()->avatar) ?
                             Auth::user()->avatar
                             :
                             $userImgPHolder
-                        }}
-                        >
-                        You
+                        }}>
+                        <p>You</p>
                     </div>
 
                     <div class="flex-column m-0 p-0 w-100">
