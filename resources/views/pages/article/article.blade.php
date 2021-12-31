@@ -15,10 +15,10 @@
                             {{ $article['title'] }}
                         </h1>
 
-                        <h2 class="flex-column mx-3">
+                        <h2 class="flex-column w-25 mx-3">
                             @if ($is_author)
-                                <i class="fas fa-thumbs-up"></i>
-                                <i class="fas fa-thumbs-down"></i>
+                                <i class="fas fa-edit me-4"></i>
+                                <i class="fas fa-trash"></i>
                             @endif
                         <h2>
                     </div>
@@ -36,10 +36,10 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    <i class="fa fa-thumbs-up ps-5"> {{ $article['likes'] }}</i>
-                    <i class="fa fa-thumbs-down ps-3"> {{ $article['dislikes'] }}</i>
+                    <i class="fas fa-thumbs-up ps-5"> {{ $article['likes'] }}</i>
+                    <i class="fas fa-thumbs-down ps-3"> {{ $article['dislikes'] }}</i>
                     
-                    <i class="iconify ms-5" data-icon="bi:share-fill"></i>
+                    <i class="fas fa-share-alt ms-4"></i>
                 </p>
 
                 <div class="flex-row h-50 mb-5">
