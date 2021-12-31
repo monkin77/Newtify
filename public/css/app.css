@@ -330,8 +330,17 @@ body {
 }
 
 /* Edit Profile */
-#userInfo #userGraphics #avatarPreview {
-    height: 75%;
+#editProfileContainer {
+    background-color: lightgray;
+}
+
+#editProfileContainer #editAvatarContainer {
+    height: 30vh;
+}
+
+#editProfileContainer #editAvatarContainer #avatarPreview {
+    height: 80%;
     aspect-ratio: 1;
     border-radius: 100em;
+    margin-right: 3em;
 }
