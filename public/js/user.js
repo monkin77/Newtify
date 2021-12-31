@@ -31,19 +31,13 @@ function unfollowUserHandler() {
 const toggleReportPopup = () => {
     const reportContainer = $('#reportElement');
     
-    if (reportContainer.classList.contains('d-none')) {
-        reportContainer.classList.remove('d-none');
-        reportContainer.classList.add('d-block');
-    } else {
+    if (!reportContainer.classList.contains('d-none')) {
         $('textarea[id=reason]').value = '';
         const errorContainer = $('#reportError');
-        errorContainer.classList.remove('d-flex');
         errorContainer.classList.add('d-none');
-
-        reportContainer.classList.remove('d-block');
-        reportContainer.classList.add('d-none');
     }
-    
+
+    toggleElem(reportContainer);
 }
 
 const reportUser = (id) => {
@@ -58,13 +52,11 @@ function reportUserHandler() {
     } else if (res.msg){
         const errorContainer = $('#reportError');
         $('#reportErrorText').innerHTML = res.msg;
-        errorContainer.classList.add('d-flex');
         errorContainer.classList.remove('d-none');
 
     } else {
         const errorContainer = $('#reportError');
         $('#reportErrorText').innerHTML = 'Failed to report user. Invalid request.';
-        errorContainer.classList.add('d-flex');
         errorContainer.classList.remove('d-none');
     }
 }
