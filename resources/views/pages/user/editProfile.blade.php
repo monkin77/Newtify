@@ -17,23 +17,31 @@
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="nameInput">Username</label>
-                <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h1 px-0 mx-0"
-                    style="border:black 1px solid" id="nameInput" />
+                <input type="text" required value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs"
+                    id="nameInput" />
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="nameInput">Birth Date</label>
-                <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h1 px-0 mx-0"
-                    style="border:black 1px solid" id="nameInput" />
+                <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs" id="nameInput" />
             </div>
             <div class="row w-100 mt-5">
-                <label class="h1 pb-3 my-0" for="nameInput">Location</label>
-                <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h1 px-0 mx-0"
-                    style="border:black 1px solid" id="nameInput" />
+                <div class="d-flex">
+                    <div class="pe-5 me-5">
+                        <label class="h1 pb-3 my-0" for="nameInput">Country</label>
+                        <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs"
+                            id="nameInput" />
+                    </div>
+                    <div class="ms-5">
+                        <label class="h1 pb-3 my-0" for="nameInput">City</label>
+                        <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs"
+                            id="nameInput" />
+                    </div>
+                </div>
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="nameInput">Description</label>
-                <input type="text" value="{{ $user['description'] }}" class="text-center w-auto h1 px-0 mx-0"
-                    style="border:black 1px solid" id="nameInput" />
+                <input type="text" value="{{ $user['description'] }}" class="text-center w-auto h2 editInputs"
+                    id="nameInput" />
             </div>
         </form>
     </section>

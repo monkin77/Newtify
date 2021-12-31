@@ -344,3 +344,9 @@ body {
     border-radius: 100em;
     margin-right: 3em;
 }
+
+#editProfileContainer .editInputs {
+    border: 2px black solid;
+    padding-top: 1.2em;
+    padding-bottom: 1.2em;
+}
