@@ -10,6 +10,7 @@ function calculateReputationLevel($reputation)
 
     return 100;
 }
+$guest = !Auth::check();
 @endphp
 
 <div class="d-flex flex-column justify-content-center" id="reputationBar">
@@ -21,7 +22,11 @@ function calculateReputationLevel($reputation)
 
     <div class="d-flex justify-content-between align-items-center">
         <h6 class="my-0 py-0 pt-2 ">Reputation: {{ $user['reputation'] }}</h6>
-        <i class="fa fa-exclamation-circle fa-1x" id="reportIcon" onclick="console.log('cliked')"></i>
+        @if (!$guest && !$isOwner)
+            <button class="btn p-0 m-0 transparentButton" onclick="toggleReportPopup()">
+                <i class="fa fa-exclamation-circle fa-2x" id="reportIcon"></i>
+            </button>
+        @endif
     </div>
 
 </div>

@@ -40,9 +40,12 @@ class UserController extends Controller
         ];
 
         $follows = false;
+        $isOwner = false;
         if (Auth::check()) {
             $follows = Auth::user()->isFollowing($id);
+            $isOwner = Auth::id() == $userInfo['id'];
         }
+
 
         $areasExpertise = $user->topAreasExpertise();
 
@@ -67,7 +70,8 @@ class UserController extends Controller
             'followerCount' => $followerCount,
             'articles' => $articles,
             'birthDate' => date('F j, Y', strtotime($userInfo['birthDate'])),
-            'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y')
+            'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y'),
+            'isOwner' => $isOwner,
         ]);
     }
 
@@ -188,7 +192,7 @@ class UserController extends Controller
         if ($validator->fails())
             return response()->json([
                 'status' => 'Bad Request',
-                'msg' => 'Failed to report user. Bad request',
+                'msg' => 'Reason must have a number of characters between 5 and 200.',
                 'errors' => $validator->errors(),
             ], 400);
 
@@ -329,14 +333,16 @@ class UserController extends Controller
         if (Auth::user()->isFollowing($id))
             return response()->json([
                 'status' => 'OK',
-                'msg' => 'User already followed, id: ' . $id,
+                'msg' => 'User already followed',
+                'id' => $id,
             ], 200);
 
         $userToFollow->followers()->attach(Auth::id());
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Successful user follow, id: ' . $id,
+            'msg' => 'Successful user follow',
+            'id' => $id,
         ], 200);
     }
 
@@ -355,14 +361,16 @@ class UserController extends Controller
         if (!Auth::user()->isFollowing($id))
             return response()->json([
                 'status' => 'OK',
-                'msg' => 'User already not followed, id: ' . $id,
+                'msg' => 'User already not followed',
+                'id' => $id,
             ], 200);
 
         $userToUnfollow->followers()->detach(Auth::id());
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Successful user unfollow, id: ' . $id,
+            'msg' => 'Successful user unfollow',
+            'id' => $id,
         ], 200);
     }
 }

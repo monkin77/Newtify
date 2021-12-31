@@ -1,14 +1,10 @@
 @extends('layouts.app')
 
-<script type="text/javascript" src={{ asset('js/user.js') }}></script>
+@php
+$guest = !Auth::check();
+@endphp
 
-{{-- TO-DO:
-    - Use sendAjaxRequest method from App.js
-    - Disable Follow, Message, Report Buttons For guests
-    - Add Report AJAX
-    - Improve Areas of Expertise Graph
-    - Improve Tags Badge
-    - Include Country Flag? --}}
+<script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('userInfo')
@@ -28,13 +24,21 @@
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
-                    @if ($follows)
-                        <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3" id="followBtn"
-                            onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
+                    @if ($isOwner)
+                        <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
+                            <a class="fa fa-pencil fa-3x" style="color:orange" href="/user/{{ $user['id'] }}/edit"></a>
+                        </button>
                     @else
-                        <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3" id="followBtn"
-                            onclick="followUser({{ $user['id'] }})">Follow</button>
+                        @if (!$guest)
+                            <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
+                            @if ($follows)
+                                <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3" id="followBtn"
+                                    onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
+                            @else
+                                <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3" id="followBtn"
+                                    onclick="followUser({{ $user['id'] }})">Follow</button>
+                            @endif
+                        @endif
                     @endif
                     <i class="fa fa-users fa-1x me-3 text-dark"></i>
                     <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
@@ -53,7 +57,7 @@
                     </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    @include('partials.user.reputationBar', ['user' => $user])
+                    @include('partials.user.reputationBar', ['user' => $user, 'isOwner' => $isOwner])
                 </div>
             </div>
 
@@ -77,9 +81,32 @@
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
+@section('report')
+    <section id="reportElement" class="d-block d-none">
+        <div id="backdrop" onclick="toggleReportPopup()"></div>
+        <div id="reportContainer" class="d-flex flex-column align-items-center justify-content-center">
+            <div id="reportInsideContainer" class="d-flex flex-column align-items-center justify-content-evenly">
+                <h3 class="text-black">Give us a reason to report this user</h3>
+                <div class="text-danger d-flex d-none py-0 my-0 align-items-center text-center px-5" id="reportError">
+                    <i class="fa fa-exclamation me-3 fa-1x"></i>
+                    <h5 class="py-0 my-0" id="reportErrorText"></h5>
+                </div>
+                <textarea id="reason" rows="10" placeholder="Insert report reason here"></textarea>
+                <button onclick="reportUser({{ $user['id'] }})">SUBMIT</button>
+                <button class="btn p-0 m-0 transparentButton" id="closePopupBtn" onclick="toggleReportPopup()">
+                    <i class="fa fa-times fa-3x" id="closeIcon"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
 @section('content')
     <div id="userProfileContainer" class="d-flex flex-column">
         @yield('userInfo')
         @yield('articles')
+        @yield('report')
     </div>
 @endsection
