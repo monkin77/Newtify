@@ -2,6 +2,68 @@ body {
     background-color: #ffffff;
 }
 
+/* Navbar */
+
+#searchForm {
+    border-radius: 2em 1em 1em 2em;
+    position: relative;
+    top: 0.6em;
+}
+
+#searchForm input {
+    color: grey;
+    font-size: medium;
+    box-shadow: none;
+}
+
+#searchDropdown {
+    width: 25%;
+    position: relative;
+    left: 1%;
+}
+
+#searchDropdownButton {
+    width: 100%;
+    border-radius: 0.5em;
+    border-width: 0; /* Disable bootstrap's button border */
+    font-size: medium;
+    text-transform: none;
+    letter-spacing: inherit;
+    box-shadow: none;
+}
+
+#searchType {
+    width: 25%;
+    border-width: 0 1px 0 1px;
+    border-radius: 0.5em;
+
+    position: relative;
+    left: 1%;
+
+    cursor: pointer;
+}
+
+#searchType:focus {
+    border-color: inherit;
+}
+
+.search-item {
+    font-size: small;
+    height: 3em;
+}
+
+.search-item:hover {
+    cursor: pointer;
+}
+
+.search-item:active {
+    background-color: #9b4dca !important;
+}
+
+.no-border {
+    border: 0 !important;
+}
+
 /* HomePage */
 
 .home-section .home-container {

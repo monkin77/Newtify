@@ -12,7 +12,13 @@ function addEventListeners() {
   [].forEach.call(filterButtons, function(checker) {
     checker.addEventListener('change', filterArticles);
   });
-  
+
+  const submitButtons = document.querySelectorAll('.submit');
+  [].forEach.call(submitButtons, function(checker) {
+    checker.addEventListener('click', function() {
+      this.parentNode.submit();
+    });
+  });
 }
 
 function encodeForAjax(data) {
@@ -83,7 +89,7 @@ function replaceArticles() {
   }
 }
 
-function filterArticles () {
+function filterArticles() {
   // TODO: Pass filter parameters when filter is implemented in interface
   // Do common function to return URL and data, and use it for loadMore too
 
@@ -103,6 +109,11 @@ const checkPass = (id) => {
       matchingMsg.style.color = 'red';
       matchingMsg.innerHTML = 'not matching'
   }
+}
+
+setSearchType = (item) => {
+  $('#searchDropdownButton').innerHTML = item.innerText;
+  $("#searchForm input[name='type']").value = item.innerText.toLowerCase();
 }
 
 addEventListeners();

@@ -61,6 +61,6 @@ Route::delete('tags/{tag_id}', 'TagController@destroy');
 Route::post('tags/new', 'TagController@propose');
 
 // Search
-Route::get('search', 'SearchController@show');
+Route::get('search', 'SearchController@show')->name('search');
 Route::get('api/search/users', 'SearchController@searchUsers');
 Route::get('api/search/articles', 'SearchController@searchArticles');

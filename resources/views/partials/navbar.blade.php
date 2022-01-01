@@ -8,10 +8,33 @@
             </button>
             <div class="collapse navbar-collapse align-items-center row" id="navbarSupportedContent">
                 <a class="navbar-brand h1 col" href="{{ url('/') }}">Newtify</a>
-                <form class="d-flex justify-content-center align-items-center m-0 col-5">
-                    <input class="form-control me-2 w-75 m-0" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success m-0" type="submit">Search</button>
+
+                <form id="searchForm" class="d-flex flex-row align-items-center border col-5" action="{{ route('search') }}">
+                    <i class="fas fa-search ms-4 submit" type="submit"></i>
+                    <input
+                        class="form-control no-border flex-grow-1 my-0 ms-3 bg-dark"
+                        type="search"
+                        placeholder="Search"
+                        name="query"
+                        autocomplete="off"
+                    />
+                    <input type="hidden" name="type" value="articles"/>
+
+                    <div class="dropdown" id="searchDropdown">
+                        <button
+                            id="searchDropdownButton"
+                            class="btn btn-outline-secondary border-start dropdown-toggle my-0 pe-0"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                        >Articles</button>
+
+                        <ul class="dropdown-menu dropdown-menu-dark w-100 text-center" aria-labelledby="searchDropdownButton">
+                            <li><a class="dropdown-item search-item" onclick="setSearchType(this)">Articles</a></li>
+                            <li><a class="dropdown-item search-item" onclick="setSearchType(this)">Users</a></li>
+                        </ul>
+                    </div>
                 </form>
+
                 <div class="d-flex justify-content-end align-items-center col">
                     <div class="nav-item mx-4">
                         <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
