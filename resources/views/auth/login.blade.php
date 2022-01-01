@@ -31,7 +31,7 @@
         <button type="submit" class="btn btn-secondary w-50 fw-bold">
         Login
         </button>
-        <a class="button button-outline w-50" href="{{ route('register') }}">Register</a>
+        <a class="button button-outline w-50" href="{{ route('signup') }}">Register</a>
     </form>
 </div>
 @endsection

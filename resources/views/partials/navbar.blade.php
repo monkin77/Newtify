@@ -36,32 +36,40 @@
                 </form>
 
                 <div class="d-flex justify-content-end align-items-center col">
-                    <div class="nav-item mx-4">
-                        <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
-                    </div>
-                    <div class="nav-item mx-4">
-                        <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
-                    </div>
-                    <div class="nav-item dropdown mx-4">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            @if (Auth::check())
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <a class="dropdown-item" href="{{ url('/user/'.Auth::id()) }}">{{ Auth::user()->name }}</a>
-                                <br>
-                                <li class="col text-center">
-                                    <a class="btn btn-outline-secondary btn-lg" href="{{ url('/logout') }}"> Logout </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
+                    @if (Auth::check())
+                        <div class="nav-item mx-4">
+                            <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
+                        </div>
+                        <div class="nav-item mx-4">
+                            <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
+                        </div>
+
+                        <div class="nav-item dropdown mx-4">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                @if (Auth::check())
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <a class="dropdown-item" href="{{ url('/user/'.Auth::id()) }}">{{ Auth::user()->name }}</a>
+                                    <br>
+                                    <li class="col text-center">
+                                        <a class="btn btn-outline-secondary btn-lg" href="{{ route('logout') }}"> Logout </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    @else
+                        <div class="nav-item me-5">
+                            <a href={{ route('login') }} class="button ms-5 mt-2">Login</a>
+                            <a href={{ route('signup') }} class="button button-secondary mx-4 mt-2">Signup</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

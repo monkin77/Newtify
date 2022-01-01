@@ -64,6 +64,12 @@ body {
     border: 0 !important;
 }
 
+.button-secondary {
+    color: rgb(200, 100, 241);
+    border-color: rgb(200, 100, 241);
+    background-color: inherit;
+}
+
 /* HomePage */
 
 .home-section .home-container {

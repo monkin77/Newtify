@@ -18,7 +18,7 @@ Route::get('/api/article/filter', 'HomeController@filter');
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
 Route::post('signup', 'Auth\RegisterController@register');
 
 // User
