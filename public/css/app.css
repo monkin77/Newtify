@@ -16,7 +16,18 @@ body {
     font-size: large; /* fontSize impacts the icon size */
 }
 
-/* Partial Article, just putting here for now then we change */
+/* Partial Article */
+
+#articles h1,
+#articles h2,
+#articles h3,
+#articles h4,
+#articles p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 #articles .card {
     margin-bottom: 15px;
     border-radius: 1rem;
@@ -42,6 +53,7 @@ body {
 }
 
 /* Full Article Page */
+/*
 .article-container h1,
 .article-container h2,
 .article-container h3,
@@ -49,7 +61,7 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
+}*/
 
 #author-container {
     background-color: #dbd7d2;
