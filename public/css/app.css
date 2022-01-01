@@ -21,8 +21,7 @@ body {
 #articles h1,
 #articles h2,
 #articles h3,
-#articles h4,
-#articles p {
+#articles h4 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -44,8 +43,16 @@ body {
     text-decoration: none;
 }
 
-#articles .card:hover {
+#articles .card a:hover {
     background-color: lightgray;
+}
+
+#articles .card-header {
+    width: 20%;
+}
+
+#articles .card-header img {
+    width: 100%;
 }
 
 #load-more {

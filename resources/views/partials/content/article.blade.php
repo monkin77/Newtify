@@ -1,14 +1,13 @@
 <section id="articles" class="container">
 
     <div class="card flex-row flex-wrap" >
-        <div class="card-header border-0" style="width: 20%;">
+        <div class="card-header border-0">
             <img src= {{
                 isset($article['thumbnail']) ?
                 $article['thumbnail']
                 :
                 $articleImgPHolder
-            }}
-            style="width: 100%;">
+            }}>
         </div>
 
         <a href="/article/{{ $article['id'] }}">
