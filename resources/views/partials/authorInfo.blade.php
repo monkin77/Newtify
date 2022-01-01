@@ -16,10 +16,12 @@
                 <a href="{{ route('userProfile', ['id' => $author['id']]) }}" ]>
                     <h4 class="mb-2"> {{ $author['name'] }} </h4>
                 </a>
-                <p> @if (isset($author['city']))
-                        {{ $author['city'] }}, {{ $author['country']->name }}
+                <p>
+                    &#{{ $author['country']['flag'][0] }}&#{{ $author['country']['flag'][1] }}
+                    @if (isset($author['city']))
+                        {{ $author['city'] }}, {{ $author['country']['name'] }}
                     @else
-                        {{ $author['country']->name }}
+                        {{ $author['country']['name'] }}
                     @endif
                 </p>
             </div>

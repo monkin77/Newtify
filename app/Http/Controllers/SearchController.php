@@ -100,7 +100,7 @@ class SearchController extends Controller
                 'name' => $user->name,
                 'description' => $user->description,
                 'avatar' => $user->avatar,
-                'country' => $user->country,
+                'country' => $user->country->getInfo(),
                 'city' => $user->city,
                 'reputation' => $user->reputation,
                 'isAdmin' => $user->is_admin,

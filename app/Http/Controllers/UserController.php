@@ -33,7 +33,7 @@ class UserController extends Controller
             'isAdmin' => $user->is_admin,
             'description' => $user->description,
             'avatar' => $user->avatar,
-            'country' => $user->country,
+            'country' => $user->country->getInfo(),
             'city' => $user->city,
             'isSuspended' => $user->is_suspended,
             'reputation' => $user->reputation,
