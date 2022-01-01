@@ -30,14 +30,20 @@
             <div class="row w-100 mt-5">
                 <div class="d-flex">
                     <div class="pe-5 me-5">
-                        <label class="h1 pb-3 my-0" for="nameInput">Country</label>
-                        <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs"
-                            id="nameInput" />
+                        <label class="h1 pb-3 my-0" for="countryInput">Country</label>
+                        <div class="d-flex position-relative align-items-center">
+                            <select required name='countrySelector' value="{{ $user['country']['name'] }}"
+                                id="countryInput" size=1 class="my-0">
+                                <option value="Afganistan">Afghanistan</option>
+                                <option value="Albania">Albania</option>
+                            </select>
+                            <i class="fa fa-caret-down fa-1x position-absolute" id='countryCaret'></i>
+                        </div>
                     </div>
                     <div class="ms-5">
-                        <label class="h1 pb-3 my-0" for="nameInput">City</label>
-                        <input type="text" value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs"
-                            id="nameInput" />
+                        <label class="h1 pb-3 my-0" for="cityInput">City</label>
+                        <input type="text" value="{{ $user['city'] }}" class="text-center w-auto h2 editInputs"
+                            id="cityInput" />
                     </div>
                 </div>
             </div>
