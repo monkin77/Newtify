@@ -42,7 +42,7 @@ Route::put('article/{id}/edit', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
 
 // Admin
-Route::get('admin', 'AdminController@show');
+Route::get('admin', 'AdminController@show')->name('admin');
 Route::get('admin/suspensions', 'AdminController@suspensions');
 Route::post('user/{id}/suspend', 'AdminController@suspendUser');
 Route::put('user/{id}/unsuspend', 'AdminController@unsuspendUser');

@@ -29,8 +29,8 @@
                         >Articles</button>
 
                         <ul class="dropdown-menu dropdown-menu-dark w-100 text-center" aria-labelledby="searchDropdownButton">
-                            <li><a class="dropdown-item search-item" onclick="setSearchType(this)">Articles</a></li>
-                            <li><a class="dropdown-item search-item" onclick="setSearchType(this)">Users</a></li>
+                            <li><a class="dropdown-item dropdown-custom-item" onclick="setSearchType(this)">Articles</a></li>
+                            <li><a class="dropdown-item dropdown-custom-item" onclick="setSearchType(this)">Users</a></li>
                         </ul>
                     </div>
                 </form>
@@ -44,24 +44,32 @@
                             <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
                         </div>
 
-                        <div class="nav-item dropdown mx-4">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                @if (Auth::check())
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <a class="dropdown-item" href="{{ url('/user/'.Auth::id()) }}">{{ Auth::user()->name }}</a>
-                                    <br>
-                                    <li class="col text-center">
-                                        <a class="btn btn-outline-secondary btn-lg" href="{{ route('logout') }}"> Logout </a>
-                                    </li>
+                        <div id="dropdownContainer" class="nav-item dropdown ms-5">
+                            <img id="dropdownAvatar" class="nav-link dropdown-toggle"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                src ={{
+                                    isset(Auth::user()->avatar) ? Auth::user()->avatar : $userImgPHolder
+                                }}/>
+
+                            <ul id="mainDropdown" class="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="dropdownAvatar">
+                                @if (Auth::user()->is_admin)
+                                    <li><a
+                                        class="dropdown-item dropdown-custom-item"
+                                        href="{{ route('admin') }}"
+                                        >Admin Panel
+                                    </a></li>
                                 @endif
+
+                                <a class="dropdown-item dropdown-custom-item" href="{{ url('/user/'.Auth::id()) }}">My Profile</a>
+                                <br>
+                                <li class="col text-center">
+                                    <a
+                                        class="button button-secondary py-0 px-3"
+                                        href="{{ route('logout') }}"
+                                        style="font-size: 0.9em"
+                                    > Logout </a>
+                                </li>
+
                             </ul>
                         </div>
                     @else
