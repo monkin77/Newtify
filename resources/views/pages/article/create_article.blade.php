@@ -11,7 +11,7 @@
 
         <div class="d-flex flex-row my-2 h-100">
 
-            <div class="articleInfoContainer d-flex flex-column mb-0 p-3 h-100">
+            <div class="articleInfoContainer d-flex flex-column mb-0 p-3 pe-5 h-100">
 
                 <form name="article-form" method="POST" action="{{ route('createArticle') }}" class="flex-row h-100">
                     @csrf
@@ -28,7 +28,7 @@
                         @endif
                     </div>
 
-                    <div class="flex-row mt-3 mb-5"> 
+                    <div class="flex-row mt-3 mb-5 pe-3"> 
                         <label for="tags">{{ "Article's Tags" }}</label>
 
                         <select required id="tags" name="tags[]" multiple>
@@ -66,7 +66,7 @@
 
             </div>
 
-            <div class="author-container flex-col ms-5 p-3 text-dark">
+            <div class="author-container flex-col p-3 text-dark">
                 @include('partials.authorInfo', [
                     'author' => $author,
                     'isOwner' => true,
