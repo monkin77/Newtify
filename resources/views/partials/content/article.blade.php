@@ -2,12 +2,12 @@
 
     <div class="card flex-row flex-wrap" >
         <div class="card-header border-0">
-            <img src= {{
+            <img src="{{
                 isset($article['thumbnail']) ?
-                $article['thumbnail']
+                asset('storage/thumbnails/'.$article['thumbnail'])
                 :
                 $articleImgPHolder
-            }}>
+            }}" onerror="this.src='{{ $articleImgPHolder }}'">
         </div>
 
         <a href="/article/{{ $article['id'] }}">

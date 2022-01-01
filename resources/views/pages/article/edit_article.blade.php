@@ -13,7 +13,7 @@
 
             <div class="articleInfoContainer d-flex flex-column mb-0 p-3 pe-5 h-100">
 
-                <form name="article-form" method="POST" action="{{ route('editArticle', ['id' => $article['content_id']]) }}" class="flex-row h-100">
+                <form name="article-form" method="POST" action="{{ route('editArticle', ['id' => $article['content_id']]) }}" class="flex-row h-100" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     
@@ -54,12 +54,10 @@
                         @endif
                     </div>
 
-                    {{--
                     <div class="flex-row">
                         <label for="thumbnail">Article's Thumbnail</label>
                         <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
                     </div>
-                    --}}
 
                     <div class="flex-row h-100">
                         <label for="body">{{ "Edit Article's Body" }}</label>

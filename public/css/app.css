@@ -239,6 +239,7 @@ body {
 
 .author-container #authorAvatar {
     border-radius: 50%;
+    aspect-ratio: 1
 }
 
 #comments-section .commentHeader {

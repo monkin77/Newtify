@@ -4,13 +4,11 @@
         <h2 class="py-0 my-0 h-25">Author</h2>
 
         <div class="d-flex flex-row pt-3 h-50">
-            <div class="w-25 me-3">
-                <img id="authorAvatar" class="h-100" src={{
-                    isset($author['thumbnail']) ?
-                    $author['thumbnail']
-                    :
-                    $userImgPHolder
-                }}>
+            <div class="w-25 me-3 text-center">
+                <img id="authorAvatar" class="h-100" src="{{
+                    isset($author['avatar']) ?
+                    asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
+                }}" onerror="this.src='{{ $userImgPHolder }}'" />
             </div>
             <div class="w-75 pb-0" id="author-header">
                 <a href="{{ route('userProfile', ['id' => $author['id']]) }}" ]>
