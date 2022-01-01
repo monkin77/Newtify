@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
-<script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
+@php
+echo $errors;
+@endphp
 
+<script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
 
 @section('content')
     <section id="editProfileContainer">
-        <form name="profileForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
-            class="container-fluid py-3 w-75">
+        <form name="profileForm" method="POST" enctype="multipart/form-data"
+            action="{{ route('editProfile', ['id' => $user['id']]) }}" class="container-fluid py-3 w-75">
             @method('put')
             @csrf
 
@@ -33,10 +36,10 @@
                     <div class="pe-5 me-5">
                         <label class="h1 pb-3 my-0" for="countryInput">Country</label>
                         <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
-                            <select required name='countryId' value="{{ $user['country']['name'] }}" id="countryInput"
+                            <select required name='country' value="{{ $user['country']['name'] }}" id="countryInput"
                                 size=1 class="my-0">
                                 @foreach ($countries as $country)
-                                    <option value={{ $country['id'] }} <?php if ($user['country']['id'] == $country['id']) {
+                                    <option value={{ $country['name'] }} <?php if ($user['country']['id'] == $country['id']) {
     echo 'selected';
 } ?>>{{ $country['name'] }}
                                     </option>

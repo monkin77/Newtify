@@ -136,9 +136,10 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:authenticated_user',
-            'password' => 'required|string|password',
+            // 'password' => 'required|string|password',
+            /*  NEED TO SEND PASSWORD TO UPDATE USER */
             'new_password' => 'nullable|string|min:6|confirmed',
-            'birthDate' => 'nullable|string|date_format:d-m-Y|before:' . date('d-m-Y'), // before today
+            'birthDate' => 'required|string|date_format:Y-m-d|before:' . date('Y-m-d'), // before today
             'country' => 'nullable|string|exists:country,name',
             'avatar' => 'nullable|file|max:5000', // max 5MB
             // TODO: File upload
@@ -158,9 +159,12 @@ class UserController extends Controller
         if (isset($request->country)) $user->country_id = Country::getIdByName($request->country);
         if (isset($request->description)) $user->description = $request->description;
         if (isset($request->city)) $user->city = $request->city;
+        if (isset($request->avatar)) {
+            echo $request->avatar;
+        }
 
-        $user->save();
-        return redirect("/user/${id}");
+        // $user->save();
+        // return redirect("/user/${id}");
     }
 
     /**
