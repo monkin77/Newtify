@@ -726,51 +726,6 @@ paths:
         "404":
           description: "Article not found"
 
-    put:
-      operationId: R308
-      summary: "R308 : Edit article action"
-      description: "Processes the user edit profile form submission. Access: OWN"
-      tags:
-        - "M03: Articles"
-
-      parameters:
-        - in: path
-          name: id
-          schema:
-            type: integer
-          required: true
-
-      requestBody:
-        required: true
-        content:
-          # since we want to upload binary files (thumbnail)
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                thumbnail:
-                  type: string
-                  format: binary
-                body:
-                  type: string
-
-      responses:
-        "302":
-          description: "Redirect after processing the article updated information"
-          headers:
-            Location:
-              schema:
-                type: string
-              examples:
-                302Success:
-                  description: "Successful article edition. Redirect to the article page."
-                  value: "/article/{id}"
-                302Failure:
-                  description: "Failed article edition. Redirect to the edit article page."
-                  value: "/article/{id}/edit"
-
     delete:
       operationId: R309
       summary: "R309 : Delete article action"
@@ -824,6 +779,51 @@ paths:
           description: "Unauthorized. Must be the owner of the article"
         "404":
           description: "Article not found"
+
+    put:
+      operationId: R308
+      summary: "R308 : Edit article action"
+      description: "Processes the user edit profile form submission. Access: OWN"
+      tags:
+        - "M03: Articles"
+
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          # since we want to upload binary files (thumbnail)
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                thumbnail:
+                  type: string
+                  format: binary
+                body:
+                  type: string
+
+      responses:
+        "302":
+          description: "Redirect after processing the article updated information"
+          headers:
+            Location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Successful article edition. Redirect to the article page."
+                  value: "/article/{id}"
+                302Failure:
+                  description: "Failed article edition. Redirect to the edit article page."
+                  value: "/article/{id}/edit"
 
   # M04 : Comments
   /comment:

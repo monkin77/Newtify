@@ -34,9 +34,7 @@ $tagline = 'Que rego amiguinho'
 
 
 @section('articles')
-    <section id="articles" class="container">
-        @include('partials.content.articles', ['articles' => $articles])
-    </section>
+    @include('partials.content.articles', ['articles' => $articles])
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}

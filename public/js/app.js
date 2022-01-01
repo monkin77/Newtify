@@ -177,8 +177,6 @@ function createItem(item) {
   return new_item;
 }
 
-const $ = (selector) => document.querySelector(selector);
-
 const loadMore = (type, value) => {
     let url;
 
@@ -223,3 +221,4 @@ const toggleElem = (elem) => {
 }
 
 addEventListeners();
+

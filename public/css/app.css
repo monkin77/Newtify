@@ -16,7 +16,17 @@ body {
     font-size: large; /* fontSize impacts the icon size */
 }
 
-/* Partial Article, just putting here for now then we change */
+/* Partial Article */
+
+#articles h1,
+#articles h2,
+#articles h3,
+#articles h4 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 #articles .card {
     margin-bottom: 15px;
     border-radius: 1rem;
@@ -33,8 +43,16 @@ body {
     text-decoration: none;
 }
 
-#articles .card:hover {
+#articles .card a:hover {
     background-color: lightgray;
+}
+
+#articles .card-header {
+    width: 20%;
+}
+
+#articles .card-header img {
+    width: 100%;
 }
 
 #load-more {
@@ -42,6 +60,7 @@ body {
 }
 
 /* Full Article Page */
+/*
 .article-container h1,
 .article-container h2,
 .article-container h3,
@@ -49,7 +68,7 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
+}*/
 
 #author-container {
     background-color: #dbd7d2;
@@ -82,38 +101,25 @@ body {
 }
 
 /* Forms Errors */
+
 .error-container {
     height: 10%;
 }
 
 /* Article Form */
-#article-form {
+
+.article-form {
     position: relative;
     min-height: 70vh;
 }
 
-.bootstrap-tagsinput {
-    white-space: nowrap;
-    font-size: large;
-    background-color: transparent;
+
+/* Select2 Tags */
+
+.select2-selection--multiple {
+    background-color: transparent !important;
 }
 
-.bootstrap-tagsinput .tag {
-    background: #99badd;
-    border: 1px solid #0892d0;
-    padding: 0 6px;
-    margin-right: 2px;
-    border-radius: 4px;
-}
-
-.bootstrap-tagsinput input {
-    border: none;
-    box-shadow: none;
-    outline: none;
-    width: auto;
-    max-width: inherit;
-    color: black;
-}
 
 /* User Profile */
 

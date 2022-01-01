@@ -41,7 +41,17 @@ class ArticleController extends Controller
             'topAreasExpertise' => $user->topAreasExpertise(),
         ];
 
-        return view('pages.article.create_article', ['author' => $authorInfo]);
+        $tags = Tag::where('state', "ACCEPTED")->get()->map(function($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+            ];
+        })->sortBy('name');
+
+        return view('pages.article.create_article', [
+            'author' => $authorInfo,
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -61,30 +71,19 @@ class ArticleController extends Controller
                 'body' => 'required|string|min:10',
                 'title' => 'required|string|min:3|max:100',
                 'thumbnail' => 'nullable|file|max:5000',
-            ]
-        );
-        if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator);//['tags' => 'You must have between 1 and 3 tags']);
-        }
-
-
-        $validator = Validator::make($request -> all(),
-            [
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|string|min:1',
             ]
         );
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors([
-                'tags' => 'Article must have between 1 and 3 tags'
-            ]);
+        if ( $validator->fails() ) {
+            // go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($validator->errors());//['tags' => 'You must have between 1 and 3 tags']);
         }
 
         $tagsIds = [];
 
         foreach($request->tags as $tag) {
-            $checkTag = Tag::where('name', $tag)->first();
+            $checkTag = Tag::find($tag);
 
             //check if is valid tag
             if (!$checkTag || $checkTag->state != 'ACCEPTED') {
@@ -123,6 +122,7 @@ class ArticleController extends Controller
             return abort(404, 'Article not found, id: '.$id);
 
         $articleInfo = [
+            'id' => $article->content_id,
             'title' => $article->title,
             'thumbnail' => $article->thumbnail,
             'body' => $article->body,
@@ -156,6 +156,7 @@ class ArticleController extends Controller
             $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) ) ;  
 
             return [
+                'id' => $comment->content_id,
                 'body' => $comment->body,
                 'likes' => $comment->likes,
                 'dislikes' => $comment->dislikes,
@@ -183,6 +184,8 @@ class ArticleController extends Controller
         ]);
     }
 
+    
+
     /**
      * Show the form for editing an Article.
      *
@@ -204,16 +207,39 @@ class ArticleController extends Controller
             'body' => $article->body,
         ];
 
-        $tagsInfo = $article->articleTags()->get()->map(function($tag){
+        $articleTags = $article->articleTags->map(function($tag) {
             return [
                 'id' => $tag->id,
                 'name' => $tag->name,
             ];
         })->sortBy('name');
 
+        $tags = Tag::where('state', "ACCEPTED")->get()->map(function($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+            ];
+        })->sortBy('name');
+        
+        $author = $article->author;
+        $authorInfo = [
+            'id' => $author->id,
+            'name' => $author->name,
+            'avatar' => $author->avatar,
+            'country' => $author->country,
+            'city' => $author->city,
+            'isAdmin' => $author->is_admin,
+            'description' => $author->description,
+            'isSuspended' => $author->is_suspended,
+            'reputation' => $author->reputation,
+            'topAreasExpertise' => $author->topAreasExpertise(),
+        ];
+
         return view('pages.article.edit_article', [
             'article' => $articleInfo,
-            'tags' => $tagsInfo,
+            'tags' => $tags,
+            'articleTags' => $articleTags,
+            'author' => $authorInfo,
         ]);
     }
 
@@ -226,6 +252,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, int $id) : RedirectResponse
     {
+
         $article = Article::find($id);
         if (is_null($article)) 
             return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
@@ -241,8 +268,8 @@ class ArticleController extends Controller
             'body' => 'nullable|string|min:10',
             'title' => 'nullable|string|min:1|max:255',
             'thumbnail' => 'nullable|file|max:5000',
-            'tags' => 'nullable|array|min:1|max:3',
-            'tags.*' => 'nullable|integer|min:0',
+            'tags' => 'required|array|min:1|max:3',
+            'tags.*' => 'required|string|min:1',
         ]);
 
         if ( $validator->fails() ) {
@@ -254,19 +281,23 @@ class ArticleController extends Controller
         if (isset($request->title)) $article->title = $request->title;
         if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
 
-        if (isset($request->tags)) {
-            // Check if tags are valid
-            foreach($request->tags as $tag) {
-                $checkTag = Tag::find($tag);
-                if (!$checkTag) {
-                    return redirect()->back()->withInput()->withErrors(['tags' => 'Tag not found: '.$tag->name]); 
-                }
+        $tagsIds = [];
+
+        foreach($request->tags as $tag) {
+            $checkTag = Tag::find($tag);
+
+            //check if is valid tag
+            if (!$checkTag || $checkTag->state != 'ACCEPTED') {
+                return redirect()->back()->withInput()->withErrors(['tags' => 'Invalid Tag: '.$tag]); 
             }
-            $article->articleTags()->sync($request->tags);
+            array_push($tagsIds, $checkTag->id);
         }
 
         $content->save();
+
         $article->save();
+
+        $article->articleTags()->sync($tagsIds);
 
         return redirect("/article/${id}");
     }

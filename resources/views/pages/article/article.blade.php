@@ -15,10 +15,12 @@
                             {{ $article['title'] }}
                         </h1>
 
-                        <h2 class="flex-column mx-3">
+                        <h2 class="flex-column w-25 mx-3">
                             @if ($is_author)
-                                <i class="iconify" data-icon="bi:pencil-fill"></i>
-                                <i class="iconify" data-icon="bi:trash-fill"></i>
+                                <a href="/article/{{$article['id']}}/edit">
+                                    <i class="fas fa-edit me-4"></i>
+                                </a>
+                                <i class="fas fa-trash"></i>
                             @endif
                         <h2>
                     </div>
@@ -36,10 +38,10 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    <i class="fa fa-thumbs-up ps-5"> {{ $article['likes'] }}</i>
-                    <i class="fa fa-thumbs-down ps-3"> {{ $article['dislikes'] }}</i>
+                    <i class="fas fa-thumbs-up ps-5"> {{ $article['likes'] }}</i>
+                    <i class="fas fa-thumbs-down ps-3"> {{ $article['dislikes'] }}</i>
                     
-                    <i class="iconify ms-5" data-icon="bi:share-fill"></i>
+                    <i class="fas fa-share-alt ms-4"></i>
                 </p>
 
                 <div class="flex-row h-50 mb-5">
@@ -72,14 +74,13 @@
                 @if (Auth::check())
                 <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
                     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-                        <img src= {{
+                        <img src={{
                             isset(Auth::user()->avatar) ?
                             Auth::user()->avatar
                             :
                             $userImgPHolder
-                        }}
-                        >
-                        You
+                        }}>
+                        <p>You</p>
                     </div>
 
                     <div class="flex-column m-0 p-0 w-100">
