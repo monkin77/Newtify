@@ -67,7 +67,10 @@
             </div>
 
             <div class="author-container flex-col ms-5 p-3 text-dark">
-                @include('partials.authorInfo', ['author' => $author])
+                @include('partials.authorInfo', [
+                    'author' => $author,
+                    'isOwner' => true,
+                    ])
             </div>
 
         </div>

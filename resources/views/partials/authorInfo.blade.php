@@ -24,7 +24,11 @@
         </div>
 
         <div class="d-flex h-25 justify-content-center align-items-center">
-            @include('partials.user.reputationBar', ['user' => $author])
+            @include('partials.user.reputationBar', [
+                'user' => $author,
+                'guest' => !Auth::check(),
+                'isOwner' => $isOwner,
+            ])
         </div>
     </div>
 
