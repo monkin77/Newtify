@@ -17,7 +17,7 @@ function proposeTagHandler() {
         return;
     }
 
-    const previousError = $('#proposeTag .error');
+    const previousError = select('#proposeTag .error');
 
     if (this.status == 400) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
@@ -25,7 +25,7 @@ function proposeTagHandler() {
         if (previousError)
             previousError.replaceWith(error);
         else
-            $('#proposeTag').appendChild(error);
+            select('#proposeTag').appendChild(error);
 
         return;
     }
@@ -36,5 +36,5 @@ function proposeTagHandler() {
     confirmation.classList.add('mb-0');
     confirmation.innerHTML = 'Thank you for your contribution!';
 
-    $('#proposeTagForm').replaceWith(confirmation);
+    select('#proposeTagForm').replaceWith(confirmation);
 }

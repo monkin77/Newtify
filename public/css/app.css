@@ -59,7 +59,7 @@ body {
 
 .dropdown-custom-item {
     font-size: small;
-    height: 3em;
+    line-height: 3em;
 }
 
 .dropdown-custom-item:hover {

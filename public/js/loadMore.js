@@ -1,8 +1,8 @@
 loadMoreHandler = (containerId) => function () {
-    const container = $(`#${containerId}`);
+    const container = select(`#${containerId}`);
     const json = JSON.parse(this.responseText);
 
-    const previousError = $(`#${containerId} .error`);
+    const previousError = select(`#${containerId} .error`);
 
     if (this.status == 400) {
         const error = createErrorMessage(json.errors);
@@ -22,19 +22,19 @@ loadMoreHandler = (containerId) => function () {
     const canLoadMore = json.canLoadMore;
   
     container.insertAdjacentHTML('beforeend', html);
-    if (!canLoadMore) $('#load-more').style.display = "none";
+    if (!canLoadMore) select('#load-more').style.display = "none";
   };
 
 const loadMoreSearch = (type, value) => {
-    const numResults = $(`#${type}`).childElementCount;
+    const numResults = select(`#${type}`).childElementCount;
     const url = `/api/search/${type}?value=${value}&offset=${numResults}&limit=10`;
     sendAjaxRequest('get', url, null, loadMoreHandler(type));
 };
 
 const loadMoreHome = () => {
     // TODO: Pass filter parameters when filter is implemented in interface
-    const numArticles = $('#articles').childElementCount;
-    const type = $('input[name="filterType"]:checked').id;
+    const numArticles = select('#articles').childElementCount;
+    const type = select('input[name="filterType"]:checked').id;
 
     const url = `/api/article/filter?type=${type}&offset=${numArticles}&limit=5`;
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
