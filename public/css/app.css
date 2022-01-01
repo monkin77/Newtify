@@ -159,13 +159,11 @@ body {
     min-height: 70vh;
 }
 
-
 /* Select2 Tags */
 
 .select2-selection--multiple {
     background-color: transparent !important;
 }
-
 
 /* User Profile */
 
@@ -352,7 +350,7 @@ body {
     background-color: inherit;
 }
 
-#editProfileContainer #countryCaret {
+#editProfileContainer .caretDown {
     right: 0.2em;
     pointer-events: none;
 }

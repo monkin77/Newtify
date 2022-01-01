@@ -45,7 +45,7 @@ echo $errors;
                                     </option>
                                 @endforeach
                             </select>
-                            <i class="fa fa-caret-down fa-1x position-absolute" id='countryCaret'></i>
+                            <i class="fa fa-caret-down fa-1x position-absolute caretDown"></i>
                         </div>
                     </div>
                     <div class="ms-5">
@@ -67,10 +67,14 @@ echo $errors;
         </form>
 
         <div class="container-fluid py-3 w-75 mt-5 pt-5 border-top border-dark">
-            <a class="h1" href="#advancedContainer" data-bs-toggle="collapse" role="button"
-                aria-expanded="false" aria-contols="advancedContainer">Advanced
-                Settings</a>
-            <div {{-- class="collapse" --}} id="advancedContainer">
+            <div class="d-flex position-relative">
+                <a class="h1 w-100" href="#advancedContainer" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-contols="advancedContainer">Advanced
+                    Settings</a>
+                <i class="fa fa-caret-down fa-1x position-absolute pe-none caretDown"></i>
+
+            </div>
+            <div class="collapse" id="advancedContainer">
                 <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
                     class="mt-3">
                     @method('put')
@@ -82,12 +86,12 @@ echo $errors;
                             <input type="password" required class="w-auto h2 editInputs" id="currPassInput" name='password'
                                 placeholder="Current Password" />
                         </div>
-                        <div class="ms-5 me-5">
+                        <div class="me-5">
                             <div class="form-text">New Password</div>
                             <input type="password" required class="w-auto h2 editInputs" id="newPassInput"
                                 name='new_password' placeholder="New Password" onkeyup="checkPass()" />
                         </div>
-                        <div class="ms-5 me-5">
+                        <div class="me-5">
                             <div class="form-text">Confirm Password</div>
                             <input type="password" required name="new_password_confirmation" class="w-auto h2 editInputs"
                                 id="newPassConfirmInput" placeholder="Confirm Password" onkeyup="checkPass()">
@@ -107,7 +111,7 @@ echo $errors;
                             <input type="password" autocomplete="new-password" required class="w-auto h2 editInputs"
                                 id="emailPassInput" name='password' placeholder="Current Password" />
                         </div>
-                        <div class="ms-5 me-5">
+                        <div class="me-5">
                             <div class="form-text">New Email</div>
                             <input type="email" required class="w-auto h2 editInputs" id="emailInput" name='email'
                                 placeholder="New Email" />
