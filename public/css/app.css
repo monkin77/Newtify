@@ -356,3 +356,9 @@ body {
     right: 0.2em;
     pointer-events: none;
 }
+
+#editProfileContainer #countryInputContainer {
+    border: 2px black solid;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}

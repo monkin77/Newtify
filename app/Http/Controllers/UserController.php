@@ -107,11 +107,14 @@ class UserController extends Controller
 
         $followerCount = count($user->followers);
 
+        $countries = Country::get();
+
         return view('pages.user.editProfile', [
             'user' => $userInfo,
             'topAreasExpertise' => $areasExpertise,
             'followerCount' => $followerCount,
             'birthDate' => date('Y-m-d', strtotime($userInfo['birthDate'])),
+            'countries' => $countries,
         ]);
     }
 

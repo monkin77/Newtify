@@ -31,11 +31,12 @@
                 <div class="d-flex">
                     <div class="pe-5 me-5">
                         <label class="h1 pb-3 my-0" for="countryInput">Country</label>
-                        <div class="d-flex position-relative align-items-center">
+                        <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
                             <select required name='countrySelector' value="{{ $user['country']['name'] }}"
                                 id="countryInput" size=1 class="my-0">
-                                <option value="Afganistan">Afghanistan</option>
-                                <option value="Albania">Albania</option>
+                                @foreach ($countries as $country)
+                                    <option value={{ $country['id'] }}>{{ $country['name'] }}</option>
+                                @endforeach
                             </select>
                             <i class="fa fa-caret-down fa-1x position-absolute" id='countryCaret'></i>
                         </div>
