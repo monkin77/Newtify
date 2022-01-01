@@ -70,3 +70,14 @@ if (imgInput) {
         }
     }
 }
+
+const checkPass = () => {
+    const matchingMsg = select('#matchingPass');
+    if (select('#newPassInput').value == select('#newPassConfirmInput').value) {
+        matchingMsg.style.color = 'green';
+        matchingMsg.innerHTML = 'matching';
+    } else {
+        matchingMsg.style.color = 'red';
+        matchingMsg.innerHTML = 'not matching'
+    }
+}

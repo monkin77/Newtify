@@ -64,6 +64,35 @@ echo $errors;
             <div class="row w-100 mt-5 d-flex justify-content-center">
                 <button type="submit" class="w-auto text-center px-5">Edit Profile</button>
             </div>
+
+            <div class="row w-100 mt-5 pt-5 border-top border-dark">
+                <a class="h1" href="#advancedContainer" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-contols="advancedContainer">Advanced
+                    Settings</a>
+                <div {{-- class="collapse" --}} id="advancedContainer">
+                    <div class="mt-3">
+                        <label for="currPassInput" class="form-label mb-3">Change Password</label>
+                        <div class="d-flex">
+                            <div class="me-5">
+                                <div class="form-text">Current Password</div>
+                                <input type="password" required class="w-auto h2 editInputs" id="currPassInput"
+                                    name='password' placeholder="Current Password" />
+                            </div>
+                            <div class="ms-5 me-5">
+                                <div class="form-text">New Password</div>
+                                <input type="password" required class="w-auto h2 editInputs" id="newPassInput"
+                                    name='new_password' placeholder="New Password" onkeyup="checkPass()" />
+                            </div>
+                            <div class="ms-5 me-5">
+                                <div class="form-text">Confirm Password</div>
+                                <input type="password" required name="new_password_confirmation"
+                                    class="w-auto h2 editInputs" id="newPassConfirmInput" placeholder="Confirm Password"
+                                    onkeyup="checkPass()">
+                                <span class="ms-2" id="matchingPass"></span>
+                            </div>
+
+                        </div>
+                    </div>
         </form>
     </section>
 @endsection
