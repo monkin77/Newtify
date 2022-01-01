@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@php
-echo $errors;
-@endphp
-
 <script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
 
 @section('content')
@@ -19,17 +15,32 @@ echo $errors;
                     <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarPreview"
                         onerror="this.src='{{ $userImgPHolder }}'" />
                     <input type="file" accept="image/*" id="imgInput" name='avatar' />
+                    @if ($errors->has('avatar'))
+                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <p class="">{{ $errors->first('avatar') }}</p>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="nameInput">Username</label>
                 <input type="text" required value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs"
                     id="nameInput" name='name' />
+                @if ($errors->has('name'))
+                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <p class="">{{ $errors->first('name') }}</p>
+                    </div>
+                @endif
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="birthDateInput">Birth Date</label>
                 <input type="date" required value="{{ $birthDate }}" class="text-center w-auto h2 editInputs py-4"
                     id="birthDateInput" name='birthDate' />
+                @if ($errors->has('birthDate'))
+                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <p class="">{{ $errors->first('birthDate') }}</p>
+                    </div>
+                @endif
             </div>
             <div class="row w-100 mt-5">
                 <div class="d-flex">
@@ -37,7 +48,7 @@ echo $errors;
                         <label class="h1 pb-3 my-0" for="countryInput">Country</label>
                         <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
                             <select required name='country' value="{{ $user['country']['name'] }}" id="countryInput"
-                                size=1 class="my-0">
+                                size=1>
                                 @foreach ($countries as $country)
                                     <option value={{ $country['name'] }} <?php if ($user['country']['id'] == $country['id']) {
     echo 'selected';
@@ -52,13 +63,29 @@ echo $errors;
                         <label class="h1 pb-3 my-0" for="cityInput">City</label>
                         <input type="text" value="{{ $user['city'] }}" class="text-center w-auto h2 editInputs"
                             id="cityInput" name='city' />
+
                     </div>
                 </div>
+                @if ($errors->has('country'))
+                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <p class="">{{ $errors->first('country') }}</p>
+                    </div>
+                @endif
+                @if ($errors->has('city'))
+                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <p class="">{{ $errors->first('city') }}</p>
+                    </div>
+                @endif
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="descriptionInput">Description</label>
                 <textarea id="descriptionInput" name="description" rows="10"
                     class="h-100 editInputs py-2">{{ $user['description'] }}</textarea>
+                @if ($errors->has('description'))
+                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <p class="">{{ $errors->first('description') }}</p>
+                    </div>
+                @endif
             </div>
 
             <div class="row w-100 mt-5 d-flex justify-content-center">
@@ -99,6 +126,16 @@ echo $errors;
                         </div>
                         <button type="submit">Change</button>
                     </div>
+                    @if ($errors->has('password'))
+                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <p class="">{{ $errors->first('password') }}</p>
+                        </div>
+                    @endif
+                    @if ($errors->has('new_password'))
+                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <p class="">{{ $errors->first('new_password') }}</p>
+                        </div>
+                    @endif
                 </form>
                 <form name="emailForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
                     class="mt-3" autocomplete="off">
@@ -118,6 +155,16 @@ echo $errors;
                         </div>
                         <button type="submit">Change</button>
                     </div>
+                    @if ($errors->has('password'))
+                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <p class="">{{ $errors->first('password') }}</p>
+                        </div>
+                    @endif
+                    @if ($errors->has('email'))
+                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <p class="">{{ $errors->first('email') }}</p>
+                        </div>
+                    @endif
                 </form>
             </div>
         </div>
