@@ -20,7 +20,16 @@
                                 <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit me-4"></i>
                                 </a>
-                                <a onclick="deleteArticle(event, $artilce['id'])">
+                                <form 
+                                    name="deleteArticleForm" id="deleteArticleForm" 
+                                    method="POST"
+                                    action="{{ route('article', ['id' => $article['id']]) }}">
+
+                                    @csrf
+                                    @method('DELETE');
+
+                                </form>
+                                <a onclick="document.deleteArticleForm.submit()" href="#">
                                     <i class="fas fa-trash" ></i>
                                 </a>
 

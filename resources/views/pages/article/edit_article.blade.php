@@ -14,8 +14,8 @@
             <div class="articleInfoContainer d-flex flex-column mb-0 p-3 pe-5 h-100">
 
                 <form name="article-form" method="POST" action="{{ route('editArticle', ['id' => $article['content_id']]) }}" class="flex-row h-100">
-                    @method('put')
                     @csrf
+                    @method('PUT')
                     
                     <div class="flex-row">
                         <label for="title">{{ "Edit article's Title" }}</label>
