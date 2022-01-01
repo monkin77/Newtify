@@ -258,7 +258,43 @@ class AdminController extends Controller
     {
         $this->authorize('tags', Admin::class);
 
-        $tags = Tag::listTagsByState('PENDING')->map(function ($tag) {
+        $tags_pending = Tag::listTagsByState('PENDING')->map(function ($tag) {
+            if (isset($tag->user))
+                $userInfo = [
+                    'id' => $tag->user_id,
+                    'name' => $tag->user->name,
+                    'avatar' => $tag->user->avatar
+                ];
+            else $userInfo = null;
+
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'proposed_at' => $tag->proposed_at,
+                'state' => $tag->state,
+                'user' => $userInfo
+            ];
+        });
+
+        $tags_accepted = Tag::listTagsByState('ACCEPTED')->map(function ($tag) {
+            if (isset($tag->user))
+                $userInfo = [
+                    'id' => $tag->user_id,
+                    'name' => $tag->user->name,
+                    'avatar' => $tag->user->avatar
+                ];
+            else $userInfo = null;
+
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'proposed_at' => $tag->proposed_at,
+                'state' => $tag->state,
+                'user' => $userInfo
+            ];
+        });
+
+        $tags_rejected = Tag::listTagsByState('REJECTED')->map(function ($tag) {
             if (isset($tag->user))
                 $userInfo = [
                     'id' => $tag->user_id,
@@ -277,7 +313,9 @@ class AdminController extends Controller
         });
 
         return view('pages.tags', [
-            'tags' => $tags,
+            'tags_pending' => $tags_pending,
+            'tags_accepted' => $tags_accepted,
+            'tags_rejected' => $tags_rejected,
         ]);
     }
 

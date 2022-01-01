@@ -496,3 +496,14 @@ body {
     height: 4em;
     border-radius: 3em;
 }
+
+/* Tags Managment */
+
+.statusContainer {
+    max-height: 90vh;
+    overflow-y: scroll;
+}
+
+.tagContainer {
+    border-top: 1px solid black;
+}
