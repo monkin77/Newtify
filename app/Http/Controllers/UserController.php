@@ -136,7 +136,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:authenticated_user',
-            'password' => 'required|string|password',
+            'password' => 'required_with:new_password|string|password',
             'new_password' => 'nullable|string|min:6|confirmed',
             'birthDate' => 'nullable|string|date_format:Y-m-d|before:' . date('Y-m-d'), // before today
             'country' => 'nullable|string|exists:country,name',
@@ -153,7 +153,7 @@ class UserController extends Controller
 
         if (isset($request->name)) $user->name = $request->name;
         if (isset($request->email)) $user->email = $request->email;
-        if (isset($request->new_password)) $user->password = $request->new_password;
+        if (isset($request->new_password)) $user->password = bcrypt($request->new_password);
         if (isset($request->birthDate)) $user->birth_date = $request->birthDate;
         if (isset($request->country)) $user->country_id = Country::getIdByName($request->country);
         if (isset($request->description)) $user->description = $request->description;
