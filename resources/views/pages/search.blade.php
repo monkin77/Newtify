@@ -42,7 +42,7 @@
 
 @section('results')
 
-@if ($type === 'article')
+@if ($type === 'articles')
 
     <section id="articles" class="container">
         @include('partials.content.articles', ['articles' => $results])
@@ -63,7 +63,7 @@
 @section('load-more')
 <div id="load-more">
 
-    <button onclick="loadMore('{{ $type }}', '{{ $query }}')">Load more</button>
+    <button onclick="loadMoreSearch('{{ $type }}', '{{ $query }}')">Load more</button>
 
 </div>
 @endsection

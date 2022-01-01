@@ -18,10 +18,11 @@ class HomeController extends Controller
     public function show()
     {
         $type = Auth::check() ? 'recommended' : 'trending';
-        $articles = $this->filterByType($type, 0, 5);
+        $results = $this->filterByType($type, 0, 5);
 
         return view('pages.home', [
-            'articles' => $articles,
+            'articles' => $results['articles'],
+            'canLoadMore' => $results['canLoadMore'],
         ]);
     }
 
@@ -87,13 +88,17 @@ class HomeController extends Controller
                 return $timestamp <= $maxTimestamp;
             });
 
-        $articles = $this->filterByType($request->type, $request->offset, $request->limit, $articles);
-        return view('partials.content.articles', [
-            'articles' => $articles
-        ]);
+        $results = $this->filterByType($request->type, $request->offset, $request->limit, $articles);
+        return response()->json([
+            'html' => view('partials.content.articles', [
+                'articles' => $results['articles'],
+                'canLoadMore' => $results['canLoadMore'],
+            ])->render(),
+            'canLoadMore' => $results['canLoadMore']
+        ], 200);
     }
 
-    private function filterByType(string $type, $offset = 0, $limit = null, $articles = null)
+    private function filterByType($type = 'trending', $offset = 0, $limit = null, $articles = null)
     {
         if (is_null($articles))
             $articles = Article::all();
@@ -109,7 +114,9 @@ class HomeController extends Controller
 
         else $sortedArticles = $articles;
 
-        return $sortedArticles->slice($offset, $limit)
+        $sortedArticles = $sortedArticles->skip($offset);
+        $canLoadMore = $sortedArticles->count() > $limit;
+        $results = $sortedArticles->take($limit)
             ->map(function ($article) {
                 return [
                     'id' => $article->id,
@@ -121,5 +128,10 @@ class HomeController extends Controller
                     'dislikes' => $article->dislikes,
                 ];
             });
+
+        return [
+            'articles' => $results,
+            'canLoadMore' => $canLoadMore,
+        ];
     }
 }

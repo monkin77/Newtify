@@ -249,25 +249,26 @@ class TagController extends Controller
         $this->authorize('propose', Tag::class);
 
         $validator = Validator::make($request->all(), [
-            'tag_name' => 'required|string|min:2|unique:tag,name'
+            'tagName' => 'required|string|min:2|unique:tag,name'
         ]);
 
         if ($validator->fails()) {
             return Response()->json([
                 'status' => 'Bad Request',
                 'msg' => 'Failed to propose a new tag. Bad Request',
+                'errors' => $validator->errors(),
             ], 400);
         }
 
         $tag = new Tag;
-        $tag->name = $request->tag_name;
+        $tag->name = $request->tagName;
         $tag->user_id = Auth::id();
         $tag->save();
 
         return Response()->json([
             'status' => 'OK',
             'msg' => 'Successfuly proposed tag',
-            'tag_name' => $request->tag_name,
+            'tagName' => $request->tagName,
         ], 200);
     }
 }
