@@ -17,7 +17,7 @@
 
                         <h2 class="flex-column w-25 mx-3">
                             @if ($is_author)
-                                <a href="/article/{{$article['id']}}/edit">
+                                <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit me-4"></i>
                                 </a>
                                 <i class="fas fa-trash"></i>

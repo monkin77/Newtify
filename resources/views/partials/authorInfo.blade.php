@@ -13,7 +13,9 @@
                 }}>
             </div>
             <div class="w-75 pb-0" id="author-header">
-                <h4 class="mb-2"> {{ $author['name'] }} </h4>
+                <a href="{{ route('userProfile', ['id' => $author['id']]) }}" ]>
+                    <h4 class="mb-2"> {{ $author['name'] }} </h4>
+                </a>
                 <p> @if (isset($author['city']))
                         {{ $author['city'] }}, {{ $author['country']->name }}
                     @else
