@@ -29,7 +29,7 @@
                                     @method('DELETE');
 
                                 </form>
-                                <a onclick="document.deleteArticleForm.submit()" href="#">
+                                <a onclick="document.deleteArticleForm.submit()" href="">
                                     <i class="fas fa-trash" ></i>
                                 </a>
 
