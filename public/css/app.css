@@ -103,10 +103,9 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}*/
-
-.article-container #article-header i {
-    width: 0.8em; 
+}
+*/ .article-container #article-header i {
+    width: 0.8em;
     height: 0.7em;
 }
 
@@ -144,7 +143,6 @@ body {
 #deleteArticleForm {
     display: none;
 }
-
 
 /* Forms Errors */
 
@@ -356,6 +354,6 @@ body {
 
 #editProfileContainer #countryInputContainer {
     border: 2px black solid;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
 }

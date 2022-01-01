@@ -48,7 +48,7 @@
                         <label class="h1 pb-3 my-0" for="countryInput">Country</label>
                         <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
                             <select required name='country' value="{{ $user['country']['name'] }}" id="countryInput"
-                                size=1>
+                                size=1 class="my-0">
                                 @foreach ($countries as $country)
                                     <option value={{ $country['name'] }} <?php if ($user['country']['id'] == $country['id']) {
     echo 'selected';
