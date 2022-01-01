@@ -4,6 +4,16 @@ body {
 
 /* Navbar */
 
+#logo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.6em;
+    color: #9b4dca;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #searchForm {
     border-radius: 2em 1em 1em 2em;
     position: relative;

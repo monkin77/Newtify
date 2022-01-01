@@ -6,8 +6,11 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse align-items-center row" id="navbarSupportedContent">
-                <a class="navbar-brand h1 col" href="{{ url('/') }}">Newtify</a>
+            <div class="collapse navbar-collapse row" id="navbarSupportedContent">
+
+                <div id="logo" class="col">
+                    <a id="logo" class="navbar-brand" href="{{ url('/') }}">Newtify</a>
+                </div>
 
                 <form id="searchForm" class="d-flex flex-row align-items-center border col-5" action="{{ route('search') }}">
                     <i class="fas fa-search ms-4 submit" type="submit"></i>
