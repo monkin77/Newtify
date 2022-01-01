@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+$isOpen = $errors->has('password');
+@endphp
+
 <script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
 
 @section('content')
@@ -101,11 +105,20 @@
                 <i class="fa fa-caret-down fa-1x position-absolute pe-none caretDown"></i>
 
             </div>
-            <div class="collapse" id="advancedContainer">
+            <div <?php if ($isOpen) {
+    echo 'class="colapse show"';
+} else {
+    echo 'class="collapse"';
+} ?> id="advancedContainer">
                 <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
                     class="mt-3">
                     @method('put')
                     @csrf
+                    @if ($errors->has('password'))
+                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <p class="">Invalid Password</p>
+                        </div>
+                    @endif
                     <label for="currPassInput" class="form-label mt-4">Change Password</label>
                     <div class="d-flex align-items-end">
                         <div class="me-5">
@@ -126,11 +139,6 @@
                         </div>
                         <button type="submit">Change</button>
                     </div>
-                    @if ($errors->has('password'))
-                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
-                            <p class="">{{ $errors->first('password') }}</p>
-                        </div>
-                    @endif
                     @if ($errors->has('new_password'))
                         <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
                             <p class="">{{ $errors->first('new_password') }}</p>
@@ -155,11 +163,6 @@
                         </div>
                         <button type="submit">Change</button>
                     </div>
-                    @if ($errors->has('password'))
-                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
-                            <p class="">{{ $errors->first('password') }}</p>
-                        </div>
-                    @endif
                     @if ($errors->has('email'))
                         <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
                             <p class="">{{ $errors->first('email') }}</p>
