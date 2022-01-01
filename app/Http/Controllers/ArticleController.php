@@ -339,7 +339,7 @@ class ArticleController extends Controller
 
         $deleted = $article->delete();
         if ($deleted) 
-            return redirect('/articles');
+            return redirect('/');
         else 
             return redirect("/article/${id}");
     }

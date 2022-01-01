@@ -2,11 +2,11 @@
 
 @section('content')
     
-    <div class="article-container container bg-light">
+    <div class="article-container container-fluid bg-light">
 
         <div class="d-flex flex-row my-2 h-100">
             
-            <div class="d-flex flex-column w-75 p-3 mb-0 text-dark" >
+            <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-dark" >
 
                 <div class="flex-row" id="article-header">
 
@@ -17,10 +17,22 @@
 
                         <h2 class="flex-column w-25 mx-3">
                             @if ($is_author)
-                                <a href="/article/{{$article['id']}}/edit">
+                                <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit me-4"></i>
                                 </a>
-                                <i class="fas fa-trash"></i>
+                                <form 
+                                    name="deleteArticleForm" id="deleteArticleForm" 
+                                    method="POST"
+                                    action="{{ route('article', ['id' => $article['id']]) }}">
+
+                                    @csrf
+                                    @method('DELETE');
+
+                                </form>
+                                <a onclick="document.deleteArticleForm.submit()" href="">
+                                    <i class="fas fa-trash" ></i>
+                                </a>
+
                             @endif
                         <h2>
                     </div>
@@ -59,8 +71,11 @@
 
             </div>  
 
-            <div class="flex-col w-25 p-3 text-dark" id="author-container">
-                @include('partials.authorInfo', ['author' => $author])
+            <div class="author-container flex-col p-3 text-dark">
+                @include('partials.authorInfo', [
+                    'author' => $author,
+                    'isOwner' => $is_author
+                ])
             </div>
 
         </div>

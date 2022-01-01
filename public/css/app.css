@@ -82,8 +82,20 @@ body {
     text-align: center;
 }
 
+/* Partial Author Information */
+#authorDescription {
+    height: 35%;
+}
+
+#authorAreaExpertise {
+    height: 40%;
+}
+
 /* Full Article Page */
-/*
+.article-container {
+    width: 85%;
+}
+
 .article-container h1,
 .article-container h2,
 .article-container h3,
@@ -93,23 +105,34 @@ body {
     text-overflow: ellipsis;
 }*/
 
-#author-container {
-    background-color: #dbd7d2;
+.article-container #article-header i {
+    width: 0.8em; 
+    height: 0.7em;
 }
 
-#author-container .row {
+.articleInfoContainer {
+    width: 70%;
+}
+
+.author-container {
+    background-color: #dbd7d2;
+    width: 30%;
+    max-height: 50em;
+}
+
+.author-container .row {
     margin-left: 0.1rem;
 }
 
-#author-container p {
+.author-container p {
     margin: 0;
 }
 
-.container #author-container #authorAvatar {
+.author-container #authorAvatar {
     border-radius: 50%;
 }
 
-.container #comments-section .commentHeader {
+#comments-section .commentHeader {
     margin: 0;
     padding: 0;
     height: 5em;
@@ -118,10 +141,10 @@ body {
     text-align: center;
 }
 
-.article-container #article-header i {
-    width: 0.8em;
-    height: 0.7em;
+#deleteArticleForm {
+    display: none;
 }
+
 
 /* Forms Errors */
 
@@ -164,7 +187,7 @@ body {
 /* Areas of expertise */
 
 #graphContainer {
-    width: 50%;
+    width: 100%;
     border-width: 0.2em;
     border-style: solid;
     border-color: gray;

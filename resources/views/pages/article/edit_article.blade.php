@@ -7,15 +7,15 @@
 {{-- ------------------------------------------------------ --}}
 @section('content')
 
-    <div class="container mb-3 bg-light" class="article-form">
+    <div class="article-container container-fluid bg-light">
 
         <div class="d-flex flex-row my-2 h-100">
 
-            <div class="d-flex flex-column w-75 my-2 p-3 h-100">
+            <div class="articleInfoContainer d-flex flex-column mb-0 p-3 pe-5 h-100">
 
                 <form name="article-form" method="POST" action="{{ route('editArticle', ['id' => $article['content_id']]) }}" class="flex-row h-100">
-                    @method('put')
                     @csrf
+                    @method('PUT')
                     
                     <div class="flex-row">
                         <label for="title">{{ "Edit article's Title" }}</label>
@@ -29,7 +29,7 @@
                         @endif
                     </div>
 
-                    <div class="flex-row mt-3 mb-5"> 
+                    <div class="flex-row mt-3 mb-5 pe-3"> 
                         <label for="tags">{{ "Edit Article's Tags" }}</label>
 
                         <select required id="tags" name="tags[]" multiple>
@@ -71,8 +71,11 @@
 
             </div>
 
-            <div class="flex-col w-25 ms-5 p-3 text-dark" id="author-container">
-                @include('partials.authorInfo', ['author' => $author])
+            <div class="author-container flex-col p-3 text-dark">
+                @include('partials.authorInfo', [
+                    'author' => $author,
+                    'isOwner' => true
+                ])
             </div>
 
         </div>

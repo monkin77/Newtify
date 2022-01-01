@@ -11,7 +11,7 @@
 |
 */
 // Home
-Route::get('/', 'HomeController@show');
+Route::get('/', 'HomeController@show')->name('homepage');
 Route::get('/api/article/filter', 'HomeController@filter');
 
 // Authentication
@@ -22,8 +22,8 @@ Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('regi
 Route::post('signup', 'Auth\RegisterController@register');
 
 // User
-Route::get('user/{id}', 'UserController@show');
-Route::get('user/{id}/edit', 'UserController@edit');
+Route::get('user/{id}', 'UserController@show')->name('userProfile');
+Route::get('user/{id}/edit', 'UserController@edit')->name('editUser');
 Route::put('user/{id}', 'UserController@update');
 Route::delete('api/user/{id}', 'UserController@delete');
 Route::post('user/{id}/report', 'UserController@report');
@@ -34,7 +34,6 @@ Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
 
 // Articles
-Route::get('articles', 'ArticleController@index')->name('articles');
 Route::get('article', 'ArticleController@createForm')->name('createArticle');
 Route::post('article', 'ArticleController@create');
 Route::get('article/{id}', 'ArticleController@show')->name('article');
