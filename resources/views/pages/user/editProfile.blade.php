@@ -26,15 +26,15 @@
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="birthDateInput">Birth Date</label>
                 <input type="date" required value="{{ $birthDate }}" class="text-center w-auto h2 editInputs py-4"
-                    id="birthDateInput" name='birithDate' />
+                    id="birthDateInput" name='birthDate' />
             </div>
             <div class="row w-100 mt-5">
                 <div class="d-flex">
                     <div class="pe-5 me-5">
                         <label class="h1 pb-3 my-0" for="countryInput">Country</label>
                         <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
-                            <select required name='countrySelector' value="{{ $user['country']['name'] }}"
-                                id="countryInput" size=1 class="my-0" name='countryId'>
+                            <select required name='countryId' value="{{ $user['country']['name'] }}" id="countryInput"
+                                size=1 class="my-0">
                                 @foreach ($countries as $country)
                                     <option value={{ $country['id'] }} <?php if ($user['country']['id'] == $country['id']) {
     echo 'selected';

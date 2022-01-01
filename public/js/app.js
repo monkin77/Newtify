@@ -1,4 +1,8 @@
-const $ = (selector) => document.querySelector(selector);
+const select = (selector) => document.querySelector(selector);
+
+const toggleElem = (elem) => {
+  elem.classList.toggle('d-none');
+}
 
 function addEventListeners() {
 
