@@ -2,11 +2,11 @@
 
 @section('content')
     
-    <div class="container-fluid bg-light" id="article-container">
+    <div class="article-container container-fluid bg-light">
 
         <div class="d-flex flex-row my-2 h-100">
             
-            <div class="d-flex flex-column p-3 mb-0 text-dark" id="articleInfoContainer" >
+            <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-dark" >
 
                 <div class="flex-row" id="article-header">
 
@@ -59,7 +59,7 @@
 
             </div>  
 
-            <div class="flex-col p-3 text-dark" id="author-container">
+            <div class="author-container flex-col p-3 text-dark">
                 @include('partials.authorInfo', ['author' => $author])
             </div>
 
