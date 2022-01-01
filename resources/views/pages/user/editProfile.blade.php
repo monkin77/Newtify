@@ -96,6 +96,25 @@ echo $errors;
                         <button type="submit">Change</button>
                     </div>
                 </form>
+                <form name="emailForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
+                    class="mt-3" autocomplete="off">
+                    @method('put')
+                    @csrf
+                    <label for="emailPassInput" class="form-label mt-4">Change Email</label>
+                    <div class="d-flex align-items-end">
+                        <div class="me-5">
+                            <div class="form-text">Current Password</div>
+                            <input type="password" autocomplete="new-password" required class="w-auto h2 editInputs"
+                                id="emailPassInput" name='password' placeholder="Current Password" />
+                        </div>
+                        <div class="ms-5 me-5">
+                            <div class="form-text">New Email</div>
+                            <input type="email" required class="w-auto h2 editInputs" id="emailInput" name='email'
+                                placeholder="New Email" />
+                        </div>
+                        <button type="submit">Change</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>

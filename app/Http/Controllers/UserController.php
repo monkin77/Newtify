@@ -136,7 +136,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:authenticated_user',
-            'password' => 'required_with:new_password|string|password',
+            'password' => 'required_with:new_password,email|string|password',
             'new_password' => 'nullable|string|min:6|confirmed',
             'birthDate' => 'nullable|string|date_format:Y-m-d|before:' . date('Y-m-d'), // before today
             'country' => 'nullable|string|exists:country,name',
