@@ -20,7 +20,10 @@
                                 <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit me-4"></i>
                                 </a>
-                                <i class="fas fa-trash"></i>
+                                <a onclick="deleteArticle(event, $artilce['id'])">
+                                    <i class="fas fa-trash" ></i>
+                                </a>
+
                             @endif
                         <h2>
                     </div>
