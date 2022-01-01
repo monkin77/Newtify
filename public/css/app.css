@@ -94,6 +94,7 @@ body {
 .author-container {
     background-color: #dbd7d2;
     width: 30%;
+    max-height: 50em;
 }
 
 .author-container .row {
