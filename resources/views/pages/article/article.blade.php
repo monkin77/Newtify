@@ -71,12 +71,12 @@
                 </p>
 
                 <div class="flex-row h-50 mb-5 text-center">
-                    <img class="h-100 w-50" src={{
+                    <img class="h-100 w-50" src="{{
                         isset($article['thumbnail']) ?
-                        $article['thumbnail']
+                        asset('storage/thumbnails/'.$article['thumbnail'])
                         :
                         $articleImgPHolder
-                    }}>
+                    }}" onerror="this.src='{{ $articleImgPHolder }}'">
                 </div>
         
                 <div id="articleBody" class="flex-row h-75">

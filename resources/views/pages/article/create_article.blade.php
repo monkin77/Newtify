@@ -13,7 +13,7 @@
 
             <div class="articleInfoContainer d-flex flex-column mb-0 p-3 pe-5 h-100">
 
-                <form name="article-form" method="POST" action="{{ route('createArticle') }}" class="flex-row h-100">
+                <form name="article-form" method="POST" action="{{ route('createArticle') }}" class="flex-row h-100" enctype="multipart/form-data">
                     @csrf
 
                     <div class="flex-row">
@@ -51,12 +51,15 @@
                         @endif
                     </div>
 
-                    {{--
                     <div class="flex-row">
                         <label for="thumbnail">Article's Thumbnail</label>
                         <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
                     </div>
-                    --}}
+                    @if ($errors->has('thumbnail'))
+                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                            <p class="mb-0">{{ $errors->first('thumbnail') }}</p>
+                        </div>
+                    @endif
       
                     <div class="flex-row h-100">
                         <label for="body">{{ "Article's Body" }}</label>

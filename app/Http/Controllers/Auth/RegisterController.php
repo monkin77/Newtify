@@ -68,10 +68,12 @@ class RegisterController extends Controller
     {
         $countryId = Country::getIdByName($data['country']);
         $timestamp = strtotime($data['birthDate']);
-        $avatar = $data['avatar'];
 
-        $imgName = time().'.'.$avatar->extension();
-        $avatar->storeAs('avatars', $imgName);
+        if(isset($data['avatar'])) {
+            $avatar = $data['avatar'];
+            $imgName = time().'.'.$avatar->extension();
+            $avatar->storeAs('public/avatars', $imgName);
+        }
 
         return User::create([
             'name' => $data['name'],
@@ -79,7 +81,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'birth_date' => gmdate('Y-m-d H:i:s', $timestamp),
             'country_id' => $countryId,
-            'avatar' => $imgName
+            'avatar' => isset($data['avatar']) ? $imgName : null,
         ]);
     }
 }

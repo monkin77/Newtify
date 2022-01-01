@@ -24,7 +24,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('userImgPHolder', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
-        View::share('articleImgPHolder', 'https://cdn.pixabay.com/photo/2013/07/12/19/16/newspaper-154444_960_720.png');
+        View::share('userImgPHolder', asset('storage/avatar_placeholder.png'));
+        View::share('articleImgPHolder', asset('storage/thumbnail_placeholder.png'));
     }
 }
