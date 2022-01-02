@@ -98,20 +98,18 @@ $isOpen = $errors->has('password');
         </form>
 
         <div class="container-fluid py-3 w-75 mt-5 pt-5 border-top border-dark">
-            <div class="d-flex position-relative">
+            <div class="d-flex position-relative mb-3">
                 <a class="h1 w-100" href="#advancedContainer" data-bs-toggle="collapse" role="button"
                     aria-expanded="false" aria-contols="advancedContainer">Advanced
                     Settings</a>
                 <i class="fa fa-caret-down fa-1x position-absolute pe-none caretDown"></i>
-
             </div>
             <div <?php if ($isOpen) {
     echo 'class="colapse show"';
 } else {
     echo 'class="collapse"';
 } ?> id="advancedContainer">
-                <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
-                    class="mt-3">
+                <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}">
                     @method('put')
                     @csrf
                     @if ($errors->has('password'))
