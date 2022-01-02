@@ -12,7 +12,7 @@
 */
 // Home
 Route::get('/', 'HomeController@show')->name('homepage');
-Route::get('/api/article/filter', 'HomeController@filter');
+Route::get('api/article/filter', 'HomeController@filter');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -29,7 +29,7 @@ Route::delete('api/user/{id}', 'UserController@delete');
 Route::post('user/{id}/report', 'UserController@report');
 Route::get('api/user/{id}/suspension', 'UserController@suspension');
 Route::get('user/{id}/followed', 'UserController@followed');
-Route::get('user/{id}/articles', 'UserController@articles');
+Route::get('api/user/{id}/articles', 'UserController@articles');
 Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
 
@@ -56,7 +56,7 @@ Route::put('tags/{tag_id}/accept', 'TagController@accept');
 Route::put('tags/{tag_id}/reject', 'TagController@reject');
 Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite');
 Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');
-Route::get('tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
+Route::get('api/tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
 Route::delete('tags/{tag_id}', 'TagController@destroy');
 Route::post('tags/new', 'TagController@propose');
 
