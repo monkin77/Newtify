@@ -24,7 +24,7 @@ Route::post('signup', 'Auth\RegisterController@register');
 // User
 Route::get('user/{id}', 'UserController@show')->name('userProfile');
 Route::get('user/{id}/edit', 'UserController@edit')->name('editUser');
-Route::put('user/{id}', 'UserController@update');
+Route::put('user/{id}', 'UserController@update')->name('editProfile');
 Route::delete('api/user/{id}', 'UserController@delete');
 Route::post('user/{id}/report', 'UserController@report');
 Route::get('api/user/{id}/suspension', 'UserController@suspension');

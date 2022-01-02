@@ -1,4 +1,8 @@
-const $ = (selector) => document.querySelector(selector);
+const select = (selector) => document.querySelector(selector);
+
+const toggleElem = (elem) => {
+  elem.classList.toggle('d-none');
+}
 
 function addEventListeners() {
 
@@ -84,6 +88,19 @@ function filterArticles () {
   const type = this.id;
   const url = `/api/article/filter?type=${type}&limit=5`;
   sendAjaxRequest('get', url, null, replaceArticles);
+}
+
+const checkPass = (id) => {
+  const matchingMsg = select('#matchingPass');
+  const confirmId = `${id}-confirm`;
+
+  if (select(id).value == select(confirmId).value) {
+      matchingMsg.style.color = 'green';
+      matchingMsg.innerHTML = 'matching';
+  } else {
+      matchingMsg.style.color = 'red';
+      matchingMsg.innerHTML = 'not matching'
+  }
 }
 
 addEventListeners();

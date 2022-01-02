@@ -103,10 +103,9 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}*/
-
-.article-container #article-header i {
-    width: 0.8em; 
+}
+*/ .article-container #article-header i {
+    width: 0.8em;
     height: 0.7em;
 }
 
@@ -145,7 +144,6 @@ body {
     display: none;
 }
 
-
 /* Forms Errors */
 
 .error-container {
@@ -159,26 +157,24 @@ body {
     min-height: 70vh;
 }
 
-
 /* Select2 Tags */
 
 .select2-selection--multiple {
     background-color: transparent !important;
 }
 
-
 /* User Profile */
 
-#userProfileContainer #userInfo {
+#userInfo {
     height: 60vh;
     background-color: lightgray;
 }
 
-#userProfileContainer #userInfo #userGraphics {
+#userInfo #userGraphics {
     height: 40%;
 }
 
-#userProfileContainer #userInfo #userGraphics #avatarImg {
+#userInfo #userGraphics #avatarImg {
     height: 100%;
     aspect-ratio: 1;
     border-radius: 100em;
@@ -204,7 +200,7 @@ body {
     height: 1.2em;
 }
 
-#userProfileContainer #userInfo #description {
+#userInfo #description {
     padding-left: 10%;
     width: 90%;
 }
@@ -327,4 +323,38 @@ body {
     height: 100%;
     background-color: black;
     opacity: 0.75;
+}
+
+/* Edit Profile */
+#editProfileContainer {
+    background-color: lightgray;
+}
+
+#editProfileContainer #editAvatarContainer {
+    height: 27.5vh;
+}
+
+#editProfileContainer #editAvatarContainer #avatarPreview {
+    height: 80%;
+    aspect-ratio: 1;
+    border-radius: 100em;
+    margin-right: 3em;
+}
+
+#editProfileContainer .editInputs {
+    border: 2px black solid;
+    height: 3em;
+    background-color: inherit;
+}
+
+#editProfileContainer .caretDown {
+    right: 0.2em;
+    pointer-events: none;
+}
+
+#editProfileContainer #countryInputContainer {
+    border: 2px black solid;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+    min-width: 10em;
 }
