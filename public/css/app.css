@@ -506,6 +506,11 @@ body {
     text-align: center;
 }
 
+.iconContainer {
+    border: 1px solid red;
+    text-align: center;
+}
+
 .manageLink {
     padding: 1em;
     min-height: 15em;
