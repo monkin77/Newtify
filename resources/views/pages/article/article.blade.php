@@ -20,19 +20,38 @@
                                 <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit me-4"></i>
                                 </a>
+                            @endif
+                            @if ($is_author || $is_admin)
                                 <form 
                                     name="deleteArticleForm" id="deleteArticleForm" 
                                     method="POST"
                                     action="{{ route('article', ['id' => $article['id']]) }}">
 
                                     @csrf
-                                    @method('DELETE');
+                                    @method('DELETE')
+                                    
+                                    @if ($errors->has('article'))
+                                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                            <p class="mb-0">{{ $errors->first('article') }}</p>
+                                        </div>
+                                    @endif
+                                    @if ($errors->has('content'))
+                                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                            <p class="mb-0">{{ $errors->first('content') }}</p>
+                                        </div>
+                                    @endif
+                                    @if ($errors->has('user'))
+                                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                            <p class="mb-0">{{ $errors->first('user') }}</p>
+                                        </div>
+                                    @endif
+
+                                    <button type="submit" class="btn btn-transparent py-0 my-0 mt-2"> 
+                                        <i class="fas fa-trash fa-3x text-danger" ></i>
+                                    </button>
 
                                 </form>
-                                <a onclick="document.deleteArticleForm.submit()" href="">
-                                    <i class="fas fa-trash" ></i>
-                                </a>
-
+                                
                             @endif
                         <h2>
                     </div>

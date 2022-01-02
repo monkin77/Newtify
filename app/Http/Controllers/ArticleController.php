@@ -175,12 +175,16 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
+        $user = Auth::user();
+        $is_admin = Auth::user() ? $user->is_admin : false;
+
         return view('pages.article.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
             'comments' => $comments,
             'tags' => $tags,
             'is_author' => $is_author,
+            'is_admin' => $is_admin
         ]);
     }
 
