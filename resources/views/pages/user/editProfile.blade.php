@@ -28,8 +28,8 @@ $isOpen = $errors->has('password');
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="nameInput">Username</label>
-                <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}" class="text-center w-auto h2 editInputs"
-                    id="nameInput" name='name' />
+                <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
+                    class="text-center w-auto h2 editInputs" id="nameInput" name='name' />
                 @if ($errors->has('name'))
                     <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
                         <p class="">{{ $errors->first('name') }}</p>
@@ -38,8 +38,8 @@ $isOpen = $errors->has('password');
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="birthDateInput">Birth Date</label>
-                <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}" class="text-center w-auto h2 editInputs py-4"
-                    id="birthDateInput" name='birthDate' />
+                <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
+                    class="text-center w-auto h2 editInputs py-4" id="birthDateInput" name='birthDate' />
                 @if ($errors->has('birthDate'))
                     <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
                         <p class="">{{ $errors->first('birthDate') }}</p>
@@ -51,19 +51,15 @@ $isOpen = $errors->has('password');
                     <div class="pe-5 me-5">
                         <label class="h1 pb-3 my-0" for="countryInput">Country</label>
                         <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
-                            <select required name='country' value="{{ old('country') ? old('country') : $user['country']['name'] }}" id="countryInput"
+                            <select required name='country'
+                                value="{{ old('country') ? old('country') : $user['country']['name'] }}" id="countryInput"
                                 size=1 class="my-0">
                                 @foreach ($countries as $country)
-                                    <option value="{{ $country['name'] }}"
-                                        @if ( old('country') ?
-                                        old('country') == $country['name']
-                                        :
-                                        $user['country']['id'] == $country['id']
-                                        )
-                                            selected
-                                        @endif>
-                                        {{ $country['name'] }}
-                                    </option>
+                                    <option value="{{ $country['name'] }}" @if (old('country') ? old('country') == $country['name'] : $user['country']['id'] == $country['id'])
+                                        selected
+                                @endif>
+                                {{ $country['name'] }}
+                                </option>
                                 @endforeach
                             </select>
                             <i class="fa fa-caret-down fa-1x position-absolute caretDown"></i>
@@ -71,8 +67,8 @@ $isOpen = $errors->has('password');
                     </div>
                     <div class="ms-5">
                         <label class="h1 pb-3 my-0" for="cityInput">City</label>
-                        <input type="text" value="{{ old('city') ? old('city') : $user['city'] }}" class="text-center w-auto h2 editInputs"
-                            id="cityInput" name='city' />
+                        <input type="text" value="{{ old('city') ? old('city') : $user['city'] }}"
+                            class="text-center w-auto h2 editInputs" id="cityInput" name='city' />
 
                     </div>
                 </div>
@@ -111,10 +107,10 @@ $isOpen = $errors->has('password');
                 <i class="fa fa-caret-down fa-1x position-absolute pe-none caretDown"></i>
             </div>
             <div <?php if ($isOpen) {
-                echo 'class="colapse show"';
-            } else {
-                echo 'class="collapse"';
-            } ?> id="advancedContainer">
+    echo 'class="colapse show"';
+} else {
+    echo 'class="collapse"';
+} ?> id="advancedContainer">
                 <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}">
                     @method('put')
                     @csrf
@@ -133,12 +129,13 @@ $isOpen = $errors->has('password');
                         <div class="me-5">
                             <div class="form-text">New Password</div>
                             <input type="password" required class="w-auto h2 editInputs" id="newPassInput"
-                                name='new_password' placeholder="New Password" onkeyup="checkPass()" />
+                                name='new_password' placeholder="New Password" onkeyup="checkPass('#newPassInput')" />
                         </div>
                         <div class="me-5">
                             <div class="form-text">Confirm Password</div>
                             <input type="password" required name="new_password_confirmation" class="w-auto h2 editInputs"
-                                id="newPassConfirmInput" placeholder="Confirm Password" onkeyup="checkPass()">
+                                id="newPassInput-confirm" placeholder="Confirm Password"
+                                onkeyup="checkPass('#newPassInput')">
                             <span class="ms-2" id="matchingPass"></span>
                         </div>
                         <button type="submit">Change</button>
@@ -163,7 +160,7 @@ $isOpen = $errors->has('password');
                         <div class="me-5">
                             <div class="form-text">New Email</div>
                             <input type="email" required class="w-auto h2 editInputs" id="emailInput" name='email'
-                                placeholder="New Email" value="{{ old('email') }}"/>
+                                placeholder="New Email" value="{{ old('email') }}" />
                         </div>
                         <button type="submit">Change</button>
                     </div>

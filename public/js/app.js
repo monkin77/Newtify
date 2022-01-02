@@ -90,4 +90,17 @@ function filterArticles () {
   sendAjaxRequest('get', url, null, replaceArticles);
 }
 
+const checkPass = (id) => {
+  const matchingMsg = select('#matchingPass');
+  const confirmId = `${id}-confirm`;
+
+  if (select(id).value == select(confirmId).value) {
+      matchingMsg.style.color = 'green';
+      matchingMsg.innerHTML = 'matching';
+  } else {
+      matchingMsg.style.color = 'red';
+      matchingMsg.innerHTML = 'not matching'
+  }
+}
+
 addEventListeners();
