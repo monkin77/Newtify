@@ -5,8 +5,8 @@
 <div class="border text-center w-25 bg-light container">
     <h2 class="modal-titlemx-auto text-center fw-bold" id="exampleModalLabel">Log In</h2>
     <form method="POST" action="{{ route('login') }}">
-        {{ csrf_field() }}
-        
+        @csrf
+
         <label for="email" class="sr-only">Email address</label>
         <input name ="email" type="email" id="email" class="bg-white" value="{{ old('email') }}" placeholder="Email address" required autofocus>
         @if ($errors->has('email'))
