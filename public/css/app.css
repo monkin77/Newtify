@@ -193,8 +193,12 @@ body {
 }
 
 /* Partial Author Information */
+#authorDetails {
+    height: 40%;
+}
+
 #authorDescription {
-    height: 35%;
+    height: 20%;
 }
 
 #authorAreaExpertise {
@@ -534,7 +538,6 @@ body {
 }
 
 
-
 /* Tags Managment */
 
 .statusContainer {
@@ -544,4 +547,22 @@ body {
 
 .statusContainer .manageTagContainer {
     border-top: 1px solid black;
+}
+
+/* App Content */
+#contentContainer {
+    min-height: 75vh;
+}
+
+/* Navbar and Footer*/
+#navbarContainer {
+    height: 10vh;
+}
+
+#footerContainer {
+    height: 15vh;
+}
+
+#footerContainer #copyrightContainer {
+    background-color: rgba(0, 0, 0, 0.2);
 }

@@ -20,14 +20,16 @@
 
     <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    
 </head>
 
 <body>
     <main>
         @include('partials.navbar')
 
-        @yield('content')
+        <div id="contentContainer">
+            @yield('content')
+        </div>
 
         @include('partials.footer')
     </main>

@@ -1,4 +1,4 @@
-<footer class="bg-dark text-center text-lg-start py-4">
+<footer class="bg-dark text-center text-lg-start py-4" id="footerContainer">
     <!--Grid row-->
     <div class="row m-0 p-0 w-100">
         <!--Grid column-->
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Copyright -->
-    <div class=" text-center p-5" style="background-color: rgba(0, 0, 0, 0.2);">
+    <div class="text-center p-3" id="copyrightContainer">
         © 2021 Copyright:
         <a class="text-reset" href="{{ url('/') }}">LBAW</a>
     </div>
