@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -275,7 +276,7 @@ class ArticleController extends Controller
         [
             'body' => 'nullable|string|min:10',
             'title' => 'nullable|string|min:1|max:255',
-            'thumbnail' => 'nullable|file|max:5000',
+            'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
             'tags' => 'required|array|min:1|max:3',
             'tags.*' => 'required|string|min:1',
         ]);
@@ -287,7 +288,17 @@ class ArticleController extends Controller
 
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
-        if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
+        if (isset($request->thumbnail)) {
+            $newThumbnail = $request->thumbnail;
+            $oldThumbnail = $article->thumbnail;
+
+            $imgName = time().'.'.$newThumbnail->extension();
+            $newThumbnail->storeAs('public/thumbnails', $imgName);
+            $article->thumbnail = $imgName;
+
+            if (!is_null($oldThumbnail))
+                Storage::delete('public/thumbnails/'.$oldThumbnail);
+        }
 
         $tagsIds = [];
 
