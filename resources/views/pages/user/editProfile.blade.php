@@ -28,7 +28,7 @@ $isOpen = $errors->has('password');
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="nameInput">Username</label>
-                <input type="text" required value="{{ $user['name'] }}" class="text-center w-auto h2 editInputs"
+                <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}" class="text-center w-auto h2 editInputs"
                     id="nameInput" name='name' />
                 @if ($errors->has('name'))
                     <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
@@ -38,7 +38,7 @@ $isOpen = $errors->has('password');
             </div>
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="birthDateInput">Birth Date</label>
-                <input type="date" required value="{{ $birthDate }}" class="text-center w-auto h2 editInputs py-4"
+                <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}" class="text-center w-auto h2 editInputs py-4"
                     id="birthDateInput" name='birthDate' />
                 @if ($errors->has('birthDate'))
                     <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
@@ -51,12 +51,18 @@ $isOpen = $errors->has('password');
                     <div class="pe-5 me-5">
                         <label class="h1 pb-3 my-0" for="countryInput">Country</label>
                         <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
-                            <select required name='country' value="{{ $user['country']['name'] }}" id="countryInput"
+                            <select required name='country' value="{{ old('country') ? old('country') : $user['country']['name'] }}" id="countryInput"
                                 size=1 class="my-0">
                                 @foreach ($countries as $country)
-                                    <option value={{ $country['name'] }} <?php if ($user['country']['id'] == $country['id']) {
-    echo 'selected';
-} ?>>{{ $country['name'] }}
+                                    <option value="{{ $country['name'] }}"
+                                        @if ( old('country') ?
+                                        old('country') == $country['name']
+                                        :
+                                        $user['country']['id'] == $country['id']
+                                        )
+                                            selected
+                                        @endif>
+                                        {{ $country['name'] }}
                                     </option>
                                 @endforeach
                             </select>
@@ -65,7 +71,7 @@ $isOpen = $errors->has('password');
                     </div>
                     <div class="ms-5">
                         <label class="h1 pb-3 my-0" for="cityInput">City</label>
-                        <input type="text" value="{{ $user['city'] }}" class="text-center w-auto h2 editInputs"
+                        <input type="text" value="{{ old('city') ? old('city') : $user['city'] }}" class="text-center w-auto h2 editInputs"
                             id="cityInput" name='city' />
 
                     </div>
@@ -84,7 +90,7 @@ $isOpen = $errors->has('password');
             <div class="row w-100 mt-5">
                 <label class="h1 pb-3 my-0" for="descriptionInput">Description</label>
                 <textarea id="descriptionInput" name="description" rows="10"
-                    class="h-100 editInputs py-2">{{ $user['description'] }}</textarea>
+                    class="h-100 editInputs py-2">{{ old('description') ? old('description') : $user['description'] }}</textarea>
                 @if ($errors->has('description'))
                     <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
                         <p class="">{{ $errors->first('description') }}</p>
@@ -105,10 +111,10 @@ $isOpen = $errors->has('password');
                 <i class="fa fa-caret-down fa-1x position-absolute pe-none caretDown"></i>
             </div>
             <div <?php if ($isOpen) {
-    echo 'class="colapse show"';
-} else {
-    echo 'class="collapse"';
-} ?> id="advancedContainer">
+                echo 'class="colapse show"';
+            } else {
+                echo 'class="collapse"';
+            } ?> id="advancedContainer">
                 <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}">
                     @method('put')
                     @csrf
@@ -157,7 +163,7 @@ $isOpen = $errors->has('password');
                         <div class="me-5">
                             <div class="form-text">New Email</div>
                             <input type="email" required class="w-auto h2 editInputs" id="emailInput" name='email'
-                                placeholder="New Email" />
+                                placeholder="New Email" value="{{ old('email') }}"/>
                         </div>
                         <button type="submit">Change</button>
                     </div>
