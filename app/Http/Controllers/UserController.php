@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Validator;
 // TODO: Check headers for redirects
 class UserController extends Controller
 {
+    private const USER_ARTICLES_LIMIT = 4;
+
     /**
      * Display the User profile.
      *
@@ -61,14 +63,17 @@ class UserController extends Controller
                 'likes' => $article->likes,
                 'dislikes' => $article->dislikes
             ];
-        })->sortByDesc('published_at')->take(4);
+        })->sortByDesc('published_at');
+
+        $canLoadMore = count($articles) > $this::USER_ARTICLES_LIMIT;
 
         return view('pages.user.profile', [
             'user' => $userInfo,
             'follows' => $follows,
             'topAreasExpertise' => $areasExpertise,
             'followerCount' => $followerCount,
-            'articles' => $articles,
+            'articles' => $articles->take($this::USER_ARTICLES_LIMIT),
+            'canLoadMore' => $canLoadMore,
             'birthDate' => date('F j, Y', strtotime($userInfo['birthDate'])),
             'age' => date_diff(date_create($userInfo['birthDate']), date_create(date('d-m-Y')))->format('%y'),
             'isOwner' => $isOwner,
@@ -324,8 +329,11 @@ class UserController extends Controller
                 'errors' => $validator->errors(),
             ], 400);
 
+        if (!isset($request->offset)) $request->offset = 0;
+
         $userArticles = $user->articles()->map(function ($article) {
             return [
+                'id' => $article->id,
                 'title' => $article->title,
                 'thumbnail' => $article->thumbnail,
                 'body' => $article->body,
@@ -333,15 +341,15 @@ class UserController extends Controller
                 'likes' => $article->likes,
                 'dislikes' => $article->dislikes
             ];
-        })->sortByDesc('published_at');
+        })->sortByDesc('published_at')->skip($request->offset);
 
-        if (!isset($request->offset)) $request->offset = 0;
+        $canLoadMore = isset($request->limit) ? count($userArticles) > $request->limit : false;
+        $articles = $userArticles->take($request->limit);
 
-        $articles = $userArticles->slice($request->offset, $request->limit);
-
-        return view('partials.user_articles', [
-            'articles' => $articles
-        ]);
+        return response()->json([
+            'html' => view('partials.content.articles', [ 'articles' => $articles ])->render(),
+            'canLoadMore' => $canLoadMore
+        ], 200);
     }
 
     public function follow(int $id)

@@ -91,7 +91,7 @@ class SearchController extends Controller
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$value])
             ->get()->skip($offset);
 
-        $canLoadMore = $rawUsers->count() > $limit;
+        $canLoadMore = is_null($limit) ? false : $rawUsers->count() > $limit;
         $rawUsers = $rawUsers->take($limit);
 
         $users = $rawUsers->map(function ($user) {
@@ -120,7 +120,7 @@ class SearchController extends Controller
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$value])
             ->get()->skip($offset);
 
-        $canLoadMore = $rawArticles->count() > $limit;
+        $canLoadMore = is_null($limit) ? false : $rawArticles->count() > $limit;
         $rawArticles = $rawArticles->take($limit);
 
         $articles = $rawArticles->map(function ($article) {

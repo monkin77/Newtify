@@ -39,3 +39,9 @@ const loadMoreHome = () => {
     const url = `/api/article/filter?type=${type}&offset=${numArticles}&limit=5`;
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
 };
+
+const loadMoreUser = (userId) => {
+    const numResults = $('#articles').childElementCount;
+    const url = `/api/user/${userId}/articles?offset=${numResults}&limit=4`;
+    sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
+};

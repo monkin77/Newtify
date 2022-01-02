@@ -115,7 +115,7 @@ class HomeController extends Controller
         else $sortedArticles = $articles;
 
         $sortedArticles = $sortedArticles->skip($offset);
-        $canLoadMore = $sortedArticles->count() > $limit;
+        $canLoadMore = is_null($limit) ? false : $sortedArticles->count() > $limit;
         $results = $sortedArticles->take($limit)
             ->map(function ($article) {
                 return [
