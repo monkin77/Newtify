@@ -1,11 +1,9 @@
 <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-        <img src={{
+        <img src="{{
             isset($comment['authorAvatar']) ?
-            $comment['authorAvatar']
-            :
-            $userImgPHolder
-        }}>
+            asset('storage/avatars/'.$comment['authorAvatar']) : $userImgPHolder 
+        }}" onerror="this.src='{{ $userImgPHolder }}'" />
 
         @if (isset($comment['author']))
             {{ $comment['author']['name'] }}

@@ -57,8 +57,9 @@
                             <img id="dropdownAvatar" class="nav-link dropdown-toggle"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"
                                 src ={{
-                                    isset(Auth::user()->avatar) ? Auth::user()->avatar : $userImgPHolder
-                                }}/>
+                                    isset(Auth::user()->avatar) ? asset('storage/avatars/'.Auth::user()->avatar) : $userImgPHolder
+                                }}
+                                onerror="this.src='{{ $userImgPHolder }}'"/>
 
                             <ul id="mainDropdown" class="dropdown-menu dropdown-menu-dark text-center" aria-labelledby="dropdownAvatar">
                                 @if (Auth::user()->is_admin)

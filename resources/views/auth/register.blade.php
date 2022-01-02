@@ -4,7 +4,7 @@
 
 <div class="border text-center w-50 bg-light container-fluid">
     <h2 class="modal-titlemx-auto text-center fw-bold" id="exampleModalLabel">Sign Up</h2>
-    <form class="form-group" method="post" action="{{ route('signup') }}">
+    <form class="form-group" method="post" action="{{ route('signup') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <label for="name">Name</label>
         <input name="name" class="bg-white w-50" type="text" id="name" placeholder="Enter name" value="{{ old('name') }}" required autofocus>

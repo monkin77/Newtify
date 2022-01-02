@@ -54,8 +54,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'birthDate' => 'required|string|date_format:Y-m-d|before:'.date('Y-m-d'), // before today
             'country' => 'required|string|exists:country,name',
-            'avatar' => 'nullable|file|max:5000', // max 5MB
-            // TODO: File upload
+            'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
         ]);
     }
 
@@ -70,13 +69,19 @@ class RegisterController extends Controller
         $countryId = Country::getIdByName($data['country']);
         $timestamp = strtotime($data['birthDate']);
 
+        if(isset($data['avatar'])) {
+            $avatar = $data['avatar'];
+            $imgName = time().'.'.$avatar->extension();
+            $avatar->storeAs('public/avatars', $imgName);
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'birth_date' => gmdate('Y-m-d H:i:s', $timestamp),
             'country_id' => $countryId,
-            'avatar' => 'https://picsum.photos/200/200'
+            'avatar' => isset($data['avatar']) ? $imgName : null,
         ]);
     }
 }

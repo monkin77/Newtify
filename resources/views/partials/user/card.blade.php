@@ -1,11 +1,13 @@
 <div class="card user-card flex-row flex-wrap mb-3">
-    <div class="user-card-avatar px-2 py-2">
-        <a href="/user/{{ $user['id'] }}"> <img src= {{
-            isset($user['avatar']) ?
-            $user['avatar']
-            :
-            $userImgPHolder
-        }} style="border-radius: 50%;"> </a>
+    <div class="user-card-avatar px-2 py-2 text-center">
+        <a href="/user/{{ $user['id'] }}">
+        <img src="{{
+                isset($user['avatar']) ?
+                asset('storage/avatars/'.$user['avatar']) : $userImgPHolder
+            }}"
+            onerror="this.src='{{ $userImgPHolder }}'"
+            style="border-radius: 50%;"
+        /> </a>
     </div>
 
     <div class="card-block user-card-body d-flex flex-column px-4 py-4">

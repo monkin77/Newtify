@@ -70,14 +70,13 @@
                     <i class="fas fa-share-alt ms-4"></i>
                 </p>
 
-                <div class="flex-row h-50 mb-5 text-center">
-                    <img class="h-100 w-50" src={{
-                        isset($article['thumbnail']) ?
-                        $article['thumbnail']
-                        :
-                        $articleImgPHolder
-                    }}>
-                </div>
+                @if (isset($article['thumbnail']))
+                    <div class="flex-row h-50 mb-5 text-center">
+                        <img class="h-100 w-50" src="{{asset('storage/thumbnails/'.$article['thumbnail'])}}"
+                            onerror="this.src='{{ $articleImgPHolder }}'"
+                        >
+                    </div>
+                @endif
         
                 <div id="articleBody" class="flex-row h-75">
                     {{ $article['body'] }}

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -70,14 +71,14 @@ class ArticleController extends Controller
             [
                 'body' => 'required|string|min:10',
                 'title' => 'required|string|min:3|max:100',
-                'thumbnail' => 'nullable|file|max:5000',
+                'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
                 'tags' => 'required|array|min:1|max:3',
                 'tags.*' => 'required|string|min:1',
             ]
         );
         if ( $validator->fails() ) {
             // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());//['tags' => 'You must have between 1 and 3 tags']);
+            return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
         $tagsIds = [];
@@ -98,9 +99,15 @@ class ArticleController extends Controller
         $content->save();
 
         $article = new Article;
-        if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
         $article->content_id = $content->id;
         $article->title = $request->title;
+
+        if (isset($request->thumbnail)) {
+            $thumbnail = $request->thumbnail;
+            $imgName = time().'.'.$thumbnail->extension();
+            $thumbnail->storeAs('public/thumbnails', $imgName);
+            $article->thumbnail = $imgName;
+        }
 
         $article->save();
 
@@ -269,7 +276,7 @@ class ArticleController extends Controller
         [
             'body' => 'nullable|string|min:10',
             'title' => 'nullable|string|min:1|max:255',
-            'thumbnail' => 'nullable|file|max:5000',
+            'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
             'tags' => 'required|array|min:1|max:3',
             'tags.*' => 'required|string|min:1',
         ]);
@@ -281,7 +288,17 @@ class ArticleController extends Controller
 
         if (isset($request->body)) $content->body = $request->body;
         if (isset($request->title)) $article->title = $request->title;
-        if (isset($request->thumbnail)) $article->thumbnail = $request->thumbnail;
+        if (isset($request->thumbnail)) {
+            $newThumbnail = $request->thumbnail;
+            $oldThumbnail = $article->thumbnail;
+
+            $imgName = time().'.'.$newThumbnail->extension();
+            $newThumbnail->storeAs('public/thumbnails', $imgName);
+            $article->thumbnail = $imgName;
+
+            if (!is_null($oldThumbnail))
+                Storage::delete('public/thumbnails/'.$oldThumbnail);
+        }
 
         $tagsIds = [];
 

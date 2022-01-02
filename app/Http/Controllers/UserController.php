@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 // TODO: Check headers for redirects
 class UserController extends Controller
@@ -145,8 +146,7 @@ class UserController extends Controller
             'new_password' => 'nullable|string|min:6|confirmed',
             'birthDate' => 'nullable|string|date_format:Y-m-d|before:' . date('Y-m-d'), // before today
             'country' => 'nullable|string|exists:country,name',
-            'avatar' => 'nullable|file|max:5000', // max 5MB
-            // TODO: File upload
+            'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
             'description' => 'nullable|string|max:500',
             'city' => 'nullable|string|max:100'
         ]);
@@ -163,6 +163,18 @@ class UserController extends Controller
         if (isset($request->country)) $user->country_id = Country::getIdByName($request->country);
         if (isset($request->description)) $user->description = $request->description;
         if (isset($request->city)) $user->city = $request->city;
+
+        if (isset($request->avatar)) {
+            $newAvatar = $request->avatar;
+            $oldAvatar = $user->avatar;
+
+            $imgName = time().'.'.$newAvatar->extension();
+            $newAvatar->storeAs('public/avatars', $imgName);
+            $user->avatar = $imgName;
+
+            if (!is_null($oldAvatar))
+                Storage::delete('public/thumbnails/'.$oldAvatar);
+        }
 
         $user->save();
         return redirect("/user/${id}");

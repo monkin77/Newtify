@@ -12,8 +12,12 @@ $guest = !Auth::check();
         <div class="container-fluid py-3">
             <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex justify-content-center h-100">
-                    <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarImg"
+                    <img src="{{
+                        isset($user['avatar']) ?
+                        asset('storage/avatars/'.$user['avatar']) : $userImgPHolder 
+                    }}" id="avatarImg"
                         onerror="this.src='{{ $userImgPHolder }}'" />
+
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
                     <div class="col-6 w-50 h-100">
