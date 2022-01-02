@@ -1,11 +1,22 @@
-const saveFavoriteTags = () => {
-    const tagIds = [];
+const saveFavoriteTags = (userTags, userId) => {
+    const prevTags = userTags.map(tag => tag.id);
 
     const tagsArray = selectAll('.tagContainer');
     tagsArray.forEach(tagElem => {
-        console.log(tagElem);
-        if (tagElem.classList.contains('selectedTag')) tagIds.push(tagElem.id);
+        const isPrevTag = prevTags.includes(parseInt(tagElem.id));
+
+        if (isPrevTag && !tagElem.classList.contains('selectedTag')) {  // Tag removed from favorites
+                console.log(tagElem);
+                sendAjaxRequest('put', `/tags/${tagElem.id}/remove_favorite`, null, null);
+        } else if (!isPrevTag && tagElem.classList.contains('selectedTag')) {  // Tag added to favorites
+                console.log(tagElem);
+                sendAjaxRequest('put', `/tags/${tagElem.id}/add_favorite`, null, null);
+        } 
     });
 
-    console.log(tagIds);
+    window.location.replace(`/user/${userId}`);
+}
+
+const toggleSelected = (elem) => {
+    elem.classList.toggle('selectedTag');
 }

@@ -365,8 +365,15 @@ body {
     margin: 0.75em;
     border-radius: 2em;
     background-color: #343434;
+    cursor: pointer;
 }
 
 #tagsContainer .selectedTag {
     background-color: green;
+}
+
+#tagsContainer #favoriteTagsButton {
+    width: 15em;
+    height: 4em;
+    border-radius: 3em;
 }
