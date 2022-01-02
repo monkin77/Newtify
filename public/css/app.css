@@ -359,6 +359,14 @@ body {
     min-width: 10em;
 }
 
+#editProfileContainer #favTagsBtn {
+    right: 35vw;
+    top: 20vh;
+    font-size: large;
+    background-color: #923ac9;
+    border-radius: 0.3em;
+}
+
 /* Favorite Tags */
 #tagsContainer .tagContainer {
     height: 15em;
