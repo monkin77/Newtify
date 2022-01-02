@@ -364,4 +364,9 @@ body {
     height: 15em;
     margin: 0.75em;
     border-radius: 2em;
+    background-color: #343434;
+}
+
+#tagsContainer .selectedTag {
+    background-color: green;
 }
