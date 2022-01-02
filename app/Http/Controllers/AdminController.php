@@ -35,7 +35,7 @@ class AdminController extends Controller
             'city' => $admin->city,
         ];
 
-        return view('pages.admin_panel',[
+        return view('pages.admin.admin_panel',[
             'admin' => $adminInfo,
         ]);
     }
@@ -103,7 +103,7 @@ class AdminController extends Controller
             ];
         })->sortByDesc('start_date');
 
-        return view('pages.suspensions', [
+        return view('pages.admin.suspensions', [
             'suspendedUsers' => $suspendedUsers,
             'suspensionHistory' => $suspensionHistory,
         ]);
@@ -244,7 +244,7 @@ class AdminController extends Controller
                 ];
             });
 
-        return view('pages.reports', [
+        return view('pages.admin.reports', [
             'reports' => $reportsInfo,
         ]);
     }
@@ -312,7 +312,7 @@ class AdminController extends Controller
             ];
         });
 
-        return view('pages.tags', [
+        return view('pages.admin.manageTags', [
             'tags_pending' => $tags_pending,
             'tags_accepted' => $tags_accepted,
             'tags_rejected' => $tags_rejected,
