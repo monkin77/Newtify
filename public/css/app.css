@@ -499,31 +499,38 @@ body {
 
 /* Admin Panel */
 
+.manageContainer:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
 .linkContainer{
-    line-height: 15em;
-    font-size: x-large;
-    min-width: 10em;
+    height: 35vh;
     text-align: center;
 }
 
 .iconContainer {
-    border: 1px solid red;
-    text-align: center;
+    position: relative;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    font-size: 5vw;
+    background-color: darkgray;
 }
 
 .manageLink {
-    padding: 1em;
-    min-height: 15em;
-    font-size: x-large;
+    height: 35vh;
+    font-size: 2vw;
     text-align: center;
 }
 
-.suspensionsIcon, 
+.suspensionsIcon,
 .reportsIcon,
 .tagsIcon {
-    padding: 0.2em;
-    font-size: 5em;
-    background-color: darkgray;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
