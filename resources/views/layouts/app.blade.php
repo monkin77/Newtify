@@ -20,7 +20,7 @@
 
     <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('css/sign-up.css')}}" rel="stylesheet">
 </head>
 
 <body>
