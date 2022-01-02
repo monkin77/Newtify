@@ -172,6 +172,10 @@ body {
     width: 100%;
 }
 
+#articleBody {
+    white-space: pre-line;
+}
+
 #load-more {
     text-align: center;
 }

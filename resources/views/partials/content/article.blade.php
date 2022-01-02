@@ -28,7 +28,7 @@
                     <i class="fa fa-thumbs-down"> {{ $article['dislikes'] }}</i>
                 </span>
 
-                <p class="card-text">{{ mb_strimwidth($article['body'], 0, 150, "...") }} </p>
+                <p class="card-text">{{ mb_strimwidth($article['body'], 0, 300, "...") }} </p>
             </div>
         </a>
         

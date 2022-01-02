@@ -84,7 +84,7 @@
                     }}>
                 </div>
         
-                <div class="flex-row h-75">
+                <div id="articleBody" class="flex-row h-75">
                     {{ $article['body'] }}
                 </div>
 
