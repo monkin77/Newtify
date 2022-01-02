@@ -17,6 +17,9 @@ class SearchController extends Controller
             'query' => 'required|string',
         ]);
 
+        // Save input to old()
+        session()->flashInput($request->input());
+
         /* 
         Errors are handled inside the search page
         See https://stackoverflow.com/questions/49451167/laravel-5-get-the-http-status-code-from-blade-view

@@ -251,6 +251,7 @@ body {
 }
 
 #deleteArticleForm {
+    display: none;
 }
 
 /* Forms Errors */

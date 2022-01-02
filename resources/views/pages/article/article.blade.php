@@ -18,21 +18,21 @@
                     @endphp
                     <i style="font-size: 1.2em; width: 25%">{{ $article_published_at }}</i>
 
-                    <div id="articleButtons">
-                        @if ($is_author)
-                            <a href="{{ route('editArticle', ['id' => $article['id']])}}">
-                                <i class="fas fa-edit article-button me-4"></i>
-                            </a>
-                        @endif
+                    @if ($is_author || $is_admin)
+                        <div id="articleButtons">
+                            @if ($is_author)
+                                <a href="{{ route('editArticle', ['id' => $article['id']])}}">
+                                    <i class="fas fa-edit article-button me-4"></i>
+                                </a>
+                            @endif
 
-                        @if ($is_author || $is_admin)
                             <form 
                                 name="deleteArticleForm" id="deleteArticleForm" 
                                 method="POST"
                                 action="{{ route('article', ['id' => $article['id']]) }}">
 
                                 @csrf
-                                @method('DELETE');
+                                @method('DELETE')
 
                                 @if ($errors->has('article'))
                                     <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
@@ -54,8 +54,8 @@
                             <a onclick="document.deleteArticleForm.submit()" href="">
                                 <i class="fas fa-trash article-button" ></i>
                             </a>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
 
                 <p class="flex-row mt-3 mb-1 h-25"> 

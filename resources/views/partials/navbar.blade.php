@@ -20,8 +20,9 @@
                         placeholder="Search"
                         name="query"
                         autocomplete="off"
+                        value="{{ old('query') }}"
                     />
-                    <input type="hidden" name="type" value="articles"/>
+                    <input type="hidden" name="type" value="{{ old('type') ? old('type') : 'articles' }}"/>
 
                     <div class="dropdown" id="searchDropdown">
                         <button
@@ -29,7 +30,12 @@
                             class="btn btn-outline-secondary border-start dropdown-toggle my-0 pe-0"
                             type="button"
                             data-bs-toggle="dropdown"
-                        >Articles</button>
+                        >{{
+                            old('type') == 'users' ?
+                            'Users'
+                            :
+                            'Articles'
+                        }}</button>
 
                         <ul class="dropdown-menu dropdown-menu-dark w-100 text-center" aria-labelledby="searchDropdownButton">
                             <li><a class="dropdown-item dropdown-custom-item" onclick="setSearchType(this)">Articles</a></li>
