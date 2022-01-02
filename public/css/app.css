@@ -358,3 +358,10 @@ body {
     padding-bottom: 0.4em;
     min-width: 10em;
 }
+
+/* Favorite Tags */
+#tagsContainer .tagContainer {
+    height: 15em;
+    margin: 0.75em;
+    border-radius: 2em;
+}
