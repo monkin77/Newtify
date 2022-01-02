@@ -39,9 +39,10 @@ class TagController extends Controller
             ];
         });
 
-        return view('pages.tags_list', [
+        return view('pages.tagsList', [
             'tags' => $tags,
-            'userTags' => $userTags
+            'userTags' => $userTags,
+            'userId' => Auth::id(),
         ]);
     }
 
