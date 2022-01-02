@@ -32,7 +32,7 @@ class ArticleController extends Controller
             'id' => $user->id,
             'name' => $user->name,
             'avatar' => $user->avatar,
-            'country' => $user->country,
+            'country' => $user->country->getInfo(),
             'city' => $user->city,
             'isAdmin' => $user->is_admin,
             'description' => $user->description,
@@ -138,7 +138,7 @@ class ArticleController extends Controller
                 'id' => $author->id,
                 'name' => $author->name,
                 'avatar' => $author->avatar,
-                'country' => $author->country,
+                'country' => $author->country->getInfo(),
                 'city' => $author->city,
                 'isAdmin' => $author->is_admin,
                 'description' => $author->description,
@@ -184,8 +184,6 @@ class ArticleController extends Controller
         ]);
     }
 
-    
-
     /**
      * Show the form for editing an Article.
      *
@@ -226,7 +224,7 @@ class ArticleController extends Controller
             'id' => $author->id,
             'name' => $author->name,
             'avatar' => $author->avatar,
-            'country' => $author->country,
+            'country' => $author->country->getInfo(),
             'city' => $author->city,
             'isAdmin' => $author->is_admin,
             'description' => $author->description,

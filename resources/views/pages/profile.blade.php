@@ -53,8 +53,8 @@ $guest = !Auth::check();
                         <h5 class="mb-0">{{ $birthDate . ' (' . $age . ')' }}</h5>
                     </div>
                     <div class="d-flex align-items-center mb-3">
-                        <i class="fa fa-flag me-3 fa-1x" onclick="console.log('cliked')"></i>
-                        <h5 class="mb-0">
+                        &#{{ $user['country']['flag'][0] }}&#{{ $user['country']['flag'][1] }}
+                        <h5 class="mb-0 ms-3">
                             {{ (is_null($user['city']) ? '' : $user['city'] . ', ') . $user['country']['name'] }}</h5>
                     </div>
                 </div>

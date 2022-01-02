@@ -14,10 +14,11 @@
         </h4>
 
         <p class="user-card-location">
+            &#{{ $user['country']['flag'][0] }}&#{{ $user['country']['flag'][1] }}
             @if (isset($user['city']))
-                {{ $user['city'] }}, {{ $user['country']->name }}
+                {{ $user['city'] }}, {{ $user['country']['name'] }}
             @else
-                {{ $user['country']->name }}
+                {{ $user['country']['name'] }}
             @endif
         </p>
 
