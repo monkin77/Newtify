@@ -100,9 +100,12 @@
         </div>
 
         <div class="d-flex flex-column" id="comments-section">
-            <div class="flex-row mt-3 p-0">
-                <h3 class="m-0">Comments</h3>
-            </div>
+
+            @if (!$comments->isEmpty() || Auth::check())
+                <div class="flex-row mt-3 p-0">
+                    <h3 class="m-0">Comments</h3>
+                </div>
+            @endif
 
             <div class="h-50">
                 @if (Auth::check())
