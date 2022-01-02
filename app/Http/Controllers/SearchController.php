@@ -17,6 +17,9 @@ class SearchController extends Controller
             'query' => 'required|string',
         ]);
 
+        // Save input to old()
+        session()->flashInput($request->input());
+
         /* 
         Errors are handled inside the search page
         See https://stackoverflow.com/questions/49451167/laravel-5-get-the-http-status-code-from-blade-view
@@ -29,7 +32,7 @@ class SearchController extends Controller
         if ($request->type === 'articles')
             $search = $this->getArticleSearch($request->input('query'), 0, 10);
         else if ($request->type === 'users')
-            $search = $this->getUserSearch($request->input('query'), 0, 1);
+            $search = $this->getUserSearch($request->input('query'), 0, 10);
 
         return view('pages.search', [
             'type' => $request->type,
@@ -91,7 +94,7 @@ class SearchController extends Controller
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$value])
             ->get()->skip($offset);
 
-        $canLoadMore = $rawUsers->count() > $limit;
+        $canLoadMore = is_null($limit) ? false : $rawUsers->count() > $limit;
         $rawUsers = $rawUsers->take($limit);
 
         $users = $rawUsers->map(function ($user) {
@@ -120,7 +123,7 @@ class SearchController extends Controller
             ->orderByRaw('ts_rank(tsvectors, plainto_tsquery(\'english\', ?)) DESC', [$value])
             ->get()->skip($offset);
 
-        $canLoadMore = $rawArticles->count() > $limit;
+        $canLoadMore = is_null($limit) ? false : $rawArticles->count() > $limit;
         $rawArticles = $rawArticles->take($limit);
 
         $articles = $rawArticles->map(function ($article) {

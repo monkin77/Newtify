@@ -73,12 +73,22 @@ $guest = !Auth::check();
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('articles')
+    <div class="container-fluid w-100 d-flex justify-content-center my-5" id="userArticles">
+        <h2 class="border-bottom border-2 border-dark text-center pb-1" id="articlesTitle">Articles</h2>
+    </div>
     <section id="articles">
-        <div class="container-fluid w-100 d-flex justify-content-center my-5" id="userArticles">
-            <h2 class="border-bottom border-2 border-dark text-center pb-1" id="articlesTitle">Articles</h2>
-        </div>
         @include('partials.content.articles', ['articles' => $articles])
     </section>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
+
+@section('load-more')
+<div id="load-more">
+
+    <button onclick="loadMoreUser({{ Auth::id() }})">Load more</button>
+
+</div>
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}
@@ -110,5 +120,9 @@ $guest = !Auth::check();
         @yield('userInfo')
         @yield('articles')
         @yield('report')
+
+        @if ($canLoadMore)
+            @yield('load-more')
+        @endif
     </div>
 @endsection

@@ -89,10 +89,6 @@
 
 @endsection
 
-@section('articles')
-    @include('partials.content.articles', ['articles' => $articles])
-@endsection
-
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('content')

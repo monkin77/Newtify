@@ -8,59 +8,54 @@
             
             <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-dark" >
 
-                <div class="flex-row" id="article-header">
+                <div class="flex-row h1" id="articleTitle">
+                    {{ $article['title'] }}
+                </div>
 
-                    <div class="d-flex flex-row w-100">
-                        <h1 class="flex-column m-0 w-75"> 
-                            {{ $article['title'] }}
-                        </h1>
-
-                        <h2 class="flex-column w-25 mx-3">
-                            @if ($is_author)
-                                <a href="{{ route('editArticle', ['id' => $article['id']])}}">
-                                    <i class="fas fa-edit me-4"></i>
-                                </a>
-                            @endif
-                            @if ($is_author || $is_admin)
-                                <form 
-                                    name="deleteArticleForm" id="deleteArticleForm" 
-                                    method="POST"
-                                    action="{{ route('article', ['id' => $article['id']]) }}">
-
-                                    @csrf
-                                    @method('DELETE')
-                                    
-                                    @if ($errors->has('article'))
-                                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                            <p class="mb-0">{{ $errors->first('article') }}</p>
-                                        </div>
-                                    @endif
-                                    @if ($errors->has('content'))
-                                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                            <p class="mb-0">{{ $errors->first('content') }}</p>
-                                        </div>
-                                    @endif
-                                    @if ($errors->has('user'))
-                                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                            <p class="mb-0">{{ $errors->first('user') }}</p>
-                                        </div>
-                                    @endif
-
-                                    <button type="submit" class="btn btn-transparent py-0 my-0 mt-2"> 
-                                        <i class="fas fa-trash fa-3x text-danger" ></i>
-                                    </button>
-
-                                </form>
-                                
-                            @endif
-                        <h2>
-                    </div>
-
+                <div class="d-flex justify-content-between align-items-center flex-row">
                     @php
                         $article_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $article['published_at'] ) )   
                     @endphp
-                    {{ $article_published_at }}
+                    <i style="font-size: 1.2em; width: 25%">{{ $article_published_at }}</i>
 
+                    @if ($is_author || $is_admin)
+                        <div id="articleButtons">
+                            @if ($is_author)
+                                <a href="{{ route('editArticle', ['id' => $article['id']])}}">
+                                    <i class="fas fa-edit article-button me-4"></i>
+                                </a>
+                            @endif
+
+                            <form 
+                                name="deleteArticleForm" id="deleteArticleForm" 
+                                method="POST"
+                                action="{{ route('article', ['id' => $article['id']]) }}">
+
+                                @csrf
+                                @method('DELETE')
+
+                                @if ($errors->has('article'))
+                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                        <p class="mb-0">{{ $errors->first('article') }}</p>
+                                    </div>
+                                @endif
+                                @if ($errors->has('content'))
+                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                        <p class="mb-0">{{ $errors->first('content') }}</p>
+                                    </div>
+                                @endif
+                                @if ($errors->has('user'))
+                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                                        <p class="mb-0">{{ $errors->first('user') }}</p>
+                                    </div>
+                                @endif
+
+                            </form>
+                            <a onclick="document.deleteArticleForm.submit()" href="">
+                                <i class="fas fa-trash article-button" ></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 <p class="flex-row mt-3 mb-1 h-25"> 
@@ -75,7 +70,7 @@
                     <i class="fas fa-share-alt ms-4"></i>
                 </p>
 
-                <div class="flex-row h-50 mb-5">
+                <div class="flex-row h-50 mb-5 text-center">
                     <img class="h-100 w-50" src={{
                         isset($article['thumbnail']) ?
                         $article['thumbnail']
@@ -84,7 +79,7 @@
                     }}>
                 </div>
         
-                <div class="flex-row h-75">
+                <div id="articleBody" class="flex-row h-75">
                     {{ $article['body'] }}
                 </div>
 
@@ -100,9 +95,12 @@
         </div>
 
         <div class="d-flex flex-column" id="comments-section">
-            <div class="flex-row mt-3 p-0">
-                <h3 class="m-0">Comments</h3>
-            </div>
+
+            @if (!$comments->isEmpty() || Auth::check())
+                <div class="flex-row mt-3 p-0">
+                    <h3 class="m-0">Comments</h3>
+                </div>
+            @endif
 
             <div class="h-50">
                 @if (Auth::check())

@@ -12,13 +12,13 @@
 */
 // Home
 Route::get('/', 'HomeController@show')->name('homepage');
-Route::get('/api/article/filter', 'HomeController@filter');
+Route::get('api/article/filter', 'HomeController@filter');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
 Route::post('signup', 'Auth\RegisterController@register');
 
 // User
@@ -29,7 +29,7 @@ Route::delete('api/user/{id}', 'UserController@delete');
 Route::post('user/{id}/report', 'UserController@report');
 Route::get('api/user/{id}/suspension', 'UserController@suspension');
 Route::get('user/{id}/followed', 'UserController@followed');
-Route::get('user/{id}/articles', 'UserController@articles');
+Route::get('api/user/{id}/articles', 'UserController@articles');
 Route::post('user/{id}/follow', 'UserController@follow');
 Route::post('user/{id}/unfollow', 'UserController@unfollow');
 
@@ -42,7 +42,7 @@ Route::put('article/{id}/edit', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
 
 // Admin
-Route::get('admin', 'AdminController@show');
+Route::get('admin', 'AdminController@show')->name('admin');
 Route::get('admin/suspensions', 'AdminController@suspensions');
 Route::post('user/{id}/suspend', 'AdminController@suspendUser');
 Route::put('user/{id}/unsuspend', 'AdminController@unsuspendUser');
@@ -56,11 +56,11 @@ Route::put('tags/{tag_id}/accept', 'TagController@accept');
 Route::put('tags/{tag_id}/reject', 'TagController@reject');
 Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite');
 Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');
-Route::get('tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
+Route::get('api/tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
 Route::delete('tags/{tag_id}', 'TagController@destroy');
 Route::post('tags/new', 'TagController@propose');
 
 // Search
-Route::get('search', 'SearchController@show');
+Route::get('search', 'SearchController@show')->name('search');
 Route::get('api/search/users', 'SearchController@searchUsers');
 Route::get('api/search/articles', 'SearchController@searchArticles');

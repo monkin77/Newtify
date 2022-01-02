@@ -384,7 +384,7 @@ paths:
         "404":
           description: "User not found"
 
-  /user/{id}/articles:
+  /api/user/{id}/articles:
     get:
       operationId: R208
       summary: "R208: User articles"
@@ -1105,7 +1105,7 @@ paths:
         "409":
           description: "Conflict. Tag is not a favourite"
 
-  /tags/{tag_state}:
+  /api/tags/{tag_state}:
     get:
       operationId: R507
       summary: "R507: Filter Tags"

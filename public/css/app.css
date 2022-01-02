@@ -2,6 +2,100 @@ body {
     background-color: #ffffff;
 }
 
+/* Navbar */
+
+#logo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.6em;
+    color: #9b4dca;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchForm {
+    border-radius: 2em 1em 1em 2em;
+    position: relative;
+    top: 0.6em;
+}
+
+#searchForm input {
+    color: grey;
+    font-size: medium;
+    box-shadow: none;
+}
+
+#searchDropdown {
+    width: 25%;
+    position: relative;
+    left: 1%;
+}
+
+#searchDropdownButton {
+    width: 100%;
+    border-radius: 0.5em;
+    border-width: 0; /* Disable bootstrap's button border */
+    font-size: medium;
+    text-transform: none;
+    letter-spacing: inherit;
+    box-shadow: none;
+}
+
+#searchType {
+    width: 25%;
+    border-width: 0 1px 0 1px;
+    border-radius: 0.5em;
+
+    position: relative;
+    left: 1%;
+
+    cursor: pointer;
+}
+
+#searchType:focus {
+    border-color: inherit;
+}
+
+.dropdown-custom-item {
+    font-size: small;
+    line-height: 3em;
+}
+
+.dropdown-custom-item:hover {
+    cursor: pointer;
+}
+
+.dropdown-custom-item:active {
+    background-color: #9b4dca !important;
+}
+
+.no-border {
+    border: 0 !important;
+}
+
+.button-secondary {
+    color: rgb(200, 100, 241);
+    border-color: rgb(200, 100, 241);
+    background-color: inherit;
+}
+
+#dropdownContainer {
+    width: 12%;
+    height: auto;
+    margin-right: 8%;
+}
+
+#mainDropdown {
+    width: 250%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#dropdownAvatar {
+    border-radius: 2em;
+}
+
 /* HomePage */
 
 .home-section .home-container {
@@ -78,6 +172,22 @@ body {
     width: 100%;
 }
 
+#articleTitle {
+    font-size: 2.7em;
+}
+
+#articleBody {
+    white-space: pre-line;
+}
+
+#articleButtons {
+    width: 16%;
+}
+
+.article-button {
+    font-size: 2em;
+}
+
 #load-more {
     text-align: center;
 }
@@ -141,6 +251,7 @@ body {
 }
 
 #deleteArticleForm {
+    display: none;
 }
 
 /* Forms Errors */
