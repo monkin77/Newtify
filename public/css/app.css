@@ -285,7 +285,7 @@ body {
     height: 40%;
 }
 
-#userInfo #userGraphics #avatarImg {
+#userInfo #userGraphics #avatarImg{
     height: 100%;
     aspect-ratio: 1;
     border-radius: 100em;
