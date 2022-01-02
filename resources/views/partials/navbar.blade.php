@@ -96,17 +96,10 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-<<<<<<< HEAD
                                 <a class="dropdown-item" href="{{ url('/user/'.Auth::id()) }}">{{ Auth::user()->name }}</a>
                                 <br>
                                 <li class="col text-center">
                                     <a class="btn btn-outline-secondary btn-lg" href="{{ url('/logout') }}"> Logout </a>
-=======
-                                <li>
-                                    <a class="button" href="{{ url('/logout') }}"> Logout </a>
-                                    <span>{{ Auth::user()->name }}</span>
->>>>>>> redo changes in navbar
->>>>>>> redo changes in navbar
                                 </li>
 
                             </ul>
@@ -123,6 +116,6 @@
     </nav>
 
     {{-- @if (Auth::check())
-    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-    @endif --}}
+    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span> {{ Auth::user()->name }}</span>
+    @endif--}}
 </header>
