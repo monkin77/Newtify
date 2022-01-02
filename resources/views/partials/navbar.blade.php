@@ -124,5 +124,5 @@
 
     {{-- @if (Auth::check())
     <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-    @endif--}}
+    @endif --}}
 </header>
