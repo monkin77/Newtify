@@ -57,7 +57,7 @@ $isOpen = $errors->has('password');
                         <div class="d-flex position-relative align-items-center h2 w-50" id='countryInputContainer'>
                             <select required name='country'
                                 value="{{ old('country') ? old('country') : $user['country']['name'] }}" id="countryInput"
-                                size=1 class="my-0">
+                                size=1 class="my-0 border-0">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country['name'] }}" @if (old('country') ? old('country') == $country['name'] : $user['country']['id'] == $country['id'])
                                         selected
