@@ -497,6 +497,25 @@ body {
     border-radius: 3em;
 }
 
+/* Admin Panel */
+
+.linkContainer{
+    line-height: 20em;
+    font-size: x-large;
+    max-height: 90vh;
+}
+
+.cir{
+    background-color: lightgray;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.iconSize{
+    font-size: 5em;
+}
+
 /* Tags Managment */
 
 .statusContainer {

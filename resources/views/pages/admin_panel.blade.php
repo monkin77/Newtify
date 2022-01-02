@@ -3,14 +3,20 @@
 @section('content')
 
 
-<div class="container">
-    <div class="d-flex shadow mb-5 flex-row row-cols-3">
-        <h3 class="modal-titlemx-auto text-left fw-bold" id="exampleModalLabel">Admin Page</h3>
-        <div class="container">
-            <a class="row" href="{{ url('/admin/suspensions') }}">Manage Suspensions</a>
-            <a class="row" href="{{ url('/admin/reports') }}">Manage Reports</a>
-            <a class="row" href="{{ url('/admin/tags') }}">Manage Tags</a>
-        </div>   
+<div class="my-5 container">
+    <div class="d-flex flex-row row-cols-3">
+        <div class="d-flex align-items-center flex-column border shadow bg-light me-3 linkContainer col">
+            <i class="fas fa-users cir iconSize"></i>
+            <a class="text-secondary" href="{{ url('/admin/reports') }}">Manage Suspensions</a>
+        </div>
+        <div class="d-flex text-center flex-column border shadow bg-light linkContainer col">
+            <i class="fas fa-users iconSize"></i>
+            <a class="text-secondary" href="{{ url('/admin/reports') }}">Manage Reports</a>
+        </div> 
+        <div class="d-flex text-center flex-column border shadow bg-light mx-3 linkContainer col">
+            <i class="fas fa-users iconSize"></i>
+            <a class="text-secondary" href="{{ url('/admin/reports') }}">Manage Tags</a>
+        </div>
     </div>
 </div>
 
