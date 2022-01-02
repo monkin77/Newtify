@@ -19,7 +19,8 @@
                     <div class="flex-row">
                         <label for="title">{{ "Article's Title" }}</label>
                         <h2 class="m-0"> 
-                            <input type="text" required minlength="3" maxlength="100" class="h-100" id="title" name="title" placeholder="Insert Title">
+                            <input type="text" required minlength="3" maxlength="100" class="h-100"
+                                id="title" name="title" placeholder="Insert Title" value="{{ old('title') }}">
                         </h2>
                         @if ($errors->has('title'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
@@ -33,7 +34,13 @@
 
                         <select required id="tags" name="tags[]" multiple>
                             @foreach($tags as $tag)
-                                <option value="{{$tag['id']}}">{{ $tag['name'] }}</option>
+                                <option value="{{$tag['id']}}"
+                                    @if (old('tags') && in_array($tag['id'], old('tags')))
+                                        selected
+                                    @endif
+                                >
+                                    {{ $tag['name'] }}
+                                </option>
                             @endforeach
                         </select>
 
@@ -53,7 +60,9 @@
       
                     <div class="flex-row h-100">
                         <label for="body">{{ "Article's Body" }}</label>
-                        <textarea id="body" required name="body" minlength="10" rows="15" class="h-100" placeholder="Insert Body"></textarea>
+                        <textarea id="body" required name="body" minlength="10" rows="15" class="h-100"
+                            placeholder="Insert Body">{{ old('body') }}</textarea>
+
                         @if ($errors->has('body'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
                                 <p class="mb-0">{{ $errors->first('body') }}</p>

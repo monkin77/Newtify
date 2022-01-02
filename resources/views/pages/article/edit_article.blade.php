@@ -20,7 +20,8 @@
                     <div class="flex-row">
                         <label for="title">{{ "Edit article's Title" }}</label>
                         <h2 class="m-0"> 
-                            <input type="text" autofocus required minlength="3" maxlength="100" class="h-100" id="title" name="title" value="{{ $article['title'] }}">
+                            <input type="text" autofocus required minlength="3" maxlength="100" class="h-100" id="title"
+                                name="title" value="{{ old('title') ? old('title') : $article['title'] }}">
                         </h2>
                         @if ($errors->has('title'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
@@ -35,8 +36,12 @@
                         <select required id="tags" name="tags[]" multiple>
                             @foreach($tags as $tag)
                                 <option class="m-0"
-                                @if ($articleTags->contains('name', $tag['name']))
-                                    selected="selected"
+                                @if ( old('tags') ?
+                                in_array($tag['id'], old('tags'))
+                                :
+                                $articleTags->contains('name', $tag['name'])
+                                )
+                                    selected
                                 @endif
                                 value="{{$tag['id']}}">{{ $tag['name'] }}</option>
                             @endforeach
@@ -55,10 +60,12 @@
                         <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
                     </div>
                     --}}
-             
+
                     <div class="flex-row h-100">
                         <label for="body">{{ "Edit Article's Body" }}</label>
-                        <textarea id="body" required name="body" minlength="10" rows="15" class="h-100">{{$article['body']}}</textarea>
+                        <textarea id="body" required name="body" minlength="10" rows="15" class="h-100">{{
+                            old('body') ? old('body') : $article['body']
+                        }}</textarea>
                         @if ($errors->has('body'))
                             <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
                                 <p class="mb-0">{{ $errors->first('body') }}</p>

@@ -41,7 +41,7 @@ const loadMoreHome = () => {
 };
 
 const loadMoreUser = (userId) => {
-    const numResults = $('#articles').childElementCount;
+    const numResults = select('#articles').childElementCount;
     const url = `/api/user/${userId}/articles?offset=${numResults}&limit=4`;
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
 };
