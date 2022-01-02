@@ -43,6 +43,6 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article)
     {
-        return $user->id === $article->author()->first()->id;
+        return $user->id === $article->author()->first()->id || $user->is_admin;
     }
 }
