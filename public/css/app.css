@@ -500,21 +500,27 @@ body {
 /* Admin Panel */
 
 .linkContainer{
-    line-height: 20em;
+    line-height: 15em;
     font-size: x-large;
-    max-height: 90vh;
+    min-width: 10em;
+    text-align: center;
 }
 
-.cir{
-    background-color: lightgray;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
+.manageLink {
+    padding: 1em;
+    min-height: 15em;
+    font-size: x-large;
+    text-align: center;
 }
 
-.iconSize{
+.suspensionsIcon, 
+.reportsIcon,
+.tagsIcon {
+    padding: 0.2em;
     font-size: 5em;
+    background-color: darkgray;
 }
+
 
 /* Tags Managment */
 
