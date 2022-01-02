@@ -78,6 +78,35 @@
                                         href="{{ route('logout') }}"
                                         style="font-size: 0.9em"
                                     > Logout </a>
+                    <div class="nav-item mx-4">
+                        <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
+                    </div>
+                    <div class="nav-item mx-4">
+                        <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
+                    </div>
+                    <div class="nav-item dropdown mx-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            @if (Auth::check())
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+<<<<<<< HEAD
+                                <a class="dropdown-item" href="{{ url('/user/'.Auth::id()) }}">{{ Auth::user()->name }}</a>
+                                <br>
+                                <li class="col text-center">
+                                    <a class="btn btn-outline-secondary btn-lg" href="{{ url('/logout') }}"> Logout </a>
+=======
+                                <li>
+                                    <a class="button" href="{{ url('/logout') }}"> Logout </a>
+                                    <span>{{ Auth::user()->name }}</span>
+>>>>>>> redo changes in navbar
+>>>>>>> redo changes in navbar
                                 </li>
 
                             </ul>
@@ -92,4 +121,8 @@
             </div>
         </div>
     </nav>
+
+    {{-- @if (Auth::check())
+    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span> {{ Auth::user()->name }}</span>
+    @endif--}}
 </header>
