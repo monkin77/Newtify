@@ -79,7 +79,6 @@
                                         style="font-size: 0.9em"
                                     > Logout </a>
                                 </li>
-<<<<<<< HEAD
 
                             </ul>
                         </div>
@@ -89,18 +88,6 @@
                             <a href={{ route('signup') }} class="button button-secondary mx-4 mt-2">Signup</a>
                         </div>
                     @endif
-=======
-                            @endif
-                            @if (Auth::check())
-                                @if (Auth::user()->is_admin)
-                                <li class="col text-center">
-                                    <a class="btn btn-outline-secondary btn-lg" href="{{ url('/admin') }}"> Admin Panel </a>
-                                </li>
-                                @endif
-                            @endif
-                        </ul>
-                    </div>
->>>>>>> Admin Button and Panel initalization
                 </div>
             </div>
         </div>

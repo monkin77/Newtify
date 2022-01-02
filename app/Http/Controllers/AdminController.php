@@ -258,65 +258,39 @@ class AdminController extends Controller
     {
         $this->authorize('tags', Admin::class);
 
-        $tags_pending = Tag::listTagsByState('PENDING')->map(function ($tag) {
-            if (isset($tag->user))
-                $userInfo = [
-                    'id' => $tag->user_id,
-                    'name' => $tag->user->name,
-                    'avatar' => $tag->user->avatar
-                ];
-            else $userInfo = null;
+        $tags_pending = $this->getTagsByState('PENDING');
 
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-                'proposed_at' => $tag->proposed_at,
-                'state' => $tag->state,
-                'user' => $userInfo
-            ];
-        });
+        $tags_accepted = $this->getTagsByState('ACCEPTED');
 
-        $tags_accepted = Tag::listTagsByState('ACCEPTED')->map(function ($tag) {
-            if (isset($tag->user))
-                $userInfo = [
-                    'id' => $tag->user_id,
-                    'name' => $tag->user->name,
-                    'avatar' => $tag->user->avatar
-                ];
-            else $userInfo = null;
-
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-                'proposed_at' => $tag->proposed_at,
-                'state' => $tag->state,
-                'user' => $userInfo
-            ];
-        });
-
-        $tags_rejected = Tag::listTagsByState('REJECTED')->map(function ($tag) {
-            if (isset($tag->user))
-                $userInfo = [
-                    'id' => $tag->user_id,
-                    'name' => $tag->user->name,
-                    'avatar' => $tag->user->avatar
-                ];
-            else $userInfo = null;
-
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-                'proposed_at' => $tag->proposed_at,
-                'state' => $tag->state,
-                'user' => $userInfo
-            ];
-        });
+        $tags_rejected = $this->getTagsByState('REJECTED');
 
         return view('pages.admin.manageTags', [
             'tags_pending' => $tags_pending,
             'tags_accepted' => $tags_accepted,
             'tags_rejected' => $tags_rejected,
         ]);
+    }
+
+    private function getTagsByState(string $state) {
+        $tags = Tag::listTagsByState($state)->map(function ($tag) {
+            if (isset($tag->user))
+                $userInfo = [
+                    'id' => $tag->user_id,
+                    'name' => $tag->user->name,
+                    'avatar' => $tag->user->avatar
+                ];
+            else $userInfo = null;
+
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'proposed_at' => $tag->proposed_at,
+                'state' => $tag->state,
+                'user' => $userInfo
+            ];
+        })->sortBy('name');
+
+        return $tags;
     }
 
     public function closeReport(int $id)
