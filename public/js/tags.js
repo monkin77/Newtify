@@ -1,10 +1,3 @@
-$('#tags').select2({
-    multiple: true,
-    maximumSelectionLength: 3,
-    tokenSeparators: [',', ' ', ";"],
-    theme: "classic",
-});
-
 proposeTag = (e) => {
     e.preventDefault();
     const tagName = e.target.elements.tagName.value;
