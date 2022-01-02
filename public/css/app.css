@@ -331,7 +331,7 @@ body {
 }
 
 #editProfileContainer #editAvatarContainer {
-    height: 30vh;
+    height: 27.5vh;
 }
 
 #editProfileContainer #editAvatarContainer #avatarPreview {
@@ -356,4 +356,5 @@ body {
     border: 2px black solid;
     padding-top: 0.4em;
     padding-bottom: 0.4em;
+    min-width: 10em;
 }

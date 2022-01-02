@@ -13,8 +13,8 @@ $isOpen = $errors->has('password');
             @method('put')
             @csrf
 
-            <div class="row w-100 mt-5" id="editAvatarContainer">
-                <label class="h1 py-0 my-0">Avatar</label>
+            <div class="row w-100 mt-2" id="editAvatarContainer">
+                <label class="h2 py-0 my-0">Avatar</label>
                 <div class="d-flex align-items-center h-100">
                     <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarPreview"
                         onerror="this.src='{{ $userImgPHolder }}'" />
@@ -27,30 +27,34 @@ $isOpen = $errors->has('password');
                 </div>
             </div>
             <div class="row w-100 mt-5">
-                <label class="h1 pb-3 my-0" for="nameInput">Username</label>
-                <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
-                    class="text-center w-auto h2 editInputs" id="nameInput" name='name' />
-                @if ($errors->has('name'))
-                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
-                        <p class="">{{ $errors->first('name') }}</p>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="h2 pb-3 my-0" for="nameInput">Username</label>
+                        <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
+                            class="text-center w-auto h2 editInputs" id="nameInput" name='name' />
+                        @if ($errors->has('name'))
+                            <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                                <p class="">{{ $errors->first('name') }}</p>
+                            </div>
+                        @endif
                     </div>
-                @endif
+                    <div class="col-4">
+                        <label class="h2 pb-3 my-0" for="birthDateInput">Birth Date</label>
+                        <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
+                            class="text-center w-auto h2 editInputs py-4" id="birthDateInput" name='birthDate' />
+                        @if ($errors->has('birthDate'))
+                            <div class="alert alert-danger ms-3 w-100 text-center py-1" role="alert">
+                                <p class="">{{ 'Isto merdou amigo' }}</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
             <div class="row w-100 mt-5">
-                <label class="h1 pb-3 my-0" for="birthDateInput">Birth Date</label>
-                <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
-                    class="text-center w-auto h2 editInputs py-4" id="birthDateInput" name='birthDate' />
-                @if ($errors->has('birthDate'))
-                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
-                        <p class="">{{ $errors->first('birthDate') }}</p>
-                    </div>
-                @endif
-            </div>
-            <div class="row w-100 mt-5">
-                <div class="d-flex">
-                    <div class="pe-5 me-5">
-                        <label class="h1 pb-3 my-0" for="countryInput">Country</label>
-                        <div class="d-flex position-relative align-items-center h2" id='countryInputContainer'>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="h2 pb-3 my-0" for="countryInput">Country</label>
+                        <div class="d-flex position-relative align-items-center h2 w-50" id='countryInputContainer'>
                             <select required name='country'
                                 value="{{ old('country') ? old('country') : $user['country']['name'] }}" id="countryInput"
                                 size=1 class="my-0">
@@ -65,8 +69,8 @@ $isOpen = $errors->has('password');
                             <i class="fa fa-caret-down fa-1x position-absolute caretDown"></i>
                         </div>
                     </div>
-                    <div class="ms-5">
-                        <label class="h1 pb-3 my-0" for="cityInput">City</label>
+                    <div class="col-4">
+                        <label class="h2 pb-3 my-0" for="cityInput">City</label>
                         <input type="text" value="{{ old('city') ? old('city') : $user['city'] }}"
                             class="text-center w-auto h2 editInputs" id="cityInput" name='city' />
 
@@ -84,8 +88,8 @@ $isOpen = $errors->has('password');
                 @endif
             </div>
             <div class="row w-100 mt-5">
-                <label class="h1 pb-3 my-0" for="descriptionInput">Description</label>
-                <textarea id="descriptionInput" name="description" rows="10"
+                <label class="h2 pb-3 my-0" for="descriptionInput">Description</label>
+                <textarea id="descriptionInput" name="description" rows="7"
                     class="h-100 editInputs py-2">{{ old('description') ? old('description') : $user['description'] }}</textarea>
                 @if ($errors->has('description'))
                     <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
@@ -94,7 +98,7 @@ $isOpen = $errors->has('password');
                 @endif
             </div>
 
-            <div class="row w-100 mt-5 d-flex justify-content-center">
+            <div class="row w-100 mt-2 d-flex justify-content-center">
                 <button type="submit" class="w-auto text-center px-5">Edit Profile</button>
             </div>
         </form>
