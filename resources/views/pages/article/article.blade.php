@@ -51,9 +51,9 @@
                                 @endif
 
                             </form>
-                            <a onclick="document.deleteArticleForm.submit()" href="">
-                                <i class="fas fa-trash article-button" ></i>
-                            </a>
+                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-transparent">
+                                <i class="fas fa-trash article-button text-danger" ></i>
+                            </button>
                         </div>
                     @endif
                 </div>

@@ -5,7 +5,7 @@
 
         <div class="d-flex flex-row pt-3 h-75">
             <div class="w-25 me-3 text-center">
-                <img id="authorAvatar" class="h-100" src="{{
+                <img id="authorAvatar" class="w-100" src="{{
                     isset($author['avatar']) ?
                     asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
                 }}" onerror="this.src='{{ $userImgPHolder }}'" />

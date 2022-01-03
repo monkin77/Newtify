@@ -331,6 +331,7 @@ class ArticleController extends Controller
      */
     public function destroy(Request $request, int $id)
     {
+
         $article = Article::find($id);
         if(is_null($article))
             return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
@@ -357,6 +358,7 @@ class ArticleController extends Controller
         }
 
         $deleted = $article->delete();
+
         if ($deleted) 
             return redirect('/');
         else 
