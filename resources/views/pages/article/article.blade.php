@@ -110,7 +110,7 @@
                             asset('storage/avatars/'.Auth::user()->avatar)
                             :
                             $userImgPHolder
-                        }}">
+                        }}" onerror="this.src='{{ $userImgPHolder }}'">
                         <p>You</p>
                     </div>
 
