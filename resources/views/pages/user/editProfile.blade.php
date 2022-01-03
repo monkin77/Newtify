@@ -17,7 +17,7 @@ $isOpen = $errors->has('password');
             <div class="row w-100 mt-2" id="editAvatarContainer">
                 <label class="h2 py-0 my-0">Avatar</label>
                 <div class="d-flex align-items-center h-100">
-                    <img src={{ isset($user['avatar']) ? $user['avatar'] : $userImgPHolder }} id="avatarPreview"
+                    <img src={{ isset($user['avatar']) ? asset('storage/avatars/'.$user['avatar']) : $userImgPHolder }} id="avatarPreview"
                         onerror="this.src='{{ $userImgPHolder }}'" />
                     <input type="file" accept="image/*" id="imgInput" name='avatar' />
                     @if ($errors->has('avatar'))
