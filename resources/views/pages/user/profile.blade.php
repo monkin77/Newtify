@@ -28,6 +28,9 @@ $guest = !Auth::check();
             <div class="row w-100 mt-5 mb-4">
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
+                    @if ($user['isAdmin'])
+                        <span class="badge rounded-pill ms-3 bg-custom"> Admin </span>
+                    @endif
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)

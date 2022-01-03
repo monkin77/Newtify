@@ -22,7 +22,7 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
-<section id="filterSection" class="d-flex flex-row border mb-3 py-2">
+<section id="filterSection" class="d-flex flex-row border mb-4 py-3">
     <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
         <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off" checked>
         <label class="filter-button btn btn-outline-secondary ms-4 my-auto" for="trending">
