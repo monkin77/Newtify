@@ -26,9 +26,20 @@ tags:
 paths:
   # M01: Authentication
   /login:
+    get:
+      operationId: "R101"
+      summary: "R101: Login Form"
+      description: "Provide form for authentication. Access: PUB"
+      tags:
+        - "M01: Authentication"
+
+      responses:
+        "200":
+          description: "Ok. Show Login form (UI02)"
+
     post:
-      operationId: R101
-      summary: "R101: Login action"
+      operationId: R102
+      summary: "R102: Login action"
       description: "Processes the login form submission. Access: PUB"
       tags:
         - "M01: Authentication"
@@ -66,9 +77,9 @@ paths:
                   value: "/login"
 
   /logout:
-    post:
-      operationId: R102
-      summary: "R102: Logout action"
+    get:
+      operationId: R103
+      summary: "R103: Logout action"
       description: "Logout the current authenticated user. Access: USR"
       tags:
         - "M01: Authentication"
@@ -87,8 +98,8 @@ paths:
 
   /signup:
     get:
-      operationId: "R103"
-      summary: "R103: Sign-up Form"
+      operationId: "R104"
+      summary: "R104: Sign-up Form"
       description: "Provide form for new users. Access: PUB"
       tags:
         - "M01: Authentication"
@@ -98,8 +109,8 @@ paths:
           description: "Ok. Show sign-up form (UI03)"
 
     post:
-      operationId: "R104"
-      summary: "R104: Sign-up action"
+      operationId: "R105"
+      summary: "R105: Sign-up action"
       description: "Processes the new user sign-up form submission. Access: PUB"
       tags:
         - "M01: Authentication"
@@ -727,8 +738,8 @@ paths:
           description: "Article not found"
 
     delete:
-      operationId: R309
-      summary: "R309 : Delete article action"
+      operationId: R308
+      summary: "R308 : Delete article action"
       description: "Processes a request to delete an article. Access: OWN, ADM"
       tags:
         - "M03: Articles"
@@ -757,8 +768,8 @@ paths:
 
   /article/{id}/edit:
     get:
-      operationId: R310
-      summary: "R310 : Article edition form"
+      operationId: R309
+      summary: "R309 : Article edition form"
       description: "Provide a form for article edition. Access: OWN"
       tags:
         - "M03: Articles"
@@ -781,8 +792,8 @@ paths:
           description: "Article not found"
 
     put:
-      operationId: R308
-      summary: "R308 : Edit article action"
+      operationId: R310
+      summary: "R310 : Edit article action"
       description: "Processes the user edit profile form submission. Access: OWN"
       tags:
         - "M03: Articles"
@@ -827,22 +838,9 @@ paths:
 
   # M04 : Comments
   /comment:
-    get:
-      operationId: R401
-      summary: "401 : Create comment form"
-      description: "Provide new comment creation form. Access: USR"
-      tags:
-        - "M04: Comments"
-
-      responses:
-        "200":
-          description: "OK. Show Create Comment form (part of UI13)"
-        "401":
-          description: "Unauthorized. Must be authenticated."
-
     post:
-      operationId: R402
-      summary: "R402 : Create comment action"
+      operationId: R401
+      summary: "R401 : Create comment action"
       description: "Processes the new comment creation form. Access: USR"
       tags:
         - "M04: Comments"
@@ -876,8 +874,8 @@ paths:
 
   /comment/{id}:
     put: # Do we need a form endpoint to edit the comment? I believe it could be in the HTML already returned by the article. However, I've added one to create a comment and maybe it's the same logic
-      operationId: R403
-      summary: "R403 : Edit comment action"
+      operationId: R402
+      summary: "R402 : Edit comment action"
       description: "Processes a comment edition. Access: OWN"
       tags:
         - "M04: Comments"
@@ -912,8 +910,8 @@ paths:
           description: "Comment id not found."
 
     delete:
-      operationId: R404
-      summary: "R404 : Delete comment action"
+      operationId: R403
+      summary: "R403 : Delete comment action"
       description: "Processes a request to delete a comment. Access: OWN, ADM"
       tags:
         - "M04: Comments"
@@ -935,10 +933,10 @@ paths:
         "404":
           description: "Comment id not found."
 
-  /comment/article/{id}:
+  /api/comment/article/{id}:
     get:
-      operationId: R405
-      summary: "R405 : Comments of a given article"
+      operationId: R404
+      summary: "R404 : Comments of a given article"
       description: "Returns comments of a given article according to user parameters. Access: PUB"
       tags:
         - "M04: Comments"
@@ -973,22 +971,10 @@ paths:
 
   # M05: Tags
 
-  /tags:
-    get:
-      operationId: R501
-      summary: "R501: List Accepted Tags"
-      description: "Show the list of accepted tags. Access: PUB"
-      tags:
-        - "M05: Tags"
-
-      responses:
-        "200":
-          description: "Ok. Show accepted tags list"
-
   /tags/{tag_id}/accept:
     put:
-      operationId: "R502"
-      summary: "R502: Accept a Tag"
+      operationId: "R501"
+      summary: "R501: Accept a Tag"
       description: "Change the state of a tag to accepted. Access: ADM"
       tags:
         - "M05: Tags"
@@ -1012,8 +998,8 @@ paths:
 
   /tags/{tag_id}/reject:
     put:
-      operationId: "R503"
-      summary: "R503: Reject a Tag"
+      operationId: "R502"
+      summary: "R502: Reject a Tag"
       description: "Change the state of a tag to rejected. Access: ADM"
       tags:
         - "M05: Tags"
@@ -1037,8 +1023,8 @@ paths:
 
   /favorite_tags:
     get:
-      operationId: R504
-      summary: "R504: View User Favourite Tags"
+      operationId: R503
+      summary: "R503: View User Favourite Tags"
       description: "Show user favourite tags. Access: USR"
       tags:
         - "M05: Tags"
@@ -1057,10 +1043,10 @@ paths:
                   description: "User is not logged in. Redirect to login form."
                   value: "/login"
 
-  /tags/{tag_id}/add_favourite:
+  /tags/{tag_id}/add_favorite:
     put:
-      operationId: R505
-      summary: "R505: Add a Tag to Favourites"
+      operationId: R504
+      summary: "R504: Add a Tag to Favourites"
       description: "Processes the addition of favourite tag. Access: USR"
       tags:
         - "M05: Tags"
@@ -1080,10 +1066,10 @@ paths:
         "404":
           description: "Not found"
 
-  /tags/{tag_id}/remove_favourite:
+  /tags/{tag_id}/remove_favorite:
     put:
-      operationId: R506
-      summary: "R506: Remove a Tag from Favourites"
+      operationId: R505
+      summary: "R505: Remove a Tag from Favourites"
       description: "Processes the removal of favourite tag. Access: USR"
       tags:
         - "M05: Tags"
@@ -1107,8 +1093,8 @@ paths:
 
   /api/tags/{tag_state}:
     get:
-      operationId: R507
-      summary: "R507: Filter Tags"
+      operationId: R506
+      summary: "R506: Filter Tags"
       description: "Show list of tags by state. Access: ADM"
       tags:
         - "M05: Tags"
@@ -1132,8 +1118,8 @@ paths:
 
   /tags/{tag_id}:
     delete:
-      operationId: R508
-      summary: "R508: Remove tag"
+      operationId: R507
+      summary: "R507: Delete tag"
       description: "Processes the delete tag request. Access: ADM"
       tags:
         - "M05: Tags"
@@ -1157,8 +1143,8 @@ paths:
 
   /tags/new:
     post:
-      operationId: R509'
-      summary: "R509: Propose New Tag"
+      operationId: R508'
+      summary: "R508: Propose New Tag"
       description: "Processes the new tag form submission. Access: USR"
       tags:
         - "M05: Tags"
