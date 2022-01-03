@@ -2,9 +2,9 @@
 
 @section('content')
     
-    <div class="article-container container-fluid bg-light">
+    <div class="article-container h-100 container-fluid bg-light">
 
-        <div class="d-flex flex-row my-2 h-100">
+        <div class="d-flex flex-row my-2 h-100" style="min-height: 65vh">
             
             <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-dark" >
 
@@ -51,9 +51,9 @@
                                 @endif
 
                             </form>
-                            <a onclick="document.deleteArticleForm.submit()" href="">
-                                <i class="fas fa-trash article-button" ></i>
-                            </a>
+                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-transparent">
+                                <i class="fas fa-trash article-button text-danger" ></i>
+                            </button>
                         </div>
                     @endif
                 </div>

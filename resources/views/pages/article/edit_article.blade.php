@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script src=" {{ asset('js/tags.js') }}"> </script>
+    <script src=" {{ asset('js/select2tags.js') }}"> </script>
 @endsection
 
 {{-- ------------------------------------------------------ --}}

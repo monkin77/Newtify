@@ -1,20 +1,21 @@
 @if (isset($author))
 
-    <div class="d-flex flex-column h-25 py-1">
+    <div class="d-flex flex-column py-1" id="authorDetails">
         <h2 class="py-0 my-0 h-25">Author</h2>
 
-        <div class="d-flex flex-row pt-3 h-50">
+        <div class="d-flex flex-row pt-3 h-75">
             <div class="w-25 me-3 text-center">
-                <img id="authorAvatar" class="h-100" src="{{
+                <img id="authorAvatar" class="w-100" src="{{
                     isset($author['avatar']) ?
                     asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
                 }}" onerror="this.src='{{ $userImgPHolder }}'" />
             </div>
             <div class="w-75 pb-0" id="author-header">
                 <a href="{{ route('userProfile', ['id' => $author['id']]) }}" ]>
-                    <h4 class="mb-2"> {{ $author['name'] }} </h4>
+                    <h4 class="m-3"> {{ $author['name'] }} </h4>
                 </a>
-                <p>
+                
+                <p class="m-3">
                     &#{{ $author['country']['flag'][0] }}&#{{ $author['country']['flag'][1] }}
                     @if (isset($author['city']))
                         {{ $author['city'] }}, {{ $author['country']['name'] }}
@@ -22,16 +23,18 @@
                         {{ $author['country']['name'] }}
                     @endif
                 </p>
+
+                <div class="m-3">
+                    @include('partials.user.reputationBar', [
+                        'user' => $author,
+                        'guest' => !Auth::check(),
+                        'isOwner' => $isOwner,
+                    ])
+                </div>
             </div>
+                        
         </div>
 
-        <div class="d-flex h-25 justify-content-center align-items-center">
-            @include('partials.user.reputationBar', [
-                'user' => $author,
-                'guest' => !Auth::check(),
-                'isOwner' => $isOwner,
-            ])
-        </div>
     </div>
 
     <div class="flex-row px-1 py-4" id="authorDescription">

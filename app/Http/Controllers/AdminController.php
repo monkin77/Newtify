@@ -35,7 +35,7 @@ class AdminController extends Controller
             'city' => $admin->city,
         ];
 
-        return view('pages.admin_panel',[
+        return view('pages.admin.admin_panel',[
             'admin' => $adminInfo,
         ]);
     }
@@ -103,7 +103,7 @@ class AdminController extends Controller
             ];
         })->sortByDesc('start_date');
 
-        return view('pages.suspensions', [
+        return view('pages.admin.suspensions', [
             'suspendedUsers' => $suspendedUsers,
             'suspensionHistory' => $suspensionHistory,
         ]);
@@ -244,7 +244,7 @@ class AdminController extends Controller
                 ];
             });
 
-        return view('pages.reports', [
+        return view('pages.admin.reports', [
             'reports' => $reportsInfo,
         ]);
     }
@@ -258,7 +258,21 @@ class AdminController extends Controller
     {
         $this->authorize('tags', Admin::class);
 
-        $tags = Tag::listTagsByState('PENDING')->map(function ($tag) {
+        $tags_pending = $this->getTagsByState('PENDING');
+
+        $tags_accepted = $this->getTagsByState('ACCEPTED');
+
+        $tags_rejected = $this->getTagsByState('REJECTED');
+
+        return view('pages.admin.manageTags', [
+            'tags_pending' => $tags_pending,
+            'tags_accepted' => $tags_accepted,
+            'tags_rejected' => $tags_rejected,
+        ]);
+    }
+
+    private function getTagsByState(string $state) {
+        $tags = Tag::listTagsByState($state)->map(function ($tag) {
             if (isset($tag->user))
                 $userInfo = [
                     'id' => $tag->user_id,
@@ -274,11 +288,9 @@ class AdminController extends Controller
                 'state' => $tag->state,
                 'user' => $userInfo
             ];
-        });
+        })->sortBy('name');
 
-        return view('pages.tags', [
-            'tags' => $tags,
-        ]);
+        return $tags;
     }
 
     public function closeReport(int $id)
