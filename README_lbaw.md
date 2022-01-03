@@ -307,7 +307,7 @@ You can now build and upload the docker image by executing that script from the 
 You can test locally the image by running:
 
 ```
-docker run -it -p 8000:80 --name=lbaw211 -e DB_DATABASE="lbaw2111" -e DB_SCHEMA="lbaw2111" -e DB_USERNAME="lbaw2111" -e DB_PASSWORD="PASSWORD" git.fe.up.pt:5050/lbaw/lbaw2122/lbaw2111
+docker run -it -p 8000:80 --name=lbaw2111 -e DB_DATABASE="lbaw2111" -e DB_SCHEMA="lbaw2111" -e DB_USERNAME="lbaw2111" -e DB_PASSWORD="PASSWORD" git.fe.up.pt:5050/lbaw/lbaw2122/lbaw2111
 ```
 
 The above command exposes your application on http://localhost:8000.
