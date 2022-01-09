@@ -40,7 +40,7 @@ Route::get('article/{id}', 'ArticleController@show')->name('article');
 Route::get('article/{id}/edit', 'ArticleController@edit')->name('editArticle');
 Route::put('article/{id}/edit', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
-Route::get('article/{id}/comments', 'ArticleController@comments');
+Route::get('api/article/{id}/comments', 'ArticleController@comments');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');

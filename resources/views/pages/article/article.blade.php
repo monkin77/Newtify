@@ -125,10 +125,16 @@
                 </div>
                 @endif
 
-                @foreach ($comments as $comment)
-                    @include('partials.content.comment', ['comment' => $comment])
-                @endforeach
-            
+                <div id="comments">
+                    @include('partials.content.comments', ['comments' => $comments])
+                </div>
+
+                @if ($canLoadMore)
+                <div id="load-more" class="w-75 my-3">
+                    <button onclick="loadMoreComments({{ $article['id'] }})">Load more</button>
+                </div>
+                @endif
+
             </div>
 
         </div>
