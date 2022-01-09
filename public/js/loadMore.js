@@ -32,12 +32,10 @@ const loadMoreSearch = (type, value) => {
 };
 
 const loadMoreHome = () => {
-    // TODO: Pass filter parameters when filter is implemented in interface
     const numArticles = select('#articles').childElementCount;
-    const type = select('input[name="filterType"]:checked').id;
 
-    const url = `/api/article/filter?type=${type}&offset=${numArticles}&limit=5`;
-    sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
+    const { url, body } = getFilterData(numArticles);
+    sendAjaxRequest('get', url, body, loadMoreHandler('articles'));
 };
 
 const loadMoreUser = (userId) => {

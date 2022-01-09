@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 <script type="text/javascript" src={{ asset('js/tags.js') }}></script>
+<script type="text/javascript" src={{ asset('js/filter.js') }}></script>
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
