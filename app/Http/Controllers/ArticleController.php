@@ -158,23 +158,7 @@ class ArticleController extends Controller
         $is_author = isset($author) ? $author->id === Auth::id() : false;
 
         // TODO: "load more" thing for comments too
-        $comments = $article->comments->map(function ($comment) {
-            $commentAuthor = $comment->author;
-            $comment_published_at = date('F j, Y', /*, g:i a',*/ strtotime( $comment['published_at'] ) ) ;  
-
-            return [
-                'id' => $comment->content_id,
-                'body' => $comment->body,
-                'likes' => $comment->likes,
-                'dislikes' => $comment->dislikes,
-                'published_at' =>$comment_published_at,
-                'author' => isset($commentAuthor) ? [
-                    'id' => $commentAuthor->id,
-                    'name' => $commentAuthor->name,
-                    'avatar' => $commentAuthor->avatar,
-                ] : null,
-            ];
-        })->sortByDesc('likes')->take(10);
+        $comments = $article->getParsedComments()->take(10);
 
         $tags = $article->articleTags->map(function($tag) {
             return [
