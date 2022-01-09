@@ -288,7 +288,7 @@ class AdminController extends Controller
                 'state' => $tag->state,
                 'user' => $userInfo
             ];
-        })->sortBy('name');
+        });
 
         return $tags;
     }

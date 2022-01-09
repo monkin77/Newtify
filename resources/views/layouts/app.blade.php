@@ -17,6 +17,7 @@
     <link href="{{ asset('css/customBootstrap.min.css') }}" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
 
     <link href="{{ asset('css/AppTheme.css') }}" rel="stylesheet">
     <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">

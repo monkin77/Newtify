@@ -1,12 +1,18 @@
 @extends('layouts.app')
 
-<script type="text/javascript" src={{ asset('js/tags.js') }}></script>
 <script type="text/javascript" src={{ asset('js/filter.js') }}></script>
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src=" {{ asset('js/select2tags.js') }}"></script>
+    <script type="text/javascript" src={{ asset('js/tags.js') }}></script>
+@endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
-<section id="filterSection" class="d-flex flex-row border border-darkPurple mb-4 py-3 mt-3 mb-4">
+<section id="filterSection" class="d-flex flex-row align-items-center border border-darkPurple py-3 mt-3 mb-4">
     <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
         @if (Auth::check())
             <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
@@ -34,6 +40,14 @@
             </label>
         @endif
         </div>
+
+        <select id="filterTags" multiple>
+            @foreach($tags as $tag)
+                <option value="{{ $tag['id'] }}">
+                    {{ $tag['name'] }}
+                </option>
+            @endforeach
+        </select>
 
         <i class="fa fa-tag filter-tag mt-2 me-4 text-purple"></i>
     </section>

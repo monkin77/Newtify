@@ -46,7 +46,8 @@ class Tag extends Model
      */
     public static function listTagsByState($tag_state)
     {
-        return Tag::where('state', $tag_state)->get();
+        return Tag::where('state', $tag_state)
+            ->orderBy('name', 'asc')->get();
     }
 
     /**

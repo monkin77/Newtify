@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -20,9 +21,17 @@ class HomeController extends Controller
         $type = Auth::check() ? 'recommended' : 'trending';
         $results = $this->filterByType($type, 0, 5);
 
+        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name,
+            ];
+        });
+
         return view('pages.home', [
             'articles' => $results['articles'],
             'canLoadMore' => $results['canLoadMore'],
+            'tags' => $tags,
         ]);
     }
 
