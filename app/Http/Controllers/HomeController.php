@@ -103,11 +103,39 @@ class HomeController extends Controller
         if (is_null($articles))
             $articles = Article::all();
 
-        // TODO: Implement recommended articles
-        if ($type === 'trending' || $type === 'recommended')
-            $sortedArticles = $articles->sortByDesc(function ($article) {
-                return $article->likes - $article->dislikes;
-            });
+        // Sort by top posts of the day
+        if ($type === 'trending' || ($type === 'recommended' && Auth::guest()))
+        {
+            $sortedArticles = $articles->sortBy([
+                fn ($a, $b) => $this->compareArticleDates($a, $b),
+                fn ($a, $b) => $this->compareArticleFeedback($a, $b)
+            ]);
+        }
+
+        else if ($type === 'recommended')
+        {
+            $sortedArticles = $articles->sortBy([
+                function ($a, $b) {
+                    $isAFollowed = Auth::user()->followers->pluck('id')->contains($a->author->id);
+                    $isBFollowed = Auth::user()->followers->pluck('id')->contains($b->author->id);
+
+                    return $isBFollowed <=> $isAFollowed;
+                },
+                function ($a, $b) {
+                    $favTagsA = $a->articleTags->filter(
+                        fn ($tag) => Auth::user()->favoriteTags->pluck('id')->contains($tag->id)
+                    );
+
+                    $favTagsB = $b->articleTags->filter(
+                        fn ($tag) => Auth::user()->favoriteTags->pluck('id')->contains($tag->id)
+                    );
+
+                    return count($favTagsB) <=> count($favTagsA);
+                },
+                fn ($a, $b) => $this->compareArticleDates($a, $b),
+                fn ($a, $b) => $this->compareArticleFeedback($a, $b)
+            ]);
+        }
 
         else if ($type === 'recent')
             $sortedArticles = $articles->sortByDesc('published_at');
@@ -133,5 +161,22 @@ class HomeController extends Controller
             'articles' => $results,
             'canLoadMore' => $canLoadMore,
         ];
+    }
+
+    private function compareArticleDates($a, $b)
+    {
+        $d1 = date_create($a->published_at);
+        $d2 = date_create($b->published_at);
+
+        $daysDiff = date_diff($d1, $d2)->format("%a");
+        if ($daysDiff === "0") return 0;
+        return $d2 <=> $d1;
+    }
+
+    private function compareArticleFeedback($a, $b)
+    {
+        $karma1 = $a->likes - $a->dislikes;
+        $karma2 = $b->likes - $b->dislikes;
+        return $karma2 <=> $karma1;
     }
 }
