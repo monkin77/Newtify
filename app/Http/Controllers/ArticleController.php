@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
+    private const COMMENTS_LIMIT = 10;
+
     /**
      * Display Create Article Form
      * 
@@ -158,7 +160,9 @@ class ArticleController extends Controller
         $is_author = isset($author) ? $author->id === Auth::id() : false;
 
         // TODO: "load more" thing for comments too
-        $comments = $article->getParsedComments()->take(10);
+        $comments = $article->getParsedComments();
+        $canLoadMore = count($comments) > $this::COMMENTS_LIMIT;
+        $comments = $comments->take($this::COMMENTS_LIMIT);
 
         $tags = $article->articleTags->map(function($tag) {
             return [
@@ -173,10 +177,45 @@ class ArticleController extends Controller
             'article' => $articleInfo,
             'author' => $authorInfo,
             'comments' => $comments,
+            'canLoadMore' => $canLoadMore,
             'tags' => $tags,
-            'is_author' => $is_author,
-            'is_admin' => $is_admin
+            'isAuthor' => $is_author,
+            'isAdmin' => $is_admin
         ]);
+    }
+
+    public function comments(Request $request, int $id)
+    {
+        $article = Article::find($id);
+        if (is_null($article))
+            return response()->json([
+                'status' => 'Not Found',
+                'msg' => 'Article not found, id: ' . $id,
+                'errors' => ['Article' => 'Article not found, id: ' . $id]
+            ], 404);
+
+        $validator = Validator::make($request->all(), [
+            'offset' => 'nullable|integer|min:0',
+            'limit' => 'nullable|integer|min:1',
+        ]);
+
+        if ($validator->fails())
+            return response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to fetch article\'s comments. Bad request',
+                'errors' => $validator->errors(),
+            ], 400);
+
+        if (!isset($request->offset)) $request->offset = 0;
+
+        $comments = $article->getParsedComments()->skip($request->offset);
+        $canLoadMore = isset($request->limit) ? count($comments) > $request->limit : false;
+        $comments = $comments->take($request->limit);
+
+        return response()->json([
+            'html' => view('partials.content.comments', [ 'comments' => $comments ])->render(),
+            'canLoadMore' => $canLoadMore
+        ], 200);
     }
 
     /**
