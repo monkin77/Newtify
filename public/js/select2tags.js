@@ -7,7 +7,7 @@ $('#tags').select2({
 
 $('#filterTags').select2({
     multiple: true,
-    width: '20%',
+    width: '15%',
     tokenSeparators: [',', ' ', ";"],
     theme: "bootstrap-5",
 });

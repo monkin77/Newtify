@@ -12,33 +12,38 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
-<section id="filterSection" class="d-flex flex-row align-items-center border border-darkPurple py-3 mt-3 mb-4">
-    <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
-        @if (Auth::check())
-            <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
-            <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recommended">
-                <i class="far fa-star mt-2"></i> <span class="mx-2">Recommended</span>
+    <section id="filterSection" class="d-flex flex-row align-items-center border border-darkPurple py-3 mt-3 mb-4">
+        <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
+            @if (Auth::check())
+                <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
+                <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recommended">
+                    <i class="far fa-star mt-2"></i> <span class="mx-2">Recommended</span>
+                </label>
+            @endif
+
+            <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
+            @if (Auth::guest()) checked @endif>
+
+            <label class="filter-button btn btn-outline-purple ms-4 my-auto" for="trending">
+                <i class="fas fa-fire-alt mt-2"></i> <span class="mx-2">Trending</span>
             </label>
-        @endif
 
-        <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
-        @if (Auth::guest()) checked @endif>
-
-        <label class="filter-button btn btn-outline-purple ms-4 my-auto" for="trending">
-            <i class="fas fa-fire-alt mt-2"></i> <span class="mx-2">Trending</span>
-        </label>
-
-        <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
-        <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recent">
-            <i class="fas fa-history mt-2"></i> <span class="mx-2">Recent</span>
-        </label>
-
-        @if (Auth::check())
-            <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off">
-            <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recommended">
-                <i class="far fa-star mt-2"></i> <span class="mx-2">Recommended</span>
+            <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
+            <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recent">
+                <i class="fas fa-history mt-2"></i> <span class="mx-2">Recent</span>
             </label>
-        @endif
+        </div>
+
+        <div class="flex-fill d-flex justify-content-evenly">
+            <div class="d-flex flex-row align-items-center">
+                <label for="minDate" class="me-4">Min: </label>
+                <input name="minDate" type="date">
+            </div>
+
+            <div class="d-flex flex-row align-items-center">
+                <label for="maxDate" class="me-4">Max: </label>
+                <input name="maxDate" type="date">
+            </div>
         </div>
 
         <select id="filterTags" onchange="filterArticles()" multiple>
