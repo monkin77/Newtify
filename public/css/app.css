@@ -134,6 +134,10 @@ body {
 
 /* Partial Article */
 
+#articles {
+    padding: 0;
+}
+
 #articles h1,
 #articles h2,
 #articles h3,
@@ -145,6 +149,7 @@ body {
 
 /* Partial Article, just putting here for now then we change */
 #articles .card {
+    height: 20vh;
     margin-bottom: 15px;
     border-radius: 1rem;
 }
