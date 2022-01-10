@@ -98,18 +98,18 @@ $isOpen = $errors->has('password');
                 <div class="col-6">
                     <label class="h2 mb-3" for="tagsInput">Favorite Tags</label>
 
-                    <select required id="favoriteTags" name="tags[]" multiple>
+                    <select required id="favoriteTags" name="favoriteTags[]" multiple>
                         @foreach ($tags as $tag)
-                            <option class="m-0" @if (old('tags') ? in_array($tag['id'], old('tags')) : $favoriteTags->contains('id', $tag['id']))
+                            <option class="m-0" @if (old('favoriteTags') ? in_array($tag['id'], old('favoriteTags')) : $favoriteTags->contains('id', $tag['id']))
                                 selected
                         @endif
                         value="{{ $tag['id'] }}">{{ $tag['name'] }}</option>
                         @endforeach
                     </select>
 
-                    @if ($errors->has('tags'))
+                    @if ($errors->has('favoriteTags'))
                         <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                            <p class="mb-0">{{ $errors->first('tags') }}</p>
+                            <p class="mb-0">{{ $errors->first('favoriteTags') }}</p>
                         </div>
                     @endif
                 </div>

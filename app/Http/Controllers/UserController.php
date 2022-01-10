@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 // TODO: Check headers for redirects
 class UserController extends Controller
@@ -164,12 +165,26 @@ class UserController extends Controller
             'country' => 'nullable|string|exists:country,name',
             'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
             'description' => 'nullable|string|max:500',
-            'city' => 'nullable|string|max:100'
+            'city' => 'nullable|string|max:100',
+            'favoriteTags' => 'nullable|array',
+            'favoriteTags.*' => [
+                'integer',
+                Rule::exists('tag', 'id')->where('state', 'ACCEPTED')
+            ],
         ]);
 
         if ($validator->fails()) {
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'favoriteTags'))
+                    $key = 'favoriteTags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+                //implode is for when you have multiple errors for a same key
+                //like email should valid as well as unique
+            }
+
             // Go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         if (isset($request->name)) $user->name = $request->name;
@@ -193,6 +208,8 @@ class UserController extends Controller
         }
 
         $user->save();
+        $user->favoriteTags()->sync($request->favoriteTags);
+
         return redirect("/user/${id}");
     }
 
