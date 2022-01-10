@@ -70,12 +70,13 @@ class TagController extends Controller
             ], 200);
 
         $tag->state = 'ACCEPTED';
-        $tag->save();
+        $tag->save();   
 
         return Response()->json([
             'status' => 'OK',
             'msg' => 'Successfully accepted tag',
-            'tag_id' => $tag_id
+            'tag_id' => $tag_id,
+            'tag_name' => $tag['name'],
         ], 200);
     }
 

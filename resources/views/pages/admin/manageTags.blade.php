@@ -7,7 +7,7 @@
 <div class="text-center container">
     <h2 class="text-center mt-5">Manage Tags</h2>
     <div class="d-flex mb-5 flex-row row-cols-3">
-        <div class="border bg-light me-3 statusContainer col">
+        <div class="border bg-light me-3 statusContainer col" id="acceptedTagsContainer">
             <h4 class="mt-5">Accepted Tags</h4>
             @foreach ($tags_accepted as $tag)
                 <div class="mt-5 pb-3 pt-5 bg-light mb-5 manageTagContainer">
