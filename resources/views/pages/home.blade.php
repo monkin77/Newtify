@@ -34,15 +34,15 @@
             </label>
         </div>
 
-        <div class="flex-fill d-flex justify-content-evenly">
+        <div class="flex-fill d-flex align-items-center justify-content-evenly">
             <div class="d-flex flex-row align-items-center">
-                <label for="minDate" class="me-4">Min: </label>
-                <input name="minDate" type="date">
+                <label for="minDate" class="me-4 py-0 my-0">Min: </label>
+                <input name="minDate" type="date" class="py-0 my-0">
             </div>
-
+    
             <div class="d-flex flex-row align-items-center">
-                <label for="maxDate" class="me-4">Max: </label>
-                <input name="maxDate" type="date">
+                <label for="maxDate" class="me-4 py-0 my-0">Max: </label>
+                <input name="maxDate" type="date" class="py-0 my-0">
             </div>
         </div>
 
@@ -54,7 +54,7 @@
             @endforeach
         </select>
 
-        <i class="fa fa-tag filter-tag mt-2 me-4 text-purple"></i>
+        <i class="fa fa-tag filter-tag mt-2 mx-4 text-purple"></i>
     </section>
 @endsection
 
