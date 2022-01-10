@@ -5,7 +5,7 @@ body {
 /* Navbar */
 
 #logo {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.6em;
     color: #9b4dca;
 
@@ -244,7 +244,7 @@ body {
 
 .author-container #authorAvatar {
     border-radius: 50%;
-    aspect-ratio: 1
+    aspect-ratio: 1;
 }
 
 #comments-section .commentHeader {
@@ -290,7 +290,7 @@ body {
     height: 40%;
 }
 
-#userInfo #userGraphics #avatarImg{
+#userInfo #userGraphics #avatarImg {
     height: 100%;
     aspect-ratio: 1;
     border-radius: 100em;
@@ -450,9 +450,14 @@ body {
     height: 27.5vh;
 }
 
-#editProfileContainer #editAvatarContainer #avatarPreview {
+#editProfileContainer #editAvatarContainer #avatarPreviewContainer {
     height: 80%;
+}
+
+#editProfileContainer #editAvatarContainer #avatarPreview {
+    height: 100%;
     aspect-ratio: 1;
+    width: auto;
     border-radius: 100em;
     margin-right: 3em;
 }
@@ -484,9 +489,14 @@ body {
 }
 
 /* Favorite Tags */
+#tagsContainer #tagSearch {
+}
+
 #tagsContainer .tagContainer {
     height: 15em;
-    margin: 0.75em;
+    margin-left: 1em;
+    margin-right: 0;
+    margin-bottom: 1em;
     border-radius: 2em;
     background-color: #343434;
     cursor: pointer;
@@ -508,7 +518,7 @@ body {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-.linkContainer{
+.linkContainer {
     height: 35vh;
     text-align: center;
 }
@@ -537,7 +547,6 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 
 /* Tags Managment */
 
