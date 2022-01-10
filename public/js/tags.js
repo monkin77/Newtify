@@ -39,7 +39,7 @@ acceptTag = (elem, id) => {
 }
 
 rejectTag = (elem, id) =>  {
-    const url = '/tags/'+ id + '/accept';
+    const url = '/tags/'+ id + '/reject';
     sendAjaxRequest('put', url, null, tagHandler(elem));
 }
 

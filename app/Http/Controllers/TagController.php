@@ -74,7 +74,7 @@ class TagController extends Controller
 
         return Response()->json([
             'status' => 'OK',
-            'msg' => 'Successfuly accepted tag',
+            'msg' => 'Successfully accepted tag',
             'tag_id' => $tag_id
         ], 200);
     }
@@ -107,7 +107,7 @@ class TagController extends Controller
 
         return Response()->json([
             'status' => 'OK',
-            'msg' => 'Successfuly rejected tag',
+            'msg' => 'Successfully rejected tag',
             'tag_id' => $tag_id
         ], 200);
     }
@@ -141,7 +141,7 @@ class TagController extends Controller
 
         return Response()->json([
             'status' => 'OK',
-            'msg' => 'Successfuly added tag to user favorites',
+            'msg' => 'Successfully added tag to user favorites',
             'tag_id' => $tag_id,
         ], 200);
     }
@@ -175,7 +175,7 @@ class TagController extends Controller
 
         return Response()->json([
             'status' => 'OK',
-            'msg' => 'Successfuly removed tag from user favorites',
+            'msg' => 'Successfully removed tag from user favorites',
             'tag_id' => $tag_id,
         ], 200);
     }
@@ -235,7 +235,7 @@ class TagController extends Controller
 
         return Response()->json([
             'status' => 'OK',
-            'msg' => 'Successfuly removed tag',
+            'msg' => 'Successfully removed tag',
             'tag_id' => $id,
         ], 200);
     }
@@ -268,7 +268,7 @@ class TagController extends Controller
 
         return Response()->json([
             'status' => 'OK',
-            'msg' => 'Successfuly proposed tag',
+            'msg' => 'Successfully proposed tag',
             'tagName' => $request->tagName,
         ], 200);
     }
