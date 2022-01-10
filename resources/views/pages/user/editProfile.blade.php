@@ -17,8 +17,8 @@ $isOpen = $errors->has('password');
             <div class="row w-100 mt-2" id="editAvatarContainer">
                 <label class="h2 py-0 my-0">Avatar</label>
                 <div class="d-flex align-items-center h-100">
-                    <img src={{ isset($user['avatar']) ? asset('storage/avatars/'.$user['avatar']) : $userImgPHolder }} id="avatarPreview"
-                        onerror="this.src='{{ $userImgPHolder }}'" />
+                    <img src={{ isset($user['avatar']) ? asset('storage/avatars/' . $user['avatar']) : $userImgPHolder }}
+                        id="avatarPreview" onerror="this.src='{{ $userImgPHolder }}'" />
                     <input type="file" accept="image/*" id="imgInput" name='avatar' />
                     @if ($errors->has('avatar'))
                         <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
@@ -45,7 +45,7 @@ $isOpen = $errors->has('password');
                             class="text-center w-auto h2 editInputs py-4" id="birthDateInput" name='birthDate' />
                         @if ($errors->has('birthDate'))
                             <div class="alert alert-danger ms-3 w-100 text-center py-1" role="alert">
-                                <p class="">{{ 'Isto merdou amigo' }}</p>
+                                <p class="">{{ $errors->first('birthDate') }}</p>
                             </div>
                         @endif
                     </div>
