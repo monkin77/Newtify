@@ -41,7 +41,7 @@
         @endif
         </div>
 
-        <select id="filterTags" multiple>
+        <select id="filterTags" onchange="filterArticles()" multiple>
             @foreach($tags as $tag)
                 <option value="{{ $tag['id'] }}">
                     {{ $tag['name'] }}

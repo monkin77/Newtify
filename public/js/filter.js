@@ -41,8 +41,14 @@ function filterArticles() {
 
 const getFilterData = (offset = 0) => {
   const type = select('input[name="filterType"]:checked').id;
+  let url = `/api/article/filter?type=${type}&offset=${offset}&limit=5`;
 
-  const url = `/api/article/filter?type=${type}&offset=${offset}&limit=5`;
+  const tags = Array.from(select("#filterTags").selectedOptions)
+    .map((elem) => parseInt(elem.value));
+
+  for (let tag of tags)
+    url += `&tags[]=${tag}`;
+
   return {
     url,
     body: null

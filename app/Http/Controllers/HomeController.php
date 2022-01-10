@@ -47,8 +47,8 @@ class HomeController extends Controller
             'type' => ['nullable', 'string', Rule::in(['trending', 'recent', 'recommended'])],
             'tags' => 'nullable|array',
             'tags.*' => [
-                'string',
-                Rule::exists('tag', 'name')->where('state', 'ACCEPTED')
+                'integer',
+                Rule::exists('tag', 'id')->where('state', 'ACCEPTED')
             ],
             'minDate' => 'nullable|string|date_format:Y-m-d|before:'.date('Y-m-d'),
             'maxDate' => 'nullable|string|date_format:Y-m-d|before:'.date('Y-m-d'),
@@ -79,7 +79,7 @@ class HomeController extends Controller
             $articles = $articles->filter(function ($article) use ($request) {
                 $tags = $article->articleTags;
                 foreach ($tags as $tag) {
-                    if (in_array($tag->name, $request->tags)) return true;
+                    if (in_array($tag->id, $request->tags)) return true;
                 }
                 return false;
             });
@@ -98,10 +98,10 @@ class HomeController extends Controller
             });
 
         $results = $this->filterByType($request->type, $request->offset, $request->limit, $articles);
+
         return response()->json([
             'html' => view('partials.content.articles', [
-                'articles' => $results['articles'],
-                'canLoadMore' => $results['canLoadMore'],
+                'articles' => $results['articles']
             ])->render(),
             'canLoadMore' => $results['canLoadMore']
         ], 200);
