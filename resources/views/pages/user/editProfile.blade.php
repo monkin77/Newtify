@@ -4,7 +4,10 @@
 $isOpen = $errors->has('password');
 @endphp
 
-<script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
+@section('scripts')
+    <script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
+    <script src=" {{ asset('js/select2tags.js') }}"> </script>
+@endsection
 
 @section('content')
     <section id="editProfileContainer">
@@ -54,7 +57,7 @@ $isOpen = $errors->has('password');
                             </div>
                         </div>
                     </div>
-                    <div class="row w-100 mt-4">
+                    <div class="row w-100 mt-5">
                         <div class="row">
                             <div class="col-6">
                                 <label class="h2 pb-3 my-0" for="countryInput">Country</label>
@@ -93,7 +96,22 @@ $isOpen = $errors->has('password');
                     </div>
                 </div>
                 <div class="col-6">
-                    <label class="h2 my-0" for="tagsInput">Favorite Tags</label>
+                    <label class="h2 mb-3" for="tagsInput">Favorite Tags</label>
+
+                    <select required id="favoriteTags" name="tags[]" multiple>
+                        @foreach ($tags as $tag)
+                            <option class="m-0" @if (old('tags') ? in_array($tag['id'], old('tags')) : $favoriteTags->contains('id', $tag['id']))
+                                selected
+                        @endif
+                        value="{{ $tag['id'] }}">{{ $tag['name'] }}</option>
+                        @endforeach
+                    </select>
+
+                    @if ($errors->has('tags'))
+                        <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
+                            <p class="mb-0">{{ $errors->first('tags') }}</p>
+                        </div>
+                    @endif
                 </div>
             </div>
 

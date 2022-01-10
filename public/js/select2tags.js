@@ -4,3 +4,9 @@ $('#tags').select2({
     tokenSeparators: [',', ' ', ";"],
     theme: "classic",
 });
+
+$('#favoriteTags').select2({
+    multiple: true,
+    tokenSeparators: [',', ' ', ";"],
+    theme: "classic",
+});

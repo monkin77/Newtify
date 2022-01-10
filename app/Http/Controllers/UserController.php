@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Report;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -115,12 +116,27 @@ class UserController extends Controller
 
         $countries = Country::get();
 
+        $favoriteTags = $user->favoriteTags->map(function ($tag) {
+            return [
+                'id' => $tag->id
+            ];
+        });
+
+        $tags = Tag::listTagsByState(TagController::tagStates['accepted'])->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name
+            ];
+        });
+
         return view('pages.user.editProfile', [
             'user' => $userInfo,
             'topAreasExpertise' => $areasExpertise,
             'followerCount' => $followerCount,
             'birthDate' => date('Y-m-d', strtotime($userInfo['birthDate'])),
             'countries' => $countries,
+            'tags' => $tags,
+            'favoriteTags' => $favoriteTags,
         ]);
     }
 
@@ -168,12 +184,12 @@ class UserController extends Controller
             $newAvatar = $request->avatar;
             $oldAvatar = $user->avatar;
 
-            $imgName = time().'.'.$newAvatar->extension();
+            $imgName = time() . '.' . $newAvatar->extension();
             $newAvatar->storeAs('public/avatars', $imgName);
             $user->avatar = $imgName;
 
             if (!is_null($oldAvatar))
-                Storage::delete('public/thumbnails/'.$oldAvatar);
+                Storage::delete('public/thumbnails/' . $oldAvatar);
         }
 
         $user->save();
@@ -359,7 +375,7 @@ class UserController extends Controller
         $articles = $userArticles->take($request->limit);
 
         return response()->json([
-            'html' => view('partials.content.articles', [ 'articles' => $articles ])->render(),
+            'html' => view('partials.content.articles', ['articles' => $articles])->render(),
             'canLoadMore' => $canLoadMore
         ], 200);
     }
