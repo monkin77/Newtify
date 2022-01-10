@@ -66,7 +66,7 @@ class TagController extends Controller
             return Response()->json([
                 'status' => 'OK',
                 'msg' => 'Tag was already accepted',
-                'tag_id' => $tag_id
+                'tag_id' => $tag_id,
             ], 200);
 
         $tag->state = 'ACCEPTED';

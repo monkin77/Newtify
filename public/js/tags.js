@@ -35,20 +35,20 @@ function proposeTagHandler() {
 
 acceptTag = (elem, id) => {
     const url = '/tags/'+ id + '/accept';
-    sendAjaxRequest('put', url, null, acceptTagHandler(elem, id));
+    sendAjaxRequest('put', url, null, tagHandler(elem, id, "accept"));
 }
 
 rejectTag = (elem, id) =>  {
     const url = '/tags/'+ id + '/reject';
-    sendAjaxRequest('put', url, null, rejectTagHandler(elem, id));
+    sendAjaxRequest('put', url, null, tagHandler(elem, id, "reject"));
 }
 
 removeTag = (elem, id) =>  {
     const url = '/tags/'+ id;
-    sendAjaxRequest('delete', url, null, removeTagHandler(elem, id));
+    sendAjaxRequest('delete', url, null, tagHandler(elem, id, "remove"));
 }
 
-const acceptTagHandler = (elem, id) => function(){
+const tagHandler = (elem, id, action) => function(){
     if (this.status == 403) {
         window.location = '/login';
         return;
@@ -67,66 +67,23 @@ const acceptTagHandler = (elem, id) => function(){
         return;
     }
 
-    const func = (btn, id) => { removeTag(btn, id); };
-    const tagContainer = replaceTagContainer(this.responseText, func, id, "fa-trash", "text-danger", `#acceptedTagsContainer`);
+    if (action !== "remove") {
+        const accept = (btn, id) => { removeTag(btn, id); };
+        const remove = (btn, id) => { acceptTag(btn, id); };;
+        let icon, color, containerId, func;
+        if (action === "accept") {
+            icon = "fa-trash";
+            color = "text-danger";
+            containerId = `#acceptedTagsContainer`;
+            func = accept;
+        } else {
+            icon = "fa-check";
+            color = "text-success";
+            containerId = `#rejectTagsContainer`
+            func = remove;
+        }
 
-    if (previousError) previousError.remove();
-
-    const confirmation = document.createElement('h4');
-    confirmation.classList.add('mb-0');
-    confirmation.innerHTML = JSON.parse(this.responseText).msg;
-
-    elem.parentElement.replaceWith(confirmation);
-}
-
-const rejectTagHandler = (elem, id) => function(){
-    if (this.status == 403) {
-        window.location = '/login';
-        return;
-    }
-
-    const previousError = elem.querySelector('.error');
-
-    if (this.status == 400) {
-        const error = createErrorMessage(JSON.parse(this.responseText).errors);
-
-        if (previousError)
-            previousError.replaceWith(error);
-        else
-            elem.appendChild(error);
-
-        return;
-    }
-
-    const func = (btn, id) => { acceptTag(btn, id); }
-    const tagContainer = replaceTagContainer(this.responseText, func, id, "fa-check", "text-success", `#rejectTagsContainer`);
-
-    if (previousError) previousError.remove();
-
-    const confirmation = document.createElement('h4');
-    confirmation.classList.add('mb-0');
-    confirmation.innerHTML = JSON.parse(this.responseText).msg;
-
-    elem.parentElement.replaceWith(confirmation);
-}
-
-const removeTagHandler = (elem, id) => function(){
-    if (this.status == 403) {
-        window.location = '/login';
-        return;
-    }
-
-    const previousError = elem.querySelector('.error');
-
-    if (this.status == 400) {
-        const error = createErrorMessage(JSON.parse(this.responseText).errors);
-
-        if (previousError)
-            previousError.replaceWith(error);
-        else
-            elem.appendChild(error);
-
-        return;
+        replaceTagContainer(this.responseText, func, id, icon, color, containerId);
     }
 
     if (previousError) previousError.remove();
@@ -137,7 +94,6 @@ const removeTagHandler = (elem, id) => function(){
 
     elem.parentElement.replaceWith(confirmation);
 }
-
 
 
 function replaceTagContainer(responseText, btnFunction, id, icon, iconColor, containerId) {
