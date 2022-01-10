@@ -64,7 +64,8 @@ class HomeController extends Controller
             ], 400);
 
         if (isset($request->minDate)) $minTimestamp = strtotime($request->minDate);
-        if (isset($request->maxDate)) $maxTimestamp = strtotime($request->maxDate);
+        if (isset($request->maxDate)) // Allow articles posted in the same day
+        $maxTimestamp = strtotime($request->maxDate . '+1 day');
 
         if (isset($request->minDate) && isset($request->maxDate) && $maxTimestamp < $minTimestamp)
             return response()->json([

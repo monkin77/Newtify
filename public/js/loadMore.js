@@ -34,8 +34,8 @@ const loadMoreSearch = (type, value) => {
 const loadMoreHome = () => {
     const numArticles = select('#articles').childElementCount;
 
-    const { url, body } = getFilterData(numArticles);
-    sendAjaxRequest('get', url, body, loadMoreHandler('articles'));
+    const url = getFilterUrl(numArticles);
+    sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
 };
 
 const loadMoreUser = (userId) => {
