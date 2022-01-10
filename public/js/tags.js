@@ -67,49 +67,8 @@ const acceptTagHandler = (elem, id) => function(){
         return;
     }
 
-    const tagContainer = document.createElement('div');
-    tagContainer.classList.add('mt-5');
-    tagContainer.classList.add('pb-3');
-    tagContainer.classList.add('pt-5');
-    tagContainer.classList.add('bg-light');
-    tagContainer.classList.add('mb-5');
-    tagContainer.classList.add('manageTagContainer');
-
-    const subdiv = document.createElement('div');
-    subdiv.id = "stateButton";
-    subdiv.classList.add("d-flex");
-    subdiv.classList.add("align-items-center");
-    
-    const tag = document.createElement("h5");
-    tag.classList.add("mx-3");
-    tag.classList.add("my-0");
-    tag.classList.add("py-0");
-    tag.classList.add("w-75");
-    tag.innerHTML = JSON.parse(this.responseText).tag_name;
-
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.onclick = () => { removeTag(btn, id);};
-    btn.classList.add("my-0");
-    btn.classList.add("py-0");
-    btn.classList.add("btn");
-    btn.classList.add("btn-lg");
-    btn.classList.add("btn-transparent");
-
-    const iter = document.createElement("i");
-    iter.classList.add("fas");
-    iter.classList.add("fa-trash");
-    iter.classList.add("fa-2x");
-    iter.classList.add("mb-2");
-    iter.classList.add("text-danger");
-
-    btn.appendChild(iter);
-    subdiv.appendChild(tag);
-    subdiv.appendChild(btn);
-    tagContainer.appendChild(subdiv);
-
-    const container = select(`#acceptedTagsContainer`);
-    container.appendChild(tagContainer);
+    const func = (btn, id) => { removeTag(btn, id); };
+    const tagContainer = replaceTagContainer(this.responseText, func, id, "fa-trash", "text-danger", `#acceptedTagsContainer`);
 
     if (previousError) previousError.remove();
 
@@ -139,49 +98,8 @@ const rejectTagHandler = (elem, id) => function(){
         return;
     }
 
-    const tagContainer = document.createElement('div');
-    tagContainer.classList.add('mt-5');
-    tagContainer.classList.add('pb-3');
-    tagContainer.classList.add('pt-5');
-    tagContainer.classList.add('bg-light');
-    tagContainer.classList.add('mb-5');
-    tagContainer.classList.add('manageTagContainer');
-
-    const subdiv = document.createElement('div');
-    subdiv.id = "stateButton";
-    subdiv.classList.add("d-flex");
-    subdiv.classList.add("align-items-center");
-    
-    const tag = document.createElement("h5");
-    tag.classList.add("mx-3");
-    tag.classList.add("my-0");
-    tag.classList.add("py-0");
-    tag.classList.add("w-75");
-    tag.innerHTML = JSON.parse(this.responseText).tag_name;
-
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.onclick = () => { acceptTag(btn, id);};
-    btn.classList.add("my-0");
-    btn.classList.add("py-0");
-    btn.classList.add("btn");
-    btn.classList.add("btn-lg");
-    btn.classList.add("btn-transparent");
-
-    const iter = document.createElement("i");
-    iter.classList.add("fas");
-    iter.classList.add("fa-check");
-    iter.classList.add("fa-2x");
-    iter.classList.add("mb-2");
-    iter.classList.add("text-success");
-
-    btn.appendChild(iter);
-    subdiv.appendChild(tag);
-    subdiv.appendChild(btn);
-    tagContainer.appendChild(subdiv);
-
-    const container = select(`#rejectTagsContainer`);
-    container.appendChild(tagContainer);
+    const func = (btn, id) => { acceptTag(btn, id); }
+    const tagContainer = replaceTagContainer(this.responseText, func, id, "fa-check", "text-success", `#rejectTagsContainer`);
 
     if (previousError) previousError.remove();
 
@@ -218,4 +136,37 @@ const removeTagHandler = (elem, id) => function(){
     confirmation.innerHTML = JSON.parse(this.responseText).msg;
 
     elem.parentElement.replaceWith(confirmation);
+}
+
+
+
+function replaceTagContainer(responseText, btnFunction, id, icon, iconColor, containerId) {
+    const tagContainer = document.createElement('div');
+    tagContainer.classList.add("mt-5", "pb-3", "pt-5", "bg-light", "mb-5", "manageTagContainer");
+
+    const subdiv = document.createElement('div');
+    subdiv.id = "stateButton";
+    subdiv.classList.add("d-flex", "align-items-center");
+    
+    const tag = document.createElement("h5");
+    tag.classList.add("mx-3", "my-0", "py-0", "w-75");
+    tag.innerHTML = JSON.parse(responseText).tag_name;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.onclick = () => { btnFunction(btn, id);};
+    btn.classList.add("my-0", "py-0", "btn", "btn-lg", "btn-transparent");
+
+    const iter = document.createElement("i");
+    iter.classList.add("fas", icon, "fa-2x", "mb-2", iconColor);
+
+    btn.appendChild(iter);
+    subdiv.appendChild(tag);
+    subdiv.appendChild(btn);
+    tagContainer.appendChild(subdiv);
+
+    const container = select(containerId);
+    container.appendChild(tagContainer);
+
+    return container;
 }
