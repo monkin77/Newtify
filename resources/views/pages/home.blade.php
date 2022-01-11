@@ -3,23 +3,6 @@
 <script type="text/javascript" src={{ asset('js/tags.js') }}></script>
 
 {{-- ------------------------------------------------------------------------------------ --}}
-@section('create-article')
-
-    <section class="home-section d-flex justify-content-center mb-3">
-        <div class="d-flex flex-grow-1 justify-content-center home-container">
-            <div id="createArticle" class="position-relative d-flex flex-column align-items-center">
-                <h1> Create Your Own Article </h1>
-                <h3> Others will decide your faith </h3>
-                <a class="addIcon btn" href="{{ route('createArticle') }}">
-                    <i class="fas fa-plus-circle fa-4x"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-@endsection
-
-{{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
     <section id="filterSection" class="d-flex flex-row border mb-4 py-3">
@@ -93,7 +76,6 @@
 
 @section('content')
 
-    @yield('create-article')
     @yield('filters')
     @yield('articles')
 

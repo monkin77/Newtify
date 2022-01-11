@@ -99,17 +99,8 @@ body {
 /* HomePage */
 
 .home-section .home-container {
-    background-color: lightgray;
     padding-top: 5vh;
     padding-bottom: 5vh;
-}
-
-.home-section #createArticle .addIcon {
-    position: absolute;
-    top: 10%;
-    left: -30%;
-    font-size: large; /* fontSize impacts the icon size */
-    color: inherit;
 }
 
 #tag-name {
@@ -581,4 +572,9 @@ body {
 
 #footerContainer #copyrightContainer {
     background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Bootstrap Variables */
+.text-purple {
+    color: rgb(188, 67, 236);
 }
