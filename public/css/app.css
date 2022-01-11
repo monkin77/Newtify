@@ -142,7 +142,7 @@ body {
 /* Partial Article, just putting here for now then we change */
 #articles .card {
     height: 20vh;
-    margin-bottom: 15px;
+    margin-bottom: 1em;
     border-radius: 1rem;
 }
 
@@ -153,12 +153,12 @@ body {
 
 #articles .card a {
     width: 80%;
-    color: gray;
+    color: var(--light);
     text-decoration: none;
 }
 
 #articles .card a:hover {
-    background-color: lightgray;
+    background-color: var(--secondary);
 }
 
 #articles .card-header {
@@ -576,5 +576,9 @@ body {
 
 /* Custom Bootstrap Variables */
 .text-purple {
-    color: rgb(188, 67, 236);
+    color: var(--purple);
+}
+
+.text-purple-dark {
+    color: var(--darkPurple);
 }
