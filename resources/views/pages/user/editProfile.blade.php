@@ -38,7 +38,7 @@ $isOpen = $errors->has('password');
                             <div class="col-6">
                                 <label class="h2 pb-3 my-0" for="nameInput">Username</label>
                                 <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
-                                    class="text-center w-auto h2 editInputs" id="nameInput" name='name' />
+                                    class="h2 editInputs w-75" id="nameInput" name='name' />
                                 @if ($errors->has('name'))
                                     <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
                                         <p class="">{{ $errors->first('name') }}</p>
@@ -48,7 +48,7 @@ $isOpen = $errors->has('password');
                             <div class="col-6">
                                 <label class="h2 pb-3 my-0" for="birthDateInput">Birth Date</label>
                                 <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
-                                    class="text-center w-auto h2 editInputs py-4" id="birthDateInput" name='birthDate' />
+                                    class="w-75 h2 editInputs py-4 ps-3" id="birthDateInput" name='birthDate' />
                                 @if ($errors->has('birthDate'))
                                     <div class="alert alert-danger ms-3 w-100 text-center py-1" role="alert">
                                         <p class="">{{ $errors->first('birthDate') }}</p>
@@ -61,7 +61,7 @@ $isOpen = $errors->has('password');
                         <div class="row">
                             <div class="col-6">
                                 <label class="h2 pb-3 my-0" for="countryInput">Country</label>
-                                <div class="d-flex position-relative align-items-center h2 w-50" id='countryInputContainer'>
+                                <div class="d-flex position-relative align-items-center h2 w-75" id='countryInputContainer'>
                                     <select required name='country'
                                         value="{{ old('country') ? old('country') : $user['country']['name'] }}"
                                         id="countryInput" size=1 class="my-0 border-0">
@@ -79,7 +79,7 @@ $isOpen = $errors->has('password');
                             <div class="col-6">
                                 <label class="h2 pb-3 my-0" for="cityInput">City</label>
                                 <input type="text" value="{{ old('city') ? old('city') : $user['city'] }}"
-                                    class="text-center w-auto h2 editInputs" id="cityInput" name='city' />
+                                    class="w-75 h2 editInputs" id="cityInput" name='city' />
 
                             </div>
                         </div>
