@@ -21,7 +21,7 @@ body {
 }
 
 #searchForm input {
-    color: grey;
+    color: white;
     font-size: medium;
     box-shadow: none;
 }
@@ -585,9 +585,9 @@ body {
 }
 
 .btn-purple-transparent {
-    color: var(--darkPurple);
+    color: var(--bs-darkPurple);
 }
 
 .btn-purple-transparent:hover {
-    color: var(--purple);
+    color: var(--bs-purple);
 }

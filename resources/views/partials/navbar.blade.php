@@ -15,13 +15,13 @@
                 <form id="searchForm" class="d-flex flex-row align-items-center border col-5"
                     action="{{ route('search') }}">
                     <i class="fas fa-search ms-4 submit" type="submit"></i>
-                    <input class="form-control no-border flex-grow-1 my-0 ms-3 bg-dark" type="search"
+                    <input class="form-control no-border flex-grow-1 my-0 ms-3 bg-secondary" type="search"
                         placeholder="Search" name="query" autocomplete="off" value="{{ old('query') }}" />
                     <input type="hidden" name="type" value="{{ old('type') ? old('type') : 'articles' }}" />
 
                     <div class="dropdown" id="searchDropdown">
                         <button id="searchDropdownButton"
-                            class="btn btn-outline-secondary border-start dropdown-toggle my-0 pe-0" type="button"
+                            class="btn btn-outline-light border-start dropdown-toggle my-0 pe-0" type="button"
                             data-bs-toggle="dropdown">{{ old('type') == 'users' ? 'Users' : 'Articles' }}</button>
 
                         <ul class="dropdown-menu dropdown-menu-dark w-100 text-center"
