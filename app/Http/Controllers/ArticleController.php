@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Tag;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -185,13 +186,25 @@ class ArticleController extends Controller
         $user = Auth::user();
         $is_admin = Auth::user() ? $user->is_admin : false;
 
+        $feedback = Feedback::select('is_like')->where('user_id', '=', Auth::id())->where('content_id', '=', $id)->get()[0];
+        
+        $liked = false;
+        $disliked = false;
+
+        if (!is_null($feedback)){
+            $liked = $feedback->is_like;
+            $disliked = !$feedback->is_like;
+        }
+
         return view('pages.article.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
             'comments' => $comments,
             'tags' => $tags,
             'is_author' => $is_author,
-            'is_admin' => $is_admin
+            'is_admin' => $is_admin,
+            'liked' => $liked,
+            'disliked' => $disliked
         ]);
     }
 

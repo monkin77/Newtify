@@ -64,8 +64,25 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    <i class="fas fa-thumbs-up ps-5"> {{ $article['likes'] }}</i>
-                    <i class="fas fa-thumbs-down ps-3"> {{ $article['dislikes'] }}</i>
+                    @if ( $liked )
+                        <i class="fas fa-thumbs-up ps-5 text-primary" id="articleLikes" onclick="removeFeedbackContent(this, $article['id'], 1)"> 
+                            {{ $article['likes'] }}
+                        </i>
+                    @else 
+                        <i class="fas fa-thumbs-up ps-5" id="articleLikes" onclick="likeContent(this, $article['id'], 1)"> 
+                            {{ $article['likes'] }}
+                        </i>
+                    @endif
+
+                    @if ($disliked)
+                        <i class="fas fa-thumbs-down ps-3 text-primary" id="articleDislikes" onclick="removeFeedbackContent(this, $article['id'], 0)"> 
+                            {{ $article['dislikes'] }}
+                        </i>
+                    @else
+                        <i class="fas fa-thumbs-down ps-3" id="articleDislikes" onclick="likeContent(this, $article['id'], 0)"> 
+                            {{ $article['dislikes'] }}
+                        </i>
+                    @endif 
                     
                     <i class="fas fa-share-alt ms-4"></i>
                 </p>
