@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="navbarContainer">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="navbarContainer">
         <div class="container-fluid py-4">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -37,7 +37,7 @@
                 <div class="d-flex justify-content-end align-items-center col">
                     @if (Auth::check())
                         <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
-                            <i class="fas fa-plus-circle fa-3x text-purple"></i>
+                            <i class="btn-purple-transparent fas fa-plus-circle fa-3x"></i>
                         </a>
                         <div class="nav-item mx-4 position-relative">
                             <i class="fas fa-bell" onclick="console.log('Clicked')"></i>

@@ -153,12 +153,13 @@ body {
 
 #articles .card a {
     width: 80%;
-    color: var(--light);
+    color: white;
     text-decoration: none;
 }
 
-#articles .card a:hover {
-    background-color: var(--secondary);
+#articles .card:hover {
+    /* background-color: var(--dark); */
+    border: 2px solid var(--light);
 }
 
 #articles .card-header {
@@ -581,4 +582,12 @@ body {
 
 .text-purple-dark {
     color: var(--darkPurple);
+}
+
+.btn-purple-transparent {
+    color: var(--darkPurple);
+}
+
+.btn-purple-transparent:hover {
+    color: var(--purple);
 }

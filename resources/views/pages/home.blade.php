@@ -5,21 +5,21 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
-    <section id="filterSection" class="d-flex flex-row border border-secondary mb-4 py-3">
+    <section id="filterSection" class="d-flex flex-row border border-darkPurple mb-4 py-3">
         <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
             <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off" checked>
-            <label class="filter-button btn btn-outline-primary ms-4 my-auto" for="trending">
+            <label class="filter-button btn btn-outline-purple ms-4 my-auto" for="trending">
                 <i class="fas fa-fire-alt mt-2"></i> <span class="mx-2">Trending</span>
             </label>
 
             <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
-            <label class="filter-button btn btn-outline-primary btn-lg ms-4 my-auto" for="recent">
+            <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recent">
                 <i class="fas fa-history mt-2"></i> <span class="mx-2">Recent</span>
             </label>
 
             @if (Auth::check())
                 <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off">
-                <label class="filter-button btn btn-outline-primary btn-lg ms-4 my-auto" for="recommended">
+                <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recommended">
                     <i class="far fa-star mt-2"></i> <span class="mx-2">Recommended</span>
                 </label>
             @endif
