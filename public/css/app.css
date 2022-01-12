@@ -81,7 +81,9 @@ body {
 }
 
 #dropdownContainer {
-    width: 12%;
+    max-width: 3.5em;
+    max-height: 3.5em;
+    width: auto;
     height: auto;
     margin-right: 8%;
 }
