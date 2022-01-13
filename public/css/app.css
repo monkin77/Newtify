@@ -136,6 +136,10 @@ option {
     font-size: 2em;
 }
 
+.tooltip{
+    font-size: 1.2rem;
+ }
+
 /* Partial Article */
 
 #articles {

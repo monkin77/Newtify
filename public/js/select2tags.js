@@ -10,6 +10,7 @@ $('#filterTags').select2({
     width: '15%',
     tokenSeparators: [',', ' ', ";"],
     theme: "bootstrap-5",
+    placeholder: "Filter by Tags"
 });
 
 $('#favoriteTags').select2({

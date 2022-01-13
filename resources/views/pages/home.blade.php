@@ -16,20 +16,26 @@
         <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
             @if (Auth::check())
                 <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
-                <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recommended">
-                    <i class="far fa-star mt-2"></i> <span class="mx-2">Recommended</span>
-                </label>
+                <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="From your favorite authors and tags"
+                    class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recommended"
+                >
+                <i class="far fa-star mt-2"></i>
+                <span class="mx-2">Recommended</span>
+            </label>
             @endif
 
             <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
             @if (Auth::guest()) checked @endif>
-
-            <label class="filter-button btn btn-outline-purple ms-4 my-auto" for="trending">
+            <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hottest articles of the day"
+                class="filter-button btn btn-outline-purple ms-4 my-auto" for="trending"
+            >
                 <i class="fas fa-fire-alt mt-2"></i> <span class="mx-2">Trending</span>
             </label>
 
             <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
-            <label class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recent">
+            <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="The latest articles"
+                class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recent"
+            >
                 <i class="fas fa-history mt-2"></i> <span class="mx-2">Recent</span>
             </label>
         </div>
@@ -46,13 +52,13 @@
             </div>
         </div>
 
-        <select id="filterTags" onchange="filterArticles()" multiple>
-            @foreach($tags as $tag)
-                <option value="{{ $tag['id'] }}">
-                    {{ $tag['name'] }}
-                </option>
-            @endforeach
-        </select>
+    <select id="filterTags" class="text-center" onchange="filterArticles()" multiple>
+        @foreach($tags as $tag)
+            <option value="{{ $tag['id'] }}">
+                {{ $tag['name'] }}
+            </option>
+        @endforeach
+    </select>
 
         <i class="fa fa-tag filter-tag mt-2 mx-4 text-purple"></i>
     </section>

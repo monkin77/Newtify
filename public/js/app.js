@@ -69,3 +69,11 @@ setSearchType = (item) => {
 }
 
 addEventListeners();
+
+// Enable tooltips
+const tooltipTriggerList = [].slice.call(selectAll('[data-bs-toggle="tooltip"]'))
+const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl, {
+    delay: { show: 500, hide: 100 },
+  })
+})
