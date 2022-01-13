@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Events\Comment;
 
 class CommentNotification extends Notification
 {
@@ -14,6 +14,19 @@ class CommentNotification extends Notification
         static::addGlobalScope(function ($query) {
             $query->where('type', 'COMMENT');
         });
+    }
+
+    public static function notify($receiver_id, $comment, $user, $article)
+    {
+        self::create([
+            'type' => 'COMMENT',
+            'receiver_id' => $receiver_id,
+            'new_comment' => $comment->id,
+        ]);
+
+        event(new Comment(
+            $receiver_id, $user->name, $user->avatar, $article->id, $article->title, $comment->body
+        ));
     }
 
     public function comment() {
