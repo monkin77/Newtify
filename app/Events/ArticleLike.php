@@ -12,9 +12,9 @@ class ArticleLike extends Notification
      *
      * @return void
      */
-    public function __construct($username, $avatar, $article_id, $article_title)
+    public function __construct($receiver_id, $username, $avatar, $article_id, $article_title)
     {
-        parent::__construct($username, $avatar);
+        parent::__construct($receiver_id, $username, $avatar);
         $this->article_id = $article_id;
         $this->article_title = $article_title;
     }

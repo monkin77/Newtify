@@ -14,6 +14,7 @@ abstract class Notification implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    protected $receiver_id;
     public $username;
     public $avatar;
 
@@ -22,8 +23,9 @@ abstract class Notification implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($username, $avatar)
+    public function __construct($receiver_id, $username, $avatar)
     {
+        $this->receiver_id = $receiver_id;
         $this->username = $username;
         $this->avatar = $avatar;
     }
@@ -35,7 +37,7 @@ abstract class Notification implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['notifications'];
+        return ['notifications.'.$this->receiver_id];
     }
 
     abstract public function broadcastAs();

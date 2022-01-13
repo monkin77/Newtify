@@ -100,6 +100,6 @@ Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
 Route::post('/api/share_socials', 'ShareController@shareWidget');
 
 Route::get('test', function () {
-    event(new App\Events\ArticleLike('likezao', 'yay', 1, 'Titulo'));
+    event(new App\Events\ArticleLike(Auth::id(), 'likezao', 'yay', 1, 'Titulo'));
     return "Event has been sent!";
 });
