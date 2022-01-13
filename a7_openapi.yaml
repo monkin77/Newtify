@@ -1260,7 +1260,7 @@ paths:
         "404":
           description: "Not found"
 
-  /notifications:
+  /api/notifications:
     get:
       operationId: R605
       summary: "R605: View Notifications"
@@ -1274,6 +1274,7 @@ paths:
         "401":
           description: "Unauthorized. Not logged in"
 
+  /notifications:
     put:
       operationId: R606
       summary: "R606: Mark Notifications as Read"
