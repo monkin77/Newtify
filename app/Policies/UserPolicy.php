@@ -128,4 +128,16 @@ class UserPolicy
     {
         return Auth::check();
     }
+
+    /**
+     * Determine whether the user can use the messaging system.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function messages(User $user)
+    {
+        return Auth::check();
+    }
 }

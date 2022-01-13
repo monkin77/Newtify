@@ -68,3 +68,6 @@ Route::get('api/search/articles', 'SearchController@searchArticles');
 // Notifications
 Route::get('api/notifications', 'NotificationController@show');
 Route::put('notifications', 'NotificationController@readNotifications');
+
+// Messages
+Route::get('messages', 'MessageController@inbox');
