@@ -4,13 +4,19 @@
 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="//js.pusher.com/3.1/pusher.min.js"></script>
+
 <script type="text/javascript">
     // Fix for Firefox autofocus CSS bug
     // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
 </script>
 
-<script type="text/javascript" src={{ asset('js/app.js') }}></script>
 <script type="text/javascript" src={{ asset('js/loadMore.js') }}></script>
 <script type="text/javascript" src={{ asset('js/share.js') }}></script>
+<script type="text/javascript" src={{ asset('js/app.js') }}></script>
+<script type="text/javascript" src={{ asset('js/pusher.js') }}></script>
 
 @yield('scripts')
