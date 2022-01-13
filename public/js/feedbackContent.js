@@ -1,18 +1,22 @@
-likeContent = (elem, id, like) => {
-    const url = '/content/' + id;
-    sendAjaxRequest('put', url, null, contentHandler(elem, id, like));
+makeFeedback = (elem, content_id, is_like) => {
+    const url = '/content/' + content_id;
+    sendAjaxRequest('put', url, { is_like }, makeFeedbackHandler(elem, content_id, is_like));
 }
 
+removeFeedback = (elem, content_id, is_like) => {
+    const url = '/content/' + content_id;
+    sendAjaxRequest('delete', url, { is_like }, removeFeedbackHandler(elem, content_id, is_like));
+}
 
-const contentHandler = (elem, is_like) => function() {
+const makeFeedbackHandler = (elem, content_id, is_like) => function() {
     if (this.status == 403) {
-        window.location = '/';
+        window.location = '/login';
         return;
     }
 
     const previousError = elem.querySelector('.error');
 
-    if (this.status == 400) {
+    if (this.status == 500) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
 
         if (previousError)
@@ -23,14 +27,47 @@ const contentHandler = (elem, is_like) => function() {
         return;
     }
 
-    elem.innerHTML = is_like ? JSON.parse(response).likes : JSON.parse(response.dislikes);
+    elem.classList.add("text-primary");
+    elem.onclick = () => { removeFeedback(elem, content_id, is_like); };
+
+    const inside = elem.lastElementChild;
+    inside.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
+
+    const oppositeFeedback = is_like ? select('#articleDislikes') : select('#articleLikes');
+    const oppositeInside = oppositeFeedback.lastElementChild;
+    oppositeInside.innerHTML = is_like ? JSON.parse(this.responseText).dislikes : JSON.parse(this.responseText).likes;
+
+    oppositeFeedback.classList = is_like ? ["fas fa-thumbs-down ps-3"] : ["fas fa-thumbs-up ps-5"];
+    oppositeFeedback.onclick = () => { makeFeedback(oppositeFeedback, content_id, !is_like); };
 
     if (previousError) previousError.remove();
+}
 
-    const confirmation = document.createElement('h4');
-    confirmation.classList.add('mb-0');
-    confirmation.innerHTML = JSON.parse(this.responseText).msg;
+const removeFeedbackHandler = (elem, content_id, is_like) => function() {
+    if (this.status == 403) {
+        window.location = '/ogin';
+        return;
+    }
 
-    elem.parentElement.replaceWith(confirmation);
+    const previousError = elem.querySelector('.error');
+
+    if (this.status == 500) {
+        const error = createErrorMessage(JSON.parse(this.responseText).errors);
+
+        if (previousError)
+            previousError.replaceWith(error);
+        else
+            elem.appendChild(error);
+
+        return;
+    }
+
+    elem.classList = is_like ? ["fas fa-thumbs-up ps-5"] : ["fas fa-thumbs-down ps-3"];
+    elem.onclick = () => { makeFeedback(elem, content_id, is_like); };
+    
+    const inside = elem.lastElementChild;
+    inside.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
+
+    if (previousError) previousError.remove();
 }
 

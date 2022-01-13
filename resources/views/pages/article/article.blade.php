@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+<script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
+
 @section('content')
     
     <div class="article-container h-100 container-fluid bg-light">
@@ -65,22 +67,25 @@
                     @endforeach
 
                     @if ( $liked )
-                        <i class="fas fa-thumbs-up ps-5 text-primary" id="articleLikes" onclick="removeFeedbackContent(this, $article['id'], 1)"> 
-                            {{ $article['likes'] }}
+                        <i class="fas fa-thumbs-up ps-5 text-primary" 
+                            id="articleLikes" 
+                            onclick="removeFeedback(this, {{ $article['id'] }}, true)"
+                            > 
+                            <span class="ms-1">{{ $article['likes'] }}</span>
                         </i>
                     @else 
-                        <i class="fas fa-thumbs-up ps-5" id="articleLikes" onclick="likeContent(this, $article['id'], 1)"> 
-                            {{ $article['likes'] }}
+                        <i class="fas fa-thumbs-up ps-5" id="articleLikes" onclick="makeFeedback(this, {{ $article['id'] }}, true)"> 
+                            <span class="ms-1">{{ $article['likes'] }}</span>
                         </i>
                     @endif
 
                     @if ($disliked)
-                        <i class="fas fa-thumbs-down ps-3 text-primary" id="articleDislikes" onclick="removeFeedbackContent(this, $article['id'], 0)"> 
-                            {{ $article['dislikes'] }}
+                        <i class="fas fa-thumbs-down ps-3 text-primary" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false)"> 
+                            <span class="ms-1">{{ $article['dislikes'] }}</span>
                         </i>
                     @else
-                        <i class="fas fa-thumbs-down ps-3" id="articleDislikes" onclick="likeContent(this, $article['id'], 0)"> 
-                            {{ $article['dislikes'] }}
+                        <i class="fas fa-thumbs-down ps-3" id="articleDislikes" onclick="makeFeedback(this, {{ $article['id'] }}, false)"> 
+                            <span class="ms-1">{{ $article['dislikes'] }}<span>
                         </i>
                     @endif 
                     

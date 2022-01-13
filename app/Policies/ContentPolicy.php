@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Content;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ContentPolicy
@@ -14,12 +15,11 @@ class ContentPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Content  $content
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Content $content)
+    public function update(User $user)
     {
-        return $user->id === $content->author()->first()->id;
+        return Auth::check();
     }
 
 }

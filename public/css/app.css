@@ -218,7 +218,8 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-*/ .article-container #article-header i {
+
+.article-container #article-header i {
     width: 0.8em;
     height: 0.7em;
 }

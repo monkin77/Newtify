@@ -48,7 +48,7 @@ removeTag = (elem, id) =>  {
     sendAjaxRequest('delete', url, null, tagHandler(elem, id, "remove"));
 }
 
-const tagHandler = (elem, id, action) => function(){
+const tagHandler = (elem, id, action) => function() {
     if (this.status == 403) {
         window.location = '/login';
         return;
@@ -69,7 +69,7 @@ const tagHandler = (elem, id, action) => function(){
 
     if (action !== "remove") {
         const accept = (btn, id) => { removeTag(btn, id); };
-        const remove = (btn, id) => { acceptTag(btn, id); };;
+        const remove = (btn, id) => { acceptTag(btn, id); };
         let icon, color, containerId, func;
         if (action === "accept") {
             icon = "fa-trash";

@@ -41,6 +41,10 @@ Route::get('article/{id}/edit', 'ArticleController@edit')->name('editArticle');
 Route::put('article/{id}/edit', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
 
+// Content
+Route::delete('content/{id}', 'ContentController@removeFeedback');
+Route::put('content/{id}', 'ContentController@makeFeedback');
+
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');
 Route::get('admin/suspensions', 'AdminController@suspensions');

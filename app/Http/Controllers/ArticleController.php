@@ -22,9 +22,8 @@ class ArticleController extends Controller
      */
     public function createForm() 
     {
-        if (Auth::guest()) {
+        if (Auth::guest()) 
             return redirect('/login');
-        }
 
         $user = User::find(Auth::id());
         if (is_null($user)) 
@@ -186,7 +185,7 @@ class ArticleController extends Controller
         $user = Auth::user();
         $is_admin = Auth::user() ? $user->is_admin : false;
 
-        $feedback = Feedback::select('is_like')->where('user_id', '=', Auth::id())->where('content_id', '=', $id)->get()[0];
+        $feedback = Feedback::where('user_id', '=', Auth::id())->where('content_id', '=', $id)->first();
         
         $liked = false;
         $disliked = false;
