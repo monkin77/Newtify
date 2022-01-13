@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Events\Message;
 
 class MessageNotification extends Notification
 {
@@ -15,6 +15,19 @@ class MessageNotification extends Notification
         static::addGlobalScope(function ($query) {
             $query->where('type', 'MESSAGE');
         });
+    }
+
+    public static function notify($receiver_id, $sender, $msg)
+    {
+        self::create([
+            'type' => 'MESSAGE',
+            'receiver_id' => $receiver_id,
+            'msg' => $msg->id,
+        ]);
+
+        event(new Message(
+            $receiver_id, $sender->name, $sender->avatar, $sender->id, $msg->body
+        ));
     }
 
     public function message() {

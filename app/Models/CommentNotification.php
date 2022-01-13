@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\Comment;
+use App\Events\CommentReply;
 
 class CommentNotification extends Notification
 {
@@ -21,12 +22,21 @@ class CommentNotification extends Notification
         self::create([
             'type' => 'COMMENT',
             'receiver_id' => $receiver_id,
-            'new_comment' => $comment->id,
+            'new_comment' => $comment['id'],
         ]);
 
-        event(new Comment(
-            $receiver_id, $user->name, $user->avatar, $article->id, $article->title, $comment->body
-        ));
+        if (isset($comment['parent_comment_id']))
+        {
+            event(new CommentReply(
+                $receiver_id, $user['name'], $user['avatar'], $article['id'], $article['title'], $comment['body']
+            ));
+        }
+        else
+        {
+            event(new Comment(
+                $receiver_id, $user['name'], $user['avatar'], $article['id'], $article['title'], $comment['body']
+            ));
+        }
     }
 
     public function comment() {

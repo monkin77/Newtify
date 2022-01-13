@@ -7,6 +7,7 @@ if (userId) {
         cluster: 'eu'
     });
 
+    // TODO: Notification snackbars and page
     const notificationChannel = pusher.subscribe(`notifications.${userId}`);
     notificationChannel.bind('article-like', (data) => console.log("Like no artigo bro", data));
     notificationChannel.bind('comment-like', (data) => console.log("Like no comment bro", data));
