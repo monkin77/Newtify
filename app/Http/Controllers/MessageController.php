@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Message;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
     public function inbox()
     {
-        $this->authorize('messages', User::class);
+        if (Auth::guest())
+            return redirect('/login');
 
         // One message per user, sorted by most recent
         $messages = Message::where('sender_id', Auth::id())
@@ -47,7 +51,8 @@ class MessageController extends Controller
 
     public function messageThread(int $id)
     {
-        $this->authorize('messages', User::class);
+        if (Auth::guest())
+            return redirect('/login');
 
         $user = User::find($id);
         if (is_null($user))
@@ -78,4 +83,44 @@ class MessageController extends Controller
             'messages' => $messages,
         ]);
     }
+
+    public function create(Request $request, int $id)
+    {
+        $this->authorize('messages', User::class);
+
+        $user = User::find($id);
+        if (is_null($user))
+            return Response()->json([
+                'status' => 'NOT FOUND',
+                'msg' => 'User not found, id: ' . $id
+            ], 404);
+
+        $validator = Validator::make($request->all(),
+            [
+                'body' => 'required|string|min:10',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return Response()->json([
+                'status' => 'Bad Request',
+                'msg' => 'Failed to send message. Bad Request',
+                'errors' => $validator->errors(),
+            ], 400);
+        }
+
+        $message = new Message;
+        $message->body = $request->body;
+        $message->sender_id = Auth::id();
+        $message->receiver_id = $id;
+        $message->save();
+
+        return Response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfully sent message',
+            'id' => $message->id,
+        ], 200);
+    }
+
+    
 }

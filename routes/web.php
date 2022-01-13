@@ -72,3 +72,4 @@ Route::put('notifications', 'NotificationController@readNotifications');
 // Messages
 Route::get('messages', 'MessageController@inbox');
 Route::get('messages/{id}', 'MessageController@messageThread');
+Route::post('messages/{id}', 'MessageController@create');
