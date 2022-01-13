@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
+    /**
+     * Displays the message inbox
+     *
+     * @return View
+     */
     public function inbox()
     {
         if (Auth::guest())
@@ -49,6 +54,11 @@ class MessageController extends Controller
         ]);
     }
 
+    /**
+     * Displays a message thread with another user
+     *
+     * @return View
+     */
     public function messageThread(int $id)
     {
         if (Auth::guest())
@@ -84,16 +94,22 @@ class MessageController extends Controller
         ]);
     }
 
+    /**
+     * Creates a new message
+     *
+     * @return Response
+     */
     public function create(Request $request, int $id)
     {
         $this->authorize('messages', User::class);
 
         $user = User::find($id);
-        if (is_null($user))
+        if (is_null($user)) {
             return Response()->json([
                 'status' => 'NOT FOUND',
                 'msg' => 'User not found, id: ' . $id
             ], 404);
+        }
 
         $validator = Validator::make($request->all(),
             [
@@ -122,5 +138,36 @@ class MessageController extends Controller
         ], 200);
     }
 
-    
+    /**
+     * Marks all the user's thread messages as read
+     *
+     * @return Response
+     */
+    public function readMessages(int $id)
+    {
+        $this->authorize('messages', User::class);
+
+        $user = User::find($id);
+        if (is_null($user)) {
+            return Response()->json([
+                'status' => 'NOT FOUND',
+                'msg' => 'User not found, id: ' . $id
+            ], 404);
+        }
+
+        Message::where(function ($query) use($id) {
+            $query->where('sender_id', $id)
+                ->where('receiver_id', Auth::id());
+
+        })->orWhere(function ($query) use($id) {
+            $query->where('sender_id', Auth::id())
+                ->where('receiver_id', $id);
+
+        })->update(['is_read' => true]);
+
+        return Response()->json([
+            'status' => 'OK',
+            'msg' => 'Successfully marked messages as read',
+        ], 200);
+    }
 }
