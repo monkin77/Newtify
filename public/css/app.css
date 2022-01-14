@@ -96,6 +96,7 @@ body {
 
 #dropdownAvatar {
     border-radius: 2em;
+    aspect-ratio: 1;
 }
 
 /* HomePage */
