@@ -179,8 +179,6 @@ class UserController extends Controller
                 if (str_contains($key, 'favoriteTags'))
                     $key = 'favoriteTags';
                 $errors[$key] = is_array($value) ? implode(',', $value) : $value;
-                //implode is for when you have multiple errors for a same key
-                //like email should valid as well as unique
             }
 
             // Go back to form and refill it

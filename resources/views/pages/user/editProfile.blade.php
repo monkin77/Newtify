@@ -11,7 +11,6 @@ $isOpen = $errors->has('password');
 
 @section('content')
     <section id="editProfileContainer">
-        {{-- <a class="btn btn-primary position-absolute p-3" id="favTagsBtn" href="/favorite_tags">Change Favorite Tags</a> --}}
         <form name="profileForm" method="POST" enctype="multipart/form-data"
             action="{{ route('editProfile', ['id' => $user['id']]) }}" class="container-fluid py-3 w-75">
             @method('put')

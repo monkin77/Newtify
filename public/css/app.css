@@ -489,9 +489,6 @@ body {
 }
 
 /* Favorite Tags */
-#tagsContainer #tagSearch {
-}
-
 #tagsContainer .tagContainer {
     height: 15em;
     margin-left: 1em;
