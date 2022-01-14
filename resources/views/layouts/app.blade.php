@@ -28,7 +28,7 @@
     <main>
         @include('partials.navbar')
 
-        <div id="contentContainer" class="pt-5 bg-dark">
+        <div id="contentContainer" class="pt-5">
             @yield('content')
         </div>
 

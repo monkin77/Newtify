@@ -48,15 +48,16 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('propose-tag')
-    <section class="home-section d-flex justify-content-center mt-3">
+    <section class="home-section d-flex flex-column align-items-center mt-5">
+        <div class="horizontalDivider"></div>
         <div class="d-flex flex-grow-1 justify-content-center home-container">
-            <div id="proposeTag" class="position-relative d-flex flex-column align-items-center text-light">
+            <div id="proposeTag" class="position-relative d-flex flex-column align-items-center">
                 <h1 class="mb-2">
                     <i class="fa fa-tag fa-sm fa-flip-horizontal px-2 text-purple-dark"></i>
                     Propose a new Tag
                     <i class="fa fa-tag fa-sm px-2 text-purple-dark"></i>
                 </h1>
-                <h4 class="mb-5"> Help us improve on getting more variety of content </h4>
+                <h4 class="mb-5 text-light"> Help us improve on getting more variety of content </h4>
 
                 <form id="proposeTagForm" class="d-flex flex-row mb-0" onsubmit="proposeTag(event)">
                     <input id="tag-name" type="text" name="tagName" placeholder="Enter your tag" required>

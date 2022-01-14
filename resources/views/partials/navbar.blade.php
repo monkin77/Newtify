@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="navbarContainer">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarContainer">
         <div class="container-fluid py-4">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -15,7 +15,7 @@
                 <form id="searchForm" class="d-flex flex-row align-items-center border col-5"
                     action="{{ route('search') }}">
                     <i class="fas fa-search ms-4 submit" type="submit"></i>
-                    <input class="form-control no-border flex-grow-1 my-0 ms-3 bg-secondary" type="search"
+                    <input class="form-control no-border flex-grow-1 my-0 ms-3 bg-dark" type="search"
                         placeholder="Search" name="query" autocomplete="off" value="{{ old('query') }}" />
                     <input type="hidden" name="type" value="{{ old('type') ? old('type') : 'articles' }}" />
 

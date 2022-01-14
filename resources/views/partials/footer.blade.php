@@ -6,13 +6,13 @@
             <h5 class="text-uppercase ps-1">Newtify Logo</h5>
         </div>
         <div class="col-2">
-            <a class="text-uppercase link-secondary" onclick="console.log('cliked')">About Us</a>
+            <a class="text-uppercase link-light" onclick="console.log('cliked')">About Us</a>
         </div>
         <div class="col-2">
-            <a class="text-uppercase link-secondary" onclick="console.log('cliked')">Guidelines</a>
+            <a class="text-uppercase link-light" onclick="console.log('cliked')">Guidelines</a>
         </div>
         <div class="col-2">
-            <a class="text-uppercase link-secondary" onclick="console.log('cliked')">FAQ</a>
+            <a class="text-uppercase link-light" onclick="console.log('cliked')">FAQ</a>
         </div>
         <div class="col-3">
             <i class="fa fa-facebook me-5 fa-1x" onclick="console.log('cliked')"></i>
@@ -23,7 +23,7 @@
 
     <!-- Copyright -->
     <div class="text-center p-3" id="copyrightContainer">
-        © 2021 Copyright:
+        © 2022 Copyright:
         <a class="text-reset" href="{{ url('/') }}">LBAW</a>
     </div>
     <!-- Copyright -->

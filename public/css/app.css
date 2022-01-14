@@ -1,5 +1,6 @@
 body {
     background-color: #ffffff;
+    color: var(--bs-body-color);
 }
 
 /* Navbar */
@@ -102,8 +103,8 @@ body {
 /* HomePage */
 
 .home-section .home-container {
-    padding-top: 5vh;
-    padding-bottom: 5vh;
+    padding-top: 2em;
+    padding-bottom: 2em;
 }
 
 #tag-name {
@@ -563,6 +564,7 @@ body {
 /* App Content */
 #contentContainer {
     min-height: 75vh;
+    background-color: var(--bs-body-bg);
 }
 
 /* Navbar and Footer*/
@@ -575,7 +577,7 @@ body {
 }
 
 #footerContainer #copyrightContainer {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--bs-gray-900);
 }
 
 /* Custom Bootstrap Variables */
@@ -593,4 +595,15 @@ body {
 
 .btn-purple-transparent:hover {
     color: var(--bs-purple);
+}
+
+.text-light-white {
+    color: var(--bs-gray-100);
+}
+
+/* Horizontal Divider */
+.horizontalDivider {
+    height: 0.1em;
+    background-color: var(--darkPurple);
+    width: 40%;
 }
