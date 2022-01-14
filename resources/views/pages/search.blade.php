@@ -30,7 +30,7 @@
 
 @else
 
-    <div class="alert alert-secondary search-nfo my-3 text-center" role="alert">
+    <div class="alert alert-dark search-nfo my-3 text-center" role="alert">
         <h3 class="mb-0">Displaying {{ $type }} results for: <i>{{ $query }}</i> </h3>
     </div>
 
