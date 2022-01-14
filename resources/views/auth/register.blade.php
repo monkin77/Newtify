@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="border text-center w-50 bg-light container-fluid">
-    <h2 class="modal-titlemx-auto text-center fw-bold" id="exampleModalLabel">Sign Up</h2>
+    <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Sign Up</h2>
     <form class="form-group" method="post" action="{{ route('signup') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <label for="name">Name</label>
