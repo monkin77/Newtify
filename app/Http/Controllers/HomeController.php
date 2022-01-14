@@ -30,7 +30,7 @@ class HomeController extends Controller
      * Return a partial with the filtered articles
      * 
      * @param  Illuminate\Http\Request  $request
-     * @return View
+     * @return Response
      */
     public function filter(Request $request)
     {

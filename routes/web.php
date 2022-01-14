@@ -65,3 +65,13 @@ Route::post('tags/new', 'TagController@propose');
 Route::get('search', 'SearchController@show')->name('search');
 Route::get('api/search/users', 'SearchController@searchUsers');
 Route::get('api/search/articles', 'SearchController@searchArticles');
+
+// Notifications
+Route::get('api/notifications', 'NotificationController@show');
+Route::put('notifications', 'NotificationController@readNotifications');
+
+// Messages
+Route::get('messages', 'MessageController@inbox');
+Route::get('messages/{id}', 'MessageController@messageThread');
+Route::post('messages/{id}', 'MessageController@create');
+Route::put('messages/{id}', 'MessageController@readMessages');
