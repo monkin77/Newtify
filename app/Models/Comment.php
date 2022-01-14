@@ -46,4 +46,21 @@ class Comment extends Content
     public function notification() {
       return $this->hasOne(CommentNotification::class, 'new_comment');
     }
+
+    public function getInfo() {
+      $published_at = date('F j, Y', strtotime( $this['published_at'] ) ) ;  
+
+      return [
+          'id' => $this->content_id, 
+          'body' => $this->body,
+          'likes' => $this->likes,
+          'dislikes' => $this->dislikes,
+          'published_at' =>$published_at,
+          'author' => isset($this->author) ? [
+              'id' => $this->author->id,
+              'name' => $this->author->name,
+              'avatar' => $this->author->avatar,
+          ] : null,
+      ];
+    }
 }

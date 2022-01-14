@@ -18,9 +18,9 @@
                     @endphp
                     <i style="font-size: 1.2em; width: 25%">{{ $article_published_at }}</i>
 
-                    @if ($is_author || $is_admin)
+                    @if ($isAuthor || $isAdmin)
                         <div id="articleButtons">
-                            @if ($is_author)
+                            @if ($isAuthor)
                                 <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit article-button me-4"></i>
                                 </a>
@@ -87,7 +87,7 @@
             <div class="author-container flex-col p-3 text-dark">
                 @include('partials.authorInfo', [
                     'author' => $author,
-                    'isOwner' => $is_author
+                    'isOwner' => $isAuthor
                 ])
             </div>
 
@@ -125,10 +125,16 @@
                 </div>
                 @endif
 
-                @foreach ($comments as $comment)
-                    @include('partials.content.comment', ['comment' => $comment])
-                @endforeach
-            
+                <div id="comments">
+                    @include('partials.content.comments', ['comments' => $comments])
+                </div>
+
+                @if ($canLoadMore)
+                <div id="load-more" class="w-75 my-3">
+                    <button onclick="loadMoreComments({{ $article['id'] }})">Load more</button>
+                </div>
+                @endif
+
             </div>
 
         </div>
