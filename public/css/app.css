@@ -285,7 +285,6 @@ body {
 
 #userInfo {
     height: 60vh;
-    background-color: lightgray;
 }
 
 #userInfo #userGraphics {
@@ -304,9 +303,9 @@ body {
     width: 100%;
     border-width: 0.2em;
     border-style: solid;
-    border-color: gray;
+    border-color: var(--bs-light);
     border-radius: 1.5em;
-    background-color: #95a5a6;
+    background-color: var(--bs-gray-800);
 }
 
 #graphContainer .tagName {
@@ -314,7 +313,7 @@ body {
 }
 
 #graphContainer .tagBar {
-    background-color: orange;
+    background-color: var(--bs-orange);
     height: 1.2em;
 }
 
@@ -419,14 +418,15 @@ body {
 #userProfileContainer #reportContainer #reportInsideContainer {
     width: 100%;
     height: 100%;
-    background-color: lightgray;
+    background-color: var(--bs-dark);
     border-radius: 3em;
 }
 
 #userProfileContainer #reportContainer #reason {
     width: 70%;
     height: 50%;
-    border-color: black;
+    border-color: var(--bs-light);
+    color: white;
 }
 
 #userProfileContainer #reportContainer #closePopupBtn {
@@ -582,11 +582,11 @@ body {
 
 /* Custom Bootstrap Variables */
 .text-purple {
-    color: var(--purple);
+    color: var(--bs-purple);
 }
 
 .text-purple-dark {
-    color: var(--darkPurple);
+    color: var(--bs-darkPurple);
 }
 
 .btn-purple-transparent {
