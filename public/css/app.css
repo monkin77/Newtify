@@ -3,6 +3,16 @@ body {
     color: var(--bs-body-color);
 }
 
+input,
+select,
+textarea {
+    color: white;
+}
+
+option {
+    color: black;
+}
+
 /* Navbar */
 
 #logo {
@@ -281,6 +291,14 @@ body {
     background-color: transparent !important;
 }
 
+.select2-selection__choice {
+    background-color: var(--bs-primary) !important;
+}
+
+.select2-results {
+    background-color: var(--bs-dark);
+}
+
 /* User Profile */
 
 #userInfo {
@@ -444,12 +462,8 @@ body {
 }
 
 /* Edit Profile */
-#editProfileContainer {
-    background-color: lightgray;
-}
-
 #editProfileContainer #editAvatarContainer {
-    height: 27.5vh;
+    height: 25vh;
 }
 
 #editProfileContainer #editAvatarContainer #avatarPreviewContainer {
@@ -465,8 +479,8 @@ body {
 }
 
 #editProfileContainer .editInputs {
-    border: 2px black solid;
-    height: 3em;
+    border: 2px var(--bs-light) solid;
+    height: 4em;
     background-color: inherit;
 }
 
@@ -476,9 +490,8 @@ body {
 }
 
 #editProfileContainer #countryInputContainer {
-    border: 2px black solid;
-    padding-top: 0.4em;
-    padding-bottom: 0.4em;
+    border: 2px var(--bs-light) solid;
+    height: 3em;
     min-width: 10em;
 }
 
@@ -488,6 +501,10 @@ body {
     font-size: large;
     background-color: #923ac9;
     border-radius: 0.3em;
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(0.9);
 }
 
 /* Favorite Tags */
