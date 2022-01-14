@@ -49,7 +49,7 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('articles')
-    <section id="articles" class="container">
+    <section id="articles" class="container-fluid">
         @include('partials.content.articles', ['articles' => $articles])
     </section>
 @endsection
