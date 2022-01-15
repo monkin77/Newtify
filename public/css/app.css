@@ -639,4 +639,5 @@ option {
     height: 0.1em;
     background-color: var(--darkPurple);
     width: 40%;
+    margin: auto;
 }
