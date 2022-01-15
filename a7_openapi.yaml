@@ -933,7 +933,7 @@ paths:
         "404":
           description: "Comment id not found."
 
-  /api/comment/article/{id}:
+  /api/article/{id}/comments:
     get:
       operationId: R404
       summary: "R404 : Comments of a given article"

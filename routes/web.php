@@ -48,6 +48,9 @@ Route::put('article/{id}/edit', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
 Route::get('api/article/{id}/comments', 'ArticleController@comments');
 
+// Comments
+Route::post('comment', 'CommentController@create');
+
 // Content
 Route::delete('content/{id}', 'ContentController@removeFeedback');
 Route::put('content/{id}', 'ContentController@giveFeedback');
