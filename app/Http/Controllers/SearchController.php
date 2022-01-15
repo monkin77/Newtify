@@ -10,6 +10,8 @@ use Illuminate\Validation\Rule;
 
 class SearchController extends Controller
 {
+    private const SEARCH_LIMIT = 10;
+
     public function show(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -30,9 +32,9 @@ class SearchController extends Controller
             ])->setStatusCode(400);
 
         if ($request->type === 'articles')
-            $search = $this->getArticleSearch($request->input('query'), 0, 10);
+            $search = $this->getArticleSearch($request->input('query'), 0, $this::SEARCH_LIMIT);
         else if ($request->type === 'users')
-            $search = $this->getUserSearch($request->input('query'), 0, 10);
+            $search = $this->getUserSearch($request->input('query'), 0, $this::SEARCH_LIMIT);
 
         return view('pages.search', [
             'type' => $request->type,

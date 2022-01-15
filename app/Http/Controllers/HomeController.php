@@ -11,6 +11,8 @@ use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
+    private const ARTICLE_LIMIT = 10;
+
     /**
      * Displays the home page
      * 
@@ -19,7 +21,7 @@ class HomeController extends Controller
     public function show()
     {
         $type = Auth::check() ? 'recommended' : 'trending';
-        $results = $this->filterByType($type, 0, 5);
+        $results = $this->filterByType($type, 0, $this::ARTICLE_LIMIT);
 
         $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
             return [

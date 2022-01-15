@@ -1,3 +1,5 @@
+const ARTICLE_FILTER_LIMIT = 10;
+
 function replaceArticles() {
   const json = JSON.parse(this.responseText);
   const previousError = select('#filterError');
@@ -44,7 +46,7 @@ function filterArticles() {
 
 const getFilterUrl = (offset = 0) => {
   const type = select('input[name="filterType"]:checked').id;
-  let url = `/api/article/filter?type=${type}&offset=${offset}&limit=5`;
+  let url = `/api/article/filter?type=${type}&offset=${offset}&limit=${ARTICLE_FILTER_LIMIT}`;
 
   const tags = Array.from(select("#filterTags").selectedOptions)
     .map((elem) => parseInt(elem.value));
