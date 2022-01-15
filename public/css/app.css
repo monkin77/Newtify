@@ -456,9 +456,14 @@ body {
     height: 27.5vh;
 }
 
-#editProfileContainer #editAvatarContainer #avatarPreview {
+#editProfileContainer #editAvatarContainer #avatarPreviewContainer {
     height: 80%;
+}
+
+#editProfileContainer #editAvatarContainer #avatarPreview {
+    height: 100%;
     aspect-ratio: 1;
+    width: auto;
     border-radius: 100em;
     margin-right: 3em;
 }
@@ -492,7 +497,9 @@ body {
 /* Favorite Tags */
 #tagsContainer .tagContainer {
     height: 15em;
-    margin: 0.75em;
+    margin-left: 1em;
+    margin-right: 0;
+    margin-bottom: 1em;
     border-radius: 2em;
     background-color: #343434;
     cursor: pointer;
