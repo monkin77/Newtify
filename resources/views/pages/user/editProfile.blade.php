@@ -137,11 +137,7 @@ $isOpen = $errors->has('password');
                     Settings</a>
                 <i class="fa fa-caret-down fa-1x position-absolute pe-none caretDown"></i>
             </div>
-            <div <?php if ($isOpen) {
-    echo 'class="colapse show"';
-} else {
-    echo 'class="collapse"';
-} ?> id="advancedContainer">
+            <div <?php if ($isOpen) { echo 'class="colapse show"'; } else { echo 'class="collapse"'; } ?> id="advancedContainer">
                 <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}">
                     @method('put')
                     @csrf
@@ -154,22 +150,22 @@ $isOpen = $errors->has('password');
                     <div class="d-flex align-items-end">
                         <div class="me-5">
                             <div class="form-text">Current Password</div>
-                            <input type="password" required class="w-auto h3 editInputs" id="currPassInput" name='password'
+                            <input type="password" required class="w-auto h4 editInputs" id="currPassInput" name='password'
                                 placeholder="Current Password" />
                         </div>
                         <div class="me-5">
                             <div class="form-text">New Password</div>
-                            <input type="password" required class="w-auto h3 editInputs" id="newPassInput"
+                            <input type="password" required class="w-auto h4 editInputs" id="newPassInput"
                                 name='new_password' placeholder="New Password" onkeyup="checkPass('#newPassInput')" />
                         </div>
                         <div class="me-5">
                             <div class="form-text">Confirm Password</div>
-                            <input type="password" required name="new_password_confirmation" class="w-auto h3 editInputs"
+                            <input type="password" required name="new_password_confirmation" class="w-auto h4 editInputs"
                                 id="newPassInput-confirm" placeholder="Confirm Password"
                                 onkeyup="checkPass('#newPassInput')">
                             <span class="ms-2" id="matchingPass"></span>
                         </div>
-                        <button type="submit">Change</button>
+                        <button class="mb-4" type="submit">Change</button>
                     </div>
                     @if ($errors->has('new_password'))
                         <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
@@ -185,15 +181,15 @@ $isOpen = $errors->has('password');
                     <div class="d-flex align-items-end">
                         <div class="me-5">
                             <div class="form-text">Current Password</div>
-                            <input type="password" autocomplete="new-password" required class="w-auto h3 editInputs"
+                            <input type="password" autocomplete="new-password" required class="w-auto h4 editInputs"
                                 id="emailPassInput" name='password' placeholder="Current Password" />
                         </div>
                         <div class="me-5">
                             <div class="form-text">New Email</div>
-                            <input type="email" required class="w-auto h3 editInputs" id="emailInput" name='email'
+                            <input type="email" required class="w-auto h4 editInputs" id="emailInput" name='email'
                                 placeholder="New Email" value="{{ old('email') }}" />
                         </div>
-                        <button type="submit">Change</button>
+                        <button class="mb-4" type="submit">Change</button>
                     </div>
                     @if ($errors->has('email'))
                         <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
