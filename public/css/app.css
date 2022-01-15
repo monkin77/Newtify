@@ -390,8 +390,7 @@ option {
 /* Alerts */
 
 .alert-custom {
-    background-color: #9a4dca91;
-    color: rgb(137, 7, 218);
+    background-color: var(--bs-darkPurple);
 }
 
 .search-nfo {

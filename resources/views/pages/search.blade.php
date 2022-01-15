@@ -25,7 +25,7 @@
 @if ($results->isEmpty())
 
     <div class="alert alert-custom mb-0 text-center" role="alert">
-        <h3 class="my-3">No results found</h3>
+        <h3 class="my-3 text-white">No results found</h3>
     </div>
 
 @else
