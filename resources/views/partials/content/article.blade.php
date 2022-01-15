@@ -1,4 +1,4 @@
-<div class="card flex-row flex-wrap" style="background-color: var(--bs-gray-700)">
+<div class="card flex-row flex-wrap bg-secondary">
     <div class="card-header border-0 h-100 bg-transparent">
         <img class="h-100" src="{{
             isset($article['thumbnail']) ?

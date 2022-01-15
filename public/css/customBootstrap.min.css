@@ -29,6 +29,7 @@
   --bs-gray-900: #222;
   --bs-purple: #ab32db;
   --bs-darkPurple: #9612ca;
+  --bs-lightPurple: #c15ce9;
   --bs-primary: #9612ca;
   --bs-secondary: #444;
   --bs-success: #00bc8c;
@@ -3294,6 +3295,47 @@ fieldset:disabled .btn {
   border-color: #9612ca;
 }
 
+.btn-lightPurple {
+  color: #fff;
+  background-color: #c15ce9;
+  border-color: #c15ce9;
+}
+
+.btn-lightPurple:hover {
+  color: #fff;
+  background-color: #a44ec6;
+  border-color: #9a4aba;
+}
+
+.btn-check:focus + .btn-lightPurple, .btn-lightPurple:focus {
+  color: #fff;
+  background-color: #a44ec6;
+  border-color: #9a4aba;
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(202, 116, 236, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(202, 116, 236, 0.5);
+}
+
+.btn-check:checked + .btn-lightPurple,
+.btn-check:active + .btn-lightPurple, .btn-lightPurple:active, .btn-lightPurple.active,
+.show > .btn-lightPurple.dropdown-toggle {
+  color: #fff;
+  background-color: #9a4aba;
+  border-color: #9145af;
+}
+
+.btn-check:checked + .btn-lightPurple:focus,
+.btn-check:active + .btn-lightPurple:focus, .btn-lightPurple:active:focus, .btn-lightPurple.active:focus,
+.show > .btn-lightPurple.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(202, 116, 236, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(202, 116, 236, 0.5);
+}
+
+.btn-lightPurple:disabled, .btn-lightPurple.disabled {
+  color: #fff;
+  background-color: #c15ce9;
+  border-color: #c15ce9;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #9612ca;
@@ -3687,6 +3729,40 @@ fieldset:disabled .btn {
 
 .btn-outline-darkPurple:disabled, .btn-outline-darkPurple.disabled {
   color: #9612ca;
+  background-color: transparent;
+}
+
+.btn-outline-lightPurple {
+  color: #c15ce9;
+  border-color: #c15ce9;
+}
+
+.btn-outline-lightPurple:hover {
+  color: #fff;
+  background-color: #c15ce9;
+  border-color: #c15ce9;
+}
+
+.btn-check:focus + .btn-outline-lightPurple, .btn-outline-lightPurple:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(193, 92, 233, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(193, 92, 233, 0.5);
+}
+
+.btn-check:checked + .btn-outline-lightPurple,
+.btn-check:active + .btn-outline-lightPurple, .btn-outline-lightPurple:active, .btn-outline-lightPurple.active, .btn-outline-lightPurple.dropdown-toggle.show {
+  color: #fff;
+  background-color: #c15ce9;
+  border-color: #c15ce9;
+}
+
+.btn-check:checked + .btn-outline-lightPurple:focus,
+.btn-check:active + .btn-outline-lightPurple:focus, .btn-outline-lightPurple:active:focus, .btn-outline-lightPurple.active:focus, .btn-outline-lightPurple.dropdown-toggle.show:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(193, 92, 233, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(193, 92, 233, 0.5);
+}
+
+.btn-outline-lightPurple:disabled, .btn-outline-lightPurple.disabled {
+  color: #c15ce9;
   background-color: transparent;
 }
 
@@ -5785,6 +5861,16 @@ fieldset:disabled .btn {
   color: #480961;
 }
 
+.alert-lightPurple {
+  color: #74378c;
+  background-color: #f3defb;
+  border-color: #eccef8;
+}
+
+.alert-lightPurple .alert-link {
+  color: #5d2c70;
+}
+
 .alert-primary {
   color: #5a0b79;
   background-color: #ead0f4;
@@ -6228,6 +6314,22 @@ fieldset:disabled .btn {
   color: #fff;
   background-color: #5a0b79;
   border-color: #5a0b79;
+}
+
+.list-group-item-lightPurple {
+  color: #74378c;
+  background-color: #f3defb;
+}
+
+.list-group-item-lightPurple.list-group-item-action:hover, .list-group-item-lightPurple.list-group-item-action:focus {
+  color: #74378c;
+  background-color: #dbc8e2;
+}
+
+.list-group-item-lightPurple.list-group-item-action.active {
+  color: #fff;
+  background-color: #74378c;
+  border-color: #74378c;
 }
 
 .list-group-item-primary {
@@ -7585,6 +7687,14 @@ fieldset:disabled .btn {
   color: #780ea2;
 }
 
+.link-lightPurple {
+  color: #c15ce9;
+}
+
+.link-lightPurple:hover, .link-lightPurple:focus {
+  color: #9a4aba;
+}
+
 .link-primary {
   color: #9612ca;
 }
@@ -8089,6 +8199,10 @@ fieldset:disabled .btn {
 
 .border-darkPurple {
   border-color: #9612ca !important;
+}
+
+.border-lightPurple {
+  border-color: #c15ce9 !important;
 }
 
 .border-primary {
@@ -12247,6 +12361,10 @@ fieldset:disabled .btn {
 
 .alert-darkPurple {
   background-color: #9612ca;
+}
+
+.alert-lightPurple {
+  background-color: #c15ce9;
 }
 
 .alert-primary {

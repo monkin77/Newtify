@@ -53,7 +53,7 @@
                         </div>
 
                         <div id="dropdownContainer" class="nav-item dropdown ms-5">
-                            <img id="dropdownAvatar" class="nav-link px-0 dropdown-toggle" role="button"
+                            <img id="dropdownAvatar" class="nav-link px-0 dropdown-toggle py-0" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"
                                 src={{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
                                 onerror="this.src='{{ $userImgPHolder }}'" />
