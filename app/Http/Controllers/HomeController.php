@@ -56,12 +56,21 @@ class HomeController extends Controller
             'limit' => 'nullable|integer|min:1',
         ]);
 
-        if ($validator->fails())
+        if ($validator->fails()) {
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'tags'))
+                    $errors['tags'] = "The selected tags are invalid";
+                else
+                    $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
             return response()->json([
                 'status' => 'Bad Request',
                 'msg' => 'Failed to filter articles. Bad request',
-                'errors' => $validator->errors(),
+                'errors' => $errors,
             ], 400);
+        }
 
         if (isset($request->minDate)) $minTimestamp = strtotime($request->minDate);
         if (isset($request->maxDate)) // Allow articles posted in the same day

@@ -79,8 +79,15 @@ class ArticleController extends Controller
             ]
         );
         if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'tags'))
+                    $key = 'tags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
+            // Go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         $tagsIds = [];
@@ -323,8 +330,15 @@ class ArticleController extends Controller
         ]);
 
         if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'tags'))
+                    $key = 'tags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
+            // Go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         if (isset($request->body)) $content->body = $request->body;
