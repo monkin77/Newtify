@@ -170,7 +170,11 @@
 @endsection
 
 @section('popup')
+<<<<<<< HEAD
     @include('partials.share')
+=======
+    <section id="sharePopup" class="d-none"></section>
+>>>>>>> Added share package and started implementing
 @endsection
 
 @section('content')
