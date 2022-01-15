@@ -77,11 +77,13 @@ $guest = !Auth::check();
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('articles')
-    <div class="container-fluid w-100 d-flex justify-content-center my-5" id="userArticles">
-        <h2 class="border-bottom border-2 border-light text-center pb-2" id="articlesTitle">Articles</h2>
-    </div>
-    <section id="articles">
-        @include('partials.content.articles', ['articles' => $articles])
+    <section class="container-fluid w-100 d-flex flex-column align-items-center my-2">
+        <div class="position-relative w-100 d-flex justify-content-center mb-4" id="userArticles">
+            <h2 class="border-bottom border-2 border-light text-center pb-2" id="articlesTitle">Articles</h2>
+        </div>
+        <div id="articles">
+            @include('partials.content.articles', ['articles' => $articles])
+        </div>
     </section>
 @endsection
 

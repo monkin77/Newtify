@@ -631,7 +631,7 @@ option {
 }
 
 .text-light-white {
-    color: var(--bs-gray-100);
+    color: var(--bs-gray-300);
 }
 
 /* Horizontal Divider */

@@ -1,5 +1,5 @@
-<div class="card flex-row flex-wrap" >
-    <div class="card-header border-0 h-100">
+<div class="card flex-row flex-wrap" style="background-color: var(--bs-gray-700)">
+    <div class="card-header border-0 h-100 bg-transparent">
         <img class="h-100" src="{{
             isset($article['thumbnail']) ?
             asset('storage/thumbnails/'.$article['thumbnail'])
@@ -26,7 +26,7 @@
                 <i class="fa fa-thumbs-down"> {{ $article['dislikes'] }}</i>
             </span>
 
-            <p class="card-text">{{ mb_strimwidth($article['body'], 0, 300, "...") }} </p>
+            <p class="card-text text-light-white">{{ mb_strimwidth($article['body'], 0, 300, "...") }} </p>
         </div>
     </a>
     

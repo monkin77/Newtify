@@ -106,14 +106,14 @@
                                 onerror="this.src='{{ $userImgPHolder }}'">
                             <p>You</p>
                         </div>
-
-                    <div class="flex-column m-0 p-0 w-100">
-                        <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
-                            <textarea class="flex-column m-0 p-2" placeholder="Type here"></textarea>
-                            <button type="button" class="btn btn-primary px-4">
-                                Comment
-                            </button>
-                        </form>
+                        <div class="flex-column m-0 p-0 w-100">
+                            <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
+                                <textarea class="flex-column m-0 p-2" placeholder="Type here"></textarea>
+                                <button type="button" class="btn btn-primary px-4">
+                                    Comment
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 @endif
 
