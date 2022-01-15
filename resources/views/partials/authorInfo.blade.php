@@ -10,7 +10,7 @@
                     asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
                 }}" onerror="this.src='{{ $userImgPHolder }}'" />
             </div>
-            <div class="w-75 pb-0" id="author-header">
+            <div class="w-75 pb-0" id="authorHeader">
                 <a href="{{ route('userProfile', ['id' => $author['id']]) }}" ]>
                     <h4 class="m-3"> {{ $author['name'] }} </h4>
                 </a>
@@ -37,7 +37,7 @@
 
     </div>
 
-    <div class="flex-row px-1 py-4" id="authorDescription">
+    <div class="flex-row px-1 py-4 text-white" id="authorDescription">
         <p>{{ (isset($author['description']) ? $author['description'] : '') }}</p>
     </div>
 

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    
+    <div class="article-container h-100 container-fluid bg-dark rounded mt-3">
 
-    <div class="article-container h-100 container-fluid bg-light">
-
-        <div class="d-flex flex-row my-2 h-100">
-
-            <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-dark">
+        <div class="d-flex flex-row my-2 h-100" style="min-height: 65vh">
+            
+            <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-white" >
 
                 <div class="flex-row h1" id="articleTitle">
                     {{ $article['title'] }}
@@ -16,7 +16,7 @@
                     @php
                         $article_published_at = date('F j, Y', /*, g:i a',*/ strtotime($article['published_at']));
                     @endphp
-                    <i style="font-size: 1.2em; width: 25%">{{ $article_published_at }}</i>
+                    <i id="publishedAt">{{ $article_published_at }}</i>
 
                     @if ($isAuthor || $isAdmin)
                         <div id="articleButtons">
@@ -62,9 +62,9 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    <i class="fas fa-thumbs-up ps-5"> {{ $article['likes'] }}</i>
-                    <i class="fas fa-thumbs-down ps-3"> {{ $article['dislikes'] }}</i>
-
+                    <i class="fas fa-thumbs-up ps-5"><span class="text-white ms-2"> {{ $article['likes'] }} </span></i>
+                    <i class="fas fa-thumbs-down ps-3"><span class="text-white ms-2">{{ $article['dislikes'] }}</span></i>
+                    
                     <i class="fas fa-share-alt ms-4"></i>
                 </p>
 
@@ -81,7 +81,7 @@
 
             </div>
 
-            <div class="author-container flex-col p-3 text-dark">
+            <div class="author-container flex-col me-4 mt-4 p-3 text-black rounded">
                 @include('partials.authorInfo', [
                     'author' => $author,
                     'isOwner' => $isAuthor
@@ -93,7 +93,7 @@
         <div class="d-flex flex-column" id="comments-section">
 
             @if (!$comments->isEmpty() || Auth::check())
-                <div class="flex-row mt-3 p-0">
+                <div class="flex-row my-3 p-0">
                     <h3 class="m-0">Comments</h3>
                 </div>
             @endif
@@ -106,11 +106,10 @@
                                 onerror="this.src='{{ $userImgPHolder }}'">
                             <p>You</p>
                         </div>
-
                         <div class="flex-column m-0 p-0 w-100">
                             <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
                                 <textarea class="flex-column m-0 p-2" placeholder="Type here"></textarea>
-                                <button type="button">
+                                <button type="button" class="btn btn-primary px-4">
                                     Comment
                                 </button>
                             </form>
