@@ -190,6 +190,7 @@ option {
 
 #articleBody {
     white-space: pre-line;
+    font-size: large;
 }
 
 #articleButtons {
@@ -207,6 +208,16 @@ option {
 /* Partial Author Information */
 #authorDetails {
     height: 40%;
+    color: white;
+}
+
+#authorDetails h4 {
+    font-weight: normal;
+    color: var(--bs-purple);
+}
+
+#authorDetails h4:hover {
+    filter: brightness(1.25);
 }
 
 #authorDescription {
@@ -240,8 +251,13 @@ option {
     height: 100%;
 }
 
+.articleInfoContainer #publishedAt {
+    font-size: 1.2em;
+    width: 25%;
+}
+
 .author-container {
-    background-color: #dbd7d2;
+    background-color: var(--bs-gray-700);
     width: 30%;
     max-height: 50em;
 }
