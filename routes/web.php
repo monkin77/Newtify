@@ -50,6 +50,8 @@ Route::get('api/article/{id}/comments', 'ArticleController@comments');
 
 // Comments
 Route::post('comment', 'CommentController@create');
+Route::put('comment/{id}', 'CommentController@update');
+Route::delete('comment/{id}', 'CommentController@destroy');
 
 // Content
 Route::delete('content/{id}', 'ContentController@removeFeedback');
