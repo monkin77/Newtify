@@ -1,5 +1,4 @@
 function replaceArticles() {
-  console.log(this.responseText);
   const json = JSON.parse(this.responseText);
   const previousError = select('#filterError');
 
@@ -25,7 +24,10 @@ function replaceArticles() {
   while (section.firstChild)
     section.removeChild(section.firstChild);
 
-  section.insertAdjacentHTML('afterbegin', html);
+  if (html === "")
+    section.appendChild(notFoundMessage());
+  else
+    section.insertAdjacentHTML('afterbegin', html);
 
   loadMoreButton = select('#load-more');
   if (loadMoreButton.style.display === "none") {
@@ -60,4 +62,17 @@ const getFilterUrl = (offset = 0) => {
     url += `&tags[]=${tag}`;
 
   return url;
+}
+
+const notFoundMessage = () => {
+  const msg = document.createElement('div');
+  msg.classList.add('alert', 'alert-danger', 'mb-4', 'text-center');
+  msg.setAttribute('role', 'alert');
+
+  const h3 = document.createElement('h3');
+  h3.classList.add('my-3');
+  h3.innerText = "No articles found. Please review your criteria";
+  msg.appendChild(h3);
+
+  return msg;
 }
