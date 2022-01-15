@@ -2,7 +2,7 @@
 
 @section('content')
     
-    <div class="article-container h-100 container-fluid bg-dark rounded mt-3">
+    <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
 
         <div class="d-flex flex-row my-2 h-100" style="min-height: 65vh">
             

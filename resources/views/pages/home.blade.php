@@ -48,8 +48,7 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('propose-tag')
-    <section class="home-section d-flex flex-column align-items-center mt-5">
-        <div class="horizontalDivider"></div>
+    <section class="home-section d-flex flex-column align-items-center mt-5 bg-secondary">
         <div class="d-flex flex-grow-1 justify-content-center home-container">
             <div id="proposeTag" class="position-relative d-flex flex-column align-items-center">
                 <h1 class="mb-2">
