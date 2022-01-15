@@ -1,6 +1,6 @@
 <div class="card flex-row flex-wrap" >
-    <div class="card-header border-0">
-        <img src="{{
+    <div class="card-header border-0 h-100">
+        <img class="h-100" src="{{
             isset($article['thumbnail']) ?
             asset('storage/thumbnails/'.$article['thumbnail'])
             :
@@ -8,8 +8,8 @@
         }}" onerror="this.src='{{ $articleImgPHolder }}'">
     </div>
 
-    <a href="/article/{{ $article['id'] }}">
-        <div class="card-block d-flex flex-column px-2">
+    <a href="/article/{{ $article['id'] }}" class="h-100">
+        <div class="card-block d-flex flex-column px-2 h-100">
             <h4 class="card-title">
                 {{ $article['title'] }}
             </h4>
