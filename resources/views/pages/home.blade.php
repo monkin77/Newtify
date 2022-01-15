@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
     <script type="text/javascript" src={{ asset('js/filter.js') }}></script>
     <script type="text/javascript" src=" {{ asset('js/select2tags.js') }}"></script>
     <script type="text/javascript" src={{ asset('js/tags.js') }}></script>
@@ -39,17 +43,7 @@
             </label>
         </div>
 
-        <div class="flex-fill d-flex align-items-center justify-content-evenly">
-            <div class="d-flex flex-row align-items-center">
-                <label for="minDate" class="me-4 py-0 my-0">Min: </label>
-                <input name="minDate" type="date" class="py-0 my-0">
-            </div>
-    
-            <div class="d-flex flex-row align-items-center">
-                <label for="maxDate" class="me-4 py-0 my-0">Max: </label>
-                <input name="maxDate" type="date" class="py-0 my-0">
-            </div>
-        </div>
+        <input type="text" name="daterange" />
 
     <select id="filterTags" class="text-center" onchange="filterArticles()" multiple>
         @foreach($tags as $tag)

@@ -85,7 +85,7 @@ class HomeController extends Controller
                 'errors' => ['maxDate' => 'Max date cannot be after Min date'],
             ], 400);
 
-        $articles = Article::all();
+        $articles = Article::lazy();
 
         if (isset($request->tags)) {
             $articles = $articles->filter(function ($article) use ($request) {
@@ -122,7 +122,7 @@ class HomeController extends Controller
     private function filterByType($type = 'trending', $offset = 0, $limit = null, $articles = null)
     {
         if (is_null($articles))
-            $articles = Article::all();
+            $articles = Article::lazy();
 
         // Sort by top posts of the day
         if ($type === 'trending' || ($type === 'recommended' && Auth::guest()))

@@ -1,4 +1,5 @@
 const ARTICLE_FILTER_LIMIT = 10;
+let minDate, maxDate;
 
 function replaceArticles() {
   const json = JSON.parse(this.responseText);
@@ -46,8 +47,7 @@ const getFilterUrl = (offset = 0) => {
   const tags = Array.from(select("#filterTags").selectedOptions)
     .map((elem) => parseInt(elem.value));
 
-  const minDate = select('input[name=minDate]').value;
-  const maxDate = select('input[name=maxDate]').value;
+  console.log(minDate);
 
   if (minDate && minDate !== "")
     url += `&minDate=${minDate}`;
@@ -73,3 +73,11 @@ const notFoundMessage = () => {
 
   return msg;
 }
+
+$('input[name="daterange"]').daterangepicker({
+  opens: 'center'
+}, (start, end, label) => {
+  minDate = start.format('YYYY-MM-DD');
+  maxDate = end.format('YYYY-MM-DD');
+  filterArticles();
+});
