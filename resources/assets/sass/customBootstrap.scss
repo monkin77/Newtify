@@ -4,9 +4,9 @@ $darkPurple: rgb(150, 18, 202);
 $lightPurple: rgb(193, 92, 233);
 $primary: $darkPurple;
 
-@import "../../../node_modules/bootstrap/scss/functions";
+@import "../bootstrap/scss/functions";
 @import "./variables";
-@import "../../../node_modules/bootstrap/scss/variables";
+@import "../bootstrap/scss/variables";
 
 $customThemeColors: (
     "purple": $purple,
@@ -17,5 +17,5 @@ $customThemeColors: (
 $theme-colors: map-merge($customThemeColors, $theme-colors);
 
 // import bootstrap and bootswatch theme
-@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../bootstrap/scss/bootstrap.scss";
 @import "./bootswatch";
