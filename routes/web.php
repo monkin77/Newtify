@@ -75,3 +75,12 @@ Route::get('messages', 'MessageController@inbox');
 Route::get('messages/{id}', 'MessageController@messageThread');
 Route::post('messages/{id}', 'MessageController@create');
 Route::put('messages/{id}', 'MessageController@readMessages');
+
+// Forgot and reset Password
+Route::get('forgot-password', 'Auth\PasswordResetController@showSendLinkForm')->name('showLinkForm');
+Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('sendLink');
+
+Route::get('reset', 'Auth\PasswordResetController@showResetForm')->name('password.reset');
+Route::post('reset', 'Auth\PasswordResetController@reset');
+
+
