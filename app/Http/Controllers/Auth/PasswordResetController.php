@@ -14,12 +14,15 @@ class PasswordResetController extends Controller
     
     protected $redirectTo = '/';
 
+    public function __construct() {
+        $this->middleware('guest');
+    }
+
     public function showSendLinkForm() {
         return view('auth.passwords.forgetPassword');
     }
 
     public function sendLink(Request $request) {
-
         $request->validate(['email' => 'required|email']);
 
         $status = Password::sendResetLink(
@@ -29,6 +32,10 @@ class PasswordResetController extends Controller
         return $status === Password::RESET_LINK_SENT
             ?   back()->with(['status' => __($status)])
             :   back()->withErrors(['email' => __($status)]);
+    }
+
+    public function showResetPasswordForm() {
+        return view('auth.passwords.resetPassword');
     }
  
 }

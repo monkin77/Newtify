@@ -10,6 +10,12 @@
             {{ Session::get('status') }}
         </div>
     @endif
+
+    @if ($errors->has('email'))
+        <p class="error text-danger">
+            {{ $errors->first('email') }}
+        </p>
+    @endif
     
     <form method="POST" action="{{ route('sendLink') }}">
         @csrf  
@@ -17,11 +23,6 @@
         <label for="email" class="sr-only">Email address</label>
         <input name ="email" type="email" id="email" class="bg-white" value="{{ old('email') }}" placeholder="Email address" required autofocus>
         
-        @if ($errors->has('email'))
-            <p class="error text-danger">
-                {{ $errors->first('email') }}
-            </p>
-        @endif
 
         <button type="submit" class="button w-50 fw-bold">
             Send Email

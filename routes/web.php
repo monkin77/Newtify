@@ -80,7 +80,7 @@ Route::put('messages/{id}', 'MessageController@readMessages');
 Route::get('forgot-password', 'Auth\PasswordResetController@showSendLinkForm')->name('showLinkForm');
 Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('sendLink');
 
-Route::get('reset', 'Auth\PasswordResetController@showResetForm')->name('password.reset');
-Route::post('reset', 'Auth\PasswordResetController@reset');
+Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('password.reset');
+Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.update');
 
 

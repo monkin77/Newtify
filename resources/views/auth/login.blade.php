@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="border text-center w-25 bg-light container mt-3">
-    <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Log In</h2>
+    <h2 class="modal-title mx-auto text-center fw-bold mt-4" id="exampleModalLabel">Log In</h2>
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -40,9 +40,13 @@
         @endif
 
         <button type="submit" class="button w-50 fw-bold">
-        Login
+            Login
         </button>
+
         <a class="button button-outline w-50" href="{{ route('signup') }}">Register</a>
+
+        <a class="button button-outline w-50" href="{{ route('showLinkForm') }}">Forgot Password</a>
+
     </form>
 </div>
 @endsection
