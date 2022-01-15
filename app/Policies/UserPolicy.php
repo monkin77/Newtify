@@ -116,4 +116,28 @@ class UserPolicy
     {
         return $user->is_admin && !$userToUnsuspend->is_admin;
     }
+
+    /**
+     * Determine whether the user can see and manage notifications.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function notifications(User $user)
+    {
+        return Auth::check();
+    }
+
+    /**
+     * Determine whether the user can use the messaging system.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $model
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function messages(User $user)
+    {
+        return Auth::check();
+    }
 }

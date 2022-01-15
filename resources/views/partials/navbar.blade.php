@@ -46,17 +46,23 @@
 
                 <div class="d-flex justify-content-end align-items-center col">
                     @if (Auth::check())
-                        <div class="nav-item mx-4">
+                        <div class="nav-item mx-4 position-relative">
                             <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
+                            @if ($newNotifications)
+                                <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
+                            @endif
                         </div>
-                        <div class="nav-item mx-4">
+                        <div class="nav-item mx-4 position-relative">
                             <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
+                            @if ($newMessages)
+                                <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
+                            @endif
                         </div>
 
                         <div id="dropdownContainer" class="nav-item dropdown ms-5">
                             <img id="dropdownAvatar" class="nav-link dropdown-toggle"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                src ={{
+                                src = {{
                                     isset(Auth::user()->avatar) ? asset('storage/avatars/'.Auth::user()->avatar) : $userImgPHolder
                                 }}
                                 onerror="this.src='{{ $userImgPHolder }}'"/>

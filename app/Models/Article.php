@@ -40,4 +40,19 @@ class Article extends Content
     public function articleTags() {
       return $this->belongsToMany(Tag::class, 'article_tag', 'article_id', 'tag_id');
     }
+
+    public function getParsedComments() {
+      return $this->comments->filter(function ($comment) {
+        return $comment->parent_comment_id === null;
+      })->map(function ($comment) {
+
+        $commentInfo = $comment->getInfo();
+        $children = $this->comments->filter(function ($comment) use($commentInfo) {
+          return $comment->parent_comment_id === $commentInfo['id'];
+        })->map(function ($comment) { return $comment->getInfo(); });
+
+        $commentInfo['children'] = $children;
+        return $commentInfo;
+      })->sortByDesc('likes');
+    }
 }

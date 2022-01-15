@@ -45,3 +45,9 @@ const loadMoreUser = (userId) => {
     const url = `/api/user/${userId}/articles?offset=${numResults}&limit=4`;
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
 };
+
+const loadMoreComments = (articleId) => {
+    const numResults = select('#comments').childElementCount;
+    const url = `/api/article/${articleId}/comments?offset=${numResults}&limit=10`;
+    sendAjaxRequest('get', url, null, loadMoreHandler('comments'));
+};
