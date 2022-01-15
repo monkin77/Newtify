@@ -69,7 +69,7 @@
     <section id="articles" class="container-fluid">
 
         @if ($articles->isEmpty())
-            <div class="alert alert-danger mb-4 text-center" role="alert">
+            <div class="alert alert-custom mb-4 text-center" role="alert">
                 <h3 class="my-3">No results found</h3>
             </div>  
         @endif

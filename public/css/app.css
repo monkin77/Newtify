@@ -17,7 +17,7 @@ option {
 #logo {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.6em;
-    color: #9b4dca;
+    color: var(--bs-purple);
 
     display: flex;
     justify-content: center;
@@ -77,7 +77,7 @@ option {
 }
 
 .dropdown-custom-item:active {
-    background-color: #9b4dca !important;
+    background-color: var(--bs-purple) !important;
 }
 
 .no-border {
@@ -313,7 +313,8 @@ option {
 }
 
 .select2-selection__choice {
-    background-color: var(--bs-primary) !important;
+    background-color: var(--bs-primary);
+    color: white !important;
 }
 
 .select2-results {
@@ -395,7 +396,7 @@ option {
 /* Alerts */
 
 .alert-custom {
-    background-color: var(--bs-darkPurple);
+    background-color: var(--bs-lightPurple);
 }
 
 .search-nfo {
@@ -406,7 +407,7 @@ option {
 /* Badges */
 
 .bg-custom {
-    background-color: #9b4dca;
+    background-color: var(--bs-purple);
 }
 
 /* User Cards */
@@ -514,7 +515,7 @@ option {
     right: 35vw;
     top: 20vh;
     font-size: large;
-    background-color: #923ac9;
+    background-color: var(--bs-purple);
     border-radius: 0.3em;
 }
 

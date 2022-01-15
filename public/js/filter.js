@@ -63,7 +63,7 @@ const getFilterUrl = (offset = 0) => {
 
 const notFoundMessage = () => {
   const msg = document.createElement('div');
-  msg.classList.add('alert', 'alert-danger', 'mb-4', 'text-center');
+  msg.classList.add('alert', 'alert-custom', 'mb-4', 'text-center');
   msg.setAttribute('role', 'alert');
 
   const h3 = document.createElement('h3');

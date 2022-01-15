@@ -16,5 +16,5 @@ $('#filterTags').select2({
 $('#favoriteTags').select2({
     multiple: true,
     tokenSeparators: [',', ' ', ";"],
-    theme: "classic",
+    theme: "bootstrap-5",
 });
