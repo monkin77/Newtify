@@ -68,6 +68,11 @@ setSearchType = (item) => {
   select("#searchForm input[name='type']").value = item.innerText.toLowerCase();
 }
 
+function filterArticles() {
+  const url = getFilterUrl();
+  sendAjaxRequest('get', url, null, replaceArticles);
+}
+
 addEventListeners();
 
 // Enable tooltips

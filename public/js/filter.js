@@ -39,11 +39,6 @@ function replaceArticles() {
   }
 }
 
-function filterArticles() {
-  const url = getFilterUrl();
-  sendAjaxRequest('get', url, null, replaceArticles);
-}
-
 const getFilterUrl = (offset = 0) => {
   const type = select('input[name="filterType"]:checked').id;
   let url = `/api/article/filter?type=${type}&offset=${offset}&limit=${ARTICLE_FILTER_LIMIT}`;
