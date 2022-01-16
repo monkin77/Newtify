@@ -18,19 +18,28 @@ $(document).on('click', '.social-button', function (e) {
     }
 });
 
-const toggleSocials = () => {
+const showSocials = () => {
     const currentURL = window.location.href;
     console.log("Current url:", currentURL);
 
     const url = `/api/share_socials`;
-    sendAjaxRequest('post', url, {url: currentURL}, handleToggleSocials());
+    sendAjaxRequest('post', url, {url: currentURL}, handleShowSocials());
 }
 
-const handleToggleSocials = () => function(){
-    const socialsPopup = JSON.parse(this.responseText);
-    console.log("socials popup:", socialsPopup);
-    const sharePopup = select('#sharePopup');
-    sharePopup.insertAdjacentHTML('afterbegin', socialsPopup.html);
-    sharePopup.classList.toggle("d-none");
+const handleShowSocials = () => function(){
+    const socialLinks = JSON.parse(this.responseText).links;
+    console.log("social links:", socialLinks);
+
+    select('#fbIcon').href = socialLinks.facebook;
+    select('#twitterIcon').href = socialLinks.twitter;
+    select('#linkedInIcon').href = socialLinks.linkedin;
+    select('#redditIcon').href = socialLinks.reddit;
+
+    select('#socialsPopup').classList.remove('d-none');
+}
+
+const hideSocials = () => {
+    const popup = select('#socialsPopup');
+    popup.classList.add('d-none');
 }
 

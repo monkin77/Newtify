@@ -86,7 +86,7 @@
                         </i>
                     @endif 
                     
-                    <button onclick="toggleSocials()" class="btn ms-4">
+                    <button onclick="showSocials()" class="btn ms-4">
                         <i class="fas fa-share-alt fa-2x"></i>
                     </button>
                 </p>
@@ -157,7 +157,31 @@
 @endsection
 
 @section('popup')
-    <section id="sharePopup" class="d-none"></section>
+    <section id="socialsPopup" class="d-block d-none fullPopup">
+        <div id="backdrop" onclick="hideSocials()"></div>
+        <div id="socialsPopupContainer" class="d-flex flex-column justify-content-center align-items-center popupContainer">
+            <div id="socialsPopupInside" class="d-flex flex-column align-items-center justify-content-evenly popupInsideContainer">
+                <h3>Share in your Social Media!</h3>
+                <div class="row">
+                    <div class="col-3 text-center">
+                        <a id="fbIcon" target="_blank" class="btn btn-outline-purple btn-lg fa fa-facebook fa-2x"></a>
+                    </div>
+                    <div class="col-3 text-center">
+                        <a id="twitterIcon" target="_blank" class="btn btn-outline-purple btn-lg fa fa-twitter fa-2x"></a>
+                    </div>
+                    <div class="col-3 text-center">
+                        <a id="linkedInIcon" target="_blank" class="btn btn-outline-purple btn-lg fa fa-linkedin fa-2x"></a>
+                    </div>
+                    <div class="col-3 text-center">
+                        <a id="redditIcon" target="_blank" class="btn btn-outline-purple btn-lg fa fa-reddit fa-2x"></a>
+                    </div>
+                </div>
+                <button class="btn p-0 m-0 transparentButton" id="socialsCloseBtn" onclick="hideSocials()">
+                    <i class="fa fa-times fa-3x text-purple" id="closeIcon"></i>
+                </button>
+            </div>
+        </div>
+    </section>
 @endsection
 
 @section('content')
