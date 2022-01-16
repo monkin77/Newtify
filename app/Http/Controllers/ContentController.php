@@ -27,7 +27,7 @@ class ContentController extends Controller
                 'errors' => ['content' => 'content not found, id: '.$id]
             ], 404);
 
-        $this->authorize('update', Content::class);
+        $this->authorize('updateFeedback', $content);
 
         $feedback = Feedback::where('user_id', '=', Auth::id())->where('content_id', '=', $id)->first();
 
@@ -80,7 +80,7 @@ class ContentController extends Controller
                 'errors' => ['content' => 'content not found, id: '.$id]
             ], 404);
 
-        $this->authorize('update', Content::class);
+        $this->authorize('updateFeedback', $content);
 
         // buscar o feedback e remove-lo da base de dados
         $feedback = Feedback::where('user_id', '=', Auth::id())->where('content_id', '=', $id)->first();

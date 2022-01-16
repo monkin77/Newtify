@@ -221,7 +221,11 @@ class ArticleController extends Controller
         if (is_null($article)) 
             return abort(404, 'Article not found, id: '.$id);
 
-        $this->authorize('update', $article);
+        $content = Content::find($article->content_id);
+        if (is_null($content))
+            return abort(404, 'Content not found, id: '.$article->content_id);
+
+        $this->authorize('update', $content);
 
         $articleInfo = [
             'content_id' => $article->content_id,
@@ -284,7 +288,7 @@ class ArticleController extends Controller
         if (is_null($content)) 
             return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
-        $this->authorize('update', $article);
+        $this->authorize('update', $content);
 
         $validator = Validator::make($request -> all(),
         [
@@ -354,7 +358,7 @@ class ArticleController extends Controller
         if (is_null($content)) 
             return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
-        $this->authorize('delete', $article);
+        $this->authorize('delete', $content);
 
         $user = Auth::user();
         $owner_id = $content->author_id;

@@ -16,7 +16,7 @@ const giveFeedbackHandler = (elem, content_id, is_like) => function() {
 
     const previousError = elem.querySelector('.error');
 
-    if (this.status == 500) {
+    if (this.status !== 200) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
 
         if (previousError)
