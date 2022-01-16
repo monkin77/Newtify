@@ -43,7 +43,7 @@
             </label>
         </div>
 
-        <div class="flex-fill d-flex justify-content-evenly">
+        <div id="daterangeContainer" class="flex-fill d-flex justify-content-evenly">
             <input type="text" name="daterange" class="my-0 mx-5 text-center text-light border-light"
             placeholder="Filter by Publish Date" />
         </div>

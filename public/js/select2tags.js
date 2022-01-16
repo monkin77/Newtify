@@ -7,7 +7,7 @@ $('#tags').select2({
 
 $('#filterTags').select2({
     multiple: true,
-    width: '15%',
+    width: '25%',
     tokenSeparators: [',', ' ', ";"],
     theme: "bootstrap-5",
     placeholder: "Filter by Tags"

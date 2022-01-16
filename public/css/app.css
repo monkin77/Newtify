@@ -689,3 +689,12 @@ option {
 }
 
 
+/* Date Range Picker */
+
+.daterangepicker {
+    color: black;
+}
+
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td {
+    padding: 0;
+}

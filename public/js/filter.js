@@ -77,6 +77,7 @@ const notFoundMessage = () => {
 $('input[name="daterange"]').daterangepicker({
   opens: 'center',
   autoUpdateInput: false,
+  cancelButtonClasses: 'button-secondary',
   locale: {
     format: 'DD/MM/YYYY'
   }
