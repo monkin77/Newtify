@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Jorenvh\Share\Share;
 
 class SocialShareButtonsController extends Controller
 {
@@ -23,7 +24,7 @@ class SocialShareButtonsController extends Controller
             ], 400);
 
 
-        $shareComponent = \Share::page(
+        $shareLinks = \Share::page(
             $request->url,
             'Wassup ma boi, check this website',
         )
@@ -32,10 +33,13 @@ class SocialShareButtonsController extends Controller
             ->linkedin()
             ->telegram()
             ->whatsapp()
-            ->reddit();
+            ->reddit()
+            ->getRawLinks();
 
         return response()->json([
-            'html' => view('partials.share', compact('shareComponent'))->render(),
+            'status' => 'OK',
+            'msg' => 'Sucessfully fectched social links',
+            'links' => $shareLinks,
         ], 200);
     }
 }
