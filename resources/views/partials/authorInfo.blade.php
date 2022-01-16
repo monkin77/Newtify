@@ -5,13 +5,15 @@
 
         <div class="d-flex flex-row pt-3 h-75">
             <div class="w-25 me-3 text-center">
-                <img id="authorAvatar" class="w-100" src="{{
-                    isset($author['avatar']) ?
-                    asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
-                }}" onerror="this.src='{{ $userImgPHolder }}'" />
+                <a href="{{ route('userProfile', ['id' => $author['id']]) }}">
+                    <img id="authorAvatar" class="w-100" src="{{
+                        isset($author['avatar']) ?
+                        asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
+                    }}" onerror="this.src='{{ $userImgPHolder }}'" />
+                </a>
             </div>
             <div class="w-75 pb-0" id="authorHeader">
-                <a href="{{ route('userProfile', ['id' => $author['id']]) }}" ]>
+                <a href="{{ route('userProfile', ['id' => $author['id']]) }}">
                     <h4 class="m-3"> {{ $author['name'] }} </h4>
                 </a>
                 

@@ -5,13 +5,21 @@
 
 <div class="d-flex flex-row mx-0 my-3 p-0 {{ $isReply ? 'w-100' : 'w-75' }}"> 
     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-        <img src="{{
-            (isset($comment['author']) && isset($comment['author']['avatar'])) ?
-            asset('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
-        }}" onerror="this.src='{{ $userImgPHolder }}'" />
+        <a
+        @if (isset($comment['author']))
+            href="/user/{{ $comment['author']['id'] }}"
+        @endif
+        >
+            <img src="{{
+                (isset($comment['author']) && isset($comment['author']['avatar'])) ?
+                asset('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
+            }}" onerror="this.src='{{ $userImgPHolder }}'" />
+        </a>
 
         @if (isset($comment['author']))
-            {{ $comment['author']['name'] }}
+            <a href="/user/{{ $comment['author']['id'] }}" class="text-white">
+                {{ $comment['author']['name'] }}
+            </a>
         @else
             <i>Anonymous</i>
         @endif
