@@ -30,12 +30,12 @@ const giveFeedbackHandler = (elem, content_id, is_like) => function() {
     elem.classList.add("text-primary");
     elem.onclick = () => { removeFeedback(elem, content_id, is_like); };
 
-    const inside = elem.lastElementChild;
-    inside.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
+    const counter = elem.lastElementChild;
+    counter.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
 
     const oppositeFeedback = is_like ? select('#articleDislikes') : select('#articleLikes');
-    const oppositeInside = oppositeFeedback.lastElementChild;
-    oppositeInside.innerHTML = is_like ? JSON.parse(this.responseText).dislikes : JSON.parse(this.responseText).likes;
+    const oppositeCounter = oppositeFeedback.lastElementChild;
+    oppositeCounter.innerHTML = is_like ? JSON.parse(this.responseText).dislikes : JSON.parse(this.responseText).likes;
 
     oppositeFeedback.classList = is_like ? ["fas fa-thumbs-down ps-3"] : ["fas fa-thumbs-up ps-5"];
     oppositeFeedback.onclick = () => { giveFeedback(oppositeFeedback, content_id, !is_like); };
@@ -65,8 +65,8 @@ const removeFeedbackHandler = (elem, content_id, is_like) => function() {
     elem.classList = is_like ? ["fas fa-thumbs-up ps-5"] : ["fas fa-thumbs-down ps-3"];
     elem.onclick = () => { giveFeedback(elem, content_id, is_like); };
     
-    const inside = elem.lastElementChild;
-    inside.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
+    const counter = elem.lastElementChild;
+    counter.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
 
     if (previousError) previousError.remove();
 }
