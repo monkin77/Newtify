@@ -20,6 +20,10 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
 Route::post('signup', 'Auth\RegisterController@register');
+Route::get('forgot-password', 'Auth\PasswordResetController@showSendLinkForm')->name('showLinkForm');
+Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('sendLink');
+Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('password.reset');
+Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.update');
 
 // User
 Route::get('user/{id}', 'UserController@show')->name('userProfile');
@@ -76,11 +80,5 @@ Route::get('messages/{id}', 'MessageController@messageThread');
 Route::post('messages/{id}', 'MessageController@create');
 Route::put('messages/{id}', 'MessageController@readMessages');
 
-// Forgot and reset Password
-Route::get('forgot-password', 'Auth\PasswordResetController@showSendLinkForm')->name('showLinkForm');
-Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('sendLink');
-
-Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('password.reset');
-Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.update');
 
 
