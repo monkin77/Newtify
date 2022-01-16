@@ -17,7 +17,7 @@ class ContentController extends Controller
      * @param  \App\Models\Content  $content
      * @return \Illuminate\Http\Response
      */
-    public function makeFeedback(Request $request, int $id)
+    public function giveFeedback(Request $request, int $id)
     {
         $content = Content::find($id);
         if (is_null($content)) 

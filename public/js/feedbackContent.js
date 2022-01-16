@@ -1,6 +1,6 @@
-makeFeedback = (elem, content_id, is_like) => {
+giveFeedback = (elem, content_id, is_like) => {
     const url = '/content/' + content_id;
-    sendAjaxRequest('put', url, { is_like }, makeFeedbackHandler(elem, content_id, is_like));
+    sendAjaxRequest('put', url, { is_like }, giveFeedbackHandler(elem, content_id, is_like));
 }
 
 removeFeedback = (elem, content_id, is_like) => {
@@ -8,7 +8,7 @@ removeFeedback = (elem, content_id, is_like) => {
     sendAjaxRequest('delete', url, { is_like }, removeFeedbackHandler(elem, content_id, is_like));
 }
 
-const makeFeedbackHandler = (elem, content_id, is_like) => function() {
+const giveFeedbackHandler = (elem, content_id, is_like) => function() {
     if (this.status == 403) {
         window.location = '/login';
         return;
@@ -38,7 +38,7 @@ const makeFeedbackHandler = (elem, content_id, is_like) => function() {
     oppositeInside.innerHTML = is_like ? JSON.parse(this.responseText).dislikes : JSON.parse(this.responseText).likes;
 
     oppositeFeedback.classList = is_like ? ["fas fa-thumbs-down ps-3"] : ["fas fa-thumbs-up ps-5"];
-    oppositeFeedback.onclick = () => { makeFeedback(oppositeFeedback, content_id, !is_like); };
+    oppositeFeedback.onclick = () => { giveFeedback(oppositeFeedback, content_id, !is_like); };
 
     if (previousError) previousError.remove();
 }
@@ -63,7 +63,7 @@ const removeFeedbackHandler = (elem, content_id, is_like) => function() {
     }
 
     elem.classList = is_like ? ["fas fa-thumbs-up ps-5"] : ["fas fa-thumbs-down ps-3"];
-    elem.onclick = () => { makeFeedback(elem, content_id, is_like); };
+    elem.onclick = () => { giveFeedback(elem, content_id, is_like); };
     
     const inside = elem.lastElementChild;
     inside.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;

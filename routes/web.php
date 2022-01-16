@@ -43,7 +43,7 @@ Route::delete('article/{id}', 'ArticleController@destroy');
 
 // Content
 Route::delete('content/{id}', 'ContentController@removeFeedback');
-Route::put('content/{id}', 'ContentController@makeFeedback');
+Route::put('content/{id}', 'ContentController@giveFeedback');
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');

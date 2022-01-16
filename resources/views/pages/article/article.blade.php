@@ -74,7 +74,7 @@
                             <span class="ms-1">{{ $article['likes'] }}</span>
                         </i>
                     @else 
-                        <i class="fas fa-thumbs-up ps-5" id="articleLikes" onclick="makeFeedback(this, {{ $article['id'] }}, true)"> 
+                        <i class="fas fa-thumbs-up ps-5" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true)"> 
                             <span class="ms-1">{{ $article['likes'] }}</span>
                         </i>
                     @endif
@@ -84,7 +84,7 @@
                             <span class="ms-1">{{ $article['dislikes'] }}</span>
                         </i>
                     @else
-                        <i class="fas fa-thumbs-down ps-3" id="articleDislikes" onclick="makeFeedback(this, {{ $article['id'] }}, false)"> 
+                        <i class="fas fa-thumbs-down ps-3" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false)"> 
                             <span class="ms-1">{{ $article['dislikes'] }}<span>
                         </i>
                     @endif 
