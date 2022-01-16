@@ -202,8 +202,8 @@ class ArticleController extends Controller
             'author' => $authorInfo,
             'comments' => $comments,
             'tags' => $tags,
-            'is_author' => $is_author,
-            'is_admin' => $is_admin,
+            'isAuthor' => $is_author,
+            'isAdmin' => $is_admin,
             'liked' => $liked,
             'disliked' => $disliked
         ]);

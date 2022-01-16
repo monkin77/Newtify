@@ -20,9 +20,9 @@
                     @endphp
                     <i style="font-size: 1.2em; width: 25%">{{ $article_published_at }}</i>
 
-                    @if ($is_author || $is_admin)
+                    @if ($isAuthor || $isAdmin)
                         <div id="articleButtons">
-                            @if ($is_author)
+                            @if ($isAuthor)
                                 <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit article-button me-4"></i>
                                 </a>
@@ -109,7 +109,7 @@
             <div class="author-container flex-col p-3 text-dark">
                 @include('partials.authorInfo', [
                     'author' => $author,
-                    'isOwner' => $is_author
+                    'isOwner' => $isAuthor
                 ])
             </div>
 
