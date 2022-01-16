@@ -47,8 +47,6 @@ const getFilterUrl = (offset = 0) => {
   const tags = Array.from(select("#filterTags").selectedOptions)
     .map((elem) => parseInt(elem.value));
 
-  console.log(minDate);
-
   if (minDate && minDate !== "")
     url += `&minDate=${minDate}`;
 
