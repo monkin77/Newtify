@@ -568,3 +568,12 @@ body {
 #footerContainer #copyrightContainer {
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+
+/* Content */
+.feedbackIcon:hover {
+    color: #9b4dca;
+    cursor: pointer;
+}
+
+

@@ -37,7 +37,7 @@ const giveFeedbackHandler = (elem, content_id, is_like) => function() {
     const oppositeCounter = oppositeFeedback.lastElementChild;
     oppositeCounter.innerHTML = is_like ? JSON.parse(this.responseText).dislikes : JSON.parse(this.responseText).likes;
 
-    oppositeFeedback.classList = is_like ? ["fas fa-thumbs-down ps-3"] : ["fas fa-thumbs-up ps-5"];
+    oppositeFeedback.classList = is_like ? ["fas fa-thumbs-down ps-3 feedbackIcon"] : ["fas fa-thumbs-up ps-5 feedbackIcon"];
     oppositeFeedback.onclick = () => { giveFeedback(oppositeFeedback, content_id, !is_like); };
 
     if (previousError) previousError.remove();
@@ -45,7 +45,7 @@ const giveFeedbackHandler = (elem, content_id, is_like) => function() {
 
 const removeFeedbackHandler = (elem, content_id, is_like) => function() {
     if (this.status == 403) {
-        window.location = '/ogin';
+        window.location = '/login';
         return;
     }
 
@@ -62,7 +62,7 @@ const removeFeedbackHandler = (elem, content_id, is_like) => function() {
         return;
     }
 
-    elem.classList = is_like ? ["fas fa-thumbs-up ps-5"] : ["fas fa-thumbs-down ps-3"];
+    elem.classList = is_like ? ["fas fa-thumbs-up ps-5 feedbackIcon"] : ["fas fa-thumbs-down ps-3 feedbackIcon"];
     elem.onclick = () => { giveFeedback(elem, content_id, is_like); };
     
     const counter = elem.lastElementChild;
