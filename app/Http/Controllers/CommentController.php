@@ -76,7 +76,7 @@ class CommentController extends Controller
             return response()->json([
                 'status' => 'Not Found',
                 'msg' => 'Comment does not exist, id: '.$id,
-                'comment_id' => $id
+                'errors' => ['Comment' => 'Comment does not exist, id: '.$id]
             ], 404);
 
         $content = Content::find($comment->content_id);
@@ -84,7 +84,7 @@ class CommentController extends Controller
             return response()->json([
                 'status' => 'Not Found',
                 'msg' => 'Content does not exist, id: '.$id,
-                'content_id' => $id
+                'errors' => ['Content' => 'Content does not exist, id: '.$id]
             ], 404);
 
         $this->authorize('update', $content);
@@ -121,13 +121,12 @@ class CommentController extends Controller
      */
     public function destroy(Request $request, int $id)
     {
-
         $comment = Comment::find($id);
         if (is_null($comment))
             return response()->json([
                 'status' => 'Not Found',
                 'msg' => 'Comment does not exist, id: '.$id,
-                'comment_id' => $id
+                'errors' => ['Comment' => 'Comment does not exist, id: '.$id]
             ], 404);
 
         $content = Content::find($comment->content_id);
@@ -135,7 +134,7 @@ class CommentController extends Controller
             return response()->json([
                 'status' => 'Not Found',
                 'msg' => 'Content does not exist, id: '.$id,
-                'content_id' => $id
+                'errors' => ['Content' => 'Content does not exist, id: '.$id]
             ], 404);
 
         $this->authorize('delete', $content);
@@ -159,6 +158,7 @@ class CommentController extends Controller
             return response()->json([
                 'status' => 'Internal Server Error',
                 'msg' => 'There was an error deleting the comment with id ' . $id,
+                'errors' => ['error' => 'There was an error deleting the comment with id ' . $id]
             ], 500);
 
         return response()->json([

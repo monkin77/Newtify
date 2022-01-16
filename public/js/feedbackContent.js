@@ -15,7 +15,7 @@ const giveFeedbackHandler = (elem, content_id, is_like, is_comment) => function(
         return;
     }
 
-    const previousError = elem.querySelector('.error');
+    const previousError = elem.querySelector(`#${elem.id} .error`);
 
     if (this.status != 200) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
@@ -55,7 +55,7 @@ const removeFeedbackHandler = (elem, content_id, is_like, is_comment) => functio
         return;
     }
 
-    const previousError = elem.querySelector('.error');
+    const previousError = elem.querySelector(`#${elem.id} .error`);
 
     if (this.status != 200) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);

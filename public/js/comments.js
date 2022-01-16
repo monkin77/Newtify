@@ -26,6 +26,9 @@ const createNewReply = (parent, article_id, parent_comment_id) => {
     );
 }
 
+const deleteComment = (comment_id) =>
+    sendAjaxRequest('DELETE', `/comment/${comment_id}`, null, deleteCommentHandler(comment_id));
+
 const newCommentHandler = (formId, textareaId, parent, position, removeId) => function () {
     const json = JSON.parse(this.responseText);
 
@@ -49,6 +52,25 @@ const newCommentHandler = (formId, textareaId, parent, position, removeId) => fu
     select(`#${textareaId}`).value = '';
 
     if (removeId) select(`#${removeId}`).remove();
+}
+
+const deleteCommentHandler = (comment_id) => function() {
+    const json = JSON.parse(this.responseText);
+    const previousError = select(`#comment_${comment_id} .error`);
+
+    if (this.status != 200) {
+        const error = createErrorMessage(json.errors);
+
+        if (previousError)
+            previousError.replaceWith(error);
+        else
+            select(`#comment_${comment_id}`).appendChild(error);
+
+        return;
+    }
+
+    if (previousError) previousError.remove();
+    select(`#comment_${comment_id}`).remove();
 }
 
 const openReplyBox = (parentComment, articleId, parentCommentId) => {

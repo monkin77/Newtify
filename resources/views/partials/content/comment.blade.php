@@ -1,78 +1,94 @@
+<div id="comment_{{$comment['id']}}"
 @if ($isReply)
-    <div class="d-flex justify-content-end w-75">
+    class="d-flex justify-content-end w-75"
+@endif
+>
+@if ($isReply)
     <div class="child-comment">
 @endif
-
-<div class="d-flex flex-row mx-0 my-3 p-0 {{ $isReply ? 'w-100' : 'w-75' }}"> 
-    <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
-        <a
-        @if (isset($comment['author']))
-            href="/user/{{ $comment['author']['id'] }}"
-        @endif
-        >
-            <img src="{{
-                (isset($comment['author']) && isset($comment['author']['avatar'])) ?
-                asset('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
-            }}" onerror="this.src='{{ $userImgPHolder }}'" />
-        </a>
-
-        @if (isset($comment['author']))
-            <a href="/user/{{ $comment['author']['id'] }}" class="text-white">
-                {{ $comment['author']['name'] }}
+    <div class="d-flex flex-row mx-0 my-3 p-0 {{ $isReply ? 'w-100' : 'w-75' }}"> 
+        <div class="flex-column h-100 commentHeader mx-5">
+            <a
+            @if (isset($comment['author']))
+                href="/user/{{ $comment['author']['id'] }}"
+            @endif
+            >
+                <img src="{{
+                    (isset($comment['author']) && isset($comment['author']['avatar'])) ?
+                    asset('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
+                }}" onerror="this.src='{{ $userImgPHolder }}'" />
             </a>
-        @else
-            <i>Anonymous</i>
-        @endif
-    </div>
 
-    <div class="flex-column m-0 p-0 w-100">
-        <div class="commentTextContainer border border-light flex-column p-3 mb-3">{{ $comment['body'] }}</div>
-
-        <i
-        @if ($comment['isAuthor'])
-            class="fa fa-thumbs-up"
-        @else
-            @if ($comment['liked'])
-                class="fa fa-thumbs-up purpleLink feedbackIcon"
-                onclick="removeFeedback(this, {{ $comment['id'] }}, true, true)"
+            @if (isset($comment['author']))
+                <a href="/user/{{ $comment['author']['id'] }}" class="text-white">
+                    {{ $comment['author']['name'] }}
+                </a>
             @else
-                class="fa fa-thumbs-up feedbackIcon"
-                onclick="giveFeedback(this, {{ $comment['id'] }}, true, true)"
+                <i>Deleted Account</i>
             @endif
-        @endif
-            id="likes_{{$comment['id']}}"
-        >
-            <span>{{ $comment['likes'] }}</span>
-        </i>
+        </div>
 
-        <i
-        @if ($comment['isAuthor'])
-            class="fa fa-thumbs-down ps-3 pe-3"
-        @else
-            @if ($comment['disliked'])
-                class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon purpleLink"
-                onclick="removeFeedback(this, {{ $comment['id'] }}, false, true)"
+        <div class="flex-column m-0 p-0 w-100">
+            <div class="commentTextContainer border border-light flex-column p-3 mb-3">{{ $comment['body'] }}</div>
+
+            <i
+            @if ($comment['isAuthor'])
+                class="fa fa-thumbs-up"
             @else
-                class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon"
-                onclick="giveFeedback(this, {{ $comment['id'] }}, false, true)"
+                @if ($comment['liked'])
+                    class="fa fa-thumbs-up purpleLink feedbackIcon"
+                    onclick="removeFeedback(this, {{ $comment['id'] }}, true, true)"
+                @else
+                    class="fa fa-thumbs-up feedbackIcon"
+                    onclick="giveFeedback(this, {{ $comment['id'] }}, true, true)"
+                @endif
             @endif
-        @endif
-            id="dislikes_{{$comment['id']}}"
-        >
-            <span>{{ $comment['dislikes'] }}</span>
-        </i>
+                id="likes_{{$comment['id']}}"
+            >
+                <span>{{ $comment['likes'] }}</span>
+            </i>
 
-        @if (Auth::check() && !$isReply)
-            <span onclick="openReplyBox(this.parentNode.parentNode, {{ $comment['article_id'] }}, {{ $comment['id'] }})"
-                class="px-3 hover-pointer">Reply</span>
-        @endif
+            <i
+            @if ($comment['isAuthor'])
+                class="fa fa-thumbs-down ps-3 pe-3"
+            @else
+                @if ($comment['disliked'])
+                    class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon purpleLink"
+                    onclick="removeFeedback(this, {{ $comment['id'] }}, false, true)"
+                @else
+                    class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon"
+                    onclick="giveFeedback(this, {{ $comment['id'] }}, false, true)"
+                @endif
+            @endif
+                id="dislikes_{{$comment['id']}}"
+            >
+                <span>{{ $comment['dislikes'] }}</span>
+            </i>
 
-        <span class="px-3">{{ $comment['published_at'] }}</span>
+            @if (Auth::check() && !$isReply)
+                <span onclick="openReplyBox(this.parentNode.parentNode, {{ $comment['article_id'] }}, {{ $comment['id'] }})"
+                    class="px-3 hover-pointer">Reply</span>
+            @endif
+
+            @if (isset($comment['author']) && Auth::id() === $comment['author']['id'])
+                <span class="px-3 hover-pointer">Edit</span>
+            @endif
+
+            <span class="px-3">{{ $comment['published_at'] }}</span>
+
+            @if (isset($comment['author']) && Auth::id() === $comment['author']['id'])
+                <button
+                    onclick="deleteComment({{ $comment['id'] }})"
+                    class="btn btn-transparent mb-0 px-2 mx-1"
+                >
+                    <i class="fas fa-trash text-danger" style="font-size: 1.7em;"></i>
+                </button>
+            @endif
+        </div>
     </div>
-
-</div>
 
 @if ($isReply)
     </div>
-    </div>
 @endif
+
+</div>
