@@ -55,7 +55,7 @@ class Comment extends Content
           'body' => $this->body,
           'likes' => $this->likes,
           'dislikes' => $this->dislikes,
-          'published_at' =>$published_at,
+          'published_at' => $published_at,
           'author' => isset($this->author) ? [
               'id' => $this->author->id,
               'name' => $this->author->name,

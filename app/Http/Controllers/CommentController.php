@@ -48,11 +48,15 @@ class CommentController extends Controller
             $comment->parent_comment_id = $request->parent_comment_id;
 
         $comment->save();
+        // Refresh model instance
+        $comment = Comment::find($content->id);
 
         return response()->json([
             'status' => 'OK',
             'msg' => 'Successfully created comment',
-            'id' => $comment->content_id,
+            'html' => view('partials.content.comment', [
+                'comment' => $comment->getInfo(),
+            ])->render(),
         ], 200);
     }
 

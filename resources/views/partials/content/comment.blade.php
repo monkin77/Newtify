@@ -1,8 +1,8 @@
 <div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
         <img src="{{
-            isset($comment['authorAvatar']) ?
-            asset('storage/avatars/'.$comment['authorAvatar']) : $userImgPHolder 
+            (isset($comment['author']) && isset($comment['author']['avatar'])) ?
+            asset('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
         }}" onerror="this.src='{{ $userImgPHolder }}'" />
 
         @if (isset($comment['author']))
