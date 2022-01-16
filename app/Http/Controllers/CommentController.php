@@ -56,7 +56,7 @@ class CommentController extends Controller
             'msg' => 'Successfully created comment',
             'html' => view('partials.content.comment', [
                 'comment' => $comment->getInfo(),
-                'isReply' => false,
+                'isReply' => isset($request->parent_comment_id),
             ])->render(),
         ], 200);
     }

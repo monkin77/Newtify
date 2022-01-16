@@ -2,34 +2,53 @@ const createNewComment = (article_id) => {
     const body = select('#commentTextArea').value;
     if (!body) return;
 
-    sendAjaxRequest('POST', '/comment', { body, article_id }, newCommentHandler);
+    sendAjaxRequest(
+        'POST', '/comment',
+        { body, article_id },
+        newCommentHandler('comment_form', 'commentTextArea', select('#comments'), 'afterbegin')
+    );
 }
 
 const createNewReply = (parent, article_id, parent_comment_id) => {
+    const body = select(`#reply_textarea_${parent_comment_id}`).value;
+    if (!body) return;
 
+    sendAjaxRequest(
+        'POST', '/comment',
+        { body, article_id, parent_comment_id },
+        newCommentHandler(
+            `reply_form_${parent_comment_id}`,
+            `reply_textarea_${parent_comment_id}`,
+            parent,
+            'afterend',
+            `reply_${parent_comment_id}`
+        )
+    );
 }
 
-function newCommentHandler() {
+const newCommentHandler = (formId, textareaId, parent, position, removeId) => function () {
     const json = JSON.parse(this.responseText);
 
-    const previousError = select(`#comment_form .error`);
+    const previousError = select(`#${formId} .error`);
 
     if (this.status != 200) {
         const error = createErrorMessage(json.errors);
-        error.classList.add('my-2');
+        error.classList.add('mt-2');
 
         if (previousError)
             previousError.replaceWith(error);
         else
-            select('#comment_form').insertBefore(error, select('#newCommentButton'));
+            select(`#${textareaId}`).insertAdjacentElement('afterend', error);
 
         return;
     }
 
     if (previousError) previousError.remove();
 
-    select('#comments').insertAdjacentHTML('afterbegin', json.html);
-    select('#commentTextArea').value = '';
+    parent.insertAdjacentHTML(position, json.html);
+    select(`#${textareaId}`).value = '';
+
+    if (removeId) select(`#${removeId}`).remove();
 }
 
 const openReplyBox = (parentComment, articleId, parentCommentId) => {
@@ -42,7 +61,6 @@ const openReplyBox = (parentComment, articleId, parentCommentId) => {
 
     const mainDiv = document.createElement('div');
     mainDiv.classList.add('d-flex', 'flex-row', 'my-3');
-    mainDiv.id = `reply_${parentCommentId}`;
 
     const headerDiv = document.createElement('div');
     headerDiv.classList.add('flex-column', 'h-100', 'commentHeader', 'mx-5');
@@ -62,6 +80,7 @@ const openReplyBox = (parentComment, articleId, parentCommentId) => {
 
     const textArea = document.createElement('textarea');
     textArea.classList.add('flex-column', 'border-light', 'm-0', 'p-2');
+    textArea.id = `reply_textarea_${parentCommentId}`;
     textArea.placeholder = 'Type here';
     replyForm.appendChild(textArea);
 
@@ -79,6 +98,7 @@ const openReplyBox = (parentComment, articleId, parentCommentId) => {
     const wrapperDiv = document.createElement('div');
     wrapperDiv.classList.add('d-flex', 'justify-content-end', 'w-75');
     wrapperDiv.appendChild(childDiv);
+    wrapperDiv.id = `reply_${parentCommentId}`;
 
     parentComment.insertAdjacentElement('afterend', wrapperDiv);
 }

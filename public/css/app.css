@@ -422,7 +422,7 @@ option {
 
 /* Reputation Bar */
 #reputationBar #reportIcon {
-    color: darkred;
+    color: var(--bs-danger);
 }
 
 #reputationBar #bar {

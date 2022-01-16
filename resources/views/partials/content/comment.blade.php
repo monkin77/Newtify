@@ -1,3 +1,8 @@
+@if ($isReply)
+    <div class="d-flex justify-content-end w-75">
+    <div class="child-comment">
+@endif
+
 <div class="d-flex flex-row mx-0 my-3 p-0 {{ $isReply ? 'w-100' : 'w-75' }}"> 
     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
         <img src="{{
@@ -27,3 +32,8 @@
     </div>
 
 </div>
+
+@if ($isReply)
+    </div>
+    </div>
+@endif
