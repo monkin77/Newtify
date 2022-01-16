@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Article;
+use App\Models\Content;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ArticlePolicy
+class ContentPolicy
 {
     use HandlesAuthorization;
 
@@ -17,7 +17,7 @@ class ArticlePolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function createContent(User $user)
     {
         return Auth::check();
     }
@@ -29,20 +29,32 @@ class ArticlePolicy
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Article $article)
+    public function update(User $user, Content $content)
     {
-        return $user->id === $article->author()->first()->id;
+        return $user->id === $content->author()->first()->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Content  $Content
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Article $article)
+    public function delete(User $user, Content $content)
     {
-        return $user->id === $article->author()->first()->id || $user->is_admin;
+        return $user->id === $content->author()->first()->id || $user->is_admin;
     }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function updateFeedback(User $user, Content $content)
+    {
+        return Auth::check() && $user->id !== $content->author()->first()->id;
+    }
+
 }

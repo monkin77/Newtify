@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+<script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
+
 @section('content')
     
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
@@ -62,8 +64,28 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    <i class="fas fa-thumbs-up ps-5"><span class="text-white ms-2"> {{ $article['likes'] }} </span></i>
-                    <i class="fas fa-thumbs-down ps-3"><span class="text-white ms-2">{{ $article['dislikes'] }}</span></i>
+                    @if ( $liked )
+                        <i class="fas fa-thumbs-up ps-5 text-primary feedbackIcon" 
+                            id="articleLikes" 
+                            onclick="removeFeedback(this, {{ $article['id'] }}, true)"
+                            > 
+                            <span class="ms-1">{{ $article['likes'] }}</span>
+                        </i>
+                    @else 
+                        <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true)"> 
+                            <span class="ms-1">{{ $article['likes'] }}</span>
+                        </i>
+                    @endif
+
+                    @if ($disliked)
+                        <i class="fas fa-thumbs-down ps-3 feedbackIcon text-primary" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false)"> 
+                            <span class="ms-1">{{ $article['dislikes'] }}</span>
+                        </i>
+                    @else
+                        <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false)"> 
+                            <span class="ms-1">{{ $article['dislikes'] }}<span>
+                        </i>
+                    @endif 
                     
                     <i class="fas fa-share-alt ms-4"></i>
                 </p>

@@ -240,7 +240,8 @@ option {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-*/ .article-container #article-header i {
+
+.article-container #article-header i {
     width: 0.8em;
     height: 0.7em;
 }
@@ -640,3 +641,12 @@ option {
     background-color: var(--darkPurple);
     width: 40%;
 }
+
+
+/* Content */
+.feedbackIcon:hover {
+    color: #9b4dca;
+    cursor: pointer;
+}
+
+
