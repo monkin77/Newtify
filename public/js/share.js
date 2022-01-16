@@ -20,16 +20,10 @@ $(document).on('click', '.social-button', function (e) {
 
 const showSocials = () => {
     const currentURL = window.location.href;
-    console.log("Current url:", currentURL);
 
     const url = `/api/share_socials`;
     sendAjaxRequest('post', url, {url: currentURL}, handleShowSocials(currentURL));
 }
-
-/* 
-TO-DO:
-- Socials could show in a bar in front instead of a popup
-*/
 
 const handleShowSocials = (currentURL) => function(){
     const socialLinks = JSON.parse(this.responseText).links;

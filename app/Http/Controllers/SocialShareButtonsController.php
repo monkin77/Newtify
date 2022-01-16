@@ -11,10 +11,8 @@ class SocialShareButtonsController extends Controller
     public function shareWidget(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'url' => 'required|string',
+            'url' => 'required|string|url',
         ]);
-
-        error_log("requestURL: " . $request->url);
 
         if ($validator->fails())
             return response()->json([
@@ -38,7 +36,7 @@ class SocialShareButtonsController extends Controller
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Sucessfully fectched social links',
+            'msg' => 'Sucessfully fetched social links',
             'links' => $shareLinks,
         ], 200);
     }
