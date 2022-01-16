@@ -189,8 +189,8 @@
                 </div>
                 <div class="popupFooter">
                     <h5 class="mt-3 mb-2">Page Link</h5>
-                    <div class="container-fluid position-relative" style="font-size: medium"> 
-                        <input class="" type="url" id="myInput" aria-describedby="inputGroup-sizing-default" style="height: 2.2em;"> 
+                    <div class="container-fluid position-relative"> 
+                        <input class="text-light" type="url" id="shareLinkInput" aria-describedby="inputGroup-sizing-default" disabled> 
                     </div>
                 </div>
             </div>

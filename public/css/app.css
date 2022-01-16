@@ -716,7 +716,7 @@ option {
     height: 20%;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--bs-purple);
+    border-bottom: 1px solid var(--bs-gray-700);
 }
 
 .popupBody {
@@ -729,7 +729,7 @@ option {
 
 .popupFooter {
     width: 85%;
-    border-top: 1px solid var(--bs-purple);
+    border-top: 1px solid var(--bs-gray-700);
     height: 30%;
 }
 
@@ -749,6 +749,10 @@ option {
     height: 100%;
     background-color: var(--bs-dark);
     border-radius: 1em;
+}
+
+#socialsPopup #shareLinkInput {
+    height: 2.2em;
 }
 
 #socialsCloseBtn {

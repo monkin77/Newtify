@@ -23,7 +23,7 @@ const showSocials = () => {
     console.log("Current url:", currentURL);
 
     const url = `/api/share_socials`;
-    sendAjaxRequest('post', url, {url: currentURL}, handleShowSocials());
+    sendAjaxRequest('post', url, {url: currentURL}, handleShowSocials(currentURL));
 }
 
 /* 
@@ -31,13 +31,14 @@ TO-DO:
 - Socials could show in a bar in front instead of a popup
 */
 
-const handleShowSocials = () => function(){
+const handleShowSocials = (currentURL) => function(){
     const socialLinks = JSON.parse(this.responseText).links;
 
     select('#fbIcon').href = socialLinks.facebook;
     select('#twitterIcon').href = socialLinks.twitter;
     select('#linkedInIcon').href = socialLinks.linkedin;
     select('#redditIcon').href = socialLinks.reddit;
+    select('#shareLinkInput').value = currentURL;
 
     select('#socialsPopup').classList.remove('d-none');
 }
