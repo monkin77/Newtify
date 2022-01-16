@@ -185,8 +185,10 @@ class ArticleController extends Controller
         $user = Auth::user();
         $is_admin = Auth::user() ? $user->is_admin : false;
 
-        $feedback = Feedback::where('user_id', '=', Auth::id())->where('content_id', '=', $id)->first();
-        
+        $feedback = Auth::check() 
+            ? Feedback::where('user_id', '=', Auth::id())->where('content_id', '=', $id)->first()
+            : null;
+
         $liked = false;
         $disliked = false;
 
