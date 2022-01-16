@@ -48,7 +48,6 @@ class ContentController extends Controller
         $feedback->is_like = $request->is_like;
 
         $feedback->save();
-        $content->save();
 
         $updatedContent = Content::find($id);
         
