@@ -26,9 +26,13 @@ const showSocials = () => {
     sendAjaxRequest('post', url, {url: currentURL}, handleShowSocials());
 }
 
+/* 
+TO-DO:
+- Socials could show in a bar in front instead of a popup
+*/
+
 const handleShowSocials = () => function(){
     const socialLinks = JSON.parse(this.responseText).links;
-    console.log("social links:", socialLinks);
 
     select('#fbIcon').href = socialLinks.facebook;
     select('#twitterIcon').href = socialLinks.twitter;
