@@ -3,6 +3,7 @@ $('#tags').select2({
     maximumSelectionLength: 3,
     tokenSeparators: [',', ' ', ";"],
     theme: "bootstrap-5",
+    closeOnSelect: false,
 });
 
 $('#filterTags').select2({
@@ -10,11 +11,13 @@ $('#filterTags').select2({
     width: '25%',
     tokenSeparators: [',', ' ', ";"],
     theme: "bootstrap-5",
-    placeholder: "Filter by Tags"
+    placeholder: "Filter by Tags",
+    closeOnSelect: false,
 });
 
 $('#favoriteTags').select2({
     multiple: true,
     tokenSeparators: [',', ' ', ";"],
     theme: "bootstrap-5",
+    closeOnSelect: false,
 });
