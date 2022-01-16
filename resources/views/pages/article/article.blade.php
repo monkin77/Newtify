@@ -66,32 +66,45 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    @if ( $liked )
-                        <i class="fas fa-thumbs-up ps-5 purpleLink feedbackIcon" 
-                            id="articleLikes" 
-                            onclick="removeFeedback(this, {{ $article['id'] }}, true)"
-                            > 
+                    @if ( $isAuthor )
+                        <i class="fas fa-thumbs-up ps-5"  id="articleLikes"> 
                             <span class="ms-1">{{ $article['likes'] }}</span>
                         </i>
-                    @else 
-                        <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true)"> 
-                            <span class="ms-1">{{ $article['likes'] }}</span>
-                        </i>
-                    @endif
 
-                    @if ($disliked)
-                        <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false)"> 
-                            <span class="ms-1">{{ $article['dislikes'] }}</span>
-                        </i>
-                    @else
-                        <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false)"> 
+                        <i class="fas fa-thumbs-down ps-3" id="articleDislikes"> 
                             <span class="ms-1">{{ $article['dislikes'] }}<span>
                         </i>
-                    @endif 
-                    
+        
                     <button onclick="showSocials()" class="btn ms-4">
                         <i class="fas fa-share-alt fa-2x"></i>
                     </button>
+
+                    @else
+                        @if ( $liked )
+                            <i class="fas fa-thumbs-up ps-5 purpleLink feedbackIcon" 
+                                id="articleLikes" 
+                                onclick="removeFeedback(this, {{ $article['id'] }}, true, false)"
+                                > 
+                                <span class="ms-1">{{ $article['likes'] }}</span>
+                            </i>
+                        @else 
+                            <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true, false)"> 
+                                <span class="ms-1">{{ $article['likes'] }}</span>
+                            </i>
+                        @endif
+
+                        @if ($disliked)
+                            <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false, false)"> 
+                                <span class="ms-1">{{ $article['dislikes'] }}</span>
+                            </i>
+                        @else
+                            <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false, false)"> 
+                                <span class="ms-1">{{ $article['dislikes'] }}<span>
+                            </i>
+                        @endif
+                    @endif
+
+                    <i class="fas fa-share-alt ms-4"></i>
                 </p>
 
                 @if (isset($article['thumbnail']))

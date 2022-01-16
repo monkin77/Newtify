@@ -27,9 +27,40 @@
 
     <div class="flex-column m-0 p-0 w-100">
         <div class="commentTextContainer border border-light flex-column p-3 mb-3">{{ $comment['body'] }}</div>
-        
-        <i class="fa fa-thumbs-up "> {{ $comment['likes'] }}</i>
-        <i class="fa fa-thumbs-down ps-3 pe-3"> {{ $comment['dislikes'] }}</i>
+
+        <i
+        @if ($comment['isAuthor'])
+            class="fa fa-thumbs-up"
+        @else
+            @if ($comment['liked'])
+                class="fa fa-thumbs-up purpleLink feedbackIcon"
+                onclick="removeFeedback(this, {{ $comment['id'] }}, true, true)"
+            @else
+                class="fa fa-thumbs-up feedbackIcon"
+                onclick="giveFeedback(this, {{ $comment['id'] }}, true, true)"
+            @endif
+        @endif
+            id="likes_{{$comment['id']}}"
+        >
+            <span>{{ $comment['likes'] }}</span>
+        </i>
+
+        <i
+        @if ($comment['isAuthor'])
+            class="fa fa-thumbs-down ps-3 pe-3"
+        @else
+            @if ($comment['disliked'])
+                class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon purpleLink"
+                onclick="removeFeedback(this, {{ $comment['id'] }}, false, true)"
+            @else
+                class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon"
+                onclick="giveFeedback(this, {{ $comment['id'] }}, false, true)"
+            @endif
+        @endif
+            id="dislikes_{{$comment['id']}}"
+        >
+            <span>{{ $comment['dislikes'] }}</span>
+        </i>
 
         @if (Auth::check() && !$isReply)
             <span onclick="openReplyBox(this.parentNode.parentNode, {{ $comment['article_id'] }}, {{ $comment['id'] }})"

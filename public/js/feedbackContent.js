@@ -1,14 +1,15 @@
-giveFeedback = (elem, content_id, is_like) => {
+giveFeedback = (elem, content_id, is_like, is_comment) => {
+    console.log(is_comment);
     const url = '/content/' + content_id;
-    sendAjaxRequest('put', url, { is_like }, giveFeedbackHandler(elem, content_id, is_like));
+    sendAjaxRequest('put', url, { is_like }, giveFeedbackHandler(elem, content_id, is_like, is_comment));
 }
 
-removeFeedback = (elem, content_id, is_like) => {
+removeFeedback = (elem, content_id, is_like, is_comment) => {
     const url = '/content/' + content_id;
-    sendAjaxRequest('delete', url, { is_like }, removeFeedbackHandler(elem, content_id, is_like));
+    sendAjaxRequest('delete', url, { is_like }, removeFeedbackHandler(elem, content_id, is_like, is_comment));
 }
 
-const giveFeedbackHandler = (elem, content_id, is_like) => function() {
+const giveFeedbackHandler = (elem, content_id, is_like, is_comment) => function() {
     if (this.status == 403) {
         window.location = '/login';
         return;
@@ -18,32 +19,37 @@ const giveFeedbackHandler = (elem, content_id, is_like) => function() {
 
     if (this.status != 200) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
+        error.classList.add('mt-3');
 
         if (previousError)
             previousError.replaceWith(error);
         else
-            elem.appendChild(error);
+            elem.append(error);
 
         return;
     }
 
     elem.classList.add("purpleLink");
-    elem.onclick = () => { removeFeedback(elem, content_id, is_like); };
+    elem.onclick = () => removeFeedback(elem, content_id, is_like, is_comment);
 
     const counter = elem.lastElementChild;
     counter.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
 
-    const oppositeFeedback = is_like ? select('#articleDislikes') : select('#articleLikes');
+    const likeSelector = is_comment ? `#likes_${content_id}` : '#articleLikes';
+    const dislikeSelector = is_comment ? `#dislikes_${content_id}` : '#articleDislikes';
+    console.log(likeSelector, dislikeSelector);
+
+    const oppositeFeedback = is_like ? select(dislikeSelector) : select(likeSelector);
     const oppositeCounter = oppositeFeedback.lastElementChild;
     oppositeCounter.innerHTML = is_like ? JSON.parse(this.responseText).dislikes : JSON.parse(this.responseText).likes;
 
-    oppositeFeedback.classList = is_like ? ["fas fa-thumbs-down ps-3 feedbackIcon"] : ["fas fa-thumbs-up ps-5 feedbackIcon"];
-    oppositeFeedback.onclick = () => { giveFeedback(oppositeFeedback, content_id, !is_like); };
+    oppositeFeedback.classList = is_like ? dislikeClasses(is_comment) : likeClasses(is_comment);
+    oppositeFeedback.onclick = () => giveFeedback(oppositeFeedback, content_id, !is_like, is_comment);
 
     if (previousError) previousError.remove();
 }
 
-const removeFeedbackHandler = (elem, content_id, is_like) => function() {
+const removeFeedbackHandler = (elem, content_id, is_like, is_comment) => function() {
     if (this.status == 403) {
         window.location = '/login';
         return;
@@ -53,6 +59,7 @@ const removeFeedbackHandler = (elem, content_id, is_like) => function() {
 
     if (this.status != 200) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
+        error.classList.add('mt-3');
 
         if (previousError)
             previousError.replaceWith(error);
@@ -62,12 +69,18 @@ const removeFeedbackHandler = (elem, content_id, is_like) => function() {
         return;
     }
 
-    elem.classList = is_like ? ["fas fa-thumbs-up ps-5 feedbackIcon"] : ["fas fa-thumbs-down ps-3 feedbackIcon"];
-    elem.onclick = () => { giveFeedback(elem, content_id, is_like); };
+    elem.classList = is_like ? likeClasses(is_comment) : dislikeClasses(is_comment);
+    elem.onclick = () => giveFeedback(elem, content_id, is_like, is_comment);
     
     const counter = elem.lastElementChild;
     counter.innerHTML = is_like ? JSON.parse(this.responseText).likes : JSON.parse(this.responseText).dislikes;
 
     if (previousError) previousError.remove();
 }
+
+const likeClasses = is_comment => is_comment ? 
+    ["fa fa-thumbs-up feedbackIcon"] : ["fas fa-thumbs-up ps-5 feedbackIcon"];
+
+const dislikeClasses = is_comment => is_comment ? 
+    ["fa fa-thumbs-down ps-3 pe-3 feedbackIcon"] : ["fas fa-thumbs-down ps-3 feedbackIcon"];
 

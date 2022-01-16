@@ -166,7 +166,6 @@ class ArticleController extends Controller
 
         $is_author = isset($author) ? $author->id === Auth::id() : false;
 
-        // TODO: "load more" thing for comments too
         $comments = $article->getParsedComments();
         $canLoadMore = count($comments) > $this::COMMENTS_LIMIT;
         $comments = $comments->take($this::COMMENTS_LIMIT);
