@@ -132,6 +132,22 @@ option {
     justify-content: center;
 }
 
+.filter-button:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.btn-check:checked + .filter-button.btn-outline-warning {
+    background-color: rgba(243, 156, 18, 0.2);
+}
+
+.btn-check:checked + .filter-button.btn-outline-danger {
+    background-color: rgba(231, 76, 60, 0.2);
+}
+
+.btn-check:checked + .filter-button.btn-outline-info {
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
 .filter-tag {
     font-size: 2em;
 }
@@ -310,15 +326,32 @@ option {
 
 .select2-selection--multiple {
     background-color: transparent !important;
+    border-color: var(--bs-light) !important;
+    font-size: inherit !important;
+}
+
+#filterSection .select2-selection--multiple {
+    min-height: 3.8rem !important;
+}
+
+#filterSection .select2-search__field {
+    color: rgba(173, 181, 189, 0.9) !important;
+    text-align: center;
+    padding-top: 2px;
 }
 
 .select2-selection__choice {
-    background-color: var(--bs-primary);
     color: white !important;
+    border-color: var(--bs-light) !important;
 }
 
 .select2-results {
     background-color: var(--bs-dark);
+}
+
+.select2-results__option[aria-selected="true"],
+.select2-results__option--selected {
+    background-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* User Profile */

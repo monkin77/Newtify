@@ -15,14 +15,14 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
-    <section id="filterSection" class="d-flex flex-row align-items-center border border-darkPurple py-3 mt-3 mb-4">
+    <section id="filterSection" class="d-flex flex-row align-items-center border border-purple py-3 mt-3 mb-4">
         <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
             @if (Auth::check())
                 <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
                 <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="From your favorite authors and tags"
-                    class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recommended"
+                    class="filter-button btn btn-outline-warning text-light btn-lg ms-4 my-auto" for="recommended"
                 >
-                <i class="far fa-star mt-2"></i>
+                <i class="far fa-star mt-2 text-warning"></i>
                 <span class="mx-2">Recommended</span>
             </label>
             @endif
@@ -30,30 +30,33 @@
             <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
             @if (Auth::guest()) checked @endif>
             <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hottest articles of the day"
-                class="filter-button btn btn-outline-purple ms-4 my-auto" for="trending"
+                class="filter-button btn btn-outline-danger text-light ms-4 my-auto" for="trending"
             >
-                <i class="fas fa-fire-alt mt-2"></i> <span class="mx-2">Trending</span>
+                <i class="fas fa-fire-alt mt-2 text-danger"></i> <span class="mx-2">Trending</span>
             </label>
 
             <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
             <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="The latest articles"
-                class="filter-button btn btn-outline-purple btn-lg ms-4 my-auto" for="recent"
+                class="filter-button btn btn-outline-info text-light btn-lg ms-4 my-auto" for="recent"
             >
-                <i class="fas fa-history mt-2"></i> <span class="mx-2">Recent</span>
+                <i class="fas fa-history mt-2 text-info"></i> <span class="mx-2">Recent</span>
             </label>
         </div>
 
-        <input type="text" name="daterange" />
+        <div class="flex-fill d-flex justify-content-evenly">
+            <input type="text" name="daterange" class="my-0 mx-5 text-center text-light border-light"
+            placeholder="Filter by Publish Date" />
+        </div>
 
-    <select id="filterTags" class="text-center" onchange="filterArticles()" multiple>
-        @foreach($tags as $tag)
-            <option value="{{ $tag['id'] }}">
-                {{ $tag['name'] }}
-            </option>
-        @endforeach
-    </select>
+        <select id="filterTags" onchange="filterArticles()" multiple>
+            @foreach($tags as $tag)
+                <option value="{{ $tag['id'] }}">
+                    {{ $tag['name'] }}
+                </option>
+            @endforeach
+        </select>
 
-        <i class="fa fa-tag filter-tag mt-2 mx-4 text-purple"></i>
+        <i class="fa fa-tag filter-tag mx-4 text-lightPurple"></i>
     </section>
 @endsection
 
@@ -87,9 +90,9 @@
         <div class="d-flex flex-grow-1 justify-content-center home-container">
             <div id="proposeTag" class="position-relative d-flex flex-column align-items-center">
                 <h1 class="mb-2">
-                    <i class="fa fa-tag fa-sm fa-flip-horizontal px-2 text-purple-dark"></i>
+                    <i class="fa fa-tag fa-sm fa-flip-horizontal px-2 text-lightPurple"></i>
                     Propose a new Tag
-                    <i class="fa fa-tag fa-sm px-2 text-purple-dark"></i>
+                    <i class="fa fa-tag fa-sm px-2 text-lightPurple"></i>
                 </h1>
                 <h4 class="mb-5 text-light"> Help us improve on getting more variety of content </h4>
 

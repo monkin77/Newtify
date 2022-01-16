@@ -75,9 +75,18 @@ const notFoundMessage = () => {
 }
 
 $('input[name="daterange"]').daterangepicker({
-  opens: 'center'
+  opens: 'center',
+  autoUpdateInput: false,
+  locale: {
+    format: 'DD/MM/YYYY'
+  }
+
 }, (start, end, label) => {
   minDate = start.format('YYYY-MM-DD');
   maxDate = end.format('YYYY-MM-DD');
   filterArticles();
+});
+
+$('input[name="daterange"]').on('apply.daterangepicker', function(e, picker) {
+  $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
 });
