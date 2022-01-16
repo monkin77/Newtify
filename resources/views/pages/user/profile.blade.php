@@ -12,11 +12,8 @@ $guest = !Auth::check();
         <div class="container-fluid py-3">
             <div class="row w-100 mt-5" id="userGraphics">
                 <div class="col-6 d-flex justify-content-center h-100">
-                    <img src="{{
-                        isset($user['avatar']) ?
-                        asset('storage/avatars/'.$user['avatar']) : $userImgPHolder 
-                    }}" id="avatarImg"
-                        onerror="this.src='{{ $userImgPHolder }}'" />
+                    <img src="{{ isset($user['avatar']) ? asset('storage/avatars/' . $user['avatar']) : $userImgPHolder }}"
+                        id="avatarImg" onerror="this.src='{{ $userImgPHolder }}'" />
 
                 </div>
                 <div class="col-6 d-flex flex-column align-items-center h-100">
@@ -29,27 +26,27 @@ $guest = !Auth::check();
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
                     @if ($user['isAdmin'])
-                        <span class="badge rounded-pill ms-3 bg-custom"> Admin </span>
+                        <span class="badge rounded-pill ms-3 bg-custom">Admin</span>
                     @endif
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)
                         <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
-                            <a class="fa fa-pencil fa-3x" style="color:orange" href="/user/{{ $user['id'] }}/edit"></a>
+                            <a class="fa fa-pencil fa-3x text-purple" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
                     @else
                         @if (!$guest)
-                            <i class="fa fa-comment-dots me-3 fa-2x text-dark" onclick="console.log('clicked')"></i>
+                            <i class="fa fa-comment-dots me-3 fa-2x text-purple-dark" onclick="console.log('clicked')"></i>
                             @if ($follows)
-                                <button type="button" class="btn btn-secondary px-5 my-0 py-0 me-3" id="followBtn"
+                                <button type="button" class="btn btn-secondary px-5 my-0 py-0 mx-3" id="followBtn"
                                     onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
                             @else
-                                <button type="button" class="btn btn-primary px-5 my-0 py-0 me-3" id="followBtn"
+                                <button type="button" class="btn btn-primary px-5 my-0 py-0 mx-3" id="followBtn"
                                     onclick="followUser({{ $user['id'] }})">Follow</button>
                             @endif
                         @endif
                     @endif
-                    <i class="fa fa-users fa-1x me-3 text-dark"></i>
+                    <i class="fa fa-users fa-2x mx-3 text-primary"></i>
                     <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
                 </div>
             </div>
@@ -80,22 +77,24 @@ $guest = !Auth::check();
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('articles')
-    <div class="container-fluid w-100 d-flex justify-content-center my-5" id="userArticles">
-        <h2 class="border-bottom border-2 border-dark text-center pb-1" id="articlesTitle">Articles</h2>
-    </div>
-    <section id="articles">
-        @include('partials.content.articles', ['articles' => $articles])
+    <section class="container-fluid w-100 d-flex flex-column align-items-center my-2">
+        <div class="position-relative w-100 d-flex justify-content-center mb-4" id="userArticles">
+            <h2 class="border-bottom border-2 border-light text-center pb-2" id="articlesTitle">Articles</h2>
+        </div>
+        <div id="articles">
+            @include('partials.content.articles', ['articles' => $articles])
+        </div>
     </section>
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('load-more')
-<div id="load-more">
+    <div id="load-more">
 
-    <button onclick="loadMoreUser({{ Auth::id() }})">Load more</button>
+        <button onclick="loadMoreUser({{ Auth::id() }})">Load more</button>
 
-</div>
+    </div>
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}
@@ -105,7 +104,7 @@ $guest = !Auth::check();
         <div id="backdrop" onclick="toggleReportPopup()"></div>
         <div id="reportContainer" class="d-flex flex-column align-items-center justify-content-center">
             <div id="reportInsideContainer" class="d-flex flex-column align-items-center justify-content-evenly">
-                <h3 class="text-black">Give us a reason to report this user</h3>
+                <h3>Give us a reason to report this user</h3>
                 <div class="text-danger d-flex d-none py-0 my-0 align-items-center text-center px-5" id="reportError">
                     <i class="fa fa-exclamation me-3 fa-1x"></i>
                     <h5 class="py-0 my-0" id="reportErrorText"></h5>
@@ -113,7 +112,7 @@ $guest = !Auth::check();
                 <textarea id="reason" rows="10" placeholder="Insert report reason here"></textarea>
                 <button onclick="reportUser({{ $user['id'] }})">SUBMIT</button>
                 <button class="btn p-0 m-0 transparentButton" id="closePopupBtn" onclick="toggleReportPopup()">
-                    <i class="fa fa-times fa-3x" id="closeIcon"></i>
+                    <i class="fa fa-times fa-3x text-purple" id="closeIcon"></i>
                 </button>
             </div>
         </div>

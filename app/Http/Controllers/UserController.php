@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Report;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 // TODO: Check headers for redirects
 class UserController extends Controller
@@ -115,12 +117,27 @@ class UserController extends Controller
 
         $countries = Country::get();
 
+        $favoriteTags = $user->favoriteTags->map(function ($tag) {
+            return [
+                'id' => $tag->id
+            ];
+        });
+
+        $tags = Tag::listTagsByState(TagController::tagStates['accepted'])->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->name
+            ];
+        });
+
         return view('pages.user.editProfile', [
             'user' => $userInfo,
             'topAreasExpertise' => $areasExpertise,
             'followerCount' => $followerCount,
             'birthDate' => date('Y-m-d', strtotime($userInfo['birthDate'])),
             'countries' => $countries,
+            'tags' => $tags,
+            'favoriteTags' => $favoriteTags,
         ]);
     }
 
@@ -148,12 +165,24 @@ class UserController extends Controller
             'country' => 'nullable|string|exists:country,name',
             'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
             'description' => 'nullable|string|max:500',
-            'city' => 'nullable|string|max:100'
+            'city' => 'nullable|string|max:100',
+            'favoriteTags' => 'nullable|array',
+            'favoriteTags.*' => [
+                'integer',
+                Rule::exists('tag', 'id')->where('state', 'ACCEPTED')
+            ],
         ]);
 
         if ($validator->fails()) {
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'favoriteTags'))
+                    $key = 'favoriteTags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
             // Go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         if (isset($request->name)) $user->name = $request->name;
@@ -168,15 +197,17 @@ class UserController extends Controller
             $newAvatar = $request->avatar;
             $oldAvatar = $user->avatar;
 
-            $imgName = time().'.'.$newAvatar->extension();
+            $imgName = time() . '.' . $newAvatar->extension();
             $newAvatar->storeAs('public/avatars', $imgName);
             $user->avatar = $imgName;
 
             if (!is_null($oldAvatar))
-                Storage::delete('public/thumbnails/'.$oldAvatar);
+                Storage::delete('public/thumbnails/' . $oldAvatar);
         }
 
         $user->save();
+        $user->favoriteTags()->sync($request->favoriteTags);
+
         return redirect("/user/${id}");
     }
 
@@ -359,7 +390,7 @@ class UserController extends Controller
         $articles = $userArticles->take($request->limit);
 
         return response()->json([
-            'html' => view('partials.content.articles', [ 'articles' => $articles ])->render(),
+            'html' => view('partials.content.articles', ['articles' => $articles])->render(),
             'canLoadMore' => $canLoadMore
         ], 200);
     }

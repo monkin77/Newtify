@@ -20,6 +20,10 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
 Route::post('signup', 'Auth\RegisterController@register');
+Route::get('forgot-password', 'Auth\PasswordResetController@showSendLinkForm')->name('showLinkForm');
+Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('sendLink');
+Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('password.reset');
+Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.update');
 
 // User
 Route::get('user/{id}', 'UserController@show')->name('userProfile');
@@ -40,6 +44,7 @@ Route::get('article/{id}', 'ArticleController@show')->name('article');
 Route::get('article/{id}/edit', 'ArticleController@edit')->name('editArticle');
 Route::put('article/{id}/edit', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
+Route::get('api/article/{id}/comments', 'ArticleController@comments');
 
 // Content
 Route::delete('content/{id}', 'ContentController@removeFeedback');
@@ -68,3 +73,16 @@ Route::post('tags/new', 'TagController@propose');
 Route::get('search', 'SearchController@show')->name('search');
 Route::get('api/search/users', 'SearchController@searchUsers');
 Route::get('api/search/articles', 'SearchController@searchArticles');
+
+// Notifications
+Route::get('api/notifications', 'NotificationController@show');
+Route::put('notifications', 'NotificationController@readNotifications');
+
+// Messages
+Route::get('messages', 'MessageController@inbox');
+Route::get('messages/{id}', 'MessageController@messageThread');
+Route::post('messages/{id}', 'MessageController@create');
+Route::put('messages/{id}', 'MessageController@readMessages');
+
+
+

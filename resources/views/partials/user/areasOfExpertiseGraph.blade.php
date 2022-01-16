@@ -18,7 +18,7 @@ function calculateExpertiseLevel($reputation)
 }
 @endphp
 
-<div class="h-100 text-dark" id="graphContainer">
+<div class="h-100 text-white" id="graphContainer">
     <h4 class="text-center pt-3 pb-0 my-0">Areas of Expertise</h4>
     <div class="d-flex flex-column h-100 justify-content-evenly pb-5">
         @foreach ($topAreasExpertise as $area)

@@ -1,0 +1,21 @@
+// Custom Variables
+$purple: rgb(171, 50, 219);
+$darkPurple: rgb(150, 18, 202);
+$lightPurple: rgb(193, 92, 233);
+$primary: $darkPurple;
+
+@import "../bootstrap/scss/functions";
+@import "./variables";
+@import "../bootstrap/scss/variables";
+
+$customThemeColors: (
+    "purple": $purple,
+    "darkPurple": $darkPurple,
+    "lightPurple": $lightPurple,
+);
+
+$theme-colors: map-merge($customThemeColors, $theme-colors);
+
+// import bootstrap and bootswatch theme
+@import "../bootstrap/scss/bootstrap.scss";
+@import "./bootswatch";

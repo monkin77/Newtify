@@ -1,4 +1,4 @@
-<div class="card user-card flex-row flex-wrap mb-3">
+<div class="card user-card flex-row flex-wrap mb-3 bg-secondary">
     <div class="user-card-avatar px-2 py-2 text-center">
         <a href="/user/{{ $user['id'] }}">
         <img src="{{
@@ -12,7 +12,7 @@
 
     <div class="card-block user-card-body d-flex flex-column px-4 py-4">
         <h4 class="card-title mb-0">
-            <a href="/user/{{ $user['id'] }}">{{ $user['name'] }}</a>
+            <a href="/user/{{ $user['id'] }}" class="purpleLink" >{{ $user['name'] }}</a>
         </h4>
 
         <p class="user-card-location">
@@ -35,7 +35,7 @@
         <p class="user-card-description mt-4 mb-4">Reputation: {{ $user['reputation'] }}</p>
 
         @foreach ($user['topAreasExpertise'] as $area)
-            <span class="badge bg-secondary mb-2">
+            <span class="badge bg-primary rounded mb-2">
                 {{ $area['tag_name'] }}
             </span>
         @endforeach
