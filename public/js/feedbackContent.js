@@ -27,7 +27,7 @@ const giveFeedbackHandler = (elem, content_id, is_like) => function() {
         return;
     }
 
-    elem.classList.add("text-primary");
+    elem.classList.add("purpleLink");
     elem.onclick = () => { removeFeedback(elem, content_id, is_like); };
 
     const counter = elem.lastElementChild;

@@ -65,7 +65,7 @@
                     @endforeach
 
                     @if ( $liked )
-                        <i class="fas fa-thumbs-up ps-5 text-primary feedbackIcon" 
+                        <i class="fas fa-thumbs-up ps-5 purpleLink feedbackIcon" 
                             id="articleLikes" 
                             onclick="removeFeedback(this, {{ $article['id'] }}, true)"
                             > 
@@ -78,7 +78,7 @@
                     @endif
 
                     @if ($disliked)
-                        <i class="fas fa-thumbs-down ps-3 feedbackIcon text-primary" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false)"> 
+                        <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false)"> 
                             <span class="ms-1">{{ $article['dislikes'] }}</span>
                         </i>
                     @else

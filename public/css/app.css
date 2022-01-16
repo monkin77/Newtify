@@ -644,8 +644,9 @@ option {
 
 
 /* Content */
+
 .feedbackIcon:hover {
-    color: #9b4dca;
+    color: var(--bs-lightPurple);
     cursor: pointer;
 }
 
