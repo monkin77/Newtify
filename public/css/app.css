@@ -305,6 +305,16 @@ option {
     text-align: center;
 }
 
+.commentTextContainer {
+    min-height: 4rem;
+    resize: vertical;
+    overflow: auto;
+}
+
+.child-comment {
+    width: 90%;
+}
+
 #deleteArticleForm {
     display: none;
 }

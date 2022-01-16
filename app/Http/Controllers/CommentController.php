@@ -22,7 +22,7 @@ class CommentController extends Controller
 
         $validator = Validator::make($request -> all(),
             [
-                'body' => 'required|string',
+                'body' => 'required|string|max:1000',
                 'article_id' => 'required|exists:article,content_id',
                 'parent_comment_id' => 'nullable|exists:comment,content_id'
             ]
@@ -56,6 +56,7 @@ class CommentController extends Controller
             'msg' => 'Successfully created comment',
             'html' => view('partials.content.comment', [
                 'comment' => $comment->getInfo(),
+                'isReply' => false,
             ])->render(),
         ], 200);
     }

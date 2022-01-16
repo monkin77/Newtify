@@ -1,4 +1,4 @@
-<div class="d-flex flex-row mx-0 my-3 p-0 w-75"> 
+<div class="d-flex flex-row mx-0 my-3 p-0 {{ $isReply ? 'w-100' : 'w-75' }}"> 
     <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
         <img src="{{
             (isset($comment['author']) && isset($comment['author']['avatar'])) ?
@@ -13,12 +13,12 @@
     </div>
 
     <div class="flex-column m-0 p-0 w-100">
-        <textarea readonly style="resize: none;" class="flex-column m-0 px-3">{{ $comment['body'] }}</textarea>
+        <div class="commentTextContainer border border-light flex-column p-3 mb-3">{{ $comment['body'] }}</div>
         
         <i class="fa fa-thumbs-up "> {{ $comment['likes'] }}</i>
         <i class="fa fa-thumbs-down ps-3 pe-3"> {{ $comment['dislikes'] }}</i>
 
-        @if (Auth::check())
+        @if (Auth::check() && !$isReply)
             <span class="px-3">Reply</span>
         @endif
 

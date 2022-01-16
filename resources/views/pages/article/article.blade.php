@@ -134,8 +134,8 @@
                         </div>
                         <div class="flex-column m-0 p-0 w-100">
                             <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
-                                <textarea id="commentTextArea" class="flex-column m-0 p-2" placeholder="Type here"></textarea>
-                                <button type="button"
+                                <textarea id="commentTextArea" class="flex-column border-light m-0 p-2" placeholder="Type here"></textarea>
+                                <button id="newCommentButton" type="button"
                                     class="btn btn-primary px-4"
                                     onclick="createNewComment({{ $article['id'] }})"
                                 >

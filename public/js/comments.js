@@ -6,25 +6,24 @@ const createNewComment = (article_id, parent_comment_id) => {
 }
 
 function newCommentHandler() {
-    const container = select('#comments');
     const json = JSON.parse(this.responseText);
 
-    const previousError = select(`#comments .error`);
+    const previousError = select(`#comment_form .error`);
 
     if (this.status != 200) {
         const error = createErrorMessage(json.errors);
-        error.classList.add('mb-2');
+        error.classList.add('my-2');
 
         if (previousError)
             previousError.replaceWith(error);
         else
-            container.appendChild(error);
+            select('#comment_form').insertBefore(error, select('#newCommentButton'));
 
         return;
     }
 
     if (previousError) previousError.remove();
 
-    container.insertAdjacentHTML('afterbegin', json.html);
+    select('#comments').insertAdjacentHTML('afterbegin', json.html);
     select('#commentTextArea').value = '';
 }
