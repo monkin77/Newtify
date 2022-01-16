@@ -17,7 +17,7 @@ class ContentPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function createContent(User $user)
+    public function create(User $user)
     {
         return Auth::check();
     }

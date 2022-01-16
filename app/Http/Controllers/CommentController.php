@@ -18,7 +18,7 @@ class CommentController extends Controller
      */
     public function create(Request $request)
     {
-        $this->authorize('create', Comment::class);
+        $this->authorize('create', Content::class);
 
         $validator = Validator::make($request -> all(),
             [
@@ -87,7 +87,7 @@ class CommentController extends Controller
                 'content_id' => $id
             ], 404);
 
-        $this->authorize('update', $comment);
+        $this->authorize('update', $content);
 
         $validator = Validator::make($request -> all(),
         [
@@ -138,7 +138,7 @@ class CommentController extends Controller
                 'content_id' => $id
             ], 404);
 
-        $this->authorize('delete', $comment);
+        $this->authorize('delete', $content);
 
         $user = Auth::user();
 
