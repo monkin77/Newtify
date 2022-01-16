@@ -126,22 +126,20 @@
 
             <div class="h-50">
                 @if (Auth::check())
-                    <div class="d-flex flex-row mx-0 my-3 p-0 w-75">
-                        <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
+                    <div class="d-flex flex-row my-3 w-75">
+                        <div class="flex-column h-100 commentHeader mx-5">
                             <img src="{{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}"
                                 onerror="this.src='{{ $userImgPHolder }}'">
                             <p>You</p>
                         </div>
-                        <div class="flex-column m-0 p-0 w-100">
-                            <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
-                                <textarea id="commentTextArea" class="flex-column border-light m-0 p-2" placeholder="Type here"></textarea>
-                                <button id="newCommentButton" type="button"
-                                    class="btn btn-primary px-4"
-                                    onclick="createNewComment({{ $article['id'] }})"
-                                >
-                                    Comment
-                                </button>
-                            </form>
+                        <div id="comment_form" class="flex-column w-100 m-0">
+                            <textarea id="commentTextArea" class="flex-column border-light m-0 p-2" placeholder="Type here"></textarea>
+                            <button id="newCommentButton"
+                                class="btn btn-primary px-4"
+                                onclick="createNewComment({{ $article['id'] }})"
+                            >
+                                Comment
+                            </button>
                         </div>
                     </div>
                 @endif

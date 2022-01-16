@@ -72,7 +72,7 @@ option {
     line-height: 3em;
 }
 
-.dropdown-custom-item:hover {
+.dropdown-custom-item:hover, .hover-pointer {
     cursor: pointer;
 }
 

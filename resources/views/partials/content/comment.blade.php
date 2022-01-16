@@ -19,10 +19,11 @@
         <i class="fa fa-thumbs-down ps-3 pe-3"> {{ $comment['dislikes'] }}</i>
 
         @if (Auth::check() && !$isReply)
-            <span class="px-3">Reply</span>
+            <span onclick="openReplyBox(this.parentNode.parentNode, {{ $comment['article_id'] }}, {{ $comment['id'] }})"
+                class="px-3 hover-pointer">Reply</span>
         @endif
 
-        <span class="px-3">{{ $comment['published_at'] }} </span>
+        <span class="px-3">{{ $comment['published_at'] }}</span>
     </div>
 
 </div>
