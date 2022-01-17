@@ -74,6 +74,7 @@ class Comment extends Content
           'liked' => $liked,
           'disliked' => $disliked,
           'isAuthor' => $isAuthor,
+          'hasFeedback' => $this['likes'] != 0 || $this['dislikes'] != 0,
           'author' => isset($this->author) ? [
               'id' => $this->author->id,
               'name' => $this->author->name,

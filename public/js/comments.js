@@ -60,6 +60,8 @@ const deleteCommentHandler = (comment_id) => function() {
 
     if (this.status != 200) {
         const error = createErrorMessage(json.errors);
+        error.classList.remove('text-center');
+        error.classList.add('ms-5');
 
         if (previousError)
             previousError.replaceWith(error);
@@ -73,13 +75,15 @@ const deleteCommentHandler = (comment_id) => function() {
     select(`#comment_${comment_id}`).remove();
 }
 
-const openReplyBox = (parentComment, articleId, parentCommentId) => {
+const openReplyBox = (articleId, parentCommentId) => {
 
     const previousReply = select(`#reply_${parentCommentId}`)
     if (previousReply) {
         previousReply.remove();
         return;
     }
+
+    const parentComment = select(`#comment_${parentCommentId}`);
 
     const mainDiv = document.createElement('div');
     mainDiv.classList.add('d-flex', 'flex-row', 'my-3');

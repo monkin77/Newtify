@@ -191,6 +191,8 @@ class ArticleController extends Controller
             $disliked = !$feedback->is_like;
         }
 
+        $hasFeedback = $liked || $disliked || !$comments->isEmpty();
+
         return view('pages.article.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
@@ -200,7 +202,8 @@ class ArticleController extends Controller
             'isAuthor' => $is_author,
             'isAdmin' => $is_admin,
             'liked' => $liked,
-            'disliked' => $disliked
+            'disliked' => $disliked,
+            'hasFeedback' => $hasFeedback,
         ]);
     }
 

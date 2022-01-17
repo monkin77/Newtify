@@ -30,32 +30,16 @@
                                 </a>
                             @endif
 
-                            <form name="deleteArticleForm" id="deleteArticleForm" method="POST"
-                                action="{{ route('article', ['id' => $article['id']]) }}">
-
-                                @csrf
-                                @method('DELETE')
-
-                                @if ($errors->has('article'))
-                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                        <p class="mb-0">{{ $errors->first('article') }}</p>
-                                    </div>
-                                @endif
-                                @if ($errors->has('content'))
-                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                        <p class="mb-0">{{ $errors->first('content') }}</p>
-                                    </div>
-                                @endif
-                                @if ($errors->has('user'))
-                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                        <p class="mb-0">{{ $errors->first('user') }}</p>
-                                    </div>
-                                @endif
-
-                            </form>
-                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-light-hover btn-transparent">
-                                <i class="fas fa-trash article-button text-danger"></i>
-                            </button>
+                            @if (!$hasFeedback || $isAdmin)
+                                <form name="deleteArticleForm" id="deleteArticleForm" method="POST"
+                                    action="{{ route('article', ['id' => $article['id']]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                                <button onclick="document.deleteArticleForm.submit();" class="btn btn-light-hover btn-transparent">
+                                    <i class="fas fa-trash article-button text-danger"></i>
+                                </button>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -106,6 +90,16 @@
 
                     <i class="fas fa-share-alt ms-4"></i>
                 </p>
+
+                @if ($errors->has('article'))
+                    <p class="text-danger my-4">{{ $errors->first('article') }}</p>
+                @endif
+                @if ($errors->has('content'))
+                    <p class="text-danger my-4">{{ $errors->first('content') }}</p>
+                @endif
+                @if ($errors->has('user'))
+                    <p class="text-danger my-4">{{ $errors->first('user') }}</p>
+                @endif
 
                 @if (isset($article['thumbnail']))
                     <div class="flex-row h-50 mb-5 text-center">

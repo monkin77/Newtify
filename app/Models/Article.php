@@ -54,6 +54,7 @@ class Article extends Content
             ->map(function ($comment) { return $comment->getInfo(); });
 
           $commentInfo['children'] = $children;
+          $commentInfo['hasFeedback'] = $commentInfo['hasFeedback'] || !$commentInfo['children']->isEmpty();
           return $commentInfo;
         });
     }

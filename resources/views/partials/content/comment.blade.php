@@ -66,7 +66,7 @@
             </i>
 
             @if (Auth::check() && !$isReply)
-                <span onclick="openReplyBox(this.parentNode.parentNode, {{ $comment['article_id'] }}, {{ $comment['id'] }})"
+                <span onclick="openReplyBox({{ $comment['article_id'] }}, {{ $comment['id'] }})"
                     class="px-3 hover-pointer">Reply</span>
             @endif
 
@@ -76,7 +76,7 @@
 
             <span class="px-3">{{ $comment['published_at'] }}</span>
 
-            @if (isset($comment['author']) && Auth::id() === $comment['author']['id'])
+            @if (isset($comment['author']) && Auth::id() === $comment['author']['id'] && !$comment['hasFeedback'])
                 <button
                     onclick="deleteComment({{ $comment['id'] }})"
                     class="btn btn-transparent mb-0 px-2 mx-1"
