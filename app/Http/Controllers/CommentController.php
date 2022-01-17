@@ -91,7 +91,7 @@ class CommentController extends Controller
 
         $validator = Validator::make($request -> all(),
         [
-            'body' => 'required|string'
+            'body' => 'required|string|max:1000'
         ]);
 
         if ( $validator->fails() ) {
@@ -108,7 +108,7 @@ class CommentController extends Controller
         return response()->json([
             'status' => 'OK',
             'msg' => 'Successfully updated comment',
-            'id' => $comment->content_id,
+            'body' => $request->body,
         ], 200);
     }
 

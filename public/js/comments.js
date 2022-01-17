@@ -26,8 +26,15 @@ const createNewReply = (parent, article_id, parent_comment_id) => {
     );
 }
 
-const deleteComment = (comment_id) =>
-    sendAjaxRequest('DELETE', `/comment/${comment_id}`, null, deleteCommentHandler(comment_id));
+const editComment = (commentId, editBox) => {
+    const body = select(`#edit_textarea_${commentId}`).value;
+    if (!body) return;
+
+    sendAjaxRequest('PUT', `/comment/${commentId}`, { body }, editCommentHandler(commentId, editBox));
+}
+
+const deleteComment = (commentId) =>
+    sendAjaxRequest('DELETE', `/comment/${commentId}`, null, deleteCommentHandler(commentId));
 
 const newCommentHandler = (formId, textareaId, parent, position, removeId) => function () {
     const json = JSON.parse(this.responseText);
@@ -54,9 +61,9 @@ const newCommentHandler = (formId, textareaId, parent, position, removeId) => fu
     if (removeId) select(`#${removeId}`).remove();
 }
 
-const deleteCommentHandler = (comment_id) => function() {
+const deleteCommentHandler = (commentId) => function() {
     const json = JSON.parse(this.responseText);
-    const previousError = select(`#comment_${comment_id} .error`);
+    const previousError = select(`#comment_${commentId} .error`);
 
     if (this.status != 200) {
         const error = createErrorMessage(json.errors);
@@ -66,13 +73,37 @@ const deleteCommentHandler = (comment_id) => function() {
         if (previousError)
             previousError.replaceWith(error);
         else
-            select(`#comment_${comment_id}`).appendChild(error);
+            select(`#comment_${commentId}`).appendChild(error);
 
         return;
     }
 
     if (previousError) previousError.remove();
-    select(`#comment_${comment_id}`).remove();
+    select(`#comment_${commentId}`).remove();
+}
+
+const editCommentHandler = (commentId, editBox) => function() {
+    const json = JSON.parse(this.responseText);
+    const previousError = select(`#comment_${commentId} + .error`);
+
+    if (this.status != 200) {
+        const error = createErrorMessage(json.errors);
+        error.classList.remove('text-center');
+        error.classList.add('ms-5');
+
+        if (previousError)
+            previousError.replaceWith(error);
+        else
+            select(`#comment_${commentId}`).insertAdjacentElement('afterend', error);
+        return;
+    }
+
+    if (previousError) previousError.remove();
+
+    select(`#comment_${commentId} .commentTextContainer`).innerText = json.body;
+
+    const comment = select(`#comment_${commentId}`);
+    closeEditBox(comment, editBox);
 }
 
 const openReplyBox = (articleId, parentCommentId) => {
@@ -108,16 +139,17 @@ const openEditBox = (commentId, isReply) => {
     textArea.id = `edit_textarea_${commentId}`;
     textArea.value = select(`#comment_${commentId} .commentTextContainer`).innerText;
 
-    button.onclick = () => editComment(commentId);
     button.innerText = 'Save';
 
     if (!isReply) {
         cancelButton.onclick = () => closeEditBox(comment, mainDiv);
-        comment.insertAdjacentElement('afterend', mainDiv);
+        button.onclick = () => editComment(commentId, mainDiv);
+        comment.insertAdjacentElement('beforebegin', mainDiv);
     } else {
         const wrapperDiv = getReplyBox(mainDiv);
         cancelButton.onclick = () => closeEditBox(comment, wrapperDiv);
-        comment.insertAdjacentElement('afterend', wrapperDiv);
+        button.onclick = () => editComment(commentId, wrapperDiv);
+        comment.insertAdjacentElement('beforebegin', wrapperDiv);
     }
 
     textArea.focus();
