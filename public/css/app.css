@@ -641,11 +641,11 @@ option {
 }
 
 .btn-purple-transparent {
-    color: var(--bs-darkPurple);
+    color: var(--bs-purple);
 }
 
 .btn-purple-transparent:hover {
-    color: var(--bs-purple);
+    color: var(--bs-lightPurple);
 }
 
 .text-light-white {

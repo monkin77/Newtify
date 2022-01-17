@@ -79,7 +79,7 @@
 
 @section('load-more')
     <div id="load-more">
-        <button onclick="loadMoreHome()">Load more</button>
+        <button class="px-5" onclick="loadMoreHome()">Load more</button>
     </div>
 @endsection
 
