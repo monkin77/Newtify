@@ -62,10 +62,6 @@
                         <i class="fas fa-thumbs-down ps-3" id="articleDislikes"> 
                             <span class="ms-1">{{ $article['dislikes'] }}<span>
                         </i>
-        
-                    <button onclick="showSocials()" class="btn ms-4">
-                        <i class="fas fa-share-alt fa-2x"></i>
-                    </button>
 
                     @else
                         @if ( $liked )
@@ -92,7 +88,9 @@
                         @endif
                     @endif
 
-                    <i class="fas fa-share-alt ms-4"></i>
+                    <button onclick="showSocials()" class="btn ms-4 mt-2">
+                        <i class="fas fa-share-alt fa-2x"></i>
+                    </button>
                 </p>
 
                 @if ($errors->has('article'))

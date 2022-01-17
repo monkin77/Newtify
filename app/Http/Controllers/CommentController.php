@@ -149,7 +149,7 @@ class CommentController extends Controller
                 'status' => 'Bad Request',
                 'msg' => 'You can\'t delete a comment with feedback',
                 'errors' => ['comment' => 'You can\'t delete a comment with feedback'],
-            ], 400);
+            ], 403);
         }
 
         $deleted = $comment->delete();

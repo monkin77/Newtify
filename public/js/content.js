@@ -1,5 +1,4 @@
 giveFeedback = (elem, content_id, is_like, is_comment) => {
-    console.log(is_comment);
     const url = '/content/' + content_id;
     sendAjaxRequest('put', url, { is_like }, giveFeedbackHandler(elem, content_id, is_like, is_comment));
 }
@@ -37,7 +36,6 @@ const giveFeedbackHandler = (elem, content_id, is_like, is_comment) => function(
 
     const likeSelector = is_comment ? `#likes_${content_id}` : '#articleLikes';
     const dislikeSelector = is_comment ? `#dislikes_${content_id}` : '#articleDislikes';
-    console.log(likeSelector, dislikeSelector);
 
     const oppositeFeedback = is_like ? select(dislikeSelector) : select(likeSelector);
     const oppositeCounter = oppositeFeedback.lastElementChild;
