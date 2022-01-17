@@ -9,7 +9,7 @@
 {{-- ------------------------------------------------------ --}}
 @section('content')
 
-    <div class="article-container container-fluid bg-light">
+    <div class="article-container container-fluid">
 
         <div class="d-flex flex-row my-2 h-100">
 
