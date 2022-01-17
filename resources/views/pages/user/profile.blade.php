@@ -32,7 +32,7 @@ $guest = !Auth::check();
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)
                         <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
-                            <a class="fa fa-pencil fa-3x text-purple" href="/user/{{ $user['id'] }}/edit"></a>
+                            <a class="fa fa-pencil fa-3x darkPurpleLink" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
                     @else
                         @if (!$guest)

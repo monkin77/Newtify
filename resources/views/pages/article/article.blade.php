@@ -25,8 +25,7 @@
                     @if ($isAuthor || $isAdmin)
                         <div id="articleButtons" class="d-flex align-items-center">
                             @if ($isAuthor)
-                                <a href="{{ route('editArticle', ['id' => $article['id']])}}">
-                                    <i class="fas fa-edit article-button me-4"></i>
+                                <a href="{{ route('editArticle', ['id' => $article['id']])}}" class="fas fa-edit article-button darkPurpleLink me-4">
                                 </a>
                             @endif
 

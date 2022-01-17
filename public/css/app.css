@@ -670,6 +670,15 @@ option {
     color: var(--bs-lightPurple);
 }
 
+.darkPurpleLink {
+    color: var(--bs-purple);
+    font-weight: bolder;
+}
+
+.darkPurpleLink:hover {
+    color: var(--bs-darkPurple);
+}
+
 .btn-light-hover:hover {
     filter: brightness(1.25);
 }
