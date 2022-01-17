@@ -146,7 +146,7 @@
                         <div id="comment_form" class="flex-column w-100 m-0">
                             <textarea id="commentTextArea" class="flex-column border-light m-0 p-2" placeholder="Type here"></textarea>
                             <button id="newCommentButton"
-                                class="btn btn-primary px-4"
+                                class="button button-primary px-4"
                                 onclick="createNewComment({{ $article['id'] }})"
                             >
                                 Comment

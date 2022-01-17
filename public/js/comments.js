@@ -83,7 +83,7 @@ const openReplyBox = (articleId, parentCommentId) => {
     }
 
     const parentComment = select(`#comment_${parentCommentId}`);
-    const { mainDiv, commentForm, textArea, button } = getCommentTextarea();
+    const { mainDiv, commentForm, textArea, button, cancelButton } = getCommentTextarea();
     
     commentForm.id = `reply_form_${parentCommentId}`;
     textArea.id = `reply_textarea_${parentCommentId}`;
@@ -94,14 +94,17 @@ const openReplyBox = (articleId, parentCommentId) => {
     const wrapperDiv = getReplyBox(mainDiv);
     wrapperDiv.id = `reply_${parentCommentId}`;
 
+    cancelButton.onclick = () => wrapperDiv.remove();
+
     parentComment.insertAdjacentElement('afterend', wrapperDiv);
+    textArea.focus();
 }
 
 const openEditBox = (commentId, isReply) => {
     const comment = select(`#comment_${commentId}`);
     comment.setAttribute('style', 'display:none !important');
 
-    const { mainDiv, commentForm, textArea, button } = getCommentTextarea();
+    const { mainDiv, commentForm, textArea, button, cancelButton } = getCommentTextarea();
     textArea.id = `edit_textarea_${commentId}`;
     textArea.value = select(`#comment_${commentId} .commentTextContainer`).innerText;
 
@@ -109,12 +112,20 @@ const openEditBox = (commentId, isReply) => {
     button.innerText = 'Save';
 
     if (!isReply) {
+        cancelButton.onclick = () => closeEditBox(comment, mainDiv);
         comment.insertAdjacentElement('afterend', mainDiv);
-        return;
+    } else {
+        const wrapperDiv = getReplyBox(mainDiv);
+        cancelButton.onclick = () => closeEditBox(comment, wrapperDiv);
+        comment.insertAdjacentElement('afterend', wrapperDiv);
     }
 
-    const wrapperDiv = getReplyBox(mainDiv);
-    comment.insertAdjacentElement('afterend', wrapperDiv);
+    textArea.focus();
+}
+
+const closeEditBox = (comment, editBox) => {
+    editBox.remove();
+    comment.removeAttribute('style');
 }
 
 const getCommentTextarea = () => {
@@ -141,11 +152,16 @@ const getCommentTextarea = () => {
     commentForm.appendChild(textArea);
 
     const button = document.createElement('button');
-    button.classList.add('btn', 'btn-primary', 'px-4');
+    button.classList.add('button', 'button-primary', 'px-4');
     commentForm.appendChild(button);
     mainDiv.appendChild(commentForm);
 
-    return { mainDiv, commentForm, textArea, button };
+    const cancelButton = document.createElement('button');
+    cancelButton.classList.add('button', 'button-secondary', 'px-4', 'mx-3');
+    cancelButton.innerText = 'Cancel';
+    commentForm.appendChild(cancelButton);
+
+    return { mainDiv, commentForm, textArea, button, cancelButton };
 }
 
 const getReplyBox = (mainDiv) => {
