@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jorenvh\Share\Share;
 
-class SocialShareButtonsController extends Controller
+class ShareController extends Controller
 {
     public function shareWidget(Request $request)
     {

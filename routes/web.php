@@ -12,8 +12,6 @@
 */
 // Home
 
-use App\Http\Controllers\SocialShareButtonsController;
-
 Route::get('/', 'HomeController@show')->name('homepage');
 Route::get('api/article/filter', 'HomeController@filter');
 
@@ -88,4 +86,4 @@ Route::post('messages/{id}', 'MessageController@create');
 Route::put('messages/{id}', 'MessageController@readMessages');
 
 // Share
-Route::post('/api/share_socials', 'SocialShareButtonsController@shareWidget');
+Route::post('/api/share_socials', 'ShareController@shareWidget');
