@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="border text-center w-25 bg-light container mt-3">
+<div class="border border-light border-2 text-center w-25 bg-secondary container mt-3">
     <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Forgot Password</h2>
     
     @if (Session::has('status')) 
@@ -21,10 +21,10 @@
         @csrf  
 
         <label for="email" class="sr-only">Email address</label>
-        <input name ="email" type="email" id="email" class="bg-white" value="{{ old('email') }}" placeholder="Email address" required autofocus>
+        <input name ="email" type="email" id="email" class="customInput" value="{{ old('email') }}" placeholder="Email address" required autofocus>
         
 
-        <button type="submit" class="button w-50 fw-bold">
+        <button type="submit" class="btn btn-purple btn-lg customBtn w-50">
             Send Email
         </button>
 

@@ -680,6 +680,13 @@ option {
     padding-right: 2em;
 }
 
+.customBtnFixed {
+    font-weight: bold;
+    width: 15em;
+    line-height: 2em;
+    font-size: 0.9em;
+}
+
 /* Horizontal Divider */
 .horizontalDivider {
     height: 0.1em;
@@ -827,4 +834,8 @@ option {
     position: absolute;
     right: 2em;
     top: 2em;
+}
+
+input[class*="customInput"] {
+    background-color: var(--bs-gray-900);
 }
