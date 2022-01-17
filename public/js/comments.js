@@ -76,7 +76,6 @@ const deleteCommentHandler = (comment_id) => function() {
 }
 
 const openReplyBox = (articleId, parentCommentId) => {
-
     const previousReply = select(`#reply_${parentCommentId}`)
     if (previousReply) {
         previousReply.remove();
@@ -84,9 +83,43 @@ const openReplyBox = (articleId, parentCommentId) => {
     }
 
     const parentComment = select(`#comment_${parentCommentId}`);
+    const { mainDiv, commentForm, textArea, button } = getCommentTextarea();
+    
+    commentForm.id = `reply_form_${parentCommentId}`;
+    textArea.id = `reply_textarea_${parentCommentId}`;
 
+    button.onclick = () => createNewReply(parentComment, articleId, parentCommentId);
+    button.innerText = 'Reply';
+
+    const wrapperDiv = getReplyBox(mainDiv);
+    wrapperDiv.id = `reply_${parentCommentId}`;
+
+    parentComment.insertAdjacentElement('afterend', wrapperDiv);
+}
+
+const openEditBox = (commentId, isReply) => {
+    const comment = select(`#comment_${commentId}`);
+    comment.setAttribute('style', 'display:none !important');
+
+    const { mainDiv, commentForm, textArea, button } = getCommentTextarea();
+    textArea.id = `edit_textarea_${commentId}`;
+    textArea.value = select(`#comment_${commentId} .commentTextContainer`).innerText;
+
+    button.onclick = () => editComment(commentId);
+    button.innerText = 'Save';
+
+    if (!isReply) {
+        comment.insertAdjacentElement('afterend', mainDiv);
+        return;
+    }
+
+    const wrapperDiv = getReplyBox(mainDiv);
+    comment.insertAdjacentElement('afterend', wrapperDiv);
+}
+
+const getCommentTextarea = () => {
     const mainDiv = document.createElement('div');
-    mainDiv.classList.add('d-flex', 'flex-row', 'my-3');
+    mainDiv.classList.add('d-flex', 'flex-row', 'my-3', 'w-75');
 
     const headerDiv = document.createElement('div');
     headerDiv.classList.add('flex-column', 'h-100', 'commentHeader', 'mx-5');
@@ -99,23 +132,24 @@ const openReplyBox = (articleId, parentCommentId) => {
     headerDiv.appendChild(imgText);
     mainDiv.appendChild(headerDiv);
 
-
-    const replyForm = document.createElement('div');
-    replyForm.classList.add('flex-column', 'w-100', 'mb-0');
-    replyForm.id = `reply_form_${parentCommentId}`;
+    const commentForm = document.createElement('div');
+    commentForm.classList.add('flex-column', 'w-100', 'mb-0');
 
     const textArea = document.createElement('textarea');
     textArea.classList.add('flex-column', 'border-light', 'm-0', 'p-2');
-    textArea.id = `reply_textarea_${parentCommentId}`;
     textArea.placeholder = 'Type here';
-    replyForm.appendChild(textArea);
+    commentForm.appendChild(textArea);
 
     const button = document.createElement('button');
     button.classList.add('btn', 'btn-primary', 'px-4');
-    button.onclick = () => createNewReply(parentComment, articleId, parentCommentId);
-    button.innerText = 'Reply';
-    replyForm.appendChild(button);
-    mainDiv.appendChild(replyForm);
+    commentForm.appendChild(button);
+    mainDiv.appendChild(commentForm);
+
+    return { mainDiv, commentForm, textArea, button };
+}
+
+const getReplyBox = (mainDiv) => {
+    mainDiv.classList.remove('w-75');
 
     const childDiv = document.createElement('div');
     childDiv.classList.add('child-comment');
@@ -124,7 +158,6 @@ const openReplyBox = (articleId, parentCommentId) => {
     const wrapperDiv = document.createElement('div');
     wrapperDiv.classList.add('d-flex', 'justify-content-end', 'w-75');
     wrapperDiv.appendChild(childDiv);
-    wrapperDiv.id = `reply_${parentCommentId}`;
 
-    parentComment.insertAdjacentElement('afterend', wrapperDiv);
+    return wrapperDiv;
 }

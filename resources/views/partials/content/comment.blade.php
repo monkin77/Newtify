@@ -21,7 +21,7 @@
 
             @if (isset($comment['author']))
                 <a href="/user/{{ $comment['author']['id'] }}" class="text-white">
-                    {{ $comment['author']['name'] }}
+                    {{ $comment['isAuthor'] ? 'You' : $comment['author']['name'] }}
                 </a>
             @else
                 <i>Deleted Account</i>
@@ -71,7 +71,7 @@
             @endif
 
             @if (isset($comment['author']) && Auth::id() === $comment['author']['id'])
-                <span class="px-3 hover-pointer">Edit</span>
+                <span onclick="openEditBox({{$comment['id']}}, {{$isReply}})" class="px-3 hover-pointer">Edit</span>
             @endif
 
             <span class="px-3">{{ $comment['published_at'] }}</span>
