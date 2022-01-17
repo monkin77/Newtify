@@ -27,6 +27,10 @@ Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('s
 Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('password.reset');
 Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.update');
 
+// Facebook Auth
+Route::get('login/facebook', 'Auth\AuthAPIController@facebookRedirect');
+Route::get('login/facebook/callback', 'Auth\AuthAPIController@loginWithFacebook');
+
 // User
 Route::get('user/{id}', 'UserController@show')->name('userProfile');
 Route::get('user/{id}/edit', 'UserController@edit')->name('editUser');
