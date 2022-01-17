@@ -675,6 +675,12 @@ option {
     filter: brightness(1.25);
 }
 
+.customBtn {
+    font-weight: bold;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
 /* Horizontal Divider */
 .horizontalDivider {
     height: 0.1em;
