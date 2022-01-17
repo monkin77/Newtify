@@ -2,7 +2,7 @@
 
 @section('scripts')
     <script type="text/javascript" src="{{ asset('js/comments.js') }}"> </script>
-    <script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/content.js') }}"></script>
 @endsection
 
 @section('article')
@@ -23,7 +23,7 @@
                     <i id="publishedAt">{{ $article_published_at }}</i>
 
                     @if ($isAuthor || $isAdmin)
-                        <div id="articleButtons">
+                        <div id="articleButtons" class="d-flex align-items-center">
                             @if ($isAuthor)
                                 <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit article-button me-4"></i>
@@ -36,7 +36,11 @@
                                     @csrf
                                     @method('DELETE')
                                 </form>
-                                <button onclick="document.deleteArticleForm.submit();" class="btn btn-light-hover btn-transparent">
+                                <button
+                                    id="delete_content_{{$article['id']}}"
+                                    onclick="confirmDeletion({{$article['id']}}, () => document.deleteArticleForm.submit())"
+                                    class="btn btn-transparent my-0"
+                                >
                                     <i class="fas fa-trash article-button text-danger"></i>
                                 </button>
                             @endif

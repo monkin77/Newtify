@@ -213,7 +213,7 @@ option {
 }
 
 #articleButtons {
-    width: 16%;
+    min-width: 20%;
 }
 
 .article-button {

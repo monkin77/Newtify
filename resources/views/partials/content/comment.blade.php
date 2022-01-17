@@ -78,7 +78,8 @@
 
             @if (isset($comment['author']) && Auth::id() === $comment['author']['id'] && !$comment['hasFeedback'])
                 <button
-                    onclick="deleteComment({{ $comment['id'] }})"
+                    id="delete_content_{{$comment['id']}}"
+                    onclick="confirmDeletion({{ $comment['id'] }}, deleteComment)"
                     class="btn btn-transparent mb-0 px-2 mx-1"
                 >
                     <i class="fas fa-trash text-danger" style="font-size: 1.7em;"></i>

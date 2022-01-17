@@ -84,3 +84,12 @@ const likeClasses = is_comment => is_comment ?
 const dislikeClasses = is_comment => is_comment ? 
     ["fa fa-thumbs-down ps-3 pe-3 feedbackIcon"] : ["fas fa-thumbs-down ps-3 feedbackIcon"];
 
+const confirmDeletion = (comment_id, deleteHandler) => {
+    const warn = document.createElement('span');
+    warn.classList.add('px-3');
+    warn.innerText = 'Confirm?';
+
+    const button = select(`#delete_content_${comment_id}`);
+    button.insertAdjacentElement('beforebegin', warn);
+    button.onclick = () => deleteHandler(comment_id);
+}
