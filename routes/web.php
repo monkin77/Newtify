@@ -32,7 +32,7 @@ Route::get('login/facebook', 'Auth\AuthAPIController@facebookRedirect');
 Route::get('login/facebook/callback', 'Auth\AuthAPIController@loginWithFacebook');
 
 // Google Auth
-Route::get('login/google', 'Auth\AuthAPIController@googleRedirect');
+Route::get('login/google', 'Auth\AuthAPIController@googleRedirect')->name('googleAuth');
 Route::get('login/google/callback', 'Auth\AuthAPIController@loginWithGoogle');
 
 // User
