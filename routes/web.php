@@ -31,6 +31,10 @@ Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.updat
 Route::get('login/facebook', 'Auth\AuthAPIController@facebookRedirect');
 Route::get('login/facebook/callback', 'Auth\AuthAPIController@loginWithFacebook');
 
+// Google Auth
+Route::get('login/google', 'Auth\AuthAPIController@googleRedirect');
+Route::get('login/google/callback', 'Auth\AuthAPIController@loginWithGoogle');
+
 // User
 Route::get('user/{id}', 'UserController@show')->name('userProfile');
 Route::get('user/{id}/edit', 'UserController@edit')->name('editUser');

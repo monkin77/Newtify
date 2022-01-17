@@ -71,7 +71,7 @@ class RegisterController extends Controller
 
         if(isset($data['avatar'])) {
             $avatar = $data['avatar'];
-            $imgName = time().'.'.$avatar->extension();
+            $imgName = round(microtime(true)*1000).'.'.$avatar->extension();
             $avatar->storeAs('public/avatars', $imgName);
         }
 

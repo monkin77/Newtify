@@ -197,7 +197,7 @@ class UserController extends Controller
             $newAvatar = $request->avatar;
             $oldAvatar = $user->avatar;
 
-            $imgName = time() . '.' . $newAvatar->extension();
+            $imgName = round(microtime(true)*1000) . '.' . $newAvatar->extension();
             $newAvatar->storeAs('public/avatars', $imgName);
             $user->avatar = $imgName;
 
