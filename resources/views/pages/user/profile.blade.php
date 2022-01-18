@@ -100,7 +100,7 @@ $guest = !Auth::check();
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('report')
-    <section id="reportElement" class="d-block d-none">
+    <section id="reportElement" class="d-block d-none fullPopup">
         <div id="backdrop" onclick="toggleReportPopup()"></div>
         <div id="reportContainer" class="d-flex flex-column align-items-center justify-content-center">
             <div id="reportInsideContainer" class="d-flex flex-column align-items-center justify-content-evenly">

@@ -2,8 +2,7 @@
 
 <script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
 
-@section('content')
-    
+@section('article')
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
 
         <div class="d-flex flex-row my-2 h-100" style="min-height: 65vh">
@@ -51,7 +50,7 @@
                                 @endif
 
                             </form>
-                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-transparent">
+                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-light-hover btn-transparent">
                                 <i class="fas fa-trash article-button text-danger"></i>
                             </button>
                         </div>
@@ -87,7 +86,9 @@
                         </i>
                     @endif 
                     
-                    <i class="fas fa-share-alt ms-4"></i>
+                    <button onclick="showSocials()" class="btn ms-4">
+                        <i class="fas fa-share-alt fa-2x"></i>
+                    </button>
                 </p>
 
                 @if (isset($article['thumbnail']))
@@ -153,5 +154,13 @@
 
         </div>
     </div>
+@endsection
 
+@section('popup')
+    @include('partials.share')
+@endsection
+
+@section('content')
+    @yield('article')
+    @yield('popup')
 @endsection

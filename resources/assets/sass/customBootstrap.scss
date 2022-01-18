@@ -1,10 +1,22 @@
-// Custom Variables
-$purple: rgb(171, 50, 219);
-$darkPurple: rgb(150, 18, 202);
-$lightPurple: rgb(193, 92, 233);
-$primary: $darkPurple;
-
 @import "../bootstrap/scss/functions";
+
+// Custom Variables
+$purple: rgb(186, 68, 233);
+
+$purple-100: tint-color($purple, 80%);
+$purple-200: tint-color($purple, 60%);
+$purple-300: tint-color($purple, 40%);
+$purple-400: tint-color($purple, 20%);
+$purple-500: $purple;
+$purple-600: shade-color($purple, 20%);
+$purple-700: shade-color($purple, 40%);
+$purple-800: shade-color($purple, 60%);
+$purple-900: shade-color($purple, 80%);
+
+$darkPurple: $purple-600;
+$lightPurple: $purple-400;
+$primary: $purple;
+
 @import "./variables";
 @import "../bootstrap/scss/variables";
 
