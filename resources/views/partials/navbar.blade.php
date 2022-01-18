@@ -71,8 +71,7 @@
                                     Profile</a>
                                 <br>
                                 <li class="col text-center">
-                                    <a class="button button-secondary py-0 px-3" href="{{ route('logout') }}"
-                                        style="font-size: 0.9em"> Logout </a>
+                                    <a class="btn btn-lightPurple btn-lg" href="{{ route('logout') }}"> Logout </a>
                                 </li>
 
                             </ul>
