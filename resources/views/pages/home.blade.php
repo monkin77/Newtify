@@ -59,42 +59,48 @@
 
             <i class="fa fa-tag filter-tag mx-4 text-lightPurple"></i>
         </div>
-        <div id="filterSectionMobile" class="dropdown d-md-none">
-            <button class="btn btn-purple dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Filter By
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                @if (Auth::check())
-                <li class="mx-2 dropdown-item">
-                    <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
-                    <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="From your favorite authors and tags"
-                        class="filter-button text-light" for="recommended"
-                    >
-                        <i class="far fa-star text-warning"></i>
-                        <span class="mx-2">Recommended</span>
-                    </label>
-                </li>
-                @endif
+        <div id="filterSectionMobile" class="d-flex justify-content-between d-md-none pe-2">
+            <div class="dropdown">
+                <button class="btn btn-purple dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Filter By
+                </button>
+                <ul class="dropdown-menu py-0 my-0" aria-labelledby="dropdownMenuButton1">
+                    @if (Auth::check())
+                    <li class="px-3 dropdown-item my-2">
+                        <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
+                        <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="From your favorite authors and tags"
+                            class="filter-button text-light" for="recommended"
+                        >
+                            <i class="far fa-star text-warning"></i>
+                            <span class="mx-2">Recommended</span>
+                        </label>
+                    </li>
+                    @endif
 
-                <li class="mx-2 dropdown-item">
-                    <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
-                    @if (Auth::guest()) checked @endif>
-                    <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hottest articles of the day"
-                        class="filter-button text-light" for="trending"
-                    >
-                        <i class="fas fa-fire-alt text-danger"></i> <span class="mx-2">Trending</span>
-                    </label>
-                </li>
+                    <li class="px-3 dropdown-item my-2">
+                        <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
+                        @if (Auth::guest()) checked @endif>
+                        <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hottest articles of the day"
+                            class="filter-button text-light" for="trending"
+                        >
+                            <i class="fas fa-fire-alt text-danger"></i> <span class="mx-2">Trending</span>
+                        </label>
+                    </li>
 
-                <li class="mx-2 dropdown-item">
-                    <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
-                    <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="The latest articles"
-                        class="filter-button text-light" for="recent"
-                    >
-                        <i class="fas fa-history text-info"></i> <span class="mx-2">Recent</span>
-                    </label>
-                </li>
-            </ul>
+                    <li class="px-3 dropdown-item my-2">
+                        <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
+                        <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="The latest articles"
+                            class="filter-button text-light" for="recent"
+                        >
+                            <i class="fas fa-history text-info"></i> <span class="mx-2">Recent</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="daterangeContainer">
+                <i class="fas fa-calendar fa-2x lightLink" id="daterangeMobile"></i> 
+            </div>
           </div>
     </section>
 @endsection
