@@ -28,9 +28,9 @@ class CommentNotification extends Notification
         }
         else
         {
-            dispatch(event(new Comment(
+            event(new Comment(
                 $receiver_id, $user['name'], $user['avatar'], $article['id'], $article['title'], $comment['body']
-            )));
+            ));
         }
     }
 
