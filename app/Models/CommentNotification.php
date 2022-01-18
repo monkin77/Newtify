@@ -19,8 +19,6 @@ class CommentNotification extends Notification
 
     public static function notify($receiver_id, $comment, $user, $article)
     {
-        if ($receiver_id == $user['id'])
-            return; // ignore own comments
 
         if (isset($comment['parent_comment_id']))
         {
@@ -30,9 +28,9 @@ class CommentNotification extends Notification
         }
         else
         {
-            event(new Comment(
+            dispatch(event(new Comment(
                 $receiver_id, $user['name'], $user['avatar'], $article['id'], $article['title'], $comment['body']
-            ));
+            )));
         }
     }
 

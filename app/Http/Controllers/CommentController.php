@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use App\Models\Comment;
+use App\Models\CommentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -50,6 +51,13 @@ class CommentController extends Controller
         $comment->save();
         // Refresh model instance
         $comment = Comment::find($content->id);
+
+        CommentNotification::notify(
+            $comment->author->id,
+            $comment,
+            Auth::user(),
+            $comment->article
+        );
 
         return response()->json([
             'status' => 'OK',

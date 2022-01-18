@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\User;
 use App\Models\Content;
 use App\Models\Feedback;
+use App\Models\FeedbackNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,6 +52,14 @@ class ContentController extends Controller
         $feedback->save();
 
         $updatedContent = Content::find($id);
+
+        $isArticle = Article::find($id) ? true : false;
+
+        FeedbackNotification::notify(
+            Auth::user(),
+            $content,
+            $isArticle
+        );
         
         return response()->json([
             'status' => 'OK',
