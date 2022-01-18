@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-<script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
+@section('scripts')
+    <script type="text/javascript" src="{{ asset('js/comments.js') }}"> </script>
+    <script type="text/javascript" src="{{ asset('js/content.js') }}"></script>
+@endsection
 
 @section('article')
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
@@ -20,39 +23,27 @@
                     <i id="publishedAt">{{ $article_published_at }}</i>
 
                     @if ($isAuthor || $isAdmin)
-                        <div id="articleButtons">
+                        <div id="articleButtons" class="d-flex align-items-center">
                             @if ($isAuthor)
                                 <a href="{{ route('editArticle', ['id' => $article['id']])}}">
                                     <i class="fas fa-edit article-button me-4"></i>
                                 </a>
                             @endif
 
-                            <form name="deleteArticleForm" id="deleteArticleForm" method="POST"
-                                action="{{ route('article', ['id' => $article['id']]) }}">
-
-                                @csrf
-                                @method('DELETE')
-
-                                @if ($errors->has('article'))
-                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                        <p class="mb-0">{{ $errors->first('article') }}</p>
-                                    </div>
-                                @endif
-                                @if ($errors->has('content'))
-                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                        <p class="mb-0">{{ $errors->first('content') }}</p>
-                                    </div>
-                                @endif
-                                @if ($errors->has('user'))
-                                    <div class="alert alert-danger mt-2 mb-0 p-0 w-50 text-center" role="alert">
-                                        <p class="mb-0">{{ $errors->first('user') }}</p>
-                                    </div>
-                                @endif
-
-                            </form>
-                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-light-hover btn-transparent">
-                                <i class="fas fa-trash article-button text-danger"></i>
-                            </button>
+                            @if (!$hasFeedback || $isAdmin)
+                                <form name="deleteArticleForm" id="deleteArticleForm" method="POST"
+                                    action="{{ route('article', ['id' => $article['id']]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                                <button
+                                    id="delete_content_{{$article['id']}}"
+                                    onclick="confirmDeletion({{$article['id']}}, () => document.deleteArticleForm.submit())"
+                                    class="btn btn-transparent my-0"
+                                >
+                                    <i class="fas fa-trash article-button text-danger"></i>
+                                </button>
+                            @endif
                         </div>
                     @endif
                 </div>
@@ -63,33 +54,54 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    @if ( $liked )
-                        <i class="fas fa-thumbs-up ps-5 purpleLink feedbackIcon" 
-                            id="articleLikes" 
-                            onclick="removeFeedback(this, {{ $article['id'] }}, true)"
-                            > 
+                    @if ( $isAuthor )
+                        <i class="fas fa-thumbs-up ps-5"  id="articleLikes"> 
                             <span class="ms-1">{{ $article['likes'] }}</span>
                         </i>
-                    @else 
-                        <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true)"> 
-                            <span class="ms-1">{{ $article['likes'] }}</span>
-                        </i>
-                    @endif
 
-                    @if ($disliked)
-                        <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false)"> 
-                            <span class="ms-1">{{ $article['dislikes'] }}</span>
-                        </i>
-                    @else
-                        <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false)"> 
+                        <i class="fas fa-thumbs-down ps-3" id="articleDislikes"> 
                             <span class="ms-1">{{ $article['dislikes'] }}<span>
                         </i>
-                    @endif 
-                    
-                    <button onclick="showSocials()" class="btn ms-4">
+
+                    @else
+                        @if ( $liked )
+                            <i class="fas fa-thumbs-up ps-5 purpleLink feedbackIcon" 
+                                id="articleLikes" 
+                                onclick="removeFeedback(this, {{ $article['id'] }}, true, false)"
+                                > 
+                                <span class="ms-1">{{ $article['likes'] }}</span>
+                            </i>
+                        @else 
+                            <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true, false)"> 
+                                <span class="ms-1">{{ $article['likes'] }}</span>
+                            </i>
+                        @endif
+
+                        @if ($disliked)
+                            <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false, false)"> 
+                                <span class="ms-1">{{ $article['dislikes'] }}</span>
+                            </i>
+                        @else
+                            <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false, false)"> 
+                                <span class="ms-1">{{ $article['dislikes'] }}<span>
+                            </i>
+                        @endif
+                    @endif
+
+                    <button onclick="showSocials()" class="btn ms-4 mt-2">
                         <i class="fas fa-share-alt fa-2x"></i>
                     </button>
                 </p>
+
+                @if ($errors->has('article'))
+                    <p class="text-danger my-4">{{ $errors->first('article') }}</p>
+                @endif
+                @if ($errors->has('content'))
+                    <p class="text-danger my-4">{{ $errors->first('content') }}</p>
+                @endif
+                @if ($errors->has('user'))
+                    <p class="text-danger my-4">{{ $errors->first('user') }}</p>
+                @endif
 
                 @if (isset($article['thumbnail']))
                     <div class="flex-row h-50 mb-5 text-center">
@@ -123,19 +135,20 @@
 
             <div class="h-50">
                 @if (Auth::check())
-                    <div class="d-flex flex-row mx-0 my-3 p-0 w-75">
-                        <div class="flex-column h-100 commentHeader mx-5 my-0 p-0">
+                    <div class="d-flex flex-row my-3 w-75">
+                        <div class="flex-column h-100 commentHeader mx-5">
                             <img src="{{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}"
                                 onerror="this.src='{{ $userImgPHolder }}'">
                             <p>You</p>
                         </div>
-                        <div class="flex-column m-0 p-0 w-100">
-                            <form action="/make_comment.php" method="POST" id="comment_form" class="m-0">
-                                <textarea class="flex-column m-0 p-2" placeholder="Type here"></textarea>
-                                <button type="button" class="btn btn-primary px-4">
-                                    Comment
-                                </button>
-                            </form>
+                        <div id="comment_form" class="flex-column w-100 m-0">
+                            <textarea id="commentTextArea" class="flex-column border-light m-0 p-2" placeholder="Type here"></textarea>
+                            <button id="newCommentButton"
+                                class="button button-primary px-4"
+                                onclick="createNewComment({{ $article['id'] }})"
+                            >
+                                Comment
+                            </button>
                         </div>
                     </div>
                 @endif

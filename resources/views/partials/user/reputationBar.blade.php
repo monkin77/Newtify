@@ -22,10 +22,10 @@ $guest = !Auth::check();
         </div>
     </div>
 
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center mt-2">
         <h6 class="my-0 py-0 pt-2 ">Reputation: {{ $user['reputation'] }}</h6>
         @if (!$guest && !$isOwner)
-            <button class="btn p-0 m-0 transparentButton" onclick="toggleReportPopup()">
+            <button class="btn px-2 m-0 btn btn-transparent" onclick="toggleReportPopup()">
                 <i class="fa fa-exclamation-circle fa-2x" id="reportIcon"></i>
             </button>
         @endif

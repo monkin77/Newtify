@@ -38,7 +38,7 @@ class ContentController extends Controller
                 return response()->json([
                     'status' => 'Internal Error',
                     'msg' => 'Could not rmeove feedback from content: '.$id,
-                    'errors' => ['error' => 'Could not rmeove feedback from content: '.$id]
+                    'errors' => ['error' => 'Could not remove feedback from content: '.$id]
                 ], 500);
         } 
 

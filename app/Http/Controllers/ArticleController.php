@@ -166,7 +166,6 @@ class ArticleController extends Controller
 
         $is_author = isset($author) ? $author->id === Auth::id() : false;
 
-        // TODO: "load more" thing for comments too
         $comments = $article->getParsedComments();
         $canLoadMore = count($comments) > $this::COMMENTS_LIMIT;
         $comments = $comments->take($this::COMMENTS_LIMIT);
@@ -192,6 +191,8 @@ class ArticleController extends Controller
             $disliked = !$feedback->is_like;
         }
 
+        $hasFeedback = $liked || $disliked || !$comments->isEmpty();
+
         return view('pages.article.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
@@ -201,7 +202,8 @@ class ArticleController extends Controller
             'isAuthor' => $is_author,
             'isAdmin' => $is_admin,
             'liked' => $liked,
-            'disliked' => $disliked
+            'disliked' => $disliked,
+            'hasFeedback' => $hasFeedback,
         ]);
     }
 

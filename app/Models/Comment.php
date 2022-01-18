@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Comment extends Content
 {
@@ -48,14 +49,32 @@ class Comment extends Content
     }
 
     public function getInfo() {
-      $published_at = date('F j, Y', strtotime( $this['published_at'] ) ) ;  
+      $published_at = date('F j, Y', strtotime( $this['published_at'] ) ) ;
+      $isAuthor = isset($this->author) ? $this->author->id === Auth::id() : false;
+
+      $feedback = Auth::check()
+        ? Auth::user()->feedback->where('content_id', '=', $this['id'])->first()
+        : null;
+
+      $liked = false;
+      $disliked = false;
+
+      if (!is_null($feedback)) {
+        $liked = $feedback['is_like'];
+        $disliked = !$feedback['is_like'];
+      }
 
       return [
           'id' => $this->content_id, 
           'body' => $this->body,
           'likes' => $this->likes,
           'dislikes' => $this->dislikes,
-          'published_at' =>$published_at,
+          'published_at' => $published_at,
+          'article_id' => $this->article_id,
+          'liked' => $liked,
+          'disliked' => $disliked,
+          'isAuthor' => $isAuthor,
+          'hasFeedback' => $this['likes'] != 0 || $this['dislikes'] != 0,
           'author' => isset($this->author) ? [
               'id' => $this->author->id,
               'name' => $this->author->name,

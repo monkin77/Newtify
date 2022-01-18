@@ -873,7 +873,7 @@ paths:
           description: "[Article | Parent Comment] id not found."
 
   /comment/{id}:
-    put: # Do we need a form endpoint to edit the comment? I believe it could be in the HTML already returned by the article. However, I've added one to create a comment and maybe it's the same logic
+    put:
       operationId: R402
       summary: "R402 : Edit comment action"
       description: "Processes a comment edition. Access: OWN"
@@ -933,7 +933,7 @@ paths:
         "404":
           description: "Comment id not found."
 
-  /api/comment/article/{id}:
+  /api/article/{id}/comments:
     get:
       operationId: R404
       summary: "R404 : Comments of a given article"

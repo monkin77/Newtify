@@ -72,7 +72,7 @@ option {
     line-height: 3em;
 }
 
-.dropdown-custom-item:hover {
+.dropdown-custom-item:hover, .hover-pointer {
     cursor: pointer;
 }
 
@@ -213,7 +213,7 @@ option {
 }
 
 #articleButtons {
-    width: 16%;
+    min-width: 20%;
 }
 
 .article-button {
@@ -303,6 +303,16 @@ option {
     width: 5em;
     font-size: small;
     text-align: center;
+}
+
+.commentTextContainer {
+    min-height: 4rem;
+    resize: vertical;
+    overflow: auto;
+}
+
+.child-comment {
+    width: 90%;
 }
 
 #deleteArticleForm {
@@ -412,7 +422,7 @@ option {
 
 /* Reputation Bar */
 #reputationBar #reportIcon {
-    color: darkred;
+    color: var(--bs-danger);
 }
 
 #reputationBar #bar {

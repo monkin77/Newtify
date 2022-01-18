@@ -565,10 +565,10 @@ CREATE TRIGGER is_suspended_flag_true
 CREATE FUNCTION create_comment_notification() RETURNS TRIGGER AS
 $BODY$
 DECLARE article_author INTEGER = (
-  SELECT id FROM content WHERE id = NEW.article_id
+  SELECT author_id FROM content WHERE id = NEW.article_id
 );
 DECLARE parent_author INTEGER = (
-  SELECT id FROM content WHERE id = NEW.parent_comment_id
+  SELECT author_id FROM content WHERE id = NEW.parent_comment_id
 );
 BEGIN
   IF parent_author IS NULL THEN

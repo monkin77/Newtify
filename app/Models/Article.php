@@ -44,15 +44,18 @@ class Article extends Content
     public function getParsedComments() {
       return $this->comments->filter(function ($comment) {
         return $comment->parent_comment_id === null;
-      })->map(function ($comment) {
+      })->sortBy([['likes', 'desc'], ['published_at', 'desc']])
+        ->map(function ($comment) {
 
-        $commentInfo = $comment->getInfo();
-        $children = $this->comments->filter(function ($comment) use($commentInfo) {
-          return $comment->parent_comment_id === $commentInfo['id'];
-        })->map(function ($comment) { return $comment->getInfo(); });
+          $commentInfo = $comment->getInfo();
+          $children = $this->comments->filter(function ($comment) use($commentInfo) {
+            return $comment->parent_comment_id === $commentInfo['id'];
+          })->sortBy([['likes', 'desc'], ['published_at', 'desc']])
+            ->map(function ($comment) { return $comment->getInfo(); });
 
-        $commentInfo['children'] = $children;
-        return $commentInfo;
-      })->sortByDesc('likes');
+          $commentInfo['children'] = $children;
+          $commentInfo['hasFeedback'] = $commentInfo['hasFeedback'] || !$commentInfo['children']->isEmpty();
+          return $commentInfo;
+        });
     }
 }
