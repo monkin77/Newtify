@@ -27,10 +27,6 @@ Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('s
 Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('password.reset');
 Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.update');
 
-// Facebook Auth
-Route::get('login/facebook', 'Auth\AuthAPIController@facebookRedirect');
-Route::get('login/facebook/callback', 'Auth\AuthAPIController@loginWithFacebook');
-
 // Google Auth
 Route::get('login/google', 'Auth\AuthAPIController@googleRedirect')->name('googleAuth');
 Route::get('login/google/callback', 'Auth\AuthAPIController@loginWithGoogle');

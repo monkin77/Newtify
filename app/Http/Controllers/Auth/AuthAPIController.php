@@ -12,40 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthAPIController extends Controller
 {
-    public function facebookRedirect()
-    {
-        return Socialite::driver('facebook')->redirect();
-    }
-
-    public function loginWithFacebook()
-    {
-        $user = Socialite::driver('facebook')->user();
-        $appUser = User::where('fb_id', $user->id)
-            ->orWhere('email', $user->email)->first();
-
-        if ($appUser) {
-            Auth::login($appUser);
-            return redirect('/');
-        } else {
-
-            if (isset($user->avatar))
-                $imgName = $this::saveAvatarFromURL($user->avatar);
-
-            $newUser = User::create([
-                'name' => $user->name,
-                'email' => $user->email,
-                'fb_id' => $user->id,
-                'avatar' => isset($user->avatar) ? $imgName : null,
-                'password' => encrypt($user->id),
-                'birth_date' => '1970-01-01 00:00:00',
-                'country_id' => 177, // Portugal by default
-            ]);
-
-            Auth::login($newUser);
-            return redirect('/');
-        }
-    }
-
     public function googleRedirect()
     {
         return Socialite::driver('google')->redirect();

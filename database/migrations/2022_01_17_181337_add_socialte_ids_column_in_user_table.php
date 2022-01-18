@@ -14,7 +14,6 @@ class AddSocialteIdsColumnInUserTable extends Migration
     public function up()
     {
         Schema::table('authenticated_user', function (Blueprint $table) {
-            $table->string('fb_id')->nullable();
             $table->string('google_id')->nullable();
         });
     }
@@ -27,7 +26,6 @@ class AddSocialteIdsColumnInUserTable extends Migration
     public function down()
     {
         Schema::table('authenticated_user', function (Blueprint $table) {
-            $table->dropColumn('fb_id');
             $table->dropColumn('google_id');
         });
     }
