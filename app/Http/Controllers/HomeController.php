@@ -137,6 +137,9 @@ class HomeController extends Controller
         {
             $sortedArticles = $articles->sortBy([
                 function ($a, $b) {
+                    if (is_null($a->author)) return 1;
+                    if (is_null($b->author)) return -1;
+
                     $isAFollowed = Auth::user()->followers->pluck('id')->contains($a->author->id);
                     $isBFollowed = Auth::user()->followers->pluck('id')->contains($b->author->id);
 

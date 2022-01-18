@@ -15,7 +15,7 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
-    <section id="filterSection" class="d-flex flex-row align-items-center border border-purple py-3 mt-3 mb-4">
+    <section id="filterSection" class="d-flex flex-row align-items-center border border-light rounded-pill py-4 px-2 mt-3 mb-4">
         <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
             @if (Auth::check())
                 <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
