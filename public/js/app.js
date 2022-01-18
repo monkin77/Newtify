@@ -7,12 +7,10 @@ const toggleElem = (elem) => {
 
 function addEventListeners() {
 
-  const filterButtons = document.querySelectorAll('input[name=filterType]');
-  [].forEach.call(filterButtons, function(checker) {
-    checker.addEventListener('change', filterArticles);
-  });
+  const articleFilter = select('#filterSection');
+  articleFilter.addEventListener('change', filterArticles);
 
-  const submitButtons = document.querySelectorAll('.submit');
+  const submitButtons = selectAll('.submit');
   [].forEach.call(submitButtons, function(checker) {
     checker.addEventListener('click', function() {
       this.parentNode.submit();
@@ -52,51 +50,6 @@ const createErrorMessage = (errors) => {
   return msg;
 }
 
-function replaceArticles() {
-  const json = JSON.parse(this.responseText);
-  const previousError = select('#filterError');
-
-  if (this.status == 400) {
-    const error = createErrorMessage(json.errors);
-    error.id = 'filterError';
-    error.classList.add('mb-2');
-
-    if (previousError)
-        previousError.replaceWith(error);
-    else
-        select('#filterSection').after(error);
-
-    return;
-  }
-
-  if (previousError) previousError.remove();
-
-  const html = json.html;
-  const canLoadMore = json.canLoadMore;
-
-  const section = select('#articles');
-  while (section.firstChild)
-    section.removeChild(section.firstChild);
-
-  section.insertAdjacentHTML('afterbegin', html);
-
-  loadMoreButton = select('#load-more');
-  if (loadMoreButton.style.display === "none") {
-    if (canLoadMore) loadMoreButton.style.display = "block";
-  } else {
-    if (!canLoadMore) loadMoreButton.style.display = "none";
-  }
-}
-
-function filterArticles() {
-  // TODO: Pass filter parameters when filter is implemented in interface
-  // Do common function to return URL and data, and use it for loadMore too
-
-  const type = this.id;
-  const url = `/api/article/filter?type=${type}&limit=5`;
-  sendAjaxRequest('get', url, null, replaceArticles);
-}
-
 const checkPass = (id) => {
   const matchingMsg = select('#matchingPass');
   const confirmId = `${id}-confirm`;
@@ -115,4 +68,17 @@ setSearchType = (item) => {
   select("#searchForm input[name='type']").value = item.innerText.toLowerCase();
 }
 
+function filterArticles() {
+  const url = getFilterUrl();
+  sendAjaxRequest('get', url, null, replaceArticles);
+}
+
 addEventListeners();
+
+// Enable tooltips
+const tooltipTriggerList = [].slice.call(selectAll('[data-bs-toggle="tooltip"]'))
+const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl, {
+    delay: { show: 500, hide: 100 },
+  })
+})

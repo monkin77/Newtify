@@ -44,12 +44,12 @@ class ArticleController extends Controller
             'topAreasExpertise' => $user->topAreasExpertise(),
         ];
 
-        $tags = Tag::where('state', "ACCEPTED")->get()->map(function($tag) {
+        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
             return [
                 'id' => $tag->id,
                 'name' => $tag->name,
             ];
-        })->sortBy('name');
+        });
 
         return view('pages.article.create_article', [
             'author' => $authorInfo,
@@ -79,8 +79,15 @@ class ArticleController extends Controller
             ]
         );
         if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'tags'))
+                    $key = 'tags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
+            // Go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         $tagsIds = [];
@@ -264,13 +271,13 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
-        $tags = Tag::where('state', "ACCEPTED")->get()->map(function($tag) {
+        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
             return [
                 'id' => $tag->id,
                 'name' => $tag->name,
             ];
-        })->sortBy('name');
-        
+        });
+
         $author = $article->author;
         $authorInfo = [
             'id' => $author->id,
@@ -323,8 +330,15 @@ class ArticleController extends Controller
         ]);
 
         if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'tags'))
+                    $key = 'tags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
+            // Go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         if (isset($request->body)) $content->body = $request->body;

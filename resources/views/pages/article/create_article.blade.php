@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script src=" {{ asset('js/select2tags.js') }}"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src=" {{ asset('js/select2tags.js') }}"> </script>
 @endsection
 
 {{-- ------------------------------------------------------ --}}
