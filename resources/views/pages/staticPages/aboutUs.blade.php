@@ -19,18 +19,18 @@
 
         <p>
             On this application, users are the experts which will evaluate the news being published, by giving 
-            their feedbacks and suggestions. Newtify brings a new reality where person's practical knowledge takes the place of
-            theoretical knowledge and where your opinion is used to evaluate others reliability! Newtify is the way to decrease the 
-            amount of fake news that we have nowadays.
+            their feedbacks and suggestions. Newtify brings a new reality where one's practical knowledge takes the place of
+            theoretical knowledge and where your opinion is used to evaluate the authors' reliability! Newtify is a way to decrease the 
+            amount of biased news we have nowadays.
         </p>
 
         <p>
-            Help us to create a new honest world where information is legit and we can learn with each other by 
+            Help us create a new and honest world where information is legit and we can learn with each other by 
             joining us!
         </p>
 
         <p>
-            In the need of help, please contact one of the following team element and we'll reply you as soon as possible!
+            If you need help or found a problem, please contact one of the following team element and we'll reply as soon as possible!
         </p>
         
         <div class="row py-3" id="contactsSection">

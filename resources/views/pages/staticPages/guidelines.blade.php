@@ -13,11 +13,11 @@
 
         <ul>
             <li>Respect the other!</li>
-            <li>Don't use inappropriate vocabulary</li>
+            <li>Don't use inappropriate vocabulary or images</li>
             <li>Any topic that jeopardizes the equality or dignity of others is forbidden.</li>
-            <li>You should not comment an article which is about unrelated topics.</li>
-            <li>Any unhuman account is forbidden!</li>
-            <li>Don't take others information! Share it</li>
+            <li>You should not comment an article with an unrelated or irrelevant topic.</li>
+            <li>Any unhuman action is forbidden!</li>
+            <li>Don't steal others information! Share it</li>
             <li>Last but not least, have fun!</li>
         </ul>
         
