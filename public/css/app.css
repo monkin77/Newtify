@@ -72,7 +72,8 @@ option {
     line-height: 3em;
 }
 
-.dropdown-custom-item:hover, .hover-pointer {
+.dropdown-custom-item:hover,
+.hover-pointer {
     cursor: pointer;
 }
 
@@ -352,8 +353,12 @@ option {
 
 .select2-selection__choice {
     color: white !important;
-    border-color: var(--bs-light) !important;
-    background-color: var(--bs-purple) !important;
+    border-color: var(--bs-gray-700) !important;
+    background-color: var(--bs-lightPurple) !important;
+}
+
+.select2-selection__choice__remove {
+    color: white !important;
 }
 
 .select2-results {

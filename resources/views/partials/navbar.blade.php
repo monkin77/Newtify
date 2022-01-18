@@ -37,7 +37,7 @@
                 <div class="d-flex justify-content-end align-items-center col">
                     @if (Auth::check())
                         <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
-                            <i class="btn-lightPurple-transparent fas fa-plus-circle fa-3x"></i>
+                            <i class="purpleLink fas fa-plus-circle fa-3x"></i>
                         </a>
                         <div class="nav-item mx-4 position-relative">
                             <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
