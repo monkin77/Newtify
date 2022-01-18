@@ -398,12 +398,17 @@ option {
 }
 
 #graphContainer .tagName {
-    width: 22%;
+    width: 40%;
 }
 
 #graphContainer .tagBar {
-    background-color: var(--bs-orange);
+    background-color: var(--bs-light);
     height: 1.2em;
+}
+
+#graphContainer .tagBarLevel {
+    background-color: var(--bs-orange);
+    height: 100%;
 }
 
 #userInfo #description {
