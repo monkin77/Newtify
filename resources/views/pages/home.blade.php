@@ -97,7 +97,7 @@
                 <h4 class="mb-5 text-light"> Help us improve on getting more variety of content </h4>
 
                 <form id="proposeTagForm" class="d-flex flex-row mb-0" onsubmit="proposeTag(event)">
-                    <input id="tag-name" type="text" name="tagName" placeholder="Enter your tag" required>
+                    <input id="tag-name" class="customInput" type="text" name="tagName" placeholder="Enter your tag" required>
 
                     <button class="btn btn-purple btn-lg customBtn ms-4" type="submit"> Propose </button>
                 </form>

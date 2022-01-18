@@ -6,6 +6,11 @@ input,
 select,
 textarea {
     color: white;
+    background-color: var(--bs-gray-900);
+}
+
+input[class*="customInput"] {
+    background-color: var(--bs-gray-900);
 }
 
 option {
@@ -115,10 +120,6 @@ option {
 .home-section .home-container {
     padding-top: 2em;
     padding-bottom: 2em;
-}
-
-#tag-name {
-    background-color: white;
 }
 
 #filterSection {
@@ -804,10 +805,6 @@ option {
     position: absolute;
     right: 2em;
     top: 2em;
-}
-
-input[class*="customInput"] {
-    background-color: var(--bs-gray-900);
 }
 
 /* Custom Bootstrap Variables */
