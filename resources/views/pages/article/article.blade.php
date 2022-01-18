@@ -3,6 +3,8 @@
 @section('scripts')
     <script type="text/javascript" src="{{ asset('js/comments.js') }}"> </script>
     <script type="text/javascript" src="{{ asset('js/content.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
+    <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 @endsection
 
 @section('article')
@@ -172,7 +174,12 @@
     @include('partials.share')
 @endsection
 
+@section('report')
+    @include('partials.user.reportPopup', ['id' => $author['id']])
+@endsection
+
 @section('content')
     @yield('article')
     @yield('popup')
+    @yield('report')
 @endsection
