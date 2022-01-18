@@ -670,6 +670,21 @@ option {
     height: 0.1em;
     background-color: var(--darkPurple);
     width: 40%;
+    margin: auto;
+}
+
+/* Static Pages */
+
+#faqAccordion button {
+    margin-bottom: 0;
+}
+
+.accordion-button {
+    background-color: var(--bs-dark);
+}
+
+#contactsSection .card {
+    width: 20rem;
 }
 
 /* Content */

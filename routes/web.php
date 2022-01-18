@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 // Home
 
 Route::get('/', 'HomeController@show')->name('homepage');
@@ -84,6 +85,11 @@ Route::get('messages', 'MessageController@inbox');
 Route::get('messages/{id}', 'MessageController@messageThread');
 Route::post('messages/{id}', 'MessageController@create');
 Route::put('messages/{id}', 'MessageController@readMessages');
+
+// Static Pages
+Route::get('about', 'StaticPagesController@getAboutUs')->name('about');
+Route::get('guidelines', 'StaticPagesController@getGuidelines')->name('guidelines');
+Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
 
 // Share
 Route::post('/api/share_socials', 'ShareController@shareWidget');
