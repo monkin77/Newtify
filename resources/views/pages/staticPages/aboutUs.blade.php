@@ -8,7 +8,7 @@
         <div class="horizontalDivider mb-5"></div>
 
         <p>
-            We are in an era of technology growth, but with it the amount of incorrect information on the internet and
+            We are in an era of technology growth, but with it, the amount of wrong information on the internet and
             media algo grows. It becomes increasingly complicated to filter the information that is correct, and knowledge proof
             is often required for our disclosures to be legitimate, proofs that aren't always easy to get.
         </p>
