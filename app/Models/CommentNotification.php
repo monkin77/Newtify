@@ -19,11 +19,8 @@ class CommentNotification extends Notification
 
     public static function notify($receiver_id, $comment, $user, $article)
     {
-        self::create([
-            'type' => 'COMMENT',
-            'receiver_id' => $receiver_id,
-            'new_comment' => $comment['id'],
-        ]);
+        if ($receiver_id == $user['id'])
+            return; // ignore own comments
 
         if (isset($comment['parent_comment_id']))
         {
