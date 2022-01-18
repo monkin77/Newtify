@@ -1,7 +1,7 @@
 @php
 function calculateExpertiseLevel($reputation)
 {
-    $step = 13;
+    $step = 20;
     if ($reputation <= 0) {
         return 0;
     } elseif ($reputation < 5) {
@@ -22,9 +22,11 @@ function calculateExpertiseLevel($reputation)
     <h4 class="text-center pt-3 pb-0 my-0">Areas of Expertise</h4>
     <div class="d-flex flex-column h-100 justify-content-evenly pb-5">
         @foreach ($topAreasExpertise as $area)
-            <div class="d-flex align-items-center ms-3">
-                <p class="my-0 py-0 pe-3 tagName">{{ $area['tag_name'] }}</p>
-                <div class="tagBar" style="width: {{ calculateExpertiseLevel($area['reputation']) . '%' }}">
+            <div class="d-flex align-items-center ms-3 me-5">
+                <p class="my-0 py-0 me-5 tagName text-truncate">{{ $area['tag_name'] }}</p>
+                <div class="tagBar w-100 position-relative">
+                    <div class="tagBarLevel" style="width: {{ calculateExpertiseLevel($area['reputation']) . '%' }}">
+                    </div>
                 </div>
             </div>
         @endforeach

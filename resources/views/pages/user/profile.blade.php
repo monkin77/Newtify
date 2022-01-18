@@ -4,7 +4,7 @@
 $guest = !Auth::check();
 @endphp
 
-<script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
+<script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('userInfo')
@@ -32,7 +32,7 @@ $guest = !Auth::check();
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)
                         <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
-                            <a class="fa fa-pencil fa-3x text-purple" href="/user/{{ $user['id'] }}/edit"></a>
+                            <a class="fa fa-pencil fa-3x darkPurpleLink" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
                     @else
                         @if (!$guest)
@@ -100,23 +100,7 @@ $guest = !Auth::check();
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('report')
-    <section id="reportElement" class="d-block d-none fullPopup">
-        <div id="backdrop" onclick="toggleReportPopup()"></div>
-        <div id="reportContainer" class="d-flex flex-column align-items-center justify-content-center">
-            <div id="reportInsideContainer" class="d-flex flex-column align-items-center justify-content-evenly">
-                <h3>Give us a reason to report this user</h3>
-                <div class="text-danger d-flex d-none py-0 my-0 align-items-center text-center px-5" id="reportError">
-                    <i class="fa fa-exclamation me-3 fa-1x"></i>
-                    <h5 class="py-0 my-0" id="reportErrorText"></h5>
-                </div>
-                <textarea id="reason" rows="10" placeholder="Insert report reason here"></textarea>
-                <button onclick="reportUser({{ $user['id'] }})">SUBMIT</button>
-                <button class="btn p-0 m-0 transparentButton" id="closePopupBtn" onclick="toggleReportPopup()">
-                    <i class="fa fa-times fa-3x text-purple" id="closeIcon"></i>
-                </button>
-            </div>
-        </div>
-    </section>
+    @include('partials.user.reportPopup', ['id' => $user['id']])
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}

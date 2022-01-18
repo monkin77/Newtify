@@ -2,13 +2,13 @@
 
 @section('content')
 
-<div class="border text-center w-25 bg-light container mt-3">
-    <h2 class="modal-title mx-auto text-center fw-bold mt-4" id="exampleModalLabel">Log In</h2>
+<div class="border border-light border-2 bg-secondary text-center w-25 container mt-3" id="loginContainer">
+    <h2 class="modal-title mx-auto text-center fw-bold my-4" id="exampleModalLabel">Log In</h2>
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
         <label for="email" class="sr-only">Email address</label>
-        <input name ="email" type="email" id="email" class="bg-white" value="{{ old('email') }}" placeholder="Email address" required autofocus>
+        <input name="email" class="customInput" type="email" id="email" value="{{ old('email') }}" placeholder="Email address" required autofocus>
         @if ($errors->has('email'))
             <span class="error text-danger">
                 {{ $errors->first('email') }}
@@ -16,7 +16,7 @@
         @endif
         
         <label for="password" class="sr-only">Password</label>
-        <input name="password" type="password" id="password" class="bg-white" placeholder="Password" required="">
+        <input name="password" class="customInput" type="password" id="password" placeholder="Password" required="">
         @if ($errors->has('password'))
             <span class="error text-danger">
                 {{ $errors->first('password') }}
@@ -39,13 +39,13 @@
             </div>
         @endif
 
-        <button type="submit" class="button w-50 fw-bold">
+        <button type="submit" class="btn btn-purple btn-lg customBtn w-50 mb-3">
             Login
         </button>
 
-        <a class="button button-outline w-50" href="{{ route('signup') }}">Register</a>
+        <a class="btn btn-outline-purple btn-lg customBtnFixed w-50 mb-3" href="{{ route('signup') }}">Register</a>
 
-        <a class="button button-outline w-50" href="{{ route('showLinkForm') }}">Forgot Password</a>
+        <a class="btn btn-outline-purple btn-lg customBtnFixed w-50" href="{{ route('showLinkForm') }}">Forgot Password</a>
 
     </form>
 </div>

@@ -79,7 +79,7 @@
 
 @section('load-more')
     <div id="load-more">
-        <button class="px-5" onclick="loadMoreHome()">Load more</button>
+        <button class="btn btn-purple btn-lg customBtn" onclick="loadMoreHome()">Load more</button>
     </div>
 @endsection
 
@@ -90,16 +90,16 @@
         <div class="d-flex flex-grow-1 justify-content-center home-container">
             <div id="proposeTag" class="position-relative d-flex flex-column align-items-center">
                 <h1 class="mb-2">
-                    <i class="fa fa-tag fa-sm fa-flip-horizontal px-2 text-lightPurple"></i>
+                    <i class="fa fa-tag fa-sm fa-flip-horizontal px-2 text-purple"></i>
                     Propose a new Tag
-                    <i class="fa fa-tag fa-sm px-2 text-lightPurple"></i>
+                    <i class="fa fa-tag fa-sm px-2 text-purple"></i>
                 </h1>
                 <h4 class="mb-5 text-light"> Help us improve on getting more variety of content </h4>
 
                 <form id="proposeTagForm" class="d-flex flex-row mb-0" onsubmit="proposeTag(event)">
-                    <input id="tag-name" type="text" name="tagName" placeholder="Enter your tag" required>
+                    <input id="tag-name" class="customInput" type="text" name="tagName" placeholder="Enter your tag" required>
 
-                    <button class="mx-4" type="submit"> Propose </button>
+                    <button class="btn btn-purple btn-lg customBtn ms-4" type="submit"> Propose </button>
                 </form>
             </div>
         </div>

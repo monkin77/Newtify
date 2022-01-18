@@ -37,7 +37,7 @@
                 <div class="d-flex justify-content-end align-items-center col">
                     @if (Auth::check())
                         <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
-                            <i class="btn-lightPurple-transparent fas fa-plus-circle fa-3x"></i>
+                            <i class="purpleLink fas fa-plus-circle fa-3x"></i>
                         </a>
                         <div class="nav-item mx-4 position-relative">
                             <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
@@ -71,8 +71,7 @@
                                     Profile</a>
                                 <br>
                                 <li class="col text-center">
-                                    <a class="button button-secondary py-0 px-3" href="{{ route('logout') }}"
-                                        style="font-size: 0.9em"> Logout </a>
+                                    <a class="btn btn-lightPurple btn-lg py-2 px-4" href="{{ route('logout') }}"> Logout </a>
                                 </li>
 
                             </ul>
