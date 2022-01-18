@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Article;
 use App\Models\Content;
 use App\Models\Tag;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -23,9 +24,8 @@ class ArticleController extends Controller
      */
     public function createForm() 
     {
-        if (Auth::guest()) {
+        if (Auth::guest()) 
             return redirect('/login');
-        }
 
         $user = User::find(Auth::id());
         if (is_null($user)) 
@@ -44,12 +44,12 @@ class ArticleController extends Controller
             'topAreasExpertise' => $user->topAreasExpertise(),
         ];
 
-        $tags = Tag::where('state', "ACCEPTED")->get()->map(function($tag) {
+        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
             return [
                 'id' => $tag->id,
                 'name' => $tag->name,
             ];
-        })->sortBy('name');
+        });
 
         return view('pages.article.create_article', [
             'author' => $authorInfo,
@@ -79,8 +79,15 @@ class ArticleController extends Controller
             ]
         );
         if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'tags'))
+                    $key = 'tags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
+            // Go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         $tagsIds = [];
@@ -173,6 +180,18 @@ class ArticleController extends Controller
         $user = Auth::user();
         $is_admin = Auth::user() ? $user->is_admin : false;
 
+        $feedback = Auth::check() 
+            ? Feedback::where('user_id', '=', Auth::id())->where('content_id', '=', $id)->first()
+            : null;
+
+        $liked = false;
+        $disliked = false;
+
+        if (!is_null($feedback)){
+            $liked = $feedback->is_like;
+            $disliked = !$feedback->is_like;
+        }
+
         return view('pages.article.article', [
             'article' => $articleInfo,
             'author' => $authorInfo,
@@ -180,7 +199,9 @@ class ArticleController extends Controller
             'canLoadMore' => $canLoadMore,
             'tags' => $tags,
             'isAuthor' => $is_author,
-            'isAdmin' => $is_admin
+            'isAdmin' => $is_admin,
+            'liked' => $liked,
+            'disliked' => $disliked
         ]);
     }
 
@@ -230,7 +251,11 @@ class ArticleController extends Controller
         if (is_null($article)) 
             return abort(404, 'Article not found, id: '.$id);
 
-        $this->authorize('update', $article);
+        $content = Content::find($article->content_id);
+        if (is_null($content))
+            return abort(404, 'Content not found, id: '.$article->content_id);
+
+        $this->authorize('update', $content);
 
         $articleInfo = [
             'content_id' => $article->content_id,
@@ -246,13 +271,13 @@ class ArticleController extends Controller
             ];
         })->sortBy('name');
 
-        $tags = Tag::where('state', "ACCEPTED")->get()->map(function($tag) {
+        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
             return [
                 'id' => $tag->id,
                 'name' => $tag->name,
             ];
-        })->sortBy('name');
-        
+        });
+
         $author = $article->author;
         $authorInfo = [
             'id' => $author->id,
@@ -293,7 +318,7 @@ class ArticleController extends Controller
         if (is_null($content)) 
             return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
-        $this->authorize('update', $article);
+        $this->authorize('update', $content);
 
         $validator = Validator::make($request -> all(),
         [
@@ -305,8 +330,15 @@ class ArticleController extends Controller
         ]);
 
         if ( $validator->fails() ) {
-            // go back to form and refill it
-            return redirect()->back()->withInput()->withErrors($validator->errors());
+            $errors = [];
+            foreach ($validator->errors()->messages() as $key => $value) {
+                if (str_contains($key, 'tags'))
+                    $key = 'tags';
+                $errors[$key] = is_array($value) ? implode(',', $value) : $value;
+            }
+
+            // Go back to form and refill it
+            return redirect()->back()->withInput()->withErrors($errors);
         }
 
         if (isset($request->body)) $content->body = $request->body;
@@ -363,7 +395,7 @@ class ArticleController extends Controller
         if (is_null($content)) 
             return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
 
-        $this->authorize('delete', $article);
+        $this->authorize('delete', $content);
 
         $user = Auth::user();
         $owner_id = $content->author_id;

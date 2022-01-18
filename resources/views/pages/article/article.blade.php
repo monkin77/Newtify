@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('content')
-    
+<script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
+
+@section('article')
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
 
         <div class="d-flex flex-row my-2 h-100" style="min-height: 65vh">
@@ -49,7 +50,7 @@
                                 @endif
 
                             </form>
-                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-transparent">
+                            <button onclick="document.deleteArticleForm.submit();" class="btn btn-light-hover btn-transparent">
                                 <i class="fas fa-trash article-button text-danger"></i>
                             </button>
                         </div>
@@ -62,10 +63,32 @@
                         @include('partials.tag', ['tag' => $tag ])
                     @endforeach
 
-                    <i class="fas fa-thumbs-up ps-5"><span class="text-white ms-2"> {{ $article['likes'] }} </span></i>
-                    <i class="fas fa-thumbs-down ps-3"><span class="text-white ms-2">{{ $article['dislikes'] }}</span></i>
+                    @if ( $liked )
+                        <i class="fas fa-thumbs-up ps-5 purpleLink feedbackIcon" 
+                            id="articleLikes" 
+                            onclick="removeFeedback(this, {{ $article['id'] }}, true)"
+                            > 
+                            <span class="ms-1">{{ $article['likes'] }}</span>
+                        </i>
+                    @else 
+                        <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true)"> 
+                            <span class="ms-1">{{ $article['likes'] }}</span>
+                        </i>
+                    @endif
+
+                    @if ($disliked)
+                        <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false)"> 
+                            <span class="ms-1">{{ $article['dislikes'] }}</span>
+                        </i>
+                    @else
+                        <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false)"> 
+                            <span class="ms-1">{{ $article['dislikes'] }}<span>
+                        </i>
+                    @endif 
                     
-                    <i class="fas fa-share-alt ms-4"></i>
+                    <button onclick="showSocials()" class="btn ms-4">
+                        <i class="fas fa-share-alt fa-2x"></i>
+                    </button>
                 </p>
 
                 @if (isset($article['thumbnail']))
@@ -131,5 +154,13 @@
 
         </div>
     </div>
+@endsection
 
+@section('popup')
+    @include('partials.share')
+@endsection
+
+@section('content')
+    @yield('article')
+    @yield('popup')
 @endsection

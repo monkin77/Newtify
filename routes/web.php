@@ -12,6 +12,7 @@
 */
 
 // Home
+
 Route::get('/', 'HomeController@show')->name('homepage');
 Route::get('api/article/filter', 'HomeController@filter');
 
@@ -21,6 +22,10 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup');
 Route::post('signup', 'Auth\RegisterController@register');
+Route::get('forgot-password', 'Auth\PasswordResetController@showSendLinkForm')->name('showLinkForm');
+Route::post('forgot-password', 'Auth\PasswordResetController@sendLink')->name('sendLink');
+Route::get('reset', 'Auth\PasswordResetController@showResetPasswordForm')->name('password.reset');
+Route::post('reset', 'Auth\PasswordResetController@reset')->name('password.update');
 
 // User
 Route::get('user/{id}', 'UserController@show')->name('userProfile');
@@ -43,6 +48,10 @@ Route::put('article/{id}/edit', 'ArticleController@update');
 Route::delete('article/{id}', 'ArticleController@destroy');
 Route::get('api/article/{id}/comments', 'ArticleController@comments');
 
+// Content
+Route::delete('content/{id}', 'ContentController@removeFeedback');
+Route::put('content/{id}', 'ContentController@giveFeedback');
+
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');
 Route::get('admin/suspensions', 'AdminController@suspensions');
@@ -56,7 +65,7 @@ Route::put('admin/reports/{id}/close', 'AdminController@closeReport');
 Route::get('favorite_tags', 'TagController@showUserFavorites');
 Route::put('tags/{tag_id}/accept', 'TagController@accept');
 Route::put('tags/{tag_id}/reject', 'TagController@reject');
-Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite');  
+Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite');
 Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');
 Route::get('api/tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
 Route::delete('tags/{tag_id}', 'TagController@destroy');
@@ -81,3 +90,6 @@ Route::put('messages/{id}', 'MessageController@readMessages');
 Route::get('about', 'StaticPagesController@getAboutUs')->name('about');
 Route::get('guidelines', 'StaticPagesController@getGuidelines')->name('guidelines');
 Route::get('faq', 'StaticPagesController@getFaq')->name('faq');
+
+// Share
+Route::post('/api/share_socials', 'ShareController@shareWidget');

@@ -13,6 +13,8 @@ function calculateReputationLevel($reputation)
 $guest = !Auth::check();
 @endphp
 
+<script type="text/javascript" src={{ asset('js/user.js') }} defer></script>
+
 <div class="d-flex flex-column justify-content-center" id="reputationBar">
     <div class="position-relative" id="bar">
         <div class="position-absolute h-100"

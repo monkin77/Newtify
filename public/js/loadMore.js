@@ -1,3 +1,6 @@
+const SEARCH_LIMIT = 10;
+const ARTICLE_USER_LIMIT = 5;
+
 loadMoreHandler = (containerId) => function () {
     const container = select(`#${containerId}`);
     const json = JSON.parse(this.responseText);
@@ -27,22 +30,20 @@ loadMoreHandler = (containerId) => function () {
 
 const loadMoreSearch = (type, value) => {
     const numResults = select(`#${type}`).childElementCount;
-    const url = `/api/search/${type}?value=${value}&offset=${numResults}&limit=10`;
+    const url = `/api/search/${type}?value=${value}&offset=${numResults}&limit=${SEARCH_LIMIT}`;
     sendAjaxRequest('get', url, null, loadMoreHandler(type));
 };
 
 const loadMoreHome = () => {
-    // TODO: Pass filter parameters when filter is implemented in interface
     const numArticles = select('#articles').childElementCount;
-    const type = select('input[name="filterType"]:checked').id;
 
-    const url = `/api/article/filter?type=${type}&offset=${numArticles}&limit=5`;
+    const url = getFilterUrl(numArticles);
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
 };
 
 const loadMoreUser = (userId) => {
     const numResults = select('#articles').childElementCount;
-    const url = `/api/user/${userId}/articles?offset=${numResults}&limit=4`;
+    const url = `/api/user/${userId}/articles?offset=${numResults}&limit=${ARTICLE_USER_LIMIT}`;
     sendAjaxRequest('get', url, null, loadMoreHandler('articles'));
 };
 
