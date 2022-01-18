@@ -1,18 +1,14 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarContainer">
         <div class="container-fluid py-4">
+            <a id="logo" class="navbar-brand text-center w-25" href="{{ url('/') }}">Newtify</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse row" id="navbarSupportedContent">
-
-                <div id="logo" class="col">
-                    <a id="logo" class="navbar-brand" href="{{ url('/') }}">Newtify</a>
-                </div>
-
-                <form id="searchForm" class="d-flex flex-row align-items-center border col-5"
+            <div class="collapse navbar-collapse w-75" id="navbarSupportedContent">
+                <form id="searchForm" class="d-flex flex-row align-items-center border"
                     action="{{ route('search') }}">
                     <i class="fas fa-search ms-4 submit" type="submit"></i>
                     <input class="form-control no-border flex-grow-1 my-0 ms-3 bg-dark" type="search"
@@ -33,10 +29,10 @@
                         </ul>
                     </div>
                 </form>
-
-                <div class="d-flex justify-content-end align-items-center col">
+                
+                <div class="d-flex justify-content-end align-items-center" id="userSectionNav">
                     @if (Auth::check())
-                        <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
+                        <a id="createArticleIcon" class="nav-item mx-4 col" href="{{ route('createArticle') }}">
                             <i class="purpleLink fas fa-plus-circle fa-3x"></i>
                         </a>
                         <div class="nav-item mx-4 position-relative">

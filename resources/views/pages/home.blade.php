@@ -15,48 +15,87 @@
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('filters')
-    <section id="filterSection" class="d-flex flex-row align-items-center border border-light rounded-pill py-4 px-2 mt-3 mb-4">
-        <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
-            @if (Auth::check())
-                <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
-                <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="From your favorite authors and tags"
-                    class="filter-button btn btn-outline-warning text-light btn-lg ms-4 my-auto" for="recommended"
+    <section>
+        <div id="filterSection" class="d-none d-md-flex flex-row align-items-center border border-light rounded-pill py-4 px-2 mt-3 mb-4 overflow-hidden">
+            <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
+                @if (Auth::check())
+                    <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
+                    <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="From your favorite authors and tags"
+                        class="filter-button btn btn-outline-warning text-light btn-lg ms-4 my-auto" for="recommended"
+                    >
+                    <i class="far fa-star mt-2 text-warning"></i>
+                    <span class="mx-2">Recommended</span>
+                </label>
+                @endif
+
+                <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
+                @if (Auth::guest()) checked @endif>
+                <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hottest articles of the day"
+                    class="filter-button btn btn-outline-danger text-light ms-4 my-auto" for="trending"
                 >
-                <i class="far fa-star mt-2 text-warning"></i>
-                <span class="mx-2">Recommended</span>
-            </label>
-            @endif
+                    <i class="fas fa-fire-alt mt-2 text-danger"></i> <span class="mx-2">Trending</span>
+                </label>
 
-            <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
-            @if (Auth::guest()) checked @endif>
-            <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hottest articles of the day"
-                class="filter-button btn btn-outline-danger text-light ms-4 my-auto" for="trending"
-            >
-                <i class="fas fa-fire-alt mt-2 text-danger"></i> <span class="mx-2">Trending</span>
-            </label>
+                <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
+                <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="The latest articles"
+                    class="filter-button btn btn-outline-info text-light btn-lg ms-4 my-auto" for="recent"
+                >
+                    <i class="fas fa-history mt-2 text-info"></i> <span class="mx-2">Recent</span>
+                </label>
+            </div>
 
-            <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
-            <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="The latest articles"
-                class="filter-button btn btn-outline-info text-light btn-lg ms-4 my-auto" for="recent"
-            >
-                <i class="fas fa-history mt-2 text-info"></i> <span class="mx-2">Recent</span>
-            </label>
+            <div id="daterangeContainer" class="flex-fill d-flex justify-content-evenly">
+                <input type="text" name="daterange" class="my-0 mx-5 text-center text-light border-light"
+                placeholder="Filter by Publish Date" />
+            </div>
+
+            <select id="filterTags" onchange="filterArticles()" multiple>
+                @foreach($tags as $tag)
+                    <option value="{{ $tag['id'] }}">
+                        {{ $tag['name'] }}
+                    </option>
+                @endforeach
+            </select>
+
+            <i class="fa fa-tag filter-tag mx-4 text-lightPurple"></i>
         </div>
+        <div id="filterSectionMobile" class="dropdown d-md-none">
+            <button class="btn btn-purple dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Filter By
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                @if (Auth::check())
+                <li class="mx-2 dropdown-item">
+                    <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
+                    <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="From your favorite authors and tags"
+                        class="filter-button text-light" for="recommended"
+                    >
+                        <i class="far fa-star text-warning"></i>
+                        <span class="mx-2">Recommended</span>
+                    </label>
+                </li>
+                @endif
 
-        <div id="daterangeContainer" class="flex-fill d-flex justify-content-evenly">
-            <input type="text" name="daterange" class="my-0 mx-5 text-center text-light border-light"
-            placeholder="Filter by Publish Date" />
-        </div>
+                <li class="mx-2 dropdown-item">
+                    <input type="radio" class="btn-check" name="filterType" id="trending" autocomplete="off"
+                    @if (Auth::guest()) checked @endif>
+                    <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hottest articles of the day"
+                        class="filter-button text-light" for="trending"
+                    >
+                        <i class="fas fa-fire-alt text-danger"></i> <span class="mx-2">Trending</span>
+                    </label>
+                </li>
 
-        <select id="filterTags" onchange="filterArticles()" multiple>
-            @foreach($tags as $tag)
-                <option value="{{ $tag['id'] }}">
-                    {{ $tag['name'] }}
-                </option>
-            @endforeach
-        </select>
-
-        <i class="fa fa-tag filter-tag mx-4 text-lightPurple"></i>
+                <li class="mx-2 dropdown-item">
+                    <input type="radio" class="btn-check" name="filterType" id="recent" autocomplete="off">
+                    <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="The latest articles"
+                        class="filter-button text-light" for="recent"
+                    >
+                        <i class="fas fa-history text-info"></i> <span class="mx-2">Recent</span>
+                    </label>
+                </li>
+            </ul>
+          </div>
     </section>
 @endsection
 

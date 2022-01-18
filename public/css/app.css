@@ -1,5 +1,7 @@
 body {
     color: var(--bs-body-color);
+    position: absolute;
+    width: 100%;
 }
 
 input,
@@ -21,18 +23,15 @@ option {
 
 #logo {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.6em;
+    font-size: 2.3em;
     color: var(--bs-purple);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #searchForm {
     border-radius: 2em 1em 1em 2em;
     position: relative;
     top: 0.6em;
+    width: 56%;
 }
 
 #searchForm input {
@@ -66,6 +65,10 @@ option {
     left: 1%;
 
     cursor: pointer;
+}
+
+#userSectionNav {
+    width: 33.3%;
 }
 
 #searchType:focus {
@@ -127,6 +130,11 @@ option {
     margin: auto;
 }
 
+#filterSectionMobile {
+    width: 85%;
+    margin: auto;
+}
+
 .filter-button {
     border-radius: 1em !important;
     width: 10em;
@@ -162,7 +170,14 @@ option {
 
 #articles {
     padding: 0;
-    width: 70%;
+    width: 85%;
+}
+
+@media screen and (min-width: 768px) {
+    #articles {
+        width: 70%;
+        padding: 0;
+    }
 }
 
 #articles h1,
@@ -647,7 +662,6 @@ option {
 
 /* Navbar and Footer*/
 #navbarContainer {
-    height: 10vh;
 }
 
 #footerContainer {
