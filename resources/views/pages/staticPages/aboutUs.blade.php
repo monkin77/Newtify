@@ -18,7 +18,7 @@
         </p>
 
         <p>
-            On this application, users are the experts which will evaluate our proofs, by giving 
+            On this application, users are the experts which will evaluate the news being published, by giving 
             their feedbacks and suggestions. Newtify brings a new reality where person's practical knowledge takes the place of
             theoretical knowledge and where your opinion is used to evaluate others reliability! Newtify is the way to decrease the 
             amount of fake news that we have nowadays.
