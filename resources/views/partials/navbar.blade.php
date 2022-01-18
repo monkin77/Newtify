@@ -71,7 +71,7 @@
                                     Profile</a>
                                 <br>
                                 <li class="col text-center">
-                                    <a class="btn btn-lightPurple btn-lg" href="{{ route('logout') }}"> Logout </a>
+                                    <a class="btn btn-lightPurple btn-lg py-2 px-4" href="{{ route('logout') }}"> Logout </a>
                                 </li>
 
                             </ul>
