@@ -47,7 +47,7 @@ option {
 }
 
 #searchDropdownButton {
-    width: 100%;
+    width: 95%;
     border-radius: 0.5em;
     border-width: 0; /* Disable bootstrap's button border */
     font-size: medium;
@@ -874,7 +874,6 @@ option {
 }
 
 /* Styles for screens md > */
-
 @media screen and (max-width: 768px) {
     body {
         font-size: small;
@@ -921,5 +920,44 @@ option {
         display: flex;
         align-items: center;
         width: 30%;
+    }
+
+    /* Navbar */
+    #searchForm {
+        border-radius: 2em 1em 1em 2em;
+        position: relative;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #searchForm input {
+        color: white;
+        font-size: medium;
+        box-shadow: none;
+    }
+
+    #searchDropdown {
+        width: 70%;
+        position: relative;
+        left: 1%;
+    }
+
+    #searchDropdownButton {
+        width: 100%;
+        border-radius: 0.5em;
+        border-width: 0; /* Disable bootstrap's button border */
+        font-size: small;
+        text-transform: none;
+        letter-spacing: inherit;
+        box-shadow: none;
+    }
+
+    #dropdownContainer {
+        max-width: 2.5em;
+        max-height: 2.5em;
+        width: auto;
+        height: auto;
+        margin-right: 2em;
     }
 }
