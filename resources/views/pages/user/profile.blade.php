@@ -17,36 +17,36 @@ $guest = !Auth::check();
 
                 </div>
                 <div class="col-7 col-md-6 d-flex flex-column align-items-center h-100">
-                    <div class="col-6 w-50 h-100">
+                    <div id="areasOfExpertiseContainer" class="h-100">
                         @include('partials.user.areasOfExpertiseGraph', ['topAreasExpertise' => $topAreasExpertise ])
                     </div>
                 </div>
             </div>
             <div class="row w-100 mt-5 mb-4">
-                <div class="col-6 d-flex justify-content-center align-items-center">
-                    <h2 class="text-center  my-0 py-0">{{ $user['name'] }}</h2>
+                <div class="col-5 col-md-6 d-flex justify-content-center align-items-center">
+                    <h2 class="text-center my-0 py-0">{{ $user['name'] }}</h2>
                     @if ($user['isAdmin'])
                         <span class="badge rounded-pill ms-3 bg-custom">Admin</span>
                     @endif
                 </div>
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="col-7 col-md-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)
                         <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
-                            <a class="fa fa-pencil fa-3x darkPurpleLink" href="/user/{{ $user['id'] }}/edit"></a>
+                            <a class="fa fa-pencil darkPurpleLink icon-3x" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
                     @else
                         @if (!$guest)
-                            <i class="fa fa-comment-dots me-3 fa-2x text-purple-dark" onclick="console.log('clicked')"></i>
+                            <i class="fa fa-comment-dots me-3 text-purple-dark icon-2x" onclick="console.log('clicked')"></i>
                             @if ($follows)
-                                <button type="button" class="btn btn-secondary px-5 my-0 py-0 mx-3" id="followBtn"
+                                <button type="button" class="btn btn-secondary px-md-5 my-0 py-0 mx-3" id="followBtn"
                                     onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
                             @else
-                                <button type="button" class="btn btn-primary px-5 my-0 py-0 mx-3" id="followBtn"
+                                <button type="button" class="btn btn-primary px-md-5 my-0 py-0 mx-3" id="followBtn"
                                     onclick="followUser({{ $user['id'] }})">Follow</button>
                             @endif
                         @endif
                     @endif
-                    <i class="fa fa-users fa-2x mx-3 text-primary"></i>
+                    <i class="fa fa-users mx-3 text-primary icon-2x"></i>
                     <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
                 </div>
             </div>

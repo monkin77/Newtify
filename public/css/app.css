@@ -384,6 +384,9 @@ option {
 }
 
 /* Areas of expertise */
+#areasOfExpertiseContainer {
+    width: 50%;
+}
 
 #graphContainer {
     width: 100%;
@@ -878,6 +881,16 @@ option {
     width: 15em;
     line-height: 2em;
     font-size: 0.9em;
+}
+
+.icon-1x {
+    font-size: 1em;
+}
+.icon-2x {
+    font-size: 2em;
+}
+.icon-3x {
+    font-size: 3em;
 }
 
 .squareImage {

@@ -9,6 +9,7 @@
     }
 
     h2 {
+        font-size: 2.3rem;
     }
 
     h3 {
@@ -16,6 +17,16 @@
 
     h4 {
         font-size: 1.5rem;
+    }
+
+    .icon-1x {
+        font-size: 1em;
+    }
+    .icon-2x {
+        font-size: 1.5em;
+    }
+    .icon-3x {
+        font-size: 2.5em;
     }
 
     /* Articles */
@@ -91,5 +102,9 @@
         height: 70%;
         aspect-ratio: 1;
         border-radius: 100em;
+    }
+
+    #areasOfExpertiseContainer {
+        width: 90%;
     }
 }
