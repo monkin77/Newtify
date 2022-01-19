@@ -84,7 +84,7 @@
                 
                 <div class="d-none d-md-flex justify-content-end align-items-center" id="userSectionNav">
                     @if (Auth::check())
-                        <a id="createArticleIcon" class="nav-item" href="{{ route('createArticle') }}">
+                        <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
                             <i class="purpleLink fas fa-plus-circle fa-3x"></i>
                         </a>
                         <div class="nav-item mx-4 position-relative">
