@@ -78,6 +78,14 @@ const deleteCommentHandler = (commentId) => function() {
         return;
     }
 
+    // Remove replies
+    let child;
+    while (child = select(`#comment_${commentId} + div`)) {
+        if (!select(`#comment_${commentId} + div > .child-comment`))
+            break;
+        child.remove();
+    }
+
     if (previousError) previousError.remove();
     select(`#comment_${commentId}`).remove();
 }
