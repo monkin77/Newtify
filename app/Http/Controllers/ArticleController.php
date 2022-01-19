@@ -44,12 +44,8 @@ class ArticleController extends Controller
             'topAreasExpertise' => $user->topAreasExpertise(),
         ];
 
-        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-            ];
-        });
+        $tags = Tag::listTagsByState('ACCEPTED')
+            ->map(fn ($tag) => $tag->only('id', 'name'));
 
         return view('pages.article.create_article', [
             'author' => $authorInfo,
@@ -171,11 +167,8 @@ class ArticleController extends Controller
         $canLoadMore = count($comments) > $this::COMMENTS_LIMIT;
         $comments = $comments->take($this::COMMENTS_LIMIT);
 
-        $tags = $article->articleTags->map(function($tag) {
-            return [
-                'name' => $tag->name,
-            ];
-        })->sortBy('name');
+        $tags = $article->articleTags->map(fn ($tag) => $tag->only('name'))
+            ->sortBy('name');
 
         $user = Auth::user();
         $is_admin = Auth::user() ? $user->is_admin : false;
@@ -267,19 +260,10 @@ class ArticleController extends Controller
             'body' => $article->body,
         ];
 
-        $articleTags = $article->articleTags->map(function($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-            ];
-        })->sortBy('name');
+        $articleTags = $article->articleTags
+            ->map(fn ($tag) => $tag->only('id', 'name'))->sortBy('name');
 
-        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-            ];
-        });
+        $tags = Tag::listTagsByState('ACCEPTED')->map(fn ($tag) => $tag->only('id', 'name'));
 
         $author = $article->author;
         $authorInfo = [

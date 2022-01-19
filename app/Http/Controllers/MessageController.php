@@ -44,9 +44,9 @@ class MessageController extends Controller
                         'published_at' => $msg->published_at,
                         'is_read' => $msg->is_read,
                     ],
-                    'friend' => $friend->only([
+                    'friend' => $friend->only(
                         'id', 'name', 'is_admin', 'avatar', 'city', 'country'
-                    ])
+                    )
                 ];
             });
 

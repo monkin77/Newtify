@@ -51,7 +51,7 @@ class Article extends Content
           $children = $this->comments->filter(function ($comment) use($commentInfo) {
             return $comment->parent_comment_id === $commentInfo['id'];
           })->sortBy([['likes', 'desc'], ['published_at', 'desc']])
-            ->map(function ($comment) { return $comment->getInfo(); });
+            ->map(fn ($comment) => $comment->getInfo());
 
           $commentInfo['children'] = $children;
           $commentInfo['hasFeedback'] = $commentInfo['hasFeedback'] || !$commentInfo['children']->isEmpty();

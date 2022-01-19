@@ -56,17 +56,9 @@ class UserController extends Controller
 
         $followerCount = count($user->followers);
 
-        $articles = $user->articles()->map(function ($article) {
-            return [
-                'id' => $article->content_id,
-                'title' => $article->title,
-                'thumbnail' => $article->thumbnail,
-                'body' => $article->body,
-                'published_at' => $article->published_at,
-                'likes' => $article->likes,
-                'dislikes' => $article->dislikes
-            ];
-        })->sortByDesc('published_at');
+        $articles = $user->articles()->map(fn ($article) => $article
+            ->only('id', 'title', 'thumbnail', 'body', 'published_at', 'likes', 'dislikes'))
+            ->sortByDesc('published_at');
 
         $canLoadMore = count($articles) > $this::USER_ARTICLES_LIMIT;
 
@@ -117,18 +109,10 @@ class UserController extends Controller
 
         $countries = Country::get();
 
-        $favoriteTags = $user->favoriteTags->map(function ($tag) {
-            return [
-                'id' => $tag->id
-            ];
-        });
+        $favoriteTags = $user->favoriteTags->map(fn ($tag) => $tag->only('id'));
 
-        $tags = Tag::listTagsByState(TagController::tagStates['accepted'])->map(function ($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name
-            ];
-        });
+        $tags = Tag::listTagsByState(TagController::tagStates['accepted'])
+            ->map(fn ($tag) => $tag->only('id', 'name'));
 
         return view('pages.user.editProfile', [
             'user' => $userInfo,
@@ -326,17 +310,8 @@ class UserController extends Controller
 
         $this->authorize('followed', $user);
 
-        $followedUsers = $user->following->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'avatar' => $user->avatar,
-                'country' => $user->country,
-                'city' => $user->city,
-                'reputation' => $user->reputation,
-                'isSuspended' => $user->is_suspended
-            ];
-        });
+        $followedUsers = $user->following->map(fn ($user) => $user
+            ->only('id', 'name', 'avatar', 'country', 'city', 'reputation', 'isSuspended'));
 
         return view('pages.followed_users', [
             'users' => $followedUsers,
@@ -374,17 +349,9 @@ class UserController extends Controller
 
         if (!isset($request->offset)) $request->offset = 0;
 
-        $userArticles = $user->articles()->map(function ($article) {
-            return [
-                'id' => $article->id,
-                'title' => $article->title,
-                'thumbnail' => $article->thumbnail,
-                'body' => $article->body,
-                'published_at' => $article->published_at,
-                'likes' => $article->likes,
-                'dislikes' => $article->dislikes
-            ];
-        })->sortByDesc('published_at')->skip($request->offset);
+        $userArticles = $user->articles()->map(fn ($article) => $article
+            ->only('id', 'title', 'thumbnail', 'body', 'published_at', 'likes', 'dislikes'))
+            ->sortByDesc('published_at')->skip($request->offset);
 
         $canLoadMore = isset($request->limit) ? count($userArticles) > $request->limit : false;
         $articles = $userArticles->take($request->limit);

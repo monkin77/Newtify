@@ -108,10 +108,12 @@ const editCommentHandler = (commentId, editBox) => function() {
 
     if (previousError) previousError.remove();
 
-    select(`#comment_${commentId} .commentTextContainer`).innerText = json.body;
+    const commentText = select(`#comment_${commentId} .commentTextContainer`);
+    const different = commentText.innerText != json.body;
+    commentText.innerText = json.body;
 
     let editFlag = select(`#comment_${commentId} .editFlag`);
-    if (!editFlag) {
+    if (!editFlag && different) {
         editFlag = document.createElement('i');
         editFlag.classList.add('mx-3', 'editFlag');
         editFlag.innerText = "Edited";

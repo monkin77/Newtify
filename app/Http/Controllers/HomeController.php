@@ -23,12 +23,7 @@ class HomeController extends Controller
         $type = Auth::check() ? 'recommended' : 'trending';
         $results = $this->filterByType($type, 0, $this::ARTICLE_LIMIT);
 
-        $tags = Tag::listTagsByState('ACCEPTED')->map(function($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-            ];
-        });
+        $tags = Tag::listTagsByState('ACCEPTED')->map(fn ($tag) => $tag->only('id', 'name'));
 
         return view('pages.home', [
             'articles' => $results['articles'],
@@ -168,18 +163,8 @@ class HomeController extends Controller
 
         $sortedArticles = $sortedArticles->skip($offset);
         $canLoadMore = is_null($limit) ? false : $sortedArticles->count() > $limit;
-        $results = $sortedArticles->take($limit)
-            ->map(function ($article) {
-                return [
-                    'id' => $article->id,
-                    'title' => $article->title,
-                    'thumbnail' => $article->thumbnail,
-                    'body' => $article->body,
-                    'published_at' => $article->published_at,
-                    'likes' => $article->likes,
-                    'dislikes' => $article->dislikes,
-                ];
-            });
+        $results = $sortedArticles->take($limit)->map(fn ($article) => $article
+            ->only('id', 'title', 'thumbnail', 'body', 'published_at', 'likes', 'dislikes'));
 
         return [
             'articles' => $results,
