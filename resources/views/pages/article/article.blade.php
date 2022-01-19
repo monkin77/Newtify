@@ -184,7 +184,9 @@
 @endsection
 
 @section('report')
-    @include('partials.user.reportPopup', ['id' => $author['id']])
+    @if (isset($author))
+        @include('partials.user.reportPopup', ['id' => $author['id']])
+    @endif
 @endsection
 
 @section('content')

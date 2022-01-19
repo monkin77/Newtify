@@ -52,10 +52,11 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:authenticated_user',
             'password' => 'required|string|min:6|confirmed',
-            'birthDate' => 'required|string|date_format:Y-m-d|before:'.date('Y-m-d'), // before today
+            // Minimum: 12 years old
+            'birthDate' => 'required|string|date_format:Y-m-d|before:'.date('Y-m-d', strtotime('-12 years')),
             'country' => 'required|string|exists:country,name',
             'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
-        ]);
+        ], ['before' => 'You must be at least 12 years old']);
     }
 
     /**
