@@ -143,6 +143,7 @@ class User extends Authenticatable
     public function suspensionEndInfo()
     {
         $suspension = $this->suspensions->sortByDesc('end_time')->first();
+        if (!isset($suspension)) return null;
 
         return [
             'reason' => $suspension->reason,

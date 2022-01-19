@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Models\Suspension;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +26,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function() {
+            $suspendedUsers = User::where('is_suspended', true)->get();
+            $suspendedUsers->filter(function($user) {
+                $info = $user->suspensionEndInfo();
+                if (!isset($info) || !isset($info['end_date']))
+                    return true;
+
+                return strtotime($info['end_date']) <= strtotime(gmdate('d-m-Y'));
+            })->each(function($user) {
+                $user->is_suspended = false;
+                $user->save();
+            });
+        })->daily();
     }
 
     /**
