@@ -167,26 +167,9 @@ option {
 }
 
 /* Partial Article */
-
 #articles {
+    width: 70%;
     padding: 0;
-    width: 85%;
-}
-
-@media screen and (min-width: 768px) {
-    #articles {
-        width: 70%;
-        padding: 0;
-    }
-}
-
-#articles h1,
-#articles h2,
-#articles h3,
-#articles h4 {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 /* Partial Article, just putting here for now then we change */
@@ -213,11 +196,9 @@ option {
 }
 
 #articles .card-header {
+    display: flex;
+    align-items: center;
     width: 20%;
-}
-
-#articles .card-header img {
-    width: 100%;
 }
 
 #articleTitle {
@@ -884,4 +865,47 @@ option {
     width: 15em;
     line-height: 2em;
     font-size: 0.9em;
+}
+
+.squareImage {
+    width: 100%;
+    aspect-ratio: 1;
+    max-height: 100%;
+}
+
+/* Styles for screens md > */
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: small;
+    }
+
+    /* Articles */
+    #articles {
+        padding: 0;
+        width: 85%;
+    }
+
+    #articles .card {
+        height: 15vh;
+        margin-bottom: 1em;
+        border-radius: 1rem;
+    }
+
+    #articles .card a {
+        width: 70%;
+        color: white;
+        text-decoration: none;
+    }
+
+    #articles .card .card-title i {
+        margin-left: 10px;
+        font-size: small;
+    }
+
+    #articles .card-header {
+        display: flex;
+        align-items: center;
+        width: 30%;
+    }
 }
