@@ -102,6 +102,14 @@ const editCommentHandler = (commentId, editBox) => function() {
 
     select(`#comment_${commentId} .commentTextContainer`).innerText = json.body;
 
+    let editFlag = select(`#comment_${commentId} .editFlag`);
+    if (!editFlag) {
+        editFlag = document.createElement('i');
+        editFlag.classList.add('mx-3', 'editFlag');
+        editFlag.innerText = "Edited";
+        select(`#comment_${commentId} .publishedAt`).insertAdjacentElement('afterend', editFlag);
+    }
+
     const comment = select(`#comment_${commentId}`);
     closeEditBox(comment, editBox);
 }

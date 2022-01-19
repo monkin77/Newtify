@@ -72,9 +72,14 @@
                 <span onclick="openEditBox({{$comment['id']}}, {{$isReply}})" class="px-3 hover-pointer">Edit</span>
             @endif
 
-            <span class="px-3">{{ $comment['published_at'] }}</span>
+            <span class="px-3 publishedAt">{{ $comment['published_at'] }}</span>
 
-            @if (isset($comment['author']) && Auth::id() === $comment['author']['id'] && !$comment['hasFeedback'])
+            @if ($comment['is_edited'])
+                <i class="mx-3 editFlag">Edited</i>
+            @endif
+
+            @if ((isset($comment['author']) && Auth::id() === $comment['author']['id'] && !$comment['hasFeedback'])
+                || (Auth::check() && Auth::user()->is_admin))
                 <button
                     id="delete_content_{{$comment['id']}}"
                     onclick="confirmDeletion({{ $comment['id'] }}, deleteComment)"

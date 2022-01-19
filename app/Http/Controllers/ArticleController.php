@@ -145,6 +145,7 @@ class ArticleController extends Controller
             'published_at' => $article->published_at,
             'likes' => $article->likes,
             'dislikes' => $article->dislikes,
+            'is_edited' => $article->is_edited
         ];
 
         $author = $article->author;

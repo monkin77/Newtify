@@ -41,7 +41,7 @@
                                     onclick="confirmDeletion({{$article['id']}}, () => document.deleteArticleForm.submit())"
                                     class="btn btn-transparent my-0"
                                 >
-                                    <i class="fas fa-trash fa-2x text-danger"></i>
+                                    <i class="fas fa-trash fa-2x article-button text-danger mt-2"></i>
                                 </button>
                             @endif
                         </div>
@@ -88,9 +88,13 @@
                         @endif
                     @endif
 
-                    <button onclick="showSocials()" class="btn ms-4 mt-2">
+                    <button onclick="showSocials()" class="btn ms-4 mt-3">
                         <i class="fas fa-share-alt fa-2x"></i>
                     </button>
+
+                    @if ($article['is_edited'])
+                        <b><i class="ms-4 text-lightPurple">Edited</i></b>
+                    @endif
                 </p>
 
                 @if ($errors->has('article'))

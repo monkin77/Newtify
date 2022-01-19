@@ -71,6 +71,7 @@ class Comment extends Content
           'dislikes' => $this->dislikes,
           'published_at' => $published_at,
           'article_id' => $this->article_id,
+          'is_edited' => $this->is_edited,
           'liked' => $liked,
           'disliked' => $disliked,
           'isAuthor' => $isAuthor,
