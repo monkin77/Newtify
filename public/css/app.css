@@ -731,6 +731,11 @@ option {
     padding: 0;
 }
 
+.daterangepicker select {
+    background-color: inherit;
+    color: black;
+}
+
 /* Popup */
 .fullPopup {
     position: fixed;

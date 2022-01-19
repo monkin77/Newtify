@@ -134,7 +134,7 @@ class UserController extends Controller
             'user' => $userInfo,
             'topAreasExpertise' => $areasExpertise,
             'followerCount' => $followerCount,
-            'birthDate' => date('Y-m-d', strtotime($userInfo['birthDate'])),
+            'birthDate' => date('d-m-Y', strtotime($userInfo['birthDate'])),
             'countries' => $countries,
             'tags' => $tags,
             'favoriteTags' => $favoriteTags,

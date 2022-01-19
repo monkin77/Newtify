@@ -1,8 +1,16 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script type="text/javascript" src={{ asset('js/daterangepicker.js') }}></script>
+@endsection
+
 @section('content')
 
-<div class="border border-light text-center border-3 w-50 bg-secondary container-fluid mt-4 mb-5" id="registerContainer">
+<div class="border border-light text-center border-3 bg-secondary container-fluid mt-4 mb-5" id="registerContainer">
     <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Sign Up</h2>
     <form class="form-group d-flex flex-column align-items-center" method="post" action="{{ route('signup') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
@@ -41,7 +49,8 @@
             <span class="ms-3 mt-2 position-absolute" id="matchingPass"></span>
         </div>
         <label for="birthDate">Birth Date</label>
-        <input name="birthDate" class="customInput" type="date" id="birthDate" value="{{ old('birthDate') }}" required>
+        <input name="birthDatePicker" class="customInput w-50" type="text" placeholder="Enter Birthdate" required>
+        <input name="birthDate" type="hidden">
         @if ($errors->has('birthDate'))
         <br>
         <span class="text-danger error">
