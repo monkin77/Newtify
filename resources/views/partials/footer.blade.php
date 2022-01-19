@@ -2,22 +2,22 @@
     <!--Grid row-->
     <div class="row m-0 p-0 w-100">
         <!--Grid column-->
-        <div class="col-3 ps-5">
+        <div class="col-12 col-md-3 ps-5 py-2">
             <h5 class="text-uppercase ps-1">Newtify Logo</h5>
         </div>
-        <div class="col-2">
+        <div class="col-12 col-md-2 py-2">
             <a class="text-uppercase link-light" href="{{ route('about') }}">About Us</a>
         </div>
-        <div class="col-2">
+        <div class="col-12 col-md-2 py-2">
             <a class="text-uppercase link-light" href="{{ route('guidelines') }}">Guidelines</a>
         </div>
-        <div class="col-2">
+        <div class="col-12 col-md-2 py-2">
             <a class="text-uppercase link-light" href="{{ route('faq') }}">FAQ</a>
         </div>
-        <div class="col-3">
-            <i class="fa fa-facebook me-5 fa-1x" onclick="console.log('cliked')"></i>
-            <i class=" fa fa-twitter me-5 fa-1x" onclick="console.log('cliked')"></i>
-            <i class=" fa fa-instagram me-5 fa-1x" onclick="console.log('cliked')"></i>
+        <div class="col-12 col-md-3 py-2">
+            <a class="fa fa-facebook mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_"></a>
+            <a class="fa fa-twitter mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_"></a>
+            <a class="fa fa-instagram mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_"></a>
         </div>
     </div>
 

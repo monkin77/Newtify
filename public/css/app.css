@@ -646,11 +646,16 @@ option {
 }
 
 #footerContainer {
-    height: 15vh;
+    min-height: 15vh;
 }
 
 #footerContainer #copyrightContainer {
     background-color: var(--bs-gray-900);
+}
+
+.footerIcons {
+    font-size: 2rem;
+    color: var(--bs-light);
 }
 
 /* Horizontal Divider */
@@ -852,6 +857,14 @@ option {
 
 .btn-light-hover:hover {
     filter: brightness(1.25);
+}
+
+.blueLink {
+    color: var(--bs-blue);
+}
+
+.blueLink:hover {
+    color: var(--bs-cyan);
 }
 
 .customBtn {
