@@ -973,4 +973,11 @@ option {
         height: auto;
         margin-right: 2em;
     }
+
+    /* User Profile */
+    #userInfo #userGraphics #avatarImg {
+        height: 70%;
+        aspect-ratio: 1;
+        border-radius: 100em;
+    }
 }
