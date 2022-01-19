@@ -127,7 +127,7 @@
                     @else
                         <div class="nav-item me-5">
                             <a href={{ route('login') }} class="button ms-5 mt-2">Login</a>
-                            <a href={{ route('signup') }} class="button button-secondary mx-4 mt-2">Signup</a>
+                            <a href={{ route('signup') }} class="button button-secondary mx-4 mt-2">Sign Up</a>
                         </div>
                     @endif
                 </div>

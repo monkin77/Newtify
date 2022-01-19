@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="border border-light border-3 text-center bg-secondary container-fluid mt-4 mb-5" id="registerContainer">
+<div class="border border-light text-center border-3 w-50 bg-secondary container-fluid mt-4 mb-5" id="registerContainer">
     <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Sign Up</h2>
-    <form class="form-group" method="post" action="{{ route('signup') }}" enctype="multipart/form-data">
+    <form class="form-group d-flex flex-column align-items-center" method="post" action="{{ route('signup') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <label for="name">Name</label>
         <input name="name" class="w-50 customInput" type="text" id="name" placeholder="Enter name" value="{{ old('name') }}" required autofocus>
@@ -24,23 +24,22 @@
         </span>
         @endif
 
-            <label for="password">Password</label>
-            <input name="password" class="w-50 customInput" type="password" id="password" placeholder="Password" required
-                onkeyup="checkPass('#password')">
-            @if ($errors->has('password'))
-                <br>
-                <span class="text-danger error">
-                    {{ $errors->first('password') }}
-                </span>
-            @endif
+        <label for="password">Password</label>
+        <input name="password" class="w-50 customInput" type="password" id="password" placeholder="Password" required
+            onkeyup="checkPass('#password')">
+        @if ($errors->has('password'))
+            <br>
+            <span class="text-danger error">
+                {{ $errors->first('password') }}
+            </span>
+        @endif
 
-            <label for="password">Confirm Password</label>
-            <div class="">
-                <input name="password_confirmation" class="w-50 customInput" type="password" id="password-confirm"
-                    placeholder="Confirm Password" required onkeyup="checkPass('#password')">
-                <span class="ms-3 mt-2 position-absolute" id="matchingPass"></span>
-            </div>
-
+        <label for="password">Confirm Password</label>
+        <div class="w-100">
+            <input name="password_confirmation" class="w-50 customInput" type="password" id="password-confirm"
+                placeholder="Confirm Password" required onkeyup="checkPass('#password')">
+            <span class="ms-3 mt-2 position-absolute" id="matchingPass"></span>
+        </div>
         <label for="birthDate">Birth Date</label>
         <input name="birthDate" class="customInput" type="date" id="birthDate" value="{{ old('birthDate') }}" required>
         @if ($errors->has('birthDate'))
@@ -51,7 +50,21 @@
         @endif
 
         <label for="country">Country</label>
-        <input name="country" class="w-50 customInput" type="text" id="country" placeholder="Country" value="{{ old('country') }}" required>
+        <div class="d-flex position-relative align-items-center w-50">
+            <select required name='country'
+                value="{{ old('country') }}"
+                placeholder="Country"
+                class="w-100">
+                @foreach ($countries as $country)
+                    <option value="{{ $country['name'] }}"
+                        @if (old('country') == $country['name']) selected @endif
+                    >
+                        {{ $country['name'] }}
+                    </option>
+                @endforeach
+            </select>
+            <i class="fa fa-caret-down fa-1x position-absolute end-0 me-3 mb-4"></i>
+        </div>
         @if ($errors->has('country'))
         <br>
         <span class="text-danger error">

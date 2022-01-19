@@ -84,4 +84,16 @@ class RegisterController extends Controller
             'avatar' => isset($data['avatar']) ? $imgName : null,
         ]);
     }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register', [
+            'countries' => Country::get()
+        ]);
+    }
 }
