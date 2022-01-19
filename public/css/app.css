@@ -115,6 +115,7 @@ option {
 
 #dropdownAvatar {
     border-radius: 2em;
+    width: 100%;
     aspect-ratio: 1;
 }
 
