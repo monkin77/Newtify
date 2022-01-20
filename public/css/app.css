@@ -398,6 +398,11 @@ option {
     border-radius: 100em;
 }
 
+#userInfo #profileRepContainer {
+    width: 25%;
+    min-width: 12.5em;
+}
+
 /* Areas of expertise */
 #areasOfExpertiseContainer {
     width: 50%;

@@ -26,7 +26,7 @@
                     @endif
                 </p>
 
-                <div class="me-3">
+                <div class="m-3">
                     @include('partials.user.reputationBar', [
                         'user' => $author,
                         'guest' => !Auth::check(),

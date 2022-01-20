@@ -63,7 +63,9 @@ $guest = !Auth::check();
                     </div>
                 </div>
                 <div class="col-12 col-md-6 d-flex justify-content-center align-items-center mt-2 mt-md-0">
-                    @include('partials.user.reputationBar', ['user' => $user, 'isOwner' => $isOwner])
+                    <div id="profileRepContainer">
+                        @include('partials.user.reputationBar', ['user' => $user, 'isOwner' => $isOwner])
+                    </div>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ if (!function_exists('calculateReputationLevel')) {
 $guest = !Auth::check();
 @endphp
 
-<div class="d-flex flex-column justify-content-center position-relative flex-grow-1 align-items-center" id="reputationBar">
+<div class="d-flex flex-column justify-content-center position-relative" id="reputationBar">
     <div class="position-relative" id="reputationInside">
         <div class="position-relative" id="bar">
             <div class="position-absolute h-100"
@@ -24,11 +24,11 @@ $guest = !Auth::check();
             </div>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-2 w-100">
-            <h6 class="my-0 py-0 pt-2 ">Reputation: {{ $user['reputation'] }}</h6>
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <h6 class="my-0 py-0">Reputation: {{ $user['reputation'] }}</h6>
             @if (!$guest && !$isOwner)
                 <button class="btn px-2 m-0 btn btn-transparent" onclick="toggleReportPopup()">
-                    <i class="fa fa-exclamation-circle fa-2x" id="reportIcon"></i>
+                    <i class="fa fa-exclamation-circle font-2x" id="reportIcon"></i>
                 </button>
             @endif
         </div>
