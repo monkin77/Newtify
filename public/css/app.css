@@ -207,6 +207,7 @@ option {
 
 #articleBody {
     white-space: pre-line;
+    word-wrap: break-word;
     font-size: large;
 }
 
