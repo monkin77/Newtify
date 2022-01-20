@@ -10,7 +10,7 @@
         /> </a>
     </div>
 
-    <div class="card-block user-card-body d-flex flex-column px-4 py-4">
+    <div class="card-block user-card-body d-flex flex-column justify-content-center px-4 py-4">
         <h4 class="card-title mb-0">
             <a href="/user/{{ $user['id'] }}" class="purpleLink" >{{ $user['name'] }}</a>
         </h4>
@@ -45,13 +45,13 @@
 
     <div class="card-block user-card-right d-flex flex-column align-items-center justify-content-start py-4">
         @if ($user['isAdmin'])
-            <span class="badge rounded-pill bg-custom mb-4"> Admin </span>
+            <span class="badge rounded-pill bg-custom mt-4 mb-4"> Admin </span>
         @endif
 
         <p class="user-card-description mt-4 mb-4">Reputation: {{ $user['reputation'] }}</p>
 
         @foreach ($user['topAreasExpertise'] as $area)
-            <span class="badge bg-primary rounded mb-2">
+            <span class="badge bg-primary rounded mb-3">
                 {{ $area['tag_name'] }}
             </span>
         @endforeach
