@@ -284,6 +284,9 @@ BEGIN
 
     IF (NEW.is_like) THEN
         UPDATE content SET likes = likes + 1 WHERE id = NEW.content_id;
+
+        INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
+        VALUES (author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
     ELSE 
         UPDATE content SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
     END IF;
@@ -298,9 +301,6 @@ BEGIN
 			SELECT tag_id FROM article_tag
     		WHERE article_id=NEW.content_id
 		);
-
-    INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
-    VALUES (author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
 
     RETURN NULL;
 END
