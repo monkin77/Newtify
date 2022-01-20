@@ -126,6 +126,20 @@
         font-size: 1.1em;
         width: 100%;
     }
+
+    /* Authentication */
+    #registerContainer {
+        width: 85%;
+    }
+    #loginContainer {
+        width: 75%;
+    }
+    #forgetPasswordContainer {
+        width: 75%;
+    }
+    #resetPassContainer {
+        width: 75%;
+    }
 }
 
 @media screen and (max-width: 576px) {

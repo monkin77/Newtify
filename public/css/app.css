@@ -814,6 +814,20 @@ option {
     top: 2em;
 }
 
+/* Authentication */
+#registerContainer {
+    width: 50%;
+}
+#loginContainer {
+    width: 25%;
+}
+#forgetPasswordContainer {
+    width: 25%;
+}
+#resetPassContainer {
+    width: 25%;
+}
+
 /* Custom Bootstrap Variables */
 .text-purple {
     color: var(--bs-purple);
