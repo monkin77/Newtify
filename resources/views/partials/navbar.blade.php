@@ -90,16 +90,10 @@
                                 <i class="purpleLink fas fa-plus-circle fa-3x"></i>
                             </a>
                         </label>
-                        <div class="nav-item mx-4 position-relative">
+                        <div class="nav-item mx-5 position-relative">
                             <i class="fas fa-bell" onclick="console.log('Clicked')"
                             data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications"></i>
                             @if ($newNotifications)
-                                <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
-                            @endif
-                        </div>
-                        <div class="nav-item mx-4 position-relative">
-                            <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
-                            @if ($newMessages)
                                 <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
                             @endif
                         </div>

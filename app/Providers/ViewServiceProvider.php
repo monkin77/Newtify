@@ -30,19 +30,14 @@ class ViewServiceProvider extends ServiceProvider
         
         View::composer('partials.navbar', function ($view) {
             $newNotifications = false;
-            $newMessages = false;
 
             if (Auth::check())
             {
                 $newNotifications = Auth::user()->notifications
                     ->where('is_read', false)->count() > 0;
-
-                $newMessages = Auth::user()->receivedMessages
-                    ->where('is_read', false)->count() > 0;
             }
 
-            $view->with('newNotifications', $newNotifications)
-                 ->with('newMessages', $newMessages);
+            $view->with('newNotifications', $newNotifications);
         });
     }
 }

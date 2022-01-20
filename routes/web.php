@@ -89,12 +89,6 @@ Route::get('api/search/articles', 'SearchController@searchArticles');
 Route::get('api/notifications', 'NotificationController@show');
 Route::put('notifications', 'NotificationController@readNotifications');
 
-// Messages
-Route::get('messages', 'MessageController@inbox');
-Route::get('messages/{id}', 'MessageController@messageThread')->where(['id' => '[0-9]+']);
-Route::post('messages/{id}', 'MessageController@create')->where(['id' => '[0-9]+']);
-Route::put('messages/{id}', 'MessageController@readMessages')->where(['id' => '[0-9]+']);
-
 // Static Pages
 Route::get('about', 'StaticPagesController@getAboutUs')->name('about');
 Route::get('guidelines', 'StaticPagesController@getGuidelines')->name('guidelines');
