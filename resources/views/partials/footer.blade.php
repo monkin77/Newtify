@@ -2,8 +2,8 @@
     <!--Grid row-->
     <div class="row m-0 p-0 w-100">
         <!--Grid column-->
-        <div class="col-12 col-md-3 ps-5 py-2">
-            <h5 class="text-uppercase ps-1">Newtify Logo</h5>
+        <div class="col-12 col-md-3 ps-md-5 py-2">
+            <h5 class="text-uppercase">Newtify Logo</h5>
         </div>
         <div class="col-12 col-md-2 py-2">
             <a class="text-uppercase link-light" href="{{ route('about') }}">About Us</a>
