@@ -8,7 +8,8 @@ const toggleElem = (elem) => {
 function addEventListeners() {
 
   const articleFilter = select('#filterSection');
-  articleFilter.addEventListener('change', filterArticles);
+  if (articleFilter)
+    articleFilter.addEventListener('change', filterArticles);
 
   const submitButtons = selectAll('.submit');
   [].forEach.call(submitButtons, function(checker) {

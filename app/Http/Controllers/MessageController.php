@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Message;
+use App\Models\MessageNotification;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -130,6 +131,12 @@ class MessageController extends Controller
         $message->sender_id = Auth::id();
         $message->receiver_id = $id;
         $message->save();
+
+        MessageNotification::notify(
+            $message->receiver_id,
+            $user,
+            $message
+        );
 
         return Response()->json([
             'status' => 'OK',
