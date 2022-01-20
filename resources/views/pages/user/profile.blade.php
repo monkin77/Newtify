@@ -10,7 +10,7 @@ $guest = !Auth::check();
 @section('userInfo')
     <section id="userInfo">
         <div class="container-fluid py-3">
-            <div class="row w-100 mt-5" id="userGraphics">
+            <div class="row w-100 mt-4 mt-md-5" id="userGraphics">
                 <div class="col-5 col-md-6 d-flex justify-content-center align-items-center h-100">
                     <img src="{{ isset($user['avatar']) ? asset('storage/avatars/' . $user['avatar']) : $userImgPHolder }}"
                         id="avatarImg" onerror="this.src='{{ $userImgPHolder }}'" />
@@ -22,7 +22,7 @@ $guest = !Auth::check();
                     </div>
                 </div>
             </div>
-            <div class="row w-100 mt-5 mb-4">
+            <div class="row w-100 my-4 mt-md-5">
                 <div class="col-5 col-md-6 d-flex justify-content-center align-items-center position-relative">
                     <h2 class="text-center my-0 py-0">{{ $user['name'] }}</h2>
                     @if ($user['isAdmin'])
@@ -73,8 +73,8 @@ $guest = !Auth::check();
 {{-- ------------------------------------------------------------------------------------ --}}
 
 @section('articles')
-    <section class="container-fluid w-100 d-flex flex-column align-items-center my-2">
-        <div class="position-relative w-100 d-flex justify-content-center mb-4" id="userArticles">
+    <section class="container-fluid w-100 d-flex flex-column align-items-center my-2 ">
+        <div class="position-relative w-100 d-flex justify-content-center align-items-center mb-2 mb-md-4" id="userArticles">
             <h2 class="border-bottom border-2 border-light text-center pb-2" id="articlesTitle">Articles</h2>
         </div>
         <div id="articles">
