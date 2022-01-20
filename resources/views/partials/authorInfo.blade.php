@@ -14,7 +14,7 @@
             </div>
             <div class="w-75 pb-0" id="authorHeader">
                 <a href="{{ route('userProfile', ['id' => $author['id']]) }}">
-                    <h4 class="m-3"> {{ $author['name'] }} </h4>
+                    <h4 class="m-3">{{ $author['name'] }}</h4>
                 </a>
                 
                 <p class="m-3">
@@ -26,7 +26,7 @@
                     @endif
                 </p>
 
-                <div class="m-3">
+                <div class="me-3">
                     @include('partials.user.reputationBar', [
                         'user' => $author,
                         'guest' => !Auth::check(),
