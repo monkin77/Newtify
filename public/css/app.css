@@ -16,7 +16,7 @@ input[class*="customInput"] {
 }
 
 option {
-    color: black;
+    color: white;
 }
 
 /* Navbar */
@@ -524,6 +524,10 @@ option {
 }
 
 /* Edit Profile */
+#editProfileContainer #editProfileForm {
+    width: 75%;
+}
+
 #editProfileContainer #editAvatarContainer {
     height: 25vh;
 }
@@ -544,6 +548,7 @@ option {
     border: 2px var(--bs-light) solid;
     height: 4em;
     background-color: inherit;
+    width: 75%;
 }
 
 #editProfileContainer .caretDown {
@@ -554,7 +559,6 @@ option {
 #editProfileContainer #countryInputContainer {
     border: 2px var(--bs-light) solid;
     height: 3em;
-    min-width: 10em;
 }
 
 #editProfileContainer #favTagsBtn {

@@ -14,7 +14,7 @@ $isOpen = $errors->has('password');
 @section('content')
     <section id="editProfileContainer">
         <form name="profileForm" method="POST" enctype="multipart/form-data"
-            action="{{ route('editProfile', ['id' => $user['id']]) }}" class="container-fluid py-3 w-75">
+            action="{{ route('editProfile', ['id' => $user['id']]) }}" class="container-fluid py-3" id="editProfileForm">
             @method('put')
             @csrf
 
@@ -33,56 +33,52 @@ $isOpen = $errors->has('password');
             </div>
 
             <div class="row w-100 mt-3">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="row w-100">
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="h2 pb-3 my-0" for="nameInput">Username</label>
-                                <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
-                                    class="h3 editInputs w-75" id="nameInput" name='name' />
-                                @if ($errors->has('name'))
-                                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
-                                        <p class="">{{ $errors->first('name') }}</p>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="col-6">
-                                <label class="h2 pb-3 my-0" for="birthDateInput">Birth Date</label>
-                                <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
-                                    class="w-75 h3 editInputs py-4 px-3" id="birthDateInput" name='birthDate' />
-                                @if ($errors->has('birthDate'))
-                                    <div class="alert alert-danger ms-3 w-100 text-center py-1" role="alert">
-                                        <p class="">{{ $errors->first('birthDate') }}</p>
-                                    </div>
-                                @endif
-                            </div>
+                        <div class="col-6">
+                            <label class="h2 pb-3 my-0" for="nameInput">Username</label>
+                            <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
+                                class="h3 editInputs" id="nameInput" name='name' />
+                            @if ($errors->has('name'))
+                                <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                                    <p class="">{{ $errors->first('name') }}</p>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-6">
+                            <label class="h2 pb-3 my-0" for="birthDateInput">Birth Date</label>
+                            <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
+                                class="h3 editInputs py-4 px-2 px-md-3" id="birthDateInput" name='birthDate' />
+                            @if ($errors->has('birthDate'))
+                                <div class="alert alert-danger ms-3 w-100 text-center py-1" role="alert">
+                                    <p class="">{{ $errors->first('birthDate') }}</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="row w-100 mt-4">
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="h2 pb-3 my-0" for="countryInput">Country</label>
-                                <div class="d-flex position-relative align-items-center h2 w-50" id='countryInputContainer'>
-                                    <select required name='country'
-                                        value="{{ old('country') ? old('country') : $user['country']['name'] }}"
-                                        id="countryInput" size=1 class="my-0 border-0 h3">
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country['name'] }}" @if (old('country') ? old('country') == $country['name'] : $user['country']['id'] == $country['id'])
-                                                selected
-                                        @endif>
-                                        {{ $country['name'] }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    <i class="fa fa-caret-down fa-1x position-absolute caretDown"></i>
-                                </div>
+                        <div class="col-6">
+                            <label class="h2 pb-3 my-0" for="countryInput">Country</label>
+                            <div class="d-flex position-relative align-items-center h2 editInputs" id='countryInputContainer'>
+                                <select required name='country'
+                                    value="{{ old('country') ? old('country') : $user['country']['name'] }}"
+                                    id="countryInput" size=1 class="my-0 border-0 h3">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country['name'] }}" @if (old('country') ? old('country') == $country['name'] : $user['country']['id'] == $country['id'])
+                                            selected
+                                    @endif>
+                                    {{ $country['name'] }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                <i class="fa fa-caret-down fa-1x position-absolute caretDown"></i>
                             </div>
-                            <div class="col-6">
-                                <label class="h2 pb-3 my-0" for="cityInput">City</label>
-                                <input type="text" value="{{ old('city') ? old('city') : $user['city'] }}"
-                                    class="w-75 h3 editInputs" id="cityInput" name='city' />
+                        </div>
+                        <div class="col-6">
+                            <label class="h2 pb-3 my-0" for="cityInput">City</label>
+                            <input type="text" value="{{ old('city') ? old('city') : $user['city'] }}"
+                                class="h3 editInputs" id="cityInput" name='city' />
 
-                            </div>
                         </div>
                         @if ($errors->has('country'))
                             <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
@@ -96,7 +92,7 @@ $isOpen = $errors->has('password');
                         @endif
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
                     <label class="h2 mb-3" for="tagsInput">Favorite Tags</label>
 
                     <select id="favoriteTags" name="favoriteTags[]" multiple>
@@ -149,7 +145,7 @@ $isOpen = $errors->has('password');
                         </div>
                     @endif
                     <label for="currPassInput" class="form-label mt-4">Change Password</label>
-                    <div class="d-flex align-items-end">
+                    <div class="d-flex align-items-end flex-wrap">
                         <div class="me-5">
                             <div class="form-text">Current Password</div>
                             <input type="password" required class="w-auto h4 editInputs" id="currPassInput" name='password'
@@ -167,7 +163,7 @@ $isOpen = $errors->has('password');
                                 onkeyup="checkPass('#newPassInput')">
                             <span class="ms-2" id="matchingPass"></span>
                         </div>
-                        <button class="mb-4" type="submit">Change</button>
+                        <button class="mt-2 mt-md-0 mb-4" type="submit">Change</button>
                     </div>
                     @if ($errors->has('new_password'))
                         <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
@@ -180,7 +176,7 @@ $isOpen = $errors->has('password');
                     @method('put')
                     @csrf
                     <label for="emailPassInput" class="form-label mt-4">Change Email</label>
-                    <div class="d-flex align-items-end">
+                    <div class="d-flex align-items-end flex-wrap">
                         <div class="me-5">
                             <div class="form-text">Current Password</div>
                             <input type="password" autocomplete="new-password" required class="w-auto h4 editInputs"

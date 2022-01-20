@@ -113,6 +113,19 @@
         top: -10px;
         right: 0;
     }
+
+    /* Edit Profile */
+    #editProfileContainer #editProfileForm {
+        width: 95%;
+    }
+
+    #editProfileContainer .editInputs {
+        border: 2px var(--bs-light) solid;
+        height: 3em;
+        background-color: inherit;
+        font-size: 1.1em;
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 576px) {
