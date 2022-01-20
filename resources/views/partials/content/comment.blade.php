@@ -1,13 +1,11 @@
 <div id="comment_{{$comment['id']}}"
-@if ($isReply)
-    class="d-flex justify-content-end w-75"
-@endif
+    class="d-flex justify-content-end articleCommentPartial"
 >
 @if ($isReply)
     <div class="child-comment">
 @endif
-    <div class="d-flex flex-row mx-0 my-3 p-0 {{ $isReply ? 'w-100' : 'w-75' }}"> 
-        <div class="flex-column h-100 commentHeader mx-5">
+    <div class="d-flex flex-row mx-0 my-3 p-0 w-100"> 
+        <div class="flex-column h-100 commentHeader mx-3 mx-md-5">
             <a
             @if (isset($comment['author']))
                 href="/user/{{ $comment['author']['id'] }}"

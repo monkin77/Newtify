@@ -146,6 +146,14 @@
     }
 
     /* Article */
+    .article-container {
+        width: 90%;
+    }
+
+    .article-container #articleContentContainer {
+        min-height: 60vh;
+    }
+
     #articleTitle {
         font-size: 2.1em;
     }
@@ -161,6 +169,19 @@
 
     .articleInfoContainer #articleImg {
         max-width: 75%;
+    }
+
+    #articleBody {
+        white-space: pre-line;
+        font-size: medium;
+    }
+
+    #comments-section #articleCommentsContainer {
+        width: 100%;
+    }
+
+    .articleCommentPartial {
+        width: 100%;
     }
 }
 
