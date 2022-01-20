@@ -310,10 +310,21 @@ class UserController extends Controller
 
         $this->authorize('followed', $user);
 
-        $followedUsers = $user->following->map(fn ($user) => $user
-            ->only('id', 'name', 'avatar', 'country', 'city', 'reputation', 'isSuspended'));
+        $followedUsers = $user->following->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'avatar' => $user->avatar,
+                'country' => $user->country->getInfo(),
+                'isAdmin' => $user->is_admin,
+                'topAreasExpertise' => $user->topAreasExpertise(),
+                'city' => $user->city,
+                'reputation' => $user->reputation,
+                'isSuspended' => $user->is_suspended
+            ];
+        });
 
-        return view('pages.followed_users', [
+        return view('pages.user.followedUsers', [
             'users' => $followedUsers,
         ]);
     }

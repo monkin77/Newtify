@@ -47,9 +47,11 @@ $guest = !Auth::check();
                             @endif
                         @endif
                     @endif
-                    <i class="fa fa-users font-2x mx-3 text-primary"
-                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Follower Count"></i>
-                    <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
+                    <a href=" {{ route('followedUsers', $user['id']) }}">
+                        <i class="fa fa-users font-2x mx-3 text-primary"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Follower Count"></i>
+                        <p class="h5 text-center py-0 my-0" id="followersCount">{{ $followerCount }}</p>
+                    </a>
                 </div>
             </div>
             <div class="row w-100 my-2">

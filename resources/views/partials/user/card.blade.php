@@ -16,15 +16,18 @@
         </h4>
 
         <p class="user-card-location">
-            &#{{ $user['country']['flag'][0] }}&#{{ $user['country']['flag'][1] }}
+            @if (isset($user['country']))
+                &#{{ $user['country']['flag'][0] }}&#{{ $user['country']['flag'][1] }}
+            @endif
             @if (isset($user['city']))
                 {{ $user['city'] }}, {{ $user['country']['name'] }}
             @else
                 {{ $user['country']['name'] }}
             @endif
         </p>
-
-        <p class="user-card-description">{{ mb_strimwidth($user['description'], 0, 300, "...") }} </p>
+        @if (isset($user['description']))
+            <p class="user-card-description">{{ mb_strimwidth($user['description'], 0, 300, "...") }} </p>
+        @endif
     </div>
 
     <div class="card-block user-card-right d-flex flex-column align-items-center justify-content-start py-4">
