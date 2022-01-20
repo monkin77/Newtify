@@ -10,7 +10,7 @@
 @section('article')
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
 
-        <div class="d-flex flex-row my-2 h-100" style="min-height: 65vh">
+        <div id="articleContentContainer" class="d-flex flex-row my-2 h-100">
             
             <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-white" >
 
@@ -27,7 +27,7 @@
                     @if ($isAuthor || $isAdmin)
                         <div id="articleButtons" class="d-flex align-items-center">
                             @if ($isAuthor)
-                                <a href="{{ route('editArticle', ['id' => $article['id']])}}" class="fas fa-edit article-button darkPurpleLink me-4">
+                                <a href="{{ route('editArticle', ['id' => $article['id']])}}" class="fas fa-edit fa-2x darkPurpleLink me-4">
                                 </a>
                             @endif
 
@@ -42,14 +42,14 @@
                                     onclick="confirmDeletion({{$article['id']}}, () => document.deleteArticleForm.submit())"
                                     class="btn btn-transparent my-0"
                                 >
-                                    <i class="fas fa-trash article-button text-danger"></i>
+                                    <i class="fas fa-trash fa-2x text-danger"></i>
                                 </button>
                             @endif
                         </div>
                     @endif
                 </div>
 
-                <p class="flex-row mt-3 mb-1 h-25">
+                <p class="flex-row mt-3 mb-1">
 
                     @foreach ($tags as $tag)
                         @include('partials.tag', ['tag' => $tag ])
@@ -105,9 +105,9 @@
                 @endif
 
                 @if (isset($article['thumbnail']))
-                    <div class="flex-row h-50 mb-5 text-center">
-                        <img class="h-100 w-50" src="{{ asset('storage/thumbnails/' . $article['thumbnail']) }}"
-                            onerror="this.src='{{ $articleImgPHolder }}'">
+                    <div class="h-50 mb-5 text-center">
+                        <img src="{{ asset('storage/thumbnails/' . $article['thumbnail']) }}"
+                            onerror="this.src='{{ $articleImgPHolder }}'" id="articleImg">
                     </div>
                 @endif
 
@@ -117,7 +117,7 @@
 
             </div>
 
-            <div class="author-container flex-col me-4 mt-4 p-3 text-black rounded">
+            <div class="d-none d-md-block author-container me-4 mt-4 p-3 text-black rounded">
                 @include('partials.authorInfo', [
                     'author' => $author,
                     'isOwner' => $isAuthor

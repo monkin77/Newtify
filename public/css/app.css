@@ -214,10 +214,6 @@ option {
     min-width: 20%;
 }
 
-.article-button {
-    font-size: 2em;
-}
-
 #load-more {
     text-align: center;
 }
@@ -250,6 +246,10 @@ option {
     width: 85%;
 }
 
+.article-container #articleContentContainer {
+    min-height: 65vh;
+}
+
 .article-container h1,
 .article-container h2,
 .article-container h3,
@@ -272,6 +272,10 @@ option {
 .articleInfoContainer #publishedAt {
     font-size: 1.2em;
     width: 25%;
+}
+
+.articleInfoContainer #articleImg {
+    max-width: 60%;
 }
 
 .author-container {
@@ -442,7 +446,7 @@ option {
 
 #reputationBar #bar {
     background-color: gray;
-    width: 15em;
+    max-width: 15em;
     height: 1.5em;
     border-radius: 0.7em;
 }
@@ -901,10 +905,10 @@ option {
     font-size: 0.9em;
 }
 
-.icon-1x {
+.font-1x {
     font-size: 1em;
 }
-.icon-2x {
+.font-2x {
     font-size: 2em;
 }
 .icon-3x {
