@@ -3,14 +3,13 @@
 @section('scripts')
     <script type="text/javascript" src="{{ asset('js/comments.js') }}"> </script>
     <script type="text/javascript" src="{{ asset('js/content.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
     <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 @endsection
 
 @section('article')
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
 
-        <div id="articleContentContainer" class="d-flex flex-row my-2 h-100">
+        <div id="articleContentContainer" class="d-flex flex-row my-2 h-100 position-relative">
             
             <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-white" >
 
@@ -123,7 +122,6 @@
                     'isOwner' => $isAuthor
                 ])
             </div>
-
         </div>
 
         <div class="d-flex flex-column" id="comments-section">
@@ -166,6 +164,13 @@
 
             </div>
 
+        </div>
+
+        <div class="d-block d-md-none author-container m-auto rounded position-relative">
+            @include('partials.authorInfo', [
+                'author' => $author,
+                'isOwner' => $isAuthor
+            ])
         </div>
     </div>
 @endsection

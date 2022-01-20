@@ -1,6 +1,6 @@
 @if (isset($author))
 
-    <div class="d-flex flex-column py-1" id="authorDetails">
+    <div class="d-flex flex-column px-2 px-md-0 py-1" id="authorDetails">
         <h2 class="py-0 my-0 h-25">Author</h2>
 
         <div class="d-flex flex-row pt-3 h-75">

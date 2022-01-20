@@ -82,3 +82,4 @@ const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     delay: { show: 500, hide: 100 },
   })
 })
+

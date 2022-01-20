@@ -1,15 +1,18 @@
 @php
-function calculateReputationLevel($reputation)
-{
-    $isPositive = $reputation >= 0;
-    $absReputation = abs($reputation);
+if (!function_exists('calculateReputationLevel')) {
+    function calculateReputationLevel($reputation)
+    {
+        $isPositive = $reputation >= 0;
+        $absReputation = abs($reputation);
 
-    if ($absReputation <= 90) {
-        return 10 + $absReputation;
+        if ($absReputation <= 90) {
+            return 10 + $absReputation;
+        }
+
+        return 100;
     }
-
-    return 100;
 }
+
 $guest = !Auth::check();
 @endphp
 
