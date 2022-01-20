@@ -10,7 +10,7 @@ function followUserHandler() {
     const res = JSON.parse(this.responseText);
     if (res.status == 'OK') {
         const button = select('#followBtn');
-        button.className = "btn btn-secondary px-5 my-0 py-0 me-3";
+        button.className = "btn btn-secondary px-md-5 my-0 py-0 mx-3";
         button.innerHTML = 'Unfollow';
         button.onclick = () => unfollowUser(res.id);
         select('#followersCount').innerHTML++;
@@ -21,7 +21,7 @@ function unfollowUserHandler() {
     const res = JSON.parse(this.responseText);
     if (res.status == 'OK') {
         const button = select('#followBtn');
-            button.className = "btn btn-primary px-5 my-0 py-0 me-3";
+            button.className = "btn btn-primary px-md-5 my-0 py-0 mx-3";
             button.innerHTML = 'Follow';
             button.onclick = () => followUser(res.id);
             select('#followersCount').innerHTML--;
