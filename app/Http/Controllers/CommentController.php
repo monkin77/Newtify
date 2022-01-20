@@ -46,11 +46,14 @@ class CommentController extends Controller
         $comment->content_id = $content->id;
         $comment->article_id = $request->article_id;
 
-        $author_id = Article::find($request->article_id)->author->id;
+        // TODO: Test this
+        $articleAuthor = Article::find($request->article_id)->author;
+        $author_id = isset($articleAuthor) ? $articleAuthor->id : null;
 
         if (isset($request->parent_comment_id)) {
             $comment->parent_comment_id = $request->parent_comment_id;
-            $author_id = Comment::find($request->parent_comment_id)->author->id;
+            $parentAuthor = Comment::find($request->parent_comment_id)->author;
+            $author_id = isset($parentAuthor) ? $parentAuthor->id : null;
         }
 
         $comment->save();

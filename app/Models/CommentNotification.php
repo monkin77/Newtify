@@ -19,7 +19,7 @@ class CommentNotification extends Notification
 
     public static function notify($receiver_id, $comment, $user, $article)
     {
-        if ($receiver_id == $user['id'])
+        if (!isset($receiver_id) || $receiver_id == $user['id'])
             return;
 
         if (isset($comment['parent_comment_id']))

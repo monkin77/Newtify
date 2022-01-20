@@ -32,15 +32,19 @@ class NotificationController extends Controller
                 $info = [
                     'type' => $notification->type,
                     'is_read' => $notification->is_read,
-                    'diff' => $timeDiff,
+                    'time' => $timeDiff,
                 ];
 
                 if ($notification->type === "COMMENT")
                 {
                     $notification = CommentNotification::find($notification->id);
 
-                    if (isset($notification->comment->parent_comment_id))
+                    if (isset($notification->comment->parent_comment_id)) {
                         $info['type'] = 'REPLY';
+                        $info['header'] = "New reply to one of your comments";
+                    } else {
+                        $info['header'] = "New comment in one of your articles";
+                    }
 
                     $info['username'] = $notification->comment->author->name;
                     $info['avatar'] = $notification->comment->author->avatar;
@@ -52,9 +56,9 @@ class NotificationController extends Controller
                 {
                     $notification = FeedbackNotification::find($notification->id);
 
-                    $info['username'] = $notification->content->author->name;
+                    $info['username'] = $notification->feedback_giver->name;
                     $info['avatar'] = $notification->content->author->avatar;
-                    $info['user_id'] = $notification->content->author->id;
+                    $info['user_id'] = $notification->fb_giver;
 
                     $content = Article::find($notification->rated_content);
                     if (isset($content))
@@ -62,6 +66,7 @@ class NotificationController extends Controller
                         $info['type'] = 'ARTICLE_LIKE';
                         $info['article_id'] = $content->id;
                         $info['article_title'] = $content->title;
+                        $info['header'] = "New like in one of your articles";
                     } else
                     {
                         $content = Comment::find($notification->rated_content);
@@ -69,6 +74,7 @@ class NotificationController extends Controller
                         $info['article_id'] = $content->article_id;
                         $info['article_title'] = $content->article->title;
                         $info['comment_body'] = mb_strimwidth($content->body, 0, 103, "...");
+                        $info['header'] = "New like in one of your comments";
                     }
                 }
 
@@ -103,23 +109,35 @@ class NotificationController extends Controller
 
     private function formatTimeDiff($diff)
     {
-        $res = $diff->format('%y');
-        if ($res > 0) return $res;
+        $res = $diff->format('%y years ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%y year ago');
+        if ($res[0] > '0') return $res;
 
-        $res = $diff->format('%m');
-        if ($res > 0) return $res;
+        $res = $diff->format('%m months ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%m month ago');
+        if ($res[0] > '0') return $res;
 
-        $res = $diff->format('%d');
-        if ($res > 0) return $res;
+        $res = $diff->format('%d days ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%d day ago');
+        if ($res[0] > '0') return $res;
 
-        $res = $diff->format('%h');
-        if ($res > 0) return $res;
+        $res = $diff->format('%h hours ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%h hour ago');
+        if ($res[0] > '0') return $res;
 
-        $res = $diff->format('%i');
-        if ($res > 0) return $res;
+        $res = $diff->format('%i minutes ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%i minute ago');
+        if ($res[0] > '0') return $res;
 
-        $res = $diff->format('%s');
-        if ($res > 0) return $res;
+        $res = $diff->format('%s seconds ago');
+        if ($res[0] === '1')
+            $res = $diff->format('%s second ago');
+        if ($res[0] > '0') return $res;
 
         return "just now";
     }

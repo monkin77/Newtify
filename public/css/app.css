@@ -998,6 +998,13 @@ option {
 
 #notificationPanel {
     z-index: 1;
+    max-height: 90vh;
+    overflow-y: scroll;
+}
+
+.notificationPanelItem {
+    min-width: 0 !important;
+    width: inherit;
 }
 
 /* Notification Toasts */
