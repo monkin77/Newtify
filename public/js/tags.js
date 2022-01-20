@@ -98,7 +98,7 @@ const tagHandler = (elem, id, action) => function() {
 
 function replaceTagContainer(responseText, btnFunction, id, icon, iconColor, containerId) {
     const tagContainer = document.createElement('div');
-    tagContainer.classList.add("mt-5", "pb-3", "pt-5", "bg-light", "mb-5", "manageTagContainer");
+    tagContainer.classList.add("y-5", "pb-3", "pt-5", "bg-dark", "manageTagContainer");
 
     const subdiv = document.createElement('div');
     subdiv.id = "stateButton";

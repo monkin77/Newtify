@@ -51,7 +51,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:authenticated_user',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
             // Minimum: 12 years old
             'birthDate' => 'required|string|date_format:Y-m-d|before:'.date('Y-m-d', strtotime('-12 years')),
             'country' => 'required|string|exists:country,name',
