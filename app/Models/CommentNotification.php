@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Events\Comment;
+use App\Events\Comment as CommentEvent;
 use App\Events\CommentReply;
 
 class CommentNotification extends Notification
@@ -31,7 +31,7 @@ class CommentNotification extends Notification
         }
         else
         {
-            event(new Comment(
+            event(new CommentEvent(
                 $receiver_id, $user['name'], asset('storage/avatars/'.$user['avatar'])
                 , $user->id, $article['id'], $article['title'], $comment['body']
             ));
