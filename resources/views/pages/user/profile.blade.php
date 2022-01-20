@@ -82,6 +82,11 @@ $guest = !Auth::check();
             <h2 class="border-bottom border-2 border-light text-center pb-2" id="articlesTitle">Articles</h2>
         </div>
         <div id="articles">
+            @if ($articles->isEmpty()) 
+                <div class="alert alert-secondary mb-0 text-center mb-5" role="alert">
+                    <h3 class="my-3 text-white">User didn't post any Article</h3>
+                </div>
+            @endif
             @include('partials.content.articles', ['articles' => $articles])
         </div>
     </section>
