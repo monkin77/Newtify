@@ -23,10 +23,10 @@ $guest = !Auth::check();
                 </div>
             </div>
             <div class="row w-100 mt-5 mb-4">
-                <div class="col-5 col-md-6 d-flex justify-content-center align-items-center">
+                <div class="col-5 col-md-6 d-flex justify-content-center align-items-center position-relative">
                     <h2 class="text-center my-0 py-0">{{ $user['name'] }}</h2>
                     @if ($user['isAdmin'])
-                        <span class="badge rounded-pill ms-3 bg-custom">Admin</span>
+                        <span id="adminBadge" class="badge rounded-pill ms-3 bg-custom">Admin</span>
                     @endif
                 </div>
                 <div class="col-7 col-md-6 d-flex justify-content-center align-items-center">
@@ -51,18 +51,18 @@ $guest = !Auth::check();
                 </div>
             </div>
             <div class="row w-100 my-2">
-                <div class="col-6 d-flex flex-column align-items-center">
-                    <div class="d-flex align-items-center mb-3">
+                <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+                    <div class="d-flex align-items-center my-2 my-md-0 mb-3">
                         <i class="fa fa-birthday-cake me-3 fa-1x" onclick="console.log('cliked')"></i>
                         <h5 class="mb-0">{{ $birthDate . ' (' . $age . ')' }}</h5>
                     </div>
-                    <div class="d-flex align-items-center mb-3">
+                    <div class="d-flex align-items-center my-2 my-md-0 mb-3">
                         &#{{ $user['country']['flag'][0] }}&#{{ $user['country']['flag'][1] }}
                         <h5 class="mb-0 ms-3">
                             {{ (is_null($user['city']) ? '' : $user['city'] . ', ') . $user['country']['name'] }}</h5>
                     </div>
                 </div>
-                <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-6 d-flex justify-content-center align-items-center mt-2 mt-md-0">
                     @include('partials.user.reputationBar', ['user' => $user, 'isOwner' => $isOwner])
                 </div>
             </div>
