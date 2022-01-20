@@ -46,9 +46,9 @@
                         </ul>
                     </div>
                 @else
-                    <div class="nav-item me-5">
-                        <a href={{ route('login') }} class="button ms-5 mt-2">Login</a>
-                        <a href={{ route('signup') }} class="button button-secondary mx-4 mt-2">Signup</a>
+                    <div class="nav-item">
+                        <a href={{ route('login') }} class="button my-0 px-3 me-3">Login</a>
+                        <a href={{ route('signup') }} class="button my-0 px-3 me-3 button-secondary">Signup</a>
                     </div>
                 @endif
             </div>
