@@ -994,7 +994,13 @@ option {
     color: black;
 }
 
-/* Notification toasts */
+/* Notification Panel */
+
+#notificationPanel {
+    z-index: 1;
+}
+
+/* Notification Toasts */
 
 .toast-container {
     z-index: 1;

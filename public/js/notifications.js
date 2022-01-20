@@ -38,3 +38,24 @@ const createNotification = (headerHTML, bodyHTML) => {
 
     bootstrap.Toast.getOrCreateInstance(toast).show();
 }
+
+function notificationPanelHandler() {
+    if (this.status == 403) {
+        window.location = '/login';
+        return;
+    }
+    if (this.status != 200) return; // Keep the panel as it is
+
+    const panel = select("#notificationPanel");
+    panel.innerHTML = this.responseText;
+
+    const circle = select("#newNotificationsCircle");
+    if (circle) circle.remove();
+}
+
+const fetchNotifications = () => {
+    sendAjaxRequest('get', 'api/notifications', null, notificationPanelHandler);
+
+    // Mark notifications as read
+    sendAjaxRequest('put', 'notifications', null, null);
+}
