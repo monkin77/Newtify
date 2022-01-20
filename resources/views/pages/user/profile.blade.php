@@ -31,10 +31,15 @@ $guest = !Auth::check();
                 </div>
                 <div class="col-7 col-lg-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)
-                        <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle"
-                        data-bs-toggle="tooltip" data-bs-placement="left" title="Edit Profile">
-                            <a class="fa fa-pencil font-3x darkPurpleLink" href="/user/{{ $user['id'] }}/edit"></a>
+                        <button type="button" class="btn transparentButton my-0 py-0 me-2 rounded-circle"
+                        data-bs-toggle="tooltip" data-bs-placement="left" title="Edit Profile">>
+                            <a class="fa fa-pencil fa-3x darkPurpleLink" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
+                        <form method="GET" class="m-0 p-0 mx-3" action="{{ route('followedUsers', $user['id']) }}">
+                            <button type="submit" class="btn btn-primary my-0 py-0" >
+                                Followed Users
+                            </button>
+                        </form>
                     @else
                         @if (!$guest)
                             <i class="fa fa-comment-dots me-3 text-purple-dark font-2x" onclick="console.log('clicked')"></i>

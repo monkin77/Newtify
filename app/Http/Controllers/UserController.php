@@ -320,7 +320,8 @@ class UserController extends Controller
                 'topAreasExpertise' => $user->topAreasExpertise(),
                 'city' => $user->city,
                 'reputation' => $user->reputation,
-                'isSuspended' => $user->is_suspended
+                'isSuspended' => $user->is_suspended,
+                'followed' => true,
             ];
         });
 

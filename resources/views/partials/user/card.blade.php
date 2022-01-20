@@ -1,5 +1,5 @@
 <div class="card user-card flex-row flex-wrap mb-3 bg-secondary">
-    <div class="user-card-avatar px-2 py-2 text-center">
+    <div class="user-card-avatar px-4 py-4 text-center">
         <a href="/user/{{ $user['id'] }}">
         <img src="{{
                 isset($user['avatar']) ?
@@ -15,7 +15,7 @@
             <a href="/user/{{ $user['id'] }}" class="purpleLink" >{{ $user['name'] }}</a>
         </h4>
 
-        <p class="user-card-location">
+        <p class="user-card-location py-1 m-0">
             @if (isset($user['country']))
                 &#{{ $user['country']['flag'][0] }}&#{{ $user['country']['flag'][1] }}
             @endif
@@ -25,6 +25,19 @@
                 {{ $user['country']['name'] }}
             @endif
         </p>
+
+        @if ($user['followed'])
+            <div class="w-25 mb-2">
+                <button type="button" class="btn btn-primary my-0 py-0 me-3" id="followBtn"
+                    onclick="shortcutUnfollowUser(this, {{ $user['id'] }})">Following</button>
+            </div>
+        @else
+            <div class="w-25 mb-2">
+                <button type="button" class="btn btn-primary my-0 py-0 me-3" id="followBtn"
+                    onclick="shortcutFollowUser(this, {{ $user['id'] }})">Follow</button>
+            </div>
+        @endif
+
         @if (isset($user['description']))
             <p class="user-card-description">{{ mb_strimwidth($user['description'], 0, 300, "...") }} </p>
         @endif
