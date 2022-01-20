@@ -14,3 +14,4 @@ trigger.sql
 *.vscode
 *.local
 *.git-old
+nohup.out

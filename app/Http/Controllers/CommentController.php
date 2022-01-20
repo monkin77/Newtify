@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\Article;
 use App\Models\Comment;
 use App\Models\CommentNotification;
 use Illuminate\Http\Request;
@@ -45,15 +46,19 @@ class CommentController extends Controller
         $comment->content_id = $content->id;
         $comment->article_id = $request->article_id;
 
-        if (isset($request->parent_comment_id))
+        $author_id = Article::find($request->article_id)->author->id;
+
+        if (isset($request->parent_comment_id)) {
             $comment->parent_comment_id = $request->parent_comment_id;
+            $author_id = Comment::find($request->parent_comment_id)->author->id;
+        }
 
         $comment->save();
         // Refresh model instance
         $comment = Comment::find($content->id);
 
         CommentNotification::notify(
-            $comment->author->id,
+            $author_id,
             $comment,
             Auth::user(),
             $comment->article

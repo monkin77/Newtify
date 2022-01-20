@@ -317,7 +317,8 @@ option {
     min-height: 4rem;
     max-height: 25rem;
     resize: vertical;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-wrap: break-word;
 }
 
 .commentBodyContainer {
@@ -991,4 +992,15 @@ option {
 .susContainer {
     background-color: blanchedalmond;
     color: black;
+}
+
+/* Notification toasts */
+
+.toast-container {
+    z-index: 1;
+}
+
+.toast {
+    min-width: 30vw;
+    font-size: inherit;
 }

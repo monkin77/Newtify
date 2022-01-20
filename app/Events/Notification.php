@@ -17,17 +17,19 @@ abstract class Notification implements ShouldBroadcast
     protected $receiver_id;
     public $username;
     public $avatar;
+    public $user_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($receiver_id, $username, $avatar)
+    public function __construct($receiver_id, $username, $avatar, $user_id)
     {
         $this->receiver_id = $receiver_id;
         $this->username = $username;
         $this->avatar = $avatar;
+        $this->user_id = $user_id;
     }
 
     /**

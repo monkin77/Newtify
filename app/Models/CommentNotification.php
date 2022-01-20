@@ -19,17 +19,21 @@ class CommentNotification extends Notification
 
     public static function notify($receiver_id, $comment, $user, $article)
     {
+        if ($receiver_id == $user['id'])
+            return;
 
         if (isset($comment['parent_comment_id']))
         {
             event(new CommentReply(
-                $receiver_id, $user['name'], $user['avatar'], $article['id'], $article['title'], $comment['body']
+                $receiver_id, $user['name'], asset('storage/avatars/'.$user['avatar'])
+                , $user->id, $article['id'], $article['title'], $comment['body']
             ));
         }
         else
         {
             event(new Comment(
-                $receiver_id, $user['name'], $user['avatar'], $article['id'], $article['title'], $comment['body']
+                $receiver_id, $user['name'], asset('storage/avatars/'.$user['avatar'])
+                , $user->id, $article['id'], $article['title'], $comment['body']
             ));
         }
     }

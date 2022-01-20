@@ -14,9 +14,9 @@ class CommentReply extends Notification
      *
      * @return void
      */
-    public function __construct($receiver_id, $username, $avatar, $article_id, $article_title, $comment_body)
+    public function __construct($receiver_id, $username, $avatar, $user_id, $article_id, $article_title, $comment_body)
     {
-        parent::__construct($receiver_id, $username, $avatar);
+        parent::__construct($receiver_id, $username, $avatar, $user_id);
         $this->article_id = $article_id;
         $this->article_title = $article_title;
         $this->comment_body = $comment_body;

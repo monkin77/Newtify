@@ -22,14 +22,18 @@ class FeedbackNotification extends Notification
     {
         if ($isArticle)
         {
+            $title = Article::find($content->id)->title;
             event(new ArticleLike(
-                $content->author_id, $user->name, $user->avatar, $content->id, $content->title
+                $content->author_id, $user->name, asset('storage/avatars/'.$user['avatar']),
+                $user->id, $content->id, $title
             ));
         }
         else
         {
+            $article = Comment::find($content->id)->article;
             event(new CommentLike(
-                $content->author_id, $user->name, $user->avatar, $content->id, $content->body
+                $content->author_id, $user->name, asset('storage/avatars/'.$user['avatar']),
+                $user->id, $article->id, $content->body, $article->title
             ));
         }
     }

@@ -35,6 +35,8 @@
     <main>
         @include('partials.navbar')
 
+        <div id="notificationContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
         <div id="contentContainer" class="pt-3">
             @yield('content')
         </div>
