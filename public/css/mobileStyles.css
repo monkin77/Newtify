@@ -212,6 +212,15 @@
     #closePopupBtn {
         display: none;
     }
+
+    /* Socials Popup */
+    #socialsPopupContainer {
+        position: absolute;
+        width: 90%;
+        height: 40%;
+        top: 30%;
+        right: 5%;
+    }
 }
 
 @media screen and (max-width: 576px) {

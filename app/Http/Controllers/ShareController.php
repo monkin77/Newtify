@@ -24,7 +24,7 @@ class ShareController extends Controller
 
         $shareLinks = \Share::page(
             $request->url,
-            'Wassup ma boi, check this website',
+            'Check out this amazing article!',
         )
             ->facebook()
             ->twitter()
