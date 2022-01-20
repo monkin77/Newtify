@@ -16,11 +16,17 @@
 
     h3,
     .h3 {
+        font-size: 2rem;
     }
 
     h4,
     .h4 {
         font-size: 1.5rem;
+    }
+
+    h5,
+    .h5 {
+        font-size: 1.3rem;
     }
 
     h6,
@@ -192,6 +198,19 @@
     .author-container {
         width: 92%;
         height: 40em;
+    }
+
+    /* Report popup */
+    #reportContainer {
+        position: absolute;
+        width: 90%;
+        height: 40%;
+        top: 30%;
+        right: 5%;
+    }
+
+    #closePopupBtn {
+        display: none;
     }
 }
 
