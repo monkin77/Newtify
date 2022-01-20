@@ -83,6 +83,7 @@ const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   })
 });
 
+
 function goBack() {
   history.back();
 }
