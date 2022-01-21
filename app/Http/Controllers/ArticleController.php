@@ -113,7 +113,7 @@ class ArticleController extends Controller
 
         if (isset($request->thumbnail)) {
             $thumbnail = $request->thumbnail;
-            $imgName = time().'.'.$thumbnail->extension();
+            $imgName = round(microtime(true)*1000).'.'.$thumbnail->extension();
             $thumbnail->storeAs('public/thumbnails', $imgName);
             $article->thumbnail = $imgName;
         }
@@ -349,7 +349,7 @@ class ArticleController extends Controller
             $newThumbnail = $request->thumbnail;
             $oldThumbnail = $article->thumbnail;
 
-            $imgName = time().'.'.$newThumbnail->extension();
+            $imgName = round(microtime(true)*1000).'.'.$newThumbnail->extension();
             $newThumbnail->storeAs('public/thumbnails', $imgName);
             $article->thumbnail = $imgName;
 

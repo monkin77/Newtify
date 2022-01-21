@@ -12,7 +12,7 @@
         </p>
 
         <ul>
-            <li>Respect the other!</li>
+            <li>Respect the others!</li>
             <li>Don't use inappropriate vocabulary or images</li>
             <li>Any topic that jeopardizes the equality or dignity of others is forbidden.</li>
             <li>You should not comment an article with an unrelated or irrelevant topic.</li>
