@@ -600,6 +600,10 @@ option {
     border-radius: 0.3em;
 }
 
+#editProfileContainer .deleteIcon {
+    cursor: pointer;
+}
+
 ::-webkit-calendar-picker-indicator {
     filter: invert(0.9);
 }
@@ -934,6 +938,20 @@ option {
 
 .blueLink:hover {
     color: var(--bs-cyan);
+}
+
+.greenLink {
+    color: var(--bs-green);
+}
+.greenLink:hover {
+    color: var(--bs-teal);
+}
+
+.redLink {
+    color: var(--bs-danger);
+}
+.redLink:hover {
+    color: var(--bs-teal);
 }
 
 .customBtn {
