@@ -41,6 +41,7 @@
                             ? asset('storage/avatars/' . $report['reported']['avatar']) 
                             : $userImgPHolder 
                             }}"
+                            alt="Reported User Avatar"
                             id="avatarImg" onerror="this.src='{{ $userImgPHolder }}'" />
                         
                         <p> {{ $report['reported']['name'] }} </p>

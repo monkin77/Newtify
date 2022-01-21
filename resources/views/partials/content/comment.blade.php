@@ -11,7 +11,7 @@
                 href="/user/{{ $comment['author']['id'] }}"
             @endif
             >
-                <img src="{{
+                <img alt="Commenter Avatar" src="{{
                     (isset($comment['author']) && isset($comment['author']['avatar'])) ?
                     asset('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
                 }}" onerror="this.src='{{ $userImgPHolder }}'" />

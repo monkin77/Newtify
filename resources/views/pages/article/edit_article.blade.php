@@ -64,6 +64,7 @@
                             <img class="col-8 col-md-6 mb-3" src={{ isset($article['thumbnail']) 
                                 ? asset('storage/thumbnails/' . $article['thumbnail'])
                                 : $articleImgPHolder }}
+                                alt="Article Thumbnail Preview"
                                 id="avatarPreview" onerror="this.src='{{ $articleImgPHolder }}'" />
                             
                             <input type="file" id="imgInput" name="thumbnail" accept="image/*">

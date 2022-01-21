@@ -58,7 +58,7 @@
                         <label for="thumbnail">Article Thumbnail</label>
                         
                         <div id="avatarPreviewContainer" class="d-flex flex-column align-items-center">
-                            <img class="col-8 col-md-6 mb-3" src={{ $articleImgPHolder }}
+                            <img class="col-8 col-md-6 mb-3" alt="Article Thumbnail Preview" src={{ $articleImgPHolder }}
                                 id="avatarPreview" onerror="this.src='{{ $articleImgPHolder }}'" />
                             
                             <input type="file" id="imgInput" name="thumbnail" accept="image/*">

@@ -1,6 +1,6 @@
 <div class="card flex-row flex-wrap bg-secondary">
     <div class="card-header border-0 h-100 bg-transparent">
-        <img class="squareImage" src="{{
+        <img class="squareImage" alt="Article Thumbnail" src="{{
             isset($article['thumbnail']) ?
             asset('storage/thumbnails/'.$article['thumbnail'])
             :

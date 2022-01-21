@@ -51,7 +51,7 @@
 
                                 <div class="manageUserContainer col-4 col-lg-2 text-center">
                                     <a href="/user/{{ $user['id'] }}" class="text-center">
-                                        <img class="mb-4" src="{{ 
+                                        <img class="mb-4" alt="Suspended User Avatar" src="{{ 
                                             isset($user['avatar']) 
                                             ? asset('storage/avatars/' . $user['avatar']) 
                                             : $userImgPHolder 
