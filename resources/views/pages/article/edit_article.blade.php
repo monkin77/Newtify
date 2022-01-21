@@ -58,9 +58,23 @@
 
                     <div class="flex-row">
                         <label for="thumbnail">Article Thumbnail</label>
-                        <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
-                    </div>
 
+                        <div id="avatarPreviewContainer" class="d-flex flex-column align-items-center">
+                            <img class="col-8 col-md-6 mb-3" src={{ isset($article['thumbnail']) 
+                                ? asset('storage/thumbnails' . $article['thumbnail'])
+                                : $articleImgPHolder }}
+                                id="avatarPreview" onerror="this.src='{{ $articleImgPHolder }}'" />
+                            
+                            <input type="file" id="imgInput" name="thumbnail" accept="image/*">
+
+                            @if ($errors->has('thumbnail'))
+                                <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                                    <p class="">{{ $errors->first('thumbnail') }}</p>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    
                     <div class="flex-row h-100">
                         <label for="body">Article Body</label>
                         <textarea id="body" required name="body" minlength="10" rows="15" class="h-100">{{
