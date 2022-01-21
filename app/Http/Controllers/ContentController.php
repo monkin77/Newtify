@@ -55,12 +55,13 @@ class ContentController extends Controller
 
         $isArticle = Article::find($id) ? true : false;
 
-        FeedbackNotification::notify(
-            Auth::user(),
-            $content,
-            $isArticle
-        );
-        
+        if ($feedback->is_like)
+            FeedbackNotification::notify(
+                Auth::user(),
+                $content,
+                $isArticle
+            );
+
         return response()->json([
             'status' => 'OK',
             'msg' => 'Successfully make feedback on content: '.$id,

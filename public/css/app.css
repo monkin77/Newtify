@@ -4,6 +4,10 @@ body {
     width: 100%;
 }
 
+a {
+    color: var(--bs-lightPurple);
+}
+
 input,
 select,
 textarea {
@@ -317,7 +321,8 @@ option {
     min-height: 4rem;
     max-height: 25rem;
     resize: vertical;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-wrap: break-word;
 }
 
 .commentBodyContainer {
@@ -991,4 +996,28 @@ option {
 .susContainer {
     background-color: blanchedalmond;
     color: black;
+}
+
+/* Notification Panel */
+
+#notificationPanel, #notificationPanelMobile {
+    z-index: 1;
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+.notificationPanelItem {
+    min-width: 0 !important;
+    width: inherit;
+}
+
+/* Notification Toasts */
+
+.toast-container {
+    z-index: 1;
+}
+
+.toast {
+    min-width: 30vw;
+    font-size: inherit;
 }

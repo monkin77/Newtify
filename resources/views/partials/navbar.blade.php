@@ -3,16 +3,25 @@
         <div class="container-fluid py-4">
             <a id="logo" class="navbar-brand text-center w-25" href="{{ url('/') }}">Newtify</a>
             
-            <div class="d-flex d-lg-none justify-content-end align-items-center flex-grow-1">
+            <div class="d-flex d-lg-none justify-content-end align-items-center position-relative flex-grow-1">
                 @if (Auth::check())
-                    <a id="createArticleIcon" class="nav-item" href="{{ route('createArticle') }}">
+                    <a id="createArticleIcon" class="nav-item mx-3" href="{{ route('createArticle') }}">
                         <i class="purpleLink fas fa-plus-circle fa-2x"></i>
                     </a>
                     <div class="nav-item mx-3 position-relative">
-                        <i class="fas fa-bell notification-bell" onclick="console.log('Clicked')"></i>
+                        <i class="fas fa-bell notification-bell" onclick="fetchNotifications()"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#notificationPanelMobile"
+                        aria-expanded="false" aria-controls="notificationPanelMobile"></i>
+
                         @if ($newNotifications)
-                            <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
+                            <div id="newNotificationsCircleMobile"
+                                class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
                         @endif
+                    </div>
+
+                    <div id="notificationPanelMobile"
+                        class="collapse container-md position-absolute bg-dark border border-light mt-2 p-0 top-100">
+                        <div class="text-center">Loading...</div>
                     </div>
 
                     <div id="dropdownContainer" class="nav-item dropdown ms-3 me-4">
@@ -75,8 +84,8 @@
                         </ul>
                     </div>
                 </form>
-                
-                <div class="d-none d-lg-flex justify-content-end align-items-center" id="userSectionNav">
+
+                <div class="d-none d-lg-flex justify-content-end align-items-center position-relative" id="userSectionNav">
                     @if (Auth::check())
                         <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Create an Article"
                         for="createArticleIcon">
@@ -85,11 +94,19 @@
                             </a>
                         </label>
                         <div class="nav-item mx-5 position-relative">
-                            <i class="fas fa-bell notification-bell" onclick="console.log('Clicked')"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications"></i>
+                            <i class="fas fa-bell notification-bell" onclick="fetchNotifications()"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#notificationPanel"
+                            aria-expanded="false" aria-controls="notificationPanel"></i>
+
                             @if ($newNotifications)
-                                <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
+                                <div id="newNotificationsCircle"
+                                    class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
                             @endif
+                        </div>
+
+                        <div id="notificationPanel"
+                            class="collapse container-md position-absolute bg-dark border border-light mt-2 p-0 top-100">
+                            <div class="text-center">Loading...</div>
                         </div>
 
                         <div id="dropdownContainer" class="nav-item dropdown ms-5">

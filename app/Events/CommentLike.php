@@ -6,17 +6,19 @@ class CommentLike extends Notification
 {
     public $article_id;
     public $comment_body;
+    public $article_title;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($receiver_id, $username, $avatar, $article_id, $comment_body)
+    public function __construct($receiver_id, $username, $avatar, $user_id, $article_id, $comment_body, $article_title)
     {
-        parent::__construct($receiver_id, $username, $avatar);
+        parent::__construct($receiver_id, $username, $avatar, $user_id);
         $this->article_id = $article_id;
         $this->comment_body = $comment_body;
+        $this->article_title = $article_title;
     }
 
     /**

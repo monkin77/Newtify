@@ -116,3 +116,9 @@ tinymce.init({
     plugins: 'autosave lists autolink',
   }
 });
+
+// Enable toasts
+const toastElList = [].slice.call(selectAll('.toast'))
+const toastList = toastElList.map(function (toastEl) {
+  return new bootstrap.Toast(toastEl, {});
+});

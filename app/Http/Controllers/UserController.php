@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
-// TODO: Check headers for redirects
 class UserController extends Controller
 {
     private const USER_ARTICLES_LIMIT = 5;
