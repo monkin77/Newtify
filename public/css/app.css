@@ -320,6 +320,11 @@ option {
     overflow: auto;
 }
 
+.commentBodyContainer {
+    overflow: auto;
+    word-wrap: break-word;
+}
+
 .child-comment {
     width: 90%;
 }

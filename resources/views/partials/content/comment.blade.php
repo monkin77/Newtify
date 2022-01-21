@@ -26,8 +26,8 @@
             @endif
         </div>
 
-        <div class="flex-column m-0 p-0 w-100">
-            <div class="commentTextContainer border border-light flex-column p-3 mb-3">{{ $comment['body'] }}</div>
+        <div class="flex-column m-0 p-0 w-100 commentBodyContainer">
+            <div class="commentTextContainer border border-light flex-column p-3 mb-3">{{$comment['body']}}</div>
 
             <i
             @if ($comment['isAuthor'])
