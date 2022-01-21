@@ -35,7 +35,7 @@ Route::get('login/google/callback', 'Auth\AuthAPIController@loginWithGoogle');
 Route::get('user/{id}', 'UserController@show')->name('userProfile')->where(['id' => '[0-9]+']);
 Route::get('user/{id}/edit', 'UserController@edit')->name('editUser')->where(['id' => '[0-9]+']);
 Route::put('user/{id}', 'UserController@update')->name('editProfile')->where(['id' => '[0-9]+']);
-Route::delete('api/user/{id}', 'UserController@delete')->where(['id' => '[0-9]+']);
+Route::delete('user/{id}', 'UserController@delete')->name('deleteUser')->where(['id' => '[0-9]+']);
 Route::post('user/{id}/report', 'UserController@report')->where(['id' => '[0-9]+']);
 Route::get('api/user/{id}/suspension', 'UserController@suspension')->where(['id' => '[0-9]+']);
 Route::get('user/{id}/followed', 'UserController@followed')->where(['id' => '[0-9]+']);

@@ -29,7 +29,7 @@ $isOpen = $errors->has('password');
                         id="avatarPreview" onerror="this.src='{{ $userImgPHolder }}'" />
                     <input type="file" accept="image/*" id="imgInput" name='avatar' />
                     @if ($errors->has('avatar'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger ">
                             <p class="">{{ $errors->first('avatar') }}</p>
                         </div>
                     @endif
@@ -37,14 +37,14 @@ $isOpen = $errors->has('password');
             </div>
 
             <div class="row w-100 mt-3">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-8">
                     <div class="row w-100">
                         <div class="col-6">
                             <label class="h2 pb-3 my-0" for="nameInput">Username</label>
                             <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
                                 class="h3 editInputs w-75" id="nameInput" name='name' />
                             @if ($errors->has('name'))
-                                <div class="w-50 py-1">
+                                <div class="w-50 py-1 text-danger ">
                                     <p class="">{{ $errors->first('name') }}</p>
                                 </div>
                             @endif
@@ -86,18 +86,18 @@ $isOpen = $errors->has('password');
 
                         </div>
                         @if ($errors->has('country'))
-                            <div class="w-50 py-1">
+                            <div class="text-danger w-50 py-1">
                                 <p class="">{{ $errors->first('country') }}</p>
                             </div>
                         @endif
                         @if ($errors->has('city'))
-                            <div class="w-50 py-1">
+                            <div class="text-danger w-50 py-1">
                                 <p class="">{{ $errors->first('city') }}</p>
                             </div>
                         @endif
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+                <div class="col-12 col-lg-4 mt-3 mt-lg-0">
                     <label class="h2 mb-3" for="tagsInput">Favorite Tags</label>
 
                     <select id="favoriteTags" name="favoriteTags[]" multiple>
@@ -122,7 +122,7 @@ $isOpen = $errors->has('password');
                 <textarea id="descriptionInput" name="description" rows="6"
                     class="h-100 editInputs py-2">{{ old('description') ? old('description') : $user['description'] }}</textarea>
                 @if ($errors->has('description'))
-                    <div class="w-50 py-1">
+                    <div class="text-danger w-50 py-1">
                         <p class="">{{ $errors->first('description') }}</p>
                     </div>
                 @endif
@@ -140,12 +140,13 @@ $isOpen = $errors->has('password');
                     Settings</a>
                 <i class="fa fa-caret-down fa-1x position-absolute pe-none caretDown"></i>
             </div>
+
             <div <?php if ($isOpen) { echo 'class="colapse show"'; } else { echo 'class="collapse"'; } ?> id="advancedContainer">
                 <form name="passForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}">
                     @method('put')
                     @csrf
                     @if ($errors->has('password'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger">
                             <p class="">Invalid Password</p>
                         </div>
                     @endif
@@ -168,14 +169,15 @@ $isOpen = $errors->has('password');
                                 onkeyup="checkPass('#newPassInput')">
                             <span class="ms-2" id="matchingPass"></span>
                         </div>
-                        <button class="mt-2 mt-lg-0 mb-4" type="submit">Change</button>
+                        <button class="mb-4 btn btn-primary px-5" type="submit">Change</button>
                     </div>
                     @if ($errors->has('new_password'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger ">
                             <p class="">{{ $errors->first('new_password') }}</p>
                         </div>
                     @endif
                 </form>
+
                 <form name="emailForm" method="POST" action="{{ route('editProfile', ['id' => $user['id']]) }}"
                     class="mt-3" autocomplete="off">
                     @method('put')
@@ -192,13 +194,34 @@ $isOpen = $errors->has('password');
                             <input type="email" required class="w-auto h4 editInputs" id="emailInput" name='email'
                                 placeholder="New Email" value="{{ old('email') }}" />
                         </div>
-                        <button class="mb-4" type="submit">Change</button>
+                        <button class="mb-4 btn btn-primary px-5" type="submit">Change</button>
                     </div>
                     @if ($errors->has('email'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger ">
                             <p class="">{{ $errors->first('email') }}</p>
                         </div>
                     @endif
+                </form>
+
+                <form name="deleteForm" method="POST" action="{{ route('deleteUser', ['id' => $user['id']]) }}"
+                    class="mt-3" autocomplete="off">
+                    @method('delete')
+                    @csrf
+                    <label for="delPassInput" class="form-label mt-4">Delete Account</label>
+                    <div class="d-flex align-items-center flex-wrap">
+                        <div class="me-5">
+                            <div class="form-text">Current Password</div>
+                            <input type="password" autocomplete="new-password" required class="w-auto h4 editInputs"
+                                id="delPassInput" name='password' placeholder="Current Password" />
+                        </div>
+                        <div class="mt-5">
+                            <button id="delAccButton" class="btn btn-danger px-5" type="button"
+                                onclick="confirmAction('#delAccButton', () => document.deleteForm.submit())" 
+                            >
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

@@ -39,7 +39,7 @@
 
     </div>
 
-    <div class="flex-row px-1 py-4 text-white" id="authorDescription">
+    <div class="flex-row px-1 py-4 text-white overflow-auto" id="authorDescription">
         <p>{{ (isset($author['description']) ? $author['description'] : '') }}</p>
     </div>
 
