@@ -5,9 +5,9 @@
 @section('content')
 
 <div class="py-5 container">
-    <div class="d-flex flex-row row w-100">
+    <div class="d-flex flex-row row w-100 m-0">
         
-        <a href="{{ url('/admin/suspensions') }}" class="manageContainer col-12 col-lg-4 my-3 h-100 text-secondary">
+        <a href="{{ url('/admin/suspensions') }}" class="text-secondary col-12 col-lg-4 my-3 adminPanelCard">
             <div class="d-flex flex-column manageContainer border bg-light h-100">
                 <div class="linkContainer w-100">
                     <div class="iconContainer shadow-lg rounded-circle bg-dark">
@@ -20,7 +20,7 @@
             </div>
         </a>
         
-        <a class="manageContainer h-100 text-secondary col-12 col-lg-4 my-3" href="{{ url('/admin/reports') }}">
+        <a class="text-secondary col-12 col-lg-4 my-3 adminPanelCard" href="{{ url('/admin/reports') }}">
             <div class="d-flex flex-column manageContainer border bg-light h-100">
                 <div class="linkContainer w-100">
                     <div class="iconContainer shadow-lg rounded-circle bg-dark">
@@ -33,7 +33,7 @@
             </div>
         </a>
         
-        <a class="manageContainer h-100 text-secondary col-12 col-lg-4 my-3" href="{{ url('/admin/tags') }}">
+        <a class="text-secondary col-12 col-lg-4 my-3 adminPanelCard" href="{{ url('/admin/tags') }}">
             <div class="d-flex flex-column manageContainer border bg-light h-100">
                 <div class="linkContainer">
                     <div class="iconContainer shadow-lg rounded-circle bg-dark">

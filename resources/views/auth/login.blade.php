@@ -39,17 +39,17 @@
             </div>
         @endif
 
-        <button type="submit" class="button w-50 mb-3">
+        <button type="submit" class="button mb-3 loginBtn">
             Login
         </button>
 
-        <a class="button w-50" href="{{ route('googleAuth') }}">
+        <a class="button loginBtn" href="{{ route('googleAuth') }}">
             <div class="d-flex align-items-center justify-content-center">
             Use Google <i class="fab fa-google ps-3 mb-2" style="font-size: 2rem;"></i>
             </div>
         </a>
 
-        <a class="button button-outline text-danger border-danger w-50" href="{{ route('showLinkForm') }}">Forgot Password</a>
+        <a class="button button-outline text-danger border-danger loginBtn" href="{{ route('showLinkForm') }}">Forgot Password</a>
 
     </form>
 </div>
