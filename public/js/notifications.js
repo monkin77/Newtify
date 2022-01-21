@@ -46,11 +46,13 @@ function notificationPanelHandler() {
     }
     if (this.status != 200) return; // Keep the panel as it is
 
-    const panel = select("#notificationPanel");
-    panel.innerHTML = this.responseText;
+    for (let sufix of ["",  "Mobile"]) {
+        const panel = select("#notificationPanel" + sufix);
+        panel.innerHTML = this.responseText;
 
-    const circle = select("#newNotificationsCircle");
-    if (circle) circle.remove();
+        const circle = select("#newNotifications" + sufix);
+        if (circle) circle.remove();
+    }
 }
 
 const fetchNotifications = () => {

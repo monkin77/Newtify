@@ -1000,9 +1000,9 @@ option {
 
 /* Notification Panel */
 
-#notificationPanel {
+#notificationPanel, #notificationPanelMobile {
     z-index: 1;
-    max-height: 90vh;
+    max-height: 80vh;
     overflow-y: scroll;
 }
 
