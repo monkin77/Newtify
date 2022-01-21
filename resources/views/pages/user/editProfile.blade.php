@@ -7,6 +7,10 @@ $isOpen = $errors->has('password');
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script type="text/javascript" src={{ asset('js/daterangepicker.js') }}></script>
     <script type="text/javascript" src={{ asset('js/user.js') }}></script>
     <script type="text/javascript" src=" {{ asset('js/select2tags.js') }}"> </script>
 @endsection
@@ -25,7 +29,7 @@ $isOpen = $errors->has('password');
                         id="avatarPreview" onerror="this.src='{{ $userImgPHolder }}'" />
                     <input type="file" accept="image/*" id="imgInput" name='avatar' />
                     @if ($errors->has('avatar'))
-                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <div class="w-50 py-1">
                             <p class="">{{ $errors->first('avatar') }}</p>
                         </div>
                     @endif
@@ -38,19 +42,20 @@ $isOpen = $errors->has('password');
                         <div class="col-6">
                             <label class="h2 pb-3 my-0" for="nameInput">Username</label>
                             <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
-                                class="h3 editInputs" id="nameInput" name='name' />
+                                class="h3 editInputs w-75" id="nameInput" name='name' />
                             @if ($errors->has('name'))
-                                <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                                <div class="w-50 py-1">
                                     <p class="">{{ $errors->first('name') }}</p>
                                 </div>
                             @endif
                         </div>
                         <div class="col-6">
                             <label class="h2 pb-3 my-0" for="birthDateInput">Birth Date</label>
-                            <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
-                                class="h3 editInputs py-4 px-2 px-lg-3" id="birthDateInput" name='birthDate' />
+                            <input name="birthDatePicker" class="h3 editInputs py-4 px-2 px-lg-3" type="text" placeholder="Enter Birthdate" required
+                                value="{{ old('birthDate') ? old('birthDate') : $birthDate }}">
+                            <input name="birthDate" type="hidden" value="{{ old('birthDate') }}" id="birthDateInput">
                             @if ($errors->has('birthDate'))
-                                <div class="alert alert-danger ms-3 w-100 text-center py-1" role="alert">
+                                <div class="text-danger w-100 py-1">
                                     <p class="">{{ $errors->first('birthDate') }}</p>
                                 </div>
                             @endif
@@ -81,12 +86,12 @@ $isOpen = $errors->has('password');
 
                         </div>
                         @if ($errors->has('country'))
-                            <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <div class="w-50 py-1">
                                 <p class="">{{ $errors->first('country') }}</p>
                             </div>
                         @endif
                         @if ($errors->has('city'))
-                            <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                            <div class="w-50 py-1">
                                 <p class="">{{ $errors->first('city') }}</p>
                             </div>
                         @endif
@@ -117,7 +122,7 @@ $isOpen = $errors->has('password');
                 <textarea id="descriptionInput" name="description" rows="6"
                     class="h-100 editInputs py-2">{{ old('description') ? old('description') : $user['description'] }}</textarea>
                 @if ($errors->has('description'))
-                    <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                    <div class="w-50 py-1">
                         <p class="">{{ $errors->first('description') }}</p>
                     </div>
                 @endif
@@ -140,7 +145,7 @@ $isOpen = $errors->has('password');
                     @method('put')
                     @csrf
                     @if ($errors->has('password'))
-                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <div class="w-50 py-1">
                             <p class="">Invalid Password</p>
                         </div>
                     @endif
@@ -166,7 +171,7 @@ $isOpen = $errors->has('password');
                         <button class="mt-2 mt-lg-0 mb-4" type="submit">Change</button>
                     </div>
                     @if ($errors->has('new_password'))
-                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <div class="w-50 py-1">
                             <p class="">{{ $errors->first('new_password') }}</p>
                         </div>
                     @endif
@@ -190,7 +195,7 @@ $isOpen = $errors->has('password');
                         <button class="mb-4" type="submit">Change</button>
                     </div>
                     @if ($errors->has('email'))
-                        <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">
+                        <div class="w-50 py-1">
                             <p class="">{{ $errors->first('email') }}</p>
                         </div>
                     @endif

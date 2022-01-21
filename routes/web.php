@@ -32,52 +32,52 @@ Route::get('login/google', 'Auth\AuthAPIController@googleRedirect')->name('googl
 Route::get('login/google/callback', 'Auth\AuthAPIController@loginWithGoogle');
 
 // User
-Route::get('user/{id}', 'UserController@show')->name('userProfile');
-Route::get('user/{id}/edit', 'UserController@edit')->name('editUser');
-Route::put('user/{id}', 'UserController@update')->name('editProfile');
-Route::delete('api/user/{id}', 'UserController@delete');
-Route::post('user/{id}/report', 'UserController@report');
-Route::get('api/user/{id}/suspension', 'UserController@suspension');
-Route::get('user/{id}/followed', 'UserController@followed');
-Route::get('api/user/{id}/articles', 'UserController@articles');
-Route::post('user/{id}/follow', 'UserController@follow');
-Route::post('user/{id}/unfollow', 'UserController@unfollow');
+Route::get('user/{id}', 'UserController@show')->name('userProfile')->where(['id' => '[0-9]+']);
+Route::get('user/{id}/edit', 'UserController@edit')->name('editUser')->where(['id' => '[0-9]+']);
+Route::put('user/{id}', 'UserController@update')->name('editProfile')->where(['id' => '[0-9]+']);
+Route::delete('api/user/{id}', 'UserController@delete')->where(['id' => '[0-9]+']);
+Route::post('user/{id}/report', 'UserController@report')->where(['id' => '[0-9]+']);
+Route::get('api/user/{id}/suspension', 'UserController@suspension')->where(['id' => '[0-9]+']);
+Route::get('user/{id}/followed', 'UserController@followed')->where(['id' => '[0-9]+']);
+Route::get('api/user/{id}/articles', 'UserController@articles')->where(['id' => '[0-9]+']);
+Route::post('user/{id}/follow', 'UserController@follow')->where(['id' => '[0-9]+']);
+Route::post('user/{id}/unfollow', 'UserController@unfollow')->where(['id' => '[0-9]+']);
 
 // Articles
 Route::get('article', 'ArticleController@createForm')->name('createArticle');
 Route::post('article', 'ArticleController@create');
-Route::get('article/{id}', 'ArticleController@show')->name('article');
-Route::get('article/{id}/edit', 'ArticleController@edit')->name('editArticle');
-Route::put('article/{id}/edit', 'ArticleController@update');
-Route::delete('article/{id}', 'ArticleController@destroy');
-Route::get('api/article/{id}/comments', 'ArticleController@comments');
+Route::get('article/{id}', 'ArticleController@show')->name('article')->where(['id' => '[0-9]+']);
+Route::get('article/{id}/edit', 'ArticleController@edit')->name('editArticle')->where(['id' => '[0-9]+']);
+Route::put('article/{id}/edit', 'ArticleController@update')->where(['id' => '[0-9]+']);
+Route::delete('article/{id}', 'ArticleController@destroy')->where(['id' => '[0-9]+']);
+Route::get('api/article/{id}/comments', 'ArticleController@comments')->where(['id' => '[0-9]+']);
 
 // Comments
 Route::post('comment', 'CommentController@create');
-Route::put('comment/{id}', 'CommentController@update');
-Route::delete('comment/{id}', 'CommentController@destroy');
+Route::put('comment/{id}', 'CommentController@update')->where(['id' => '[0-9]+']);
+Route::delete('comment/{id}', 'CommentController@destroy')->where(['id' => '[0-9]+']);
 
 // Content
-Route::delete('content/{id}', 'ContentController@removeFeedback');
-Route::put('content/{id}', 'ContentController@giveFeedback');
+Route::delete('content/{id}', 'ContentController@removeFeedback')->where(['id' => '[0-9]+']);
+Route::put('content/{id}', 'ContentController@giveFeedback')->where(['id' => '[0-9]+']);
 
 // Admin
 Route::get('admin', 'AdminController@show')->name('admin');
 Route::get('admin/suspensions', 'AdminController@suspensions');
-Route::post('user/{id}/suspend', 'AdminController@suspendUser');
-Route::put('user/{id}/unsuspend', 'AdminController@unsuspendUser');
+Route::post('user/{id}/suspend', 'AdminController@suspendUser')->where(['id' => '[0-9]+']);
+Route::put('user/{id}/unsuspend', 'AdminController@unsuspendUser')->where(['id' => '[0-9]+']);
 Route::get('admin/reports', 'AdminController@reports');
 Route::get('admin/tags', 'AdminController@tags');
-Route::put('admin/reports/{id}/close', 'AdminController@closeReport');
+Route::put('admin/reports/{id}/close', 'AdminController@closeReport')->where(['id' => '[0-9]+']);
 
 // Tag
 Route::get('favorite_tags', 'TagController@showUserFavorites');
-Route::put('tags/{tag_id}/accept', 'TagController@accept');
-Route::put('tags/{tag_id}/reject', 'TagController@reject');
-Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite');
-Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite');
+Route::put('tags/{tag_id}/accept', 'TagController@accept')->where(['tag_id' => '[0-9]+']);
+Route::put('tags/{tag_id}/reject', 'TagController@reject')->where(['tag_id' => '[0-9]+']);
+Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite')->where(['tag_id' => '[0-9]+']);
+Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite')->where(['tag_id' => '[0-9]+']);
 Route::get('api/tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
-Route::delete('tags/{tag_id}', 'TagController@destroy');
+Route::delete('tags/{tag_id}', 'TagController@destroy')->where(['tag_id' => '[0-9]+']);
 Route::post('tags/new', 'TagController@propose');
 
 // Search
@@ -88,12 +88,6 @@ Route::get('api/search/articles', 'SearchController@searchArticles');
 // Notifications
 Route::get('api/notifications', 'NotificationController@show');
 Route::put('notifications', 'NotificationController@readNotifications');
-
-// Messages
-Route::get('messages', 'MessageController@inbox');
-Route::get('messages/{id}', 'MessageController@messageThread');
-Route::post('messages/{id}', 'MessageController@create');
-Route::put('messages/{id}', 'MessageController@readMessages');
 
 // Static Pages
 Route::get('about', 'StaticPagesController@getAboutUs')->name('about');

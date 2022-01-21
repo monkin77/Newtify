@@ -23,14 +23,15 @@ $guest = !Auth::check();
                 style="background-color: {{ $user['reputation'] >= 0 ? 'green' : 'red' }}; width: {{ calculateReputationLevel($user['reputation']) . '%' }}; border-radius: 0.7em">
             </div>
         </div>
+    </div>
 
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <h6 class="my-0 py-0">Reputation: {{ $user['reputation'] }}</h6>
-            @if (!$guest && !$isOwner)
-                <button class="btn px-2 m-0 btn btn-transparent" onclick="toggleReportPopup()">
-                    <i class="fa fa-exclamation-circle font-2x" id="reportIcon"></i>
-                </button>
-            @endif
-        </div>
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <h6 class="my-0 py-0 pt-2">Reputation: {{ $user['reputation'] }}</h6>
+        @if (!$guest && !$isOwner)
+            <button class="btn px-2 m-0 btn btn-transparent" onclick="toggleReportPopup()"
+            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Report User">
+                <i class="fa fa-exclamation-circle font-2x" id="reportIcon"></i>
+            </button>
+        @endif
     </div>
 </div>

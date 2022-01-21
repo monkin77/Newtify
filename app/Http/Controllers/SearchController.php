@@ -128,17 +128,8 @@ class SearchController extends Controller
         $canLoadMore = is_null($limit) ? false : $rawArticles->count() > $limit;
         $rawArticles = $rawArticles->take($limit);
 
-        $articles = $rawArticles->map(function ($article) {
-            return [
-                'id' => $article->id,
-                'title' => $article->title,
-                'thumbnail' => $article->thumbnail,
-                'body' => $article->body,
-                'published_at' => $article->published_at,
-                'likes' => $article->likes,
-                'dislikes' => $article->dislikes
-            ];
-        });
+        $articles = $rawArticles->map(fn ($article) => $article
+            ->only('id', 'title', 'thumbnail', 'body', 'published_at', 'likes', 'dislikes'));
 
         return [
             'results' => $articles,

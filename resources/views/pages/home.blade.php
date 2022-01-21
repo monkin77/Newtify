@@ -8,6 +8,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script type="text/javascript" src={{ asset('js/filter.js') }}></script>
+    <script type="text/javascript" src={{ asset('js/daterangepicker.js') }}></script>
     <script type="text/javascript" src=" {{ asset('js/select2tags.js') }}"></script>
     <script type="text/javascript" src={{ asset('js/tags.js') }}></script>
 @endsection

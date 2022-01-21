@@ -78,6 +78,14 @@ const deleteCommentHandler = (commentId) => function() {
         return;
     }
 
+    // Remove replies
+    let child;
+    while (child = select(`#comment_${commentId} + div`)) {
+        if (!select(`#comment_${commentId} + div > .child-comment`))
+            break;
+        child.remove();
+    }
+
     if (previousError) previousError.remove();
     select(`#comment_${commentId}`).remove();
 }
@@ -100,7 +108,17 @@ const editCommentHandler = (commentId, editBox) => function() {
 
     if (previousError) previousError.remove();
 
-    select(`#comment_${commentId} .commentTextContainer`).innerText = json.body;
+    const commentText = select(`#comment_${commentId} .commentTextContainer`);
+    const different = commentText.innerText != json.body;
+    commentText.innerText = json.body;
+
+    let editFlag = select(`#comment_${commentId} .editFlag`);
+    if (!editFlag && different) {
+        editFlag = document.createElement('i');
+        editFlag.classList.add('mx-3', 'editFlag');
+        editFlag.innerText = "Edited";
+        select(`#comment_${commentId} .publishedAt`).insertAdjacentElement('afterend', editFlag);
+    }
 
     const comment = select(`#comment_${commentId}`);
     closeEditBox(comment, editBox);

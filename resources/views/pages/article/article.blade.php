@@ -26,7 +26,9 @@
                     @if ($isAuthor || $isAdmin)
                         <div id="articleButtons" class="d-flex align-items-center">
                             @if ($isAuthor)
-                                <a href="{{ route('editArticle', ['id' => $article['id']])}}" class="fas fa-edit fa-2x darkPurpleLink me-4">
+                                <a id="editArticleButton" href="{{ route('editArticle', ['id' => $article['id']])}}"
+                                    class="fas fa-edit fa-2x article-button darkPurpleLink me-4"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit Article">
                                 </a>
                             @endif
 
@@ -41,7 +43,8 @@
                                     onclick="confirmDeletion({{$article['id']}}, () => document.deleteArticleForm.submit())"
                                     class="btn btn-transparent my-0"
                                 >
-                                    <i class="fas fa-trash fa-2x text-danger"></i>
+                                    <i class="fas fa-trash fa-2x article-button text-danger mt-2"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Remove Article"></i>
                                 </button>
                             @endif
                         </div>
@@ -66,31 +69,43 @@
                     @else
                         @if ( $liked )
                             <i class="fas fa-thumbs-up ps-5 purpleLink feedbackIcon" 
-                                id="articleLikes" 
+                                id="articleLikes"
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Like"
                                 onclick="removeFeedback(this, {{ $article['id'] }}, true, false)"
                                 > 
                                 <span class="ms-1">{{ $article['likes'] }}</span>
                             </i>
                         @else 
-                            <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes" onclick="giveFeedback(this, {{ $article['id'] }}, true, false)"> 
+                            <i class="fas fa-thumbs-up ps-5 feedbackIcon" id="articleLikes"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Like"
+                            onclick="giveFeedback(this, {{ $article['id'] }}, true, false)"> 
                                 <span class="ms-1">{{ $article['likes'] }}</span>
                             </i>
                         @endif
 
                         @if ($disliked)
-                            <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes" onclick="removeFeedback(this, {{ $article['id'] }}, false, false)"> 
+                            <i class="fas fa-thumbs-down ps-3 feedbackIcon purpleLink" id="articleDislikes"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dislike"
+                            onclick="removeFeedback(this, {{ $article['id'] }}, false, false)"> 
                                 <span class="ms-1">{{ $article['dislikes'] }}</span>
                             </i>
                         @else
-                            <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes" onclick="giveFeedback(this, {{ $article['id'] }}, false, false)"> 
+                            <i class="fas fa-thumbs-down ps-3 feedbackIcon" id="articleDislikes"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dislike"
+                            onclick="giveFeedback(this, {{ $article['id'] }}, false, false)"> 
                                 <span class="ms-1">{{ $article['dislikes'] }}<span>
                             </i>
                         @endif
                     @endif
 
-                    <button onclick="showSocials()" class="btn ms-4 mt-2">
+                    <button onclick="showSocials()" class="btn ms-4 mt-3"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Share Article">
                         <i class="fas fa-share-alt fa-2x"></i>
                     </button>
+
+                    @if ($article['is_edited'])
+                        <b><i class="ms-4 text-lightPurple">Edited</i></b>
+                    @endif
                 </p>
 
                 @if ($errors->has('article'))
@@ -180,7 +195,9 @@
 @endsection
 
 @section('report')
-    @include('partials.user.reportPopup', ['id' => $author['id']])
+    @if (isset($author))
+        @include('partials.user.reportPopup', ['id' => $author['id']])
+    @endif
 @endsection
 
 @section('content')

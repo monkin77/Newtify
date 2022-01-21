@@ -31,8 +31,9 @@ $guest = !Auth::check();
                 </div>
                 <div class="col-7 col-lg-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)
-                        <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle">
-                            <a class="fa fa-pencil darkPurpleLink font-3x" href="/user/{{ $user['id'] }}/edit"></a>
+                        <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle"
+                        data-bs-toggle="tooltip" data-bs-placement="left" title="Edit Profile">
+                            <a class="fa fa-pencil font-3x darkPurpleLink" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
                     @else
                         @if (!$guest)
@@ -46,7 +47,8 @@ $guest = !Auth::check();
                             @endif
                         @endif
                     @endif
-                    <i class="fa fa-users mx-3 text-primary font-2x"></i>
+                    <i class="fa fa-users font-2x mx-3 text-primary"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Follower Count"></i>
                     <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
                 </div>
             </div>

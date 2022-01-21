@@ -26,18 +26,10 @@ class TagController extends Controller
             return redirect('/login');
         }
 
-        $userTags = Auth::user()->favoriteTags->map(function ($tag) {
-            return [
-                'id' => $tag->id
-            ];
-        });
+        $userTags = Auth::user()->favoriteTags->map(fn ($tag) => $tag->only('id'));
 
-        $tags = Tag::listTagsByState(self::tagStates['accepted'])->map(function ($tag) {
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name
-            ];
-        });
+        $tags = Tag::listTagsByState(self::tagStates['accepted'])
+            ->map(fn ($tag) => $tag->only('id', 'name'));
 
         return view('pages.tagsList', [
             'tags' => $tags,
@@ -188,11 +180,8 @@ class TagController extends Controller
 
         $tags = Tag::listTagsByState(self::tagStates[$tag_state])->map(function ($tag) {
             if (isset($tag->user))
-                $userInfo = [
-                    'id' => $tag->user_id,
-                    'name' => $tag->user->name,
-                    'avatar' => $tag->user->avatar
-                ];
+                $userInfo = $tag->user->only('id', 'name', 'avatar');
+
             else $userInfo = null;
 
             return [

@@ -35,9 +35,11 @@
             @else
                 @if ($comment['liked'])
                     class="fa fa-thumbs-up purpleLink feedbackIcon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Like"
                     onclick="removeFeedback(this, {{ $comment['id'] }}, true, true)"
                 @else
                     class="fa fa-thumbs-up feedbackIcon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Like"
                     onclick="giveFeedback(this, {{ $comment['id'] }}, true, true)"
                 @endif
             @endif
@@ -52,9 +54,11 @@
             @else
                 @if ($comment['disliked'])
                     class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon purpleLink"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dislike"
                     onclick="removeFeedback(this, {{ $comment['id'] }}, false, true)"
                 @else
                     class="fa fa-thumbs-down ps-3 pe-3 feedbackIcon"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dislike"
                     onclick="giveFeedback(this, {{ $comment['id'] }}, false, true)"
                 @endif
             @endif
@@ -72,11 +76,17 @@
                 <span onclick="openEditBox({{$comment['id']}}, {{$isReply}})" class="px-3 hover-pointer">Edit</span>
             @endif
 
-            <span class="px-3">{{ $comment['published_at'] }}</span>
+            <span class="px-3 publishedAt">{{ $comment['published_at'] }}</span>
 
-            @if (isset($comment['author']) && Auth::id() === $comment['author']['id'] && !$comment['hasFeedback'])
+            @if ($comment['is_edited'])
+                <i class="mx-3 editFlag">Edited</i>
+            @endif
+
+            @if ((isset($comment['author']) && Auth::id() === $comment['author']['id'] && !$comment['hasFeedback'])
+                || (Auth::check() && Auth::user()->is_admin))
                 <button
                     id="delete_content_{{$comment['id']}}"
+                    data-bs-toggle="tooltip" data-bs-placement="right" title="Remove Comment"
                     onclick="confirmDeletion({{ $comment['id'] }}, deleteComment)"
                     class="btn btn-transparent mb-0 px-2 mx-1"
                 >

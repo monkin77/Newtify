@@ -9,14 +9,8 @@
                         <i class="purpleLink fas fa-plus-circle fa-2x"></i>
                     </a>
                     <div class="nav-item mx-3 position-relative">
-                        <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
+                        <i class="fas fa-bell notification-bell" onclick="console.log('Clicked')"></i>
                         @if ($newNotifications)
-                            <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
-                        @endif
-                    </div>
-                    <div class="nav-item mx-3 position-relative">
-                        <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
-                        @if ($newMessages)
                             <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
                         @endif
                     </div>
@@ -84,27 +78,27 @@
                 
                 <div class="d-none d-lg-flex justify-content-end align-items-center" id="userSectionNav">
                     @if (Auth::check())
-                        <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
-                            <i class="purpleLink fas fa-plus-circle fa-3x"></i>
-                        </a>
-                        <div class="nav-item mx-4 position-relative">
-                            <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
+                        <label data-bs-toggle="tooltip" data-bs-placement="bottom" title="Create an Article"
+                        for="createArticleIcon">
+                            <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
+                                <i class="purpleLink fas fa-plus-circle fa-3x"></i>
+                            </a>
+                        </label>
+                        <div class="nav-item mx-5 position-relative">
+                            <i class="fas fa-bell notification-bell" onclick="console.log('Clicked')"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications"></i>
                             @if ($newNotifications)
-                                <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
-                            @endif
-                        </div>
-                        <div class="nav-item mx-4 position-relative">
-                            <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
-                            @if ($newMessages)
                                 <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
                             @endif
                         </div>
 
                         <div id="dropdownContainer" class="nav-item dropdown ms-5">
+                            <label data-bs-toggle="dropdown" for="dropdownAvatar">
                             <img id="dropdownAvatar" class="nav-link px-0 dropdown-toggle py-0" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false"
+                                data-bs-toggle="tooltip" aria-expanded="false" data-bs-placement="bottom" title="{{Auth::user()->name}}"
                                 src={{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
                                 onerror="this.src='{{ $userImgPHolder }}'" />
+                            </label>
 
                             <ul id="mainDropdown" class="dropdown-menu dropdown-menu-dark text-center"
                                 aria-labelledby="dropdownAvatar">
@@ -127,7 +121,7 @@
                     @else
                         <div class="nav-item me-5">
                             <a href={{ route('login') }} class="button ms-5 mt-2">Login</a>
-                            <a href={{ route('signup') }} class="button button-secondary mx-4 mt-2">Signup</a>
+                            <a href={{ route('signup') }} class="button button-secondary mx-4 mt-2">Sign Up</a>
                         </div>
                     @endif
                 </div>

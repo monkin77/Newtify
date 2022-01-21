@@ -85,21 +85,15 @@ class AdminController extends Controller
                 'name' => Admin::find($suspension->admin_id)->name,
             ];
 
-            $user = User::find($suspension->user_id);
-            $userInfo = [
-                'id' => $user->id,
-                'name' => $user->name,
-                'avatar' => $user->avatar,
-                'country' => $user->country,
-                'is_admin' => $user->is_admin,
-            ];
+            $user = User::find($suspension->user_id)
+                ->only('id', 'name', 'avatar', 'country', 'is_admin');
 
             return [
                 'reason' => $suspension->reason,
                 'start_date' => gmdate('d-m-Y', strtotime($suspension->start_time)),
                 'end_date' => gmdate('d-m-Y', strtotime($suspension->end_time)),
                 'admin' => $adminInfo,
-                'user' => $userInfo,
+                'user' => $user,
             ];
         })->sortByDesc('start_date');
 
@@ -219,19 +213,12 @@ class AdminController extends Controller
         $reportsInfo = Report::orderByDesc('reported_at')->get()
             ->map(function ($report) {
 
-                $reportedInfo = [
-                    'id' => $report->reported_id,
-                    'name' => $report->reported->name,
-                    'avatar' => $report->reported->avatar,
-                    'country' => $report->reported->country,
-                    'is_admin' => $report->reported->is_admin,
-                ];
+                $reportedInfo = $report->reported
+                    ->only('id', 'name', 'avatar', 'country', 'is_admin');
 
                 if (isset($report->reporter))
-                    $reporterInfo = [
-                        'id' => $report->reporter_id,
-                        'name' => $report->reporter->name,
-                    ];
+                    $reporterInfo = $report->reporter->only('id', 'name');
+
                 else $reporterInfo = null;
 
                 return [
@@ -274,11 +261,8 @@ class AdminController extends Controller
     private function getTagsByState(string $state) {
         $tags = Tag::listTagsByState($state)->map(function ($tag) {
             if (isset($tag->user))
-                $userInfo = [
-                    'id' => $tag->user_id,
-                    'name' => $tag->user->name,
-                    'avatar' => $tag->user->avatar
-                ];
+                $userInfo = $tag->user->only('id', 'name', 'avatar');
+
             else $userInfo = null;
 
             return [
