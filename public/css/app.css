@@ -600,10 +600,6 @@ option {
     border-radius: 0.3em;
 }
 
-#editProfileContainer .deleteIcon {
-    cursor: pointer;
-}
-
 ::-webkit-calendar-picker-indicator {
     filter: invert(0.9);
 }

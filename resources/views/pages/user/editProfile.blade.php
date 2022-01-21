@@ -37,7 +37,7 @@ $isOpen = $errors->has('password');
             </div>
 
             <div class="row w-100 mt-3">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-8">
                     <div class="row w-100">
                         <div class="col-6">
                             <label class="h2 pb-3 my-0" for="nameInput">Username</label>
@@ -97,7 +97,7 @@ $isOpen = $errors->has('password');
                         @endif
                     </div>
                 </div>
-                <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+                <div class="col-12 col-lg-4 mt-3 mt-lg-0">
                     <label class="h2 mb-3" for="tagsInput">Favorite Tags</label>
 
                     <select id="favoriteTags" name="favoriteTags[]" multiple>
@@ -220,8 +220,6 @@ $isOpen = $errors->has('password');
                             >
                                 Delete Account
                             </button>
-                            {{-- <i class="far fa-check-circle fa-2x ms-3 pe-auto greenLink deleteIcon"></i>
-                            <i class="far fa-times-circle fa-2x ms-3 pe-auto text-danger deleteIcon"></i> --}}
                         </div>
                     </div>
                 </form>
