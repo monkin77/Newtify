@@ -116,7 +116,7 @@
 
             </div>
 
-            <div class="d-none d-md-block author-container me-4 mt-4 p-3 text-black rounded">
+            <div class="d-none d-lg-block author-container me-4 mt-4 p-3 text-black rounded">
                 @include('partials.authorInfo', [
                     'author' => $author,
                     'isOwner' => $isAuthor
@@ -124,7 +124,7 @@
             </div>
         </div>
 
-        <div class="d-block d-md-none author-container m-auto rounded position-relative">
+        <div class="d-block d-lg-none author-container m-auto rounded position-relative">
             @include('partials.authorInfo', [
                 'author' => $author,
                 'isOwner' => $isAuthor
@@ -142,7 +142,7 @@
             <div class="h-50">
                 @if (Auth::check())
                     <div class="d-flex flex-row my-3" id="articleCommentsContainer">
-                        <div class="flex-column h-100 commentHeader mx-3 mx-md-5">
+                        <div class="flex-column h-100 commentHeader mx-3 mx-lg-5">
                             <img src="{{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}"
                                 onerror="this.src='{{ $userImgPHolder }}'">
                             <p>You</p>

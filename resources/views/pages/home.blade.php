@@ -16,7 +16,7 @@
 
 @section('filters')
     <section>
-        <div id="filterSection" class="d-none d-md-flex flex-row align-items-center border border-light rounded-pill py-4 px-2 mt-3 mb-4 overflow-hidden">
+        <div id="filterSection" class="d-none d-lg-flex flex-row align-items-center border border-light rounded-pill py-4 px-2 mt-3 mb-4 overflow-hidden">
             <div class="btn-group btn-group-toggle me-auto" data-toggle="buttons">
                 @if (Auth::check())
                     <input type="radio" class="btn-check" name="filterType" id="recommended" autocomplete="off" checked>
@@ -60,7 +60,7 @@
             <i class="fa fa-tag filter-tag mx-4 text-lightPurple"></i>
         </div>
 
-        <div id="filterSectionMobile" class="d-flex d-md-none justify-content-between align-items-center pe-2">
+        <div id="filterSectionMobile" class="d-flex d-lg-none justify-content-between align-items-center pe-2">
             <div class="dropdown">
                 <button class="btn btn-purple dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Filter By

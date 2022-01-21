@@ -81,7 +81,7 @@
 
             </div>
 
-            <div class="d-none d-md-block author-container flex-col p-3 text-dark">
+            <div class="d-none d-lg-block author-container flex-col p-3 text-dark">
                 @include('partials.authorInfo', [
                     'author' => $author,
                     'isOwner' => true

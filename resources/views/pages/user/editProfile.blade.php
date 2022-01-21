@@ -33,7 +33,7 @@ $isOpen = $errors->has('password');
             </div>
 
             <div class="row w-100 mt-3">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-lg-6">
                     <div class="row w-100">
                         <div class="col-6">
                             <label class="h2 pb-3 my-0" for="nameInput">Username</label>
@@ -48,7 +48,7 @@ $isOpen = $errors->has('password');
                         <div class="col-6">
                             <label class="h2 pb-3 my-0" for="birthDateInput">Birth Date</label>
                             <input type="date" required value="{{ old('birthDate') ? old('birthDate') : $birthDate }}"
-                                class="h3 editInputs py-4 px-2 px-md-3" id="birthDateInput" name='birthDate' />
+                                class="h3 editInputs py-4 px-2 px-lg-3" id="birthDateInput" name='birthDate' />
                             @if ($errors->has('birthDate'))
                                 <div class="alert alert-danger ms-3 w-100 text-center py-1" role="alert">
                                     <p class="">{{ $errors->first('birthDate') }}</p>
@@ -92,7 +92,7 @@ $isOpen = $errors->has('password');
                         @endif
                     </div>
                 </div>
-                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                <div class="col-12 col-lg-6 mt-3 mt-lg-0">
                     <label class="h2 mb-3" for="tagsInput">Favorite Tags</label>
 
                     <select id="favoriteTags" name="favoriteTags[]" multiple>
@@ -163,7 +163,7 @@ $isOpen = $errors->has('password');
                                 onkeyup="checkPass('#newPassInput')">
                             <span class="ms-2" id="matchingPass"></span>
                         </div>
-                        <button class="mt-2 mt-md-0 mb-4" type="submit">Change</button>
+                        <button class="mt-2 mt-lg-0 mb-4" type="submit">Change</button>
                     </div>
                     @if ($errors->has('new_password'))
                         <div class="alert alert-danger ms-3 w-50 text-center py-1" role="alert">

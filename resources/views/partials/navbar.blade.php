@@ -1,9 +1,9 @@
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbarContainer">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarContainer">
         <div class="container-fluid py-4">
             <a id="logo" class="navbar-brand text-center w-25" href="{{ url('/') }}">Newtify</a>
             
-            <div class="d-flex d-md-none justify-content-end align-items-center flex-grow-1">
+            <div class="d-flex d-lg-none justify-content-end align-items-center flex-grow-1">
                 @if (Auth::check())
                     <a id="createArticleIcon" class="nav-item" href="{{ route('createArticle') }}">
                         <i class="purpleLink fas fa-plus-circle fa-2x"></i>
@@ -82,7 +82,7 @@
                     </div>
                 </form>
                 
-                <div class="d-none d-md-flex justify-content-end align-items-center" id="userSectionNav">
+                <div class="d-none d-lg-flex justify-content-end align-items-center" id="userSectionNav">
                     @if (Auth::check())
                         <a id="createArticleIcon" class="nav-item mx-4" href="{{ route('createArticle') }}">
                             <i class="purpleLink fas fa-plus-circle fa-3x"></i>

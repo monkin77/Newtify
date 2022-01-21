@@ -1,5 +1,5 @@
 /* Styles for screens md > */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
     body {
         font-size: small;
     }
@@ -221,7 +221,4 @@
         top: 30%;
         right: 5%;
     }
-}
-
-@media screen and (max-width: 576px) {
 }

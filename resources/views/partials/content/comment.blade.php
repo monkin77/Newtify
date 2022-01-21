@@ -5,7 +5,7 @@
     <div class="child-comment">
 @endif
     <div class="d-flex flex-row mx-0 my-3 p-0 w-100"> 
-        <div class="flex-column h-100 commentHeader mx-3 mx-md-5">
+        <div class="flex-column h-100 commentHeader mx-3 mx-lg-5">
             <a
             @if (isset($comment['author']))
                 href="/user/{{ $comment['author']['id'] }}"
