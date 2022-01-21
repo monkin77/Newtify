@@ -237,8 +237,6 @@ paths:
                   description: "Failed profile edition. Redirect to edit profile form."
                   value: "/user/{id}/edit"
 
-  # User deletion is hidden behind /api to prevent accidents
-  /api/user/{id}:
     delete:
       operationId: R203
       summary: "R203: Delete user account action"
