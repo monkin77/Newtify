@@ -5,6 +5,21 @@ const toggleElem = (elem) => {
   elem.classList.toggle('d-none');
 }
 
+/**
+ * @brief Show confirm text before certain action
+ * @param {*} elem 
+ * @param {*} deleteHandler 
+ */
+const confirmAction = (elem, deleteHandler) => {
+  const warn = document.createElement('span');
+  warn.classList.add('px-3');
+  warn.innerText = 'Confirm?';
+
+  const button = select(elem);
+  button.insertAdjacentElement('beforebegin', warn);
+  button.onclick = deleteHandler;
+}
+
 function addEventListeners() {
 
   const articleFilter = select('#filterSection');

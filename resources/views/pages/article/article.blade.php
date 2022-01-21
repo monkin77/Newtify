@@ -40,7 +40,8 @@
                                 </form>
                                 <button
                                     id="delete_content_{{$article['id']}}"
-                                    onclick="confirmDeletion({{$article['id']}}, () => document.deleteArticleForm.submit())"
+                                    type="button"
+                                    onclick="confirmAction('#delete_content_{{$article['id']}}', () => document.deleteArticleForm.submit())"
                                     class="btn btn-transparent my-0"
                                 >
                                     <i class="fas fa-trash fa-2x article-button text-danger mt-2"

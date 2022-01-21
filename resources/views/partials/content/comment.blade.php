@@ -87,7 +87,7 @@
                 <button
                     id="delete_content_{{$comment['id']}}"
                     data-bs-toggle="tooltip" data-bs-placement="right" title="Remove Comment"
-                    onclick="confirmDeletion({{ $comment['id'] }}, deleteComment)"
+                    onclick="confirmAction('#delete_content_{{$comment['id']}}', () => deleteComment({{$comment['id']}}))"
                     class="btn btn-transparent mb-0 px-2 mx-1"
                 >
                     <i class="fas fa-trash text-danger" style="font-size: 1.7em;"></i>

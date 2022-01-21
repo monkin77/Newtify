@@ -215,9 +215,13 @@ $isOpen = $errors->has('password');
                                 id="delPassInput" name='password' placeholder="Current Password" />
                         </div>
                         <div class="mt-5">
-                            <button class="btn btn-danger px-5" type="button" >Delete Account</button>
-                            <i class="far fa-check-circle fa-2x ms-3 pe-auto greenLink deleteIcon"></i>
-                            <i class="far fa-times-circle fa-2x ms-3 pe-auto text-danger deleteIcon"></i>
+                            <button id="delAccButton" class="btn btn-danger px-5" type="button"
+                                onclick="confirmAction('#delAccButton', () => document.deleteForm.submit())" 
+                            >
+                                Delete Account
+                            </button>
+                            {{-- <i class="far fa-check-circle fa-2x ms-3 pe-auto greenLink deleteIcon"></i>
+                            <i class="far fa-times-circle fa-2x ms-3 pe-auto text-danger deleteIcon"></i> --}}
                         </div>
                     </div>
                 </form>
