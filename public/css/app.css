@@ -633,6 +633,9 @@ option {
 }
 
 /* Admin Panel */
+.adminPanelCard {
+    height: 100%;
+}
 
 .reportsContainer {
     background-color: var(--bs-gray-900);

@@ -123,6 +123,17 @@
         width: 90%;
     }
 
+    .linkContainer {
+        height: 27vh;
+        text-align: center;
+    }
+
+    .manageLink {
+        height: 13vh;
+        font-size: 2vw;
+        text-align: center;
+    }
+
     #adminBadge {
         position: absolute;
         top: -10px;
