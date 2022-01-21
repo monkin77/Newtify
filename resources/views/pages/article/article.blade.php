@@ -124,6 +124,13 @@
             </div>
         </div>
 
+        <div class="d-block d-md-none author-container m-auto rounded position-relative">
+            @include('partials.authorInfo', [
+                'author' => $author,
+                'isOwner' => $isAuthor
+            ])
+        </div>
+
         <div class="d-flex flex-column" id="comments-section">
 
             @if (!$comments->isEmpty() || Auth::check())
@@ -164,13 +171,6 @@
 
             </div>
 
-        </div>
-
-        <div class="d-block d-md-none author-container m-auto rounded position-relative">
-            @include('partials.authorInfo', [
-                'author' => $author,
-                'isOwner' => $isAuthor
-            ])
         </div>
     </div>
 @endsection
