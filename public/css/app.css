@@ -4,6 +4,10 @@ body {
     width: 100%;
 }
 
+a {
+    color: var(--bs-lightPurple);
+}
+
 input,
 select,
 textarea {

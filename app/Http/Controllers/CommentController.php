@@ -46,7 +46,6 @@ class CommentController extends Controller
         $comment->content_id = $content->id;
         $comment->article_id = $request->article_id;
 
-        // TODO: Test this
         $articleAuthor = Article::find($request->article_id)->author;
         $author_id = isset($articleAuthor) ? $articleAuthor->id : null;
 

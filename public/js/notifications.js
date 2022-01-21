@@ -54,8 +54,8 @@ function notificationPanelHandler() {
 }
 
 const fetchNotifications = () => {
-    sendAjaxRequest('get', 'api/notifications', null, notificationPanelHandler);
+    sendAjaxRequest('get', '/api/notifications', null, notificationPanelHandler);
 
     // Mark notifications as read
-    sendAjaxRequest('put', 'notifications', null, null);
+    sendAjaxRequest('put', '/notifications', null, null);
 }

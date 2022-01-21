@@ -54,7 +54,10 @@ class ContentPolicy
      */
     public function updateFeedback(User $user, Content $content)
     {
-        return Auth::check() && $user->id !== $content->author()->first()->id;
+        if (!Auth::check()) return false;
+        if (!isset($content->author)) return true;
+
+        return $user->id !== $content->author->id;
     }
 
 }

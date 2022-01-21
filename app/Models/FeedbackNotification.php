@@ -20,7 +20,6 @@ class FeedbackNotification extends Notification
 
     public static function notify($user, $content, $isArticle)
     {
-        // TODO: Test this
         if (!isset($content->author_id)) return;
 
         if ($isArticle)

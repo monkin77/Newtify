@@ -285,8 +285,10 @@ BEGIN
     IF (NEW.is_like) THEN
         UPDATE content SET likes = likes + 1 WHERE id = NEW.content_id;
 
-        INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
-        VALUES (author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
+        IF (author_id IS NOT NULL) THEN
+          INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type)
+          VALUES (author_id, FALSE, NULL, NEW.user_id, NEW.content_id, NULL, 'FEEDBACK');
+        END IF;
     ELSE 
         UPDATE content SET dislikes = dislikes + 1 WHERE id = NEW.content_id;
     END IF;
@@ -570,13 +572,19 @@ DECLARE article_author INTEGER = (
 DECLARE parent_author INTEGER = (
   SELECT author_id FROM content WHERE id = NEW.parent_comment_id
 );
+DECLARE commenter INTEGER = (
+  SELECT author_id FROM content WHERE id = NEW.content_id
+);
 BEGIN
-  IF parent_author IS NULL THEN
+  IF NEW.parent_comment_id IS NOT NULL THEN
+    IF parent_author IS NOT NULL AND parent_author <> commenter THEN
+      INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
+        VALUES (parent_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'COMMENT');
+    END IF;
+  ELSE IF article_author IS NOT NULL AND article_author <> commenter THEN
     INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
         VALUES (article_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'COMMENT');
-  ELSE
-    INSERT INTO notification(receiver_id, is_read, msg, fb_giver, rated_content, new_comment, type) 
-        VALUES (parent_author, FALSE, NULL, NULL, NULL, NEW.content_id, 'COMMENT');
+  END IF;
   END IF;
   RETURN NULL;
 END
