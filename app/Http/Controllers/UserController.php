@@ -315,6 +315,7 @@ class UserController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'avatar' => $user->avatar,
+                'description' => $user->description,
                 'country' => $user->country->getInfo(),
                 'isAdmin' => $user->is_admin,
                 'topAreasExpertise' => $user->topAreasExpertise(),
