@@ -16,29 +16,6 @@ class TagController extends Controller
     ];
 
     /**
-     * Show Page that contains all the tags and the user's favorite tags highlighted.
-     *
-     * @return View
-     */
-    public function showUserFavorites()
-    {
-        if (Auth::guest()) {
-            return redirect('/login');
-        }
-
-        $userTags = Auth::user()->favoriteTags->map(fn ($tag) => $tag->only('id'));
-
-        $tags = Tag::listTagsByState(self::tagStates['accepted'])
-            ->map(fn ($tag) => $tag->only('id', 'name'));
-
-        return view('pages.tagsList', [
-            'tags' => $tags,
-            'userTags' => $userTags,
-            'userId' => Auth::id(),
-        ]);
-    }
-
-    /**
      * Accept a Tag
      *
      * @return \Illuminate\Http\Response
@@ -172,30 +149,6 @@ class TagController extends Controller
             'msg' => 'Successfully removed tag from user favorites',
             'tag_id' => $tag_id,
         ], 200);
-    }
-
-    public function showFilteredTags($tag_state)
-    {
-        $this->authorize('showFilteredTags', Tag::class);
-
-        $tags = Tag::listTagsByState(self::tagStates[$tag_state])->map(function ($tag) {
-            if (isset($tag->user))
-                $userInfo = $tag->user->only('id', 'name', 'avatar');
-
-            else $userInfo = null;
-
-            return [
-                'id' => $tag->id,
-                'name' => $tag->name,
-                'proposed_at' => $tag->proposed_at,
-                'state' => $tag->state,
-                'user' => $userInfo
-            ];
-        });
-
-        return view('partials.tags_list', [
-            'tags' => $tags,
-        ]);
     }
 
     /**

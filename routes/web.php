@@ -71,12 +71,10 @@ Route::get('admin/tags', 'AdminController@tags');
 Route::put('admin/reports/{id}/close', 'AdminController@closeReport')->where(['id' => '[0-9]+']);
 
 // Tag
-Route::get('favorite_tags', 'TagController@showUserFavorites');
 Route::put('tags/{tag_id}/accept', 'TagController@accept')->where(['tag_id' => '[0-9]+']);
 Route::put('tags/{tag_id}/reject', 'TagController@reject')->where(['tag_id' => '[0-9]+']);
 Route::put('tags/{tag_id}/add_favorite', 'TagController@addUserFavorite')->where(['tag_id' => '[0-9]+']);
 Route::put('tags/{tag_id}/remove_favorite', 'TagController@removeUserFavorite')->where(['tag_id' => '[0-9]+']);
-Route::get('api/tags/{tag_state}', 'TagController@showFilteredTags')->where('tag_state', '(accepted|rejected|pending)');
 Route::delete('tags/{tag_id}', 'TagController@destroy')->where(['tag_id' => '[0-9]+']);
 Route::post('tags/new', 'TagController@propose');
 
