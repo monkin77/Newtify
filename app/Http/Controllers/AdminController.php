@@ -54,18 +54,22 @@ class AdminController extends Controller
         $suspendedUsers = $suspendedUserList->map(function ($user) {
             $history = $user->suspensions->map(function ($suspension) {
 
-                $adminInfo = [
-                    'id' => $suspension->admin_id,
-                    'name' => Admin::find($suspension->admin_id)->name,
-                ];
+                $admin = Admin::find($suspension->admin_id);
+                if (isset($admin)) 
+                    $adminInfo = [
+                        'id' => $suspension->admin_id,
+                        'name' => $admin->name,
+                    ];
+                else $adminInfo = null;
 
                 return [
                     'reason' => $suspension->reason,
-                    'start_date' => gmdate('d-m-Y', strtotime($suspension->start_time)),
-                    'end_date' => gmdate('d-m-Y', strtotime($suspension->end_time)),
+                    'sort_date' => gmdate('d-m-Y', strtotime($suspension->start_time)),
+                    'start_date' => date('F j, Y', strtotime($suspension->start_time)),
+                    'end_date' => date('F j, Y', strtotime($suspension->end_time)),
                     'admin' => $adminInfo,
                 ];
-            })->sortByDesc('start_date');
+            })->sortByDesc('sort_date');
 
             return [
                 'id' => $user->id,
@@ -80,22 +84,27 @@ class AdminController extends Controller
 
         $suspensionHistory = DB::table('suspension')->get()->map(function ($suspension) {
 
-            $adminInfo = [
-                'id' => $suspension->admin_id,
-                'name' => Admin::find($suspension->admin_id)->name,
-            ];
+
+            $admin = Admin::find($suspension->admin_id);
+            if (isset($admin)) 
+                $adminInfo = [
+                    'id' => $suspension->admin_id,
+                    'name' => $admin->name,
+                ];
+            else $adminInfo = null;
 
             $user = User::find($suspension->user_id)
                 ->only('id', 'name', 'avatar', 'country', 'is_admin');
 
             return [
                 'reason' => $suspension->reason,
-                'start_date' => gmdate('d-m-Y', strtotime($suspension->start_time)),
-                'end_date' => gmdate('d-m-Y', strtotime($suspension->end_time)),
+                'sort_date' => gmdate('d-m-Y', strtotime($suspension->start_time)),
+                'start_date' => date('F j, Y', strtotime($suspension->start_time)),
+                'end_date' => date('F j, Y', strtotime($suspension->end_time)),
                 'admin' => $adminInfo,
                 'user' => $user,
             ];
-        })->sortByDesc('start_date');
+        })->sortByDesc('sort_date');
 
         return view('pages.admin.suspensions', [
             'suspendedUsers' => $suspendedUsers,
@@ -112,6 +121,7 @@ class AdminController extends Controller
      */
     public function suspendUser(Request $request, int $id)
     {  
+
         $user = User::find($id);
         if (is_null($user))
             return response()->json([
@@ -124,7 +134,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(),[
             'reason' => 'required|string|min:5|max:200',
-            'end_time' => 'required|string|date_format:d-m-Y H:i:s',
+            'end_time' => 'required|string|date_format:Y-m-d',
         ]);
 
         if ($validator->fails())
@@ -158,7 +168,7 @@ class AdminController extends Controller
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Successful user suspension',
+            'msg' => 'Successfully suspensed user '.$user->name,
             'id' => $suspension->id,
         ], 200);
     }
@@ -185,7 +195,7 @@ class AdminController extends Controller
         if (!$user->is_suspended)
             return response()->json([
                 'status' => 'OK',
-                'msg' => 'User was not suspended, id: '.$id,
+                'msg' => 'User '.$user->name.' was alreay unsuspended',
             ], 200);
 
         Suspension::where('user_id', $id)
@@ -214,7 +224,7 @@ class AdminController extends Controller
             ->map(function ($report) {
 
                 $reportedInfo = $report->reported
-                    ->only('id', 'name', 'avatar', 'country', 'is_admin');
+                    ->only('id', 'name', 'avatar', 'country', 'is_admin', 'is_suspended');
 
                 if (isset($report->reporter))
                     $reporterInfo = $report->reporter->only('id', 'name');
@@ -224,7 +234,7 @@ class AdminController extends Controller
                 return [
                     'id' => $report->id,
                     'reason' => $report->reason,
-                    'reported_at' => $report->reported_at,
+                    'reported_at' => date('F j, Y', strtotime($report->reported_at)),
                     'is_closed' => $report->is_closed,
                     'reported' => $reportedInfo,
                     'reporter' => $reporterInfo,
@@ -292,7 +302,7 @@ class AdminController extends Controller
         if ($report->is_closed)
             return response()->json([
                 'status' => 'OK',
-                'msg' => 'Report was already closed, id: '.$id,
+                'msg' => 'Report was already closed',
             ], 200);
 
         $report->is_closed = true;
@@ -300,7 +310,7 @@ class AdminController extends Controller
 
         return response()->json([
             'status' => 'OK',
-            'msg' => 'Report was successfully closed, id: '.$id,
+            'msg' => 'Report was successfully closed',
         ], 200);
     }
 }

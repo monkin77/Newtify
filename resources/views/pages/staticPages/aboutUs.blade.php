@@ -35,7 +35,7 @@
         
         <div class="row py-3" id="contactsSection">
             
-            <div class="col col-md mb-3 d-flex justify-content-center">
+            <div class="col mb-3 d-flex justify-content-center">
                 <div class="card">
                     <img class="card-img-top" src="storage/up201905853.jpg" alt="Rui Alves">
                     <div class="card-body">
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="col col-md mb-3 d-flex justify-content-center">
+            <div class="col mb-3 d-flex justify-content-center">
                 <div class="card">
                     <img class="card-img-top" src="storage/up201906334.jpg" alt="Bruno Rosendo">
                     <div class="card-body">
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-            <div class="col col-md mb-3 d-flex justify-content-center">
+            <div class="col mb-3 d-flex justify-content-center">
                 <div class="card">
                     <img class="card-img-top" src="storage/up201906682.jpg" alt="João Mesquita">
                     <div class="card-body">
@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            <div class="col col-md mb-3 d-flex justify-content-center">
+            <div class="col mb-3 d-flex justify-content-center">
                 <div class="card">
                     <img class="card-img-top" src="storage/up201706518.jpg" alt="Jorge Costa">
                     <div class="card-body">

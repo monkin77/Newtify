@@ -8,13 +8,12 @@
         <p>
             Here, you can find answers to questions that you may have:
         </p>
-        
 
         <div class="accordion text-center" id="faqAccordion">
             <div class="accordion-item my-5">
                 <h4 class="accordion-header " id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        How do i create an article?
+                        How do I create an article?
                     </button>
                 </h4>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
