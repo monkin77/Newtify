@@ -627,6 +627,18 @@ option {
 
 /* Admin Panel */
 
+.reportsContainer {
+    background-color: var(--bs-gray-900);
+}
+
+.manageUserContainer {
+    margin: auto;
+}
+
+.manageUserContainer #userImg {
+    
+}
+
 .manageContainer:hover {
     box-shadow: 0px 0px 10px 6px var(--bs-gray-600),
         0px 0px 10px 10px var(--bs-gray-800);
@@ -664,9 +676,9 @@ option {
 
 /* Tags Managment */
 
-.statusContainer {
-    max-height: 90vh;
-    overflow-y: scroll;
+.statusContainer, .reportsContainer {
+    height: 65rem;
+    overflow-y: auto;
 }
 
 .statusContainer .manageTagContainer {
@@ -955,4 +967,15 @@ option {
     width: 100%;
     aspect-ratio: 1;
     max-height: 100%;
+}
+
+/* Suspensions Page */
+
+.accordion-button {
+    font-size: 1.3rem;
+}
+
+.susContainer {
+    background-color: blanchedalmond;
+    color: black;
 }

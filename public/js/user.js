@@ -29,6 +29,7 @@ function unfollowUserHandler() {
 }
 
 const toggleReportPopup = () => {
+    
     const reportContainer = select('#reportElement');
     
     if (!reportContainer.classList.contains('d-none')) {
