@@ -82,4 +82,10 @@ const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl, {
     delay: { show: 500, hide: 100 },
   })
-})
+});
+
+
+function goBack() {
+  history.back();
+}
+

@@ -27,6 +27,8 @@
     <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <!-- This Stylesheet needs to be placed after app.css  -->
+    <link href="{{ asset('css/mobileStyles.css') }}" rel="stylesheet">  
 </head>
 
 <body>

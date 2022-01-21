@@ -1,19 +1,21 @@
 @php
-function calculateExpertiseLevel($reputation)
-{
-    $step = 20;
-    if ($reputation <= 0) {
-        return 0;
-    } elseif ($reputation < 5) {
-        return $step * 1;
-    } elseif ($reputation < 10) {
-        return $step * 2;
-    } elseif ($reputation < 20) {
-        return $step * 3;
-    } elseif ($reputation < 40) {
-        return $step * 4;
-    } else {
-        return $step * 5;
+if (!function_exists('calculateExpertiseLevel')) {
+    function calculateExpertiseLevel($reputation)
+    {
+        $step = 20;
+        if ($reputation <= 0) {
+            return 0;
+        } elseif ($reputation < 5) {
+            return $step * 1;
+        } elseif ($reputation < 10) {
+            return $step * 2;
+        } elseif ($reputation < 20) {
+            return $step * 3;
+        } elseif ($reputation < 40) {
+            return $step * 4;
+        } else {
+            return $step * 5;
+        }
     }
 }
 @endphp

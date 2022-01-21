@@ -204,7 +204,7 @@ const getReplyBox = (mainDiv) => {
     childDiv.appendChild(mainDiv);
 
     const wrapperDiv = document.createElement('div');
-    wrapperDiv.classList.add('d-flex', 'justify-content-end', 'w-75');
+    wrapperDiv.classList.add('d-flex', 'justify-content-end', 'articleCommentPartial');
     wrapperDiv.appendChild(childDiv);
 
     return wrapperDiv;

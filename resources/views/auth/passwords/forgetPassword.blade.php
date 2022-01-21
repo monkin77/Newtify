@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="border border-light border-2 text-center w-25 bg-secondary container mt-3">
+<div class="border border-light border-2 text-center bg-secondary container mt-3" id="forgetPasswordContainer">
     <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Forgot Password</h2>
     
     @if (Session::has('status')) 
@@ -24,7 +24,7 @@
         <input name ="email" type="email" id="email" class="customInput" value="{{ old('email') }}" placeholder="Email address" required autofocus>
         
 
-        <button type="submit" class="btn btn-purple btn-lg customBtn w-50">
+        <button type="submit" class="btn btn-purple btn-lg customBtn">
             Send Email
         </button>
 

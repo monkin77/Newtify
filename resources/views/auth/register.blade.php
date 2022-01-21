@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="border border-light border-3 text-center w-50 bg-secondary container-fluid mt-4 mb-5" id="registerContainer">
+<div class="border border-light border-3 text-center bg-secondary container-fluid mt-4 mb-5" id="registerContainer">
     <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Sign Up</h2>
     <form class="form-group" method="post" action="{{ route('signup') }}" enctype="multipart/form-data">
         {{ csrf_field() }}

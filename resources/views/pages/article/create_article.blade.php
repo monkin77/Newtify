@@ -19,7 +19,7 @@
                     @csrf
 
                     <div class="flex-row">
-                        <label for="title">{{ "Article's Title" }}</label>
+                        <label for="title">{{ "Article Title" }}</label>
                         <h3 class="m-0"> 
                             <input type="text" required minlength="3" maxlength="100" class="h-100"
                                 id="title" name="title" placeholder="Insert Title" value="{{ old('title') }}">
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="flex-row mt-3 mb-5 pe-3"> 
-                        <label for="tags">{{ "Article's Tags" }}</label>
+                        <label for="tags">{{ "Article Tags" }}</label>
 
                         <select required id="tags" name="tags[]" multiple>
                             @foreach($tags as $tag)
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="flex-row">
-                        <label for="thumbnail">Article's Thumbnail</label>
+                        <label for="thumbnail">Article Thumbnail</label>
                         <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
                     </div>
                     @if ($errors->has('thumbnail'))
@@ -64,7 +64,7 @@
                     @endif
       
                     <div class="flex-row h-100">
-                        <label for="body">{{ "Article's Body" }}</label>
+                        <label for="body">{{ "Article Body" }}</label>
                         <textarea id="body" required name="body" minlength="10" rows="15" class="h-100"
                             placeholder="Insert Body">{{ old('body') }}</textarea>
 
@@ -75,12 +75,15 @@
                         @endif
                     </div>
 
-                    <button type="submit">Create Article</button>
+                    <div>
+                        <button type="submit" class="btn btn-primary px-4">Create Article</button>
+                        <button type="button" class="btn btn-secondary px-4 ms-4" onclick="goBack()" >Go Back</button>
+                    </div>
                 </form>
 
             </div>
 
-            <div class="author-container flex-col p-3 text-dark">
+            <div class="d-none d-lg-block author-container flex-col p-3 text-dark">
                 @include('partials.authorInfo', [
                     'author' => $author,
                     'isOwner' => true,

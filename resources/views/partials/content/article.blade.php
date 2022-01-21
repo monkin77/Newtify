@@ -1,6 +1,6 @@
 <div class="card flex-row flex-wrap bg-secondary">
     <div class="card-header border-0 h-100 bg-transparent">
-        <img class="h-100" src="{{
+        <img class="squareImage" src="{{
             isset($article['thumbnail']) ?
             asset('storage/thumbnails/'.$article['thumbnail'])
             :
@@ -9,8 +9,8 @@
     </div>
 
     <a href="/article/{{ $article['id'] }}" class="h-100">
-        <div class="card-block d-flex flex-column px-2 h-100">
-            <h4 class="card-title">
+        <div class="card-block d-flex flex-column px-2 h-100 py-2">
+            <h4 class="card-title text-truncate pb-4 my-0">
                 {{ $article['title'] }}
             </h4>
 
@@ -26,7 +26,7 @@
                 <i class="fa fa-thumbs-down"> {{ $article['dislikes'] }}</i>
             </span>
 
-            <p class="card-text text-light-white">{{ mb_strimwidth($article['body'], 0, 300, "...") }} </p>
+            <p class="card-text text-light-white text-wrap overflow-hidden h-100">{{ mb_strimwidth($article['body'], 0, 300, "...") }} </p>
         </div>
     </a>
     

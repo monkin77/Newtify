@@ -3,14 +3,13 @@
 @section('scripts')
     <script type="text/javascript" src="{{ asset('js/comments.js') }}"> </script>
     <script type="text/javascript" src="{{ asset('js/content.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/feedbackContent.js') }}"></script>
     <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 @endsection
 
 @section('article')
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
 
-        <div class="d-flex flex-row my-2 h-100" style="min-height: 65vh">
+        <div id="articleContentContainer" class="d-flex flex-row my-2 h-100 position-relative">
             
             <div class="articleInfoContainer d-flex flex-column p-3 mb-0 text-white" >
 
@@ -27,7 +26,7 @@
                     @if ($isAuthor || $isAdmin)
                         <div id="articleButtons" class="d-flex align-items-center">
                             @if ($isAuthor)
-                                <a href="{{ route('editArticle', ['id' => $article['id']])}}" class="fas fa-edit article-button darkPurpleLink me-4">
+                                <a href="{{ route('editArticle', ['id' => $article['id']])}}" class="fas fa-edit fa-2x darkPurpleLink me-4">
                                 </a>
                             @endif
 
@@ -42,14 +41,14 @@
                                     onclick="confirmDeletion({{$article['id']}}, () => document.deleteArticleForm.submit())"
                                     class="btn btn-transparent my-0"
                                 >
-                                    <i class="fas fa-trash article-button text-danger"></i>
+                                    <i class="fas fa-trash fa-2x text-danger"></i>
                                 </button>
                             @endif
                         </div>
                     @endif
                 </div>
 
-                <p class="flex-row mt-3 mb-1 h-25">
+                <p class="flex-row mt-3 mb-1">
 
                     @foreach ($tags as $tag)
                         @include('partials.tag', ['tag' => $tag ])
@@ -105,9 +104,9 @@
                 @endif
 
                 @if (isset($article['thumbnail']))
-                    <div class="flex-row h-50 mb-5 text-center">
-                        <img class="h-100 w-50" src="{{ asset('storage/thumbnails/' . $article['thumbnail']) }}"
-                            onerror="this.src='{{ $articleImgPHolder }}'">
+                    <div class="h-50 mb-5 text-center">
+                        <img src="{{ asset('storage/thumbnails/' . $article['thumbnail']) }}"
+                            onerror="this.src='{{ $articleImgPHolder }}'" id="articleImg">
                     </div>
                 @endif
 
@@ -117,13 +116,19 @@
 
             </div>
 
-            <div class="author-container flex-col me-4 mt-4 p-3 text-black rounded">
+            <div class="d-none d-lg-block author-container me-4 mt-4 p-3 text-black rounded">
                 @include('partials.authorInfo', [
                     'author' => $author,
                     'isOwner' => $isAuthor
                 ])
             </div>
+        </div>
 
+        <div class="d-block d-lg-none author-container m-auto rounded position-relative">
+            @include('partials.authorInfo', [
+                'author' => $author,
+                'isOwner' => $isAuthor
+            ])
         </div>
 
         <div class="d-flex flex-column" id="comments-section">
@@ -136,8 +141,8 @@
 
             <div class="h-50">
                 @if (Auth::check())
-                    <div class="d-flex flex-row my-3 w-75">
-                        <div class="flex-column h-100 commentHeader mx-5">
+                    <div class="d-flex flex-row my-3" id="articleCommentsContainer">
+                        <div class="flex-column h-100 commentHeader mx-3 mx-lg-5">
                             <img src="{{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}"
                                 onerror="this.src='{{ $userImgPHolder }}'">
                             <p>You</p>
@@ -145,7 +150,7 @@
                         <div id="comment_form" class="flex-column w-100 m-0">
                             <textarea id="commentTextArea" class="flex-column border-light m-0 p-2" placeholder="Type here"></textarea>
                             <button id="newCommentButton"
-                                class="button button-primary px-4"
+                                class="btn btn-primary px-4"
                                 onclick="createNewComment({{ $article['id'] }})"
                             >
                                 Comment

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="border border-light border-2 text-center w-25 bg-secondary container mt-3">
+    <div class="border border-light border-2 text-center bg-secondary container mt-3" id="resetPassContainer">
         <h2 class="modal-titlemx-auto text-center fw-bold mt-4" id="exampleModalLabel">Forgot Password</h2>
         
         @if (Session::has('status')) 
@@ -35,7 +35,7 @@
             <input type="hidden" name="token" value="{{ request()->token }}">
             <input type="hidden" name="email" value="{{ request()->email }}">
 
-            <button type="submit" class="btn btn-purple btn-lg customBtn w-50">
+            <button type="submit" class="btn btn-purple btn-lg customBtn">
                 Reset Password
             </button>
 
