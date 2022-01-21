@@ -6,6 +6,8 @@ $guest = !Auth::check();
 
 <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 
+@section('title', "- User Profile")
+
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('userInfo')
     <section id="userInfo">

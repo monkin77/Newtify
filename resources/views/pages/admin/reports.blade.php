@@ -10,6 +10,8 @@
     <script type="text/javascript" src="{{ asset('js/user.js') }}"></script>
 @endsection
 
+@section('title', "- Reports")
+
 @section('users')
 
 <div class="text-center container-fluid">

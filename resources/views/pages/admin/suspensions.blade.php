@@ -4,6 +4,8 @@
     <script type="text/javascript" src="{{ asset('js/suspensions.js') }}"></script>
 @endsection
 
+@section('title', "- Suspensions")
+
 @section('content')
 
     <div class="text-center container">

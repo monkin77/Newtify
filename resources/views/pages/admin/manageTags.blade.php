@@ -4,7 +4,6 @@
 
 @section('title', "- Manage Tags")
 
-
 @section('content')
 
 <div class="text-center container">
