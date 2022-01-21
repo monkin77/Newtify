@@ -26,7 +26,7 @@
             @endif
         </p>
 
-        @if (!Auth::guest())
+        @if ($user['id'] != Auth::id())
             @if ($user['followed'])
                 <div class="w-25 mb-2">
                     <button type="button" class="btn btn-primary my-0 py-0 me-3" id="followBtn"
