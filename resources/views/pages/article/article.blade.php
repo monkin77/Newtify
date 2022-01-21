@@ -122,7 +122,8 @@
                 @if (isset($article['thumbnail']))
                     <div class="h-50 mb-5 text-center">
                         <img src="{{ asset('storage/thumbnails/' . $article['thumbnail']) }}"
-                            onerror="this.src='{{ $articleImgPHolder }}'" id="articleImg">
+                            onerror="this.src='{{ $articleImgPHolder }}'" id="articleImg"
+                            alt="Article Thumbnail">
                     </div>
                 @endif
 
@@ -160,7 +161,7 @@
                     <div class="d-flex flex-row my-3" id="articleCommentsContainer">
                         <div class="flex-column h-100 commentHeader mx-3 mx-lg-5">
                             <img src="{{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}"
-                                onerror="this.src='{{ $userImgPHolder }}'">
+                                onerror="this.src='{{ $userImgPHolder }}'" alt="Your Avatar">
                             <p>You</p>
                         </div>
                         <div id="comment_form" class="flex-column w-100 m-0">

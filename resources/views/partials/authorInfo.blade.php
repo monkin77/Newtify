@@ -9,7 +9,7 @@
                     <img id="authorAvatar" class="w-100" src="{{
                         isset($author['avatar']) ?
                         asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
-                    }}" onerror="this.src='{{ $userImgPHolder }}'" />
+                    }}" onerror="this.src='{{ $userImgPHolder }}'" alt="Author Avatar" />
                 </a>
             </div>
             <div class="w-75 pb-0" id="authorHeader">
@@ -49,7 +49,7 @@
 @else
     <div class="d-flex flex-row mb-3">
         <div class="flex-col w-25" style="margin-right: 1em;">
-            <img id="authorAvatar" class="h-100" src={{ $userImgPHolder }}>
+            <img id="authorAvatar" class="h-100" src={{ $userImgPHolder }} alt="Author Avatar">
         </div>
         <div class="flex-col w-75" id="author-header" style="padding-top: 1em;">
             <h4 class="mb-2"><i>Anonymous</i></h4>

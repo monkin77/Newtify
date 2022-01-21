@@ -26,7 +26,7 @@
 
                     <div id="dropdownContainer" class="nav-item dropdown ms-3 me-4">
                         <img id="dropdownAvatar" class="nav-link px-0 dropdown-toggle py-0" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false"
+                            data-bs-toggle="dropdown" aria-expanded="false" alt="Your Avatar"
                             src={{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
                             onerror="this.src='{{ $userImgPHolder }}'" />
 
@@ -112,9 +112,10 @@
                         <div id="dropdownContainer" class="nav-item dropdown ms-5">
                             <label data-bs-toggle="dropdown" for="dropdownAvatar">
                             <img id="dropdownAvatar" class="nav-link px-0 dropdown-toggle py-0" role="button"
+                                alt="Your Avatar"
                                 data-bs-toggle="tooltip" aria-expanded="false" data-bs-placement="bottom" title="{{Auth::user()->name}}"
                                 src={{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
-                                onerror="this.src='{{ $userImgPHolder }}'" />
+                                onerror="this.src='{{ $userImgPHolder }}'"/>
                             </label>
 
                             <ul id="mainDropdown" class="dropdown-menu dropdown-menu-dark text-center"

@@ -13,7 +13,7 @@ $guest = !Auth::check();
             <div class="row w-100 mt-4 mt-lg-5" id="userGraphics">
                 <div class="col-5 col-lg-6 d-flex justify-content-center align-items-center h-100">
                     <img src="{{ isset($user['avatar']) ? asset('storage/avatars/' . $user['avatar']) : $userImgPHolder }}"
-                        id="avatarImg" onerror="this.src='{{ $userImgPHolder }}'" />
+                        id="avatarImg" onerror="this.src='{{ $userImgPHolder }}'" alt="User Avatar" />
 
                 </div>
                 <div class="col-7 col-lg-6 d-flex flex-column align-items-center h-100">

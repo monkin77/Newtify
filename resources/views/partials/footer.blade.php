@@ -15,9 +15,9 @@
             <a class="text-uppercase link-light" href="{{ route('faq') }}">FAQ</a>
         </div>
         <div class="col-12 col-lg-3 py-2">
-            <a class="fa fa-facebook mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_"></a>
-            <a class="fa fa-twitter mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_"></a>
-            <a class="fa fa-instagram mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_"></a>
+            <a class="fa fa-facebook mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_blank"></a>
+            <a class="fa fa-twitter mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_blank"></a>
+            <a class="fa fa-instagram mx-4 footerIcons" href="https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111" target="_blank"></a>
         </div>
     </div>
 

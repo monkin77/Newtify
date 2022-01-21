@@ -120,7 +120,7 @@ option {
 #dropdownAvatar {
     border-radius: 2em;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
 }
 
 /* HomePage */
@@ -301,7 +301,7 @@ option {
 
 .author-container #authorAvatar {
     border-radius: 50%;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
 }
 
 #comments-section #articleCommentsContainer {
@@ -405,7 +405,7 @@ option {
 
 #userInfo #userGraphics #avatarImg {
     height: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
     border-radius: 100em;
 }
 
@@ -576,7 +576,7 @@ option {
 
 #editProfileContainer #editAvatarContainer #avatarPreview {
     height: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
     width: auto;
     border-radius: 100em;
     margin-right: 3em;
@@ -605,10 +605,6 @@ option {
     font-size: large;
     background-color: var(--bs-purple);
     border-radius: 0.3em;
-}
-
-::-webkit-calendar-picker-indicator {
-    filter: invert(0.9);
 }
 
 /* Admin Panel */
@@ -964,7 +960,7 @@ option {
 
 .squareImage {
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
     max-height: 100%;
 }
 
