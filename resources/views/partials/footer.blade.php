@@ -3,7 +3,7 @@
     <div class="row m-0 p-0 w-100">
         <!--Grid column-->
         <div class="col-12 col-lg-3 ps-lg-5 py-2">
-            <h5 class="text-uppercase">Newtify Logo</h5>
+            <h5 class="text-uppercase text-purple">Newtify</h5>
         </div>
         <div class="col-12 col-lg-2 py-2">
             <a class="text-uppercase link-light" href="{{ route('about') }}">About Us</a>
