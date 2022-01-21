@@ -635,9 +635,6 @@ option {
     margin: auto;
 }
 
-.manageUserContainer #userImg {
-}
-
 .manageContainer:hover {
     box-shadow: 0px 0px 10px 6px var(--bs-gray-600),
         0px 0px 10px 10px var(--bs-gray-800);
@@ -692,9 +689,6 @@ option {
 }
 
 /* Navbar and Footer*/
-#navbarContainer {
-}
-
 #footerContainer {
     min-height: 15vh;
 }
