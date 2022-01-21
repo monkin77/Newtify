@@ -508,6 +508,8 @@ option {
 
 .user-card {
     border-color: var(--bs-gray-600);
+    max-height: 25rem;
+    overflow: hidden;
 }
 
 .user-card-avatar {
