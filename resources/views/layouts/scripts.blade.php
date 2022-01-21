@@ -5,6 +5,7 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
 </script>
 
 <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/1b07llfopaqjsr26834ikea0i2hyvslhbteirkypr8jc45t9/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
 <script type="text/javascript">
     // Fix for Firefox autofocus CSS bug

@@ -127,7 +127,7 @@
                 @endif
 
                 <div id="articleBody" class="flex-row h-75">
-                    {{ $article['body'] }}
+                    {!! $article['body'] !!}
                 </div>
 
             </div>

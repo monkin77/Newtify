@@ -26,7 +26,9 @@
                 <i class="fa fa-thumbs-down"> {{ $article['dislikes'] }}</i>
             </span>
 
-            <p class="card-text text-light-white text-wrap overflow-hidden h-100">{{ mb_strimwidth($article['body'], 0, 300, "...") }} </p>
+            <p class="card-text text-light-white text-wrap overflow-hidden h-100">
+                {{ mb_strimwidth(str_replace("&nbsp;", " ", strip_tags($article['body'])), 0, 500, "...") }}
+            </p>
         </div>
     </a>
     
