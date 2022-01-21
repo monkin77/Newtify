@@ -29,7 +29,7 @@ $isOpen = $errors->has('password');
                         id="avatarPreview" onerror="this.src='{{ $userImgPHolder }}'" />
                     <input type="file" accept="image/*" id="imgInput" name='avatar' />
                     @if ($errors->has('avatar'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger ">
                             <p class="">{{ $errors->first('avatar') }}</p>
                         </div>
                     @endif
@@ -44,7 +44,7 @@ $isOpen = $errors->has('password');
                             <input type="text" required value="{{ old('name') ? old('name') : $user['name'] }}"
                                 class="h3 editInputs w-75" id="nameInput" name='name' />
                             @if ($errors->has('name'))
-                                <div class="w-50 py-1">
+                                <div class="w-50 py-1 text-danger ">
                                     <p class="">{{ $errors->first('name') }}</p>
                                 </div>
                             @endif
@@ -86,12 +86,12 @@ $isOpen = $errors->has('password');
 
                         </div>
                         @if ($errors->has('country'))
-                            <div class="w-50 py-1">
+                            <div class="text-danger w-50 py-1">
                                 <p class="">{{ $errors->first('country') }}</p>
                             </div>
                         @endif
                         @if ($errors->has('city'))
-                            <div class="w-50 py-1">
+                            <div class="text-danger w-50 py-1">
                                 <p class="">{{ $errors->first('city') }}</p>
                             </div>
                         @endif
@@ -122,7 +122,7 @@ $isOpen = $errors->has('password');
                 <textarea id="descriptionInput" name="description" rows="6"
                     class="h-100 editInputs py-2">{{ old('description') ? old('description') : $user['description'] }}</textarea>
                 @if ($errors->has('description'))
-                    <div class="w-50 py-1">
+                    <div class="text-danger w-50 py-1">
                         <p class="">{{ $errors->first('description') }}</p>
                     </div>
                 @endif
@@ -146,7 +146,7 @@ $isOpen = $errors->has('password');
                     @method('put')
                     @csrf
                     @if ($errors->has('password'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger">
                             <p class="">Invalid Password</p>
                         </div>
                     @endif
@@ -172,7 +172,7 @@ $isOpen = $errors->has('password');
                         <button class="mb-4 btn btn-primary px-5" type="submit">Change</button>
                     </div>
                     @if ($errors->has('new_password'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger ">
                             <p class="">{{ $errors->first('new_password') }}</p>
                         </div>
                     @endif
@@ -197,7 +197,7 @@ $isOpen = $errors->has('password');
                         <button class="mb-4 btn btn-primary px-5" type="submit">Change</button>
                     </div>
                     @if ($errors->has('email'))
-                        <div class="w-50 py-1">
+                        <div class="w-50 py-1 text-danger ">
                             <p class="">{{ $errors->first('email') }}</p>
                         </div>
                     @endif
