@@ -653,6 +653,9 @@ option {
 }
 
 /* Tags Managment */
+.statusContainer {
+    background-color: var(--bs-gray-900);
+}
 
 .statusContainer,
 .reportsContainer {

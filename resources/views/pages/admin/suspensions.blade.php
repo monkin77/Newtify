@@ -4,13 +4,15 @@
     <script type="text/javascript" src="{{ asset('js/suspensions.js') }}"></script>
 @endsection
 
+@section('title', "- Suspensions")
+
 @section('content')
 
     <div class="text-center container">
         
         <h1 class="text-center mt-5">Users Suspensions</h1>
 
-        <div class="accordion border bg-dark my-5 statusContainer" id="accordionElement">
+        <div class="accordion border my-5 statusContainer" id="accordionElement">
 
             @foreach ($suspendedUsers as $user)
                 <div class="bg-dark">

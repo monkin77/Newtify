@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- Search")
+
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('scripts')
     <script type="text/javascript" src={{ asset('js/user.js') }}></script>

@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
+@section('title', "- Admin Panel")
+   
 @section('content')
-
 
 <div class="py-5 container">
     <div class="d-flex flex-row row w-100">

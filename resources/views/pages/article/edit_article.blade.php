@@ -7,6 +7,8 @@
     <script type="text/javascript" src=" {{ asset('js/select2tags.js') }}"> </script>
 @endsection
 
+@section('title', "- Edit Article")
+
 {{-- ------------------------------------------------------ --}}
 @section('content')
 

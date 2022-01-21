@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
+@section('title', "- About Us")
+
 @section('content')
-    
 
     <div class="container text-center my-5 p-5 bg-secondary">
         <h1>About us</h1>

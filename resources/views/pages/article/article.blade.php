@@ -6,6 +6,9 @@
     <script type="text/javascript" src={{ asset('js/user.js') }}></script>
 @endsection
 
+@section('title', "- Article")
+
+
 @section('article')
     <div class="article-container h-100 container-fluid bg-dark rounded mt-3 mb-5">
 
