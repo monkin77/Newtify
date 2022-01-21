@@ -106,7 +106,13 @@ const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 // Enable Text Editor
 tinymce.init({
   selector: '#body',
-  plugins: 'a11ychecker advcode casechange export linkchecker autolink lists media mediaembed powerpaste table advtable tinymcespellchecker',
+  plugins: 'a11ychecker autosave advcode casechange export linkchecker autolink lists media mediaembed powerpaste table advtable tinymcespellchecker',
   toolbar: 'a11ycheck advcode numlist bullist casechange code export table',
   toolbar_mode: 'floating',
+  skin: "oxide-dark",
+  content_css: "dark",
+  mobile: {
+    theme: 'mobile',
+    plugins: 'autosave lists autolink',
+  }
 });
