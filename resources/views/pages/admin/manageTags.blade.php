@@ -2,14 +2,17 @@
 
 <script type="text/javascript" src="{{ asset('js/tags.js') }}"></script>
 
+@section('title', "- Manage Tags")
+
+
 @section('content')
 
 <div class="text-center container">
     <h1 class="text-center mt-5">Manage Tags</h1>
     <div class="mb-5 row">
 
-        <div class="px-2 mt-5 col-12 col-lg-4" id="acceptedTagsContainer">
-            <div class="border bg-dark statusContainer">
+        <div class="px-2 mt-5 col-12 col-lg-4">
+            <div class="border bg-dark statusContainer" id="acceptedTagsContainer">
                 <h3 class="mt-5">Accepted Tags</h3>
                 @foreach ($tags_accepted as $tag)
                     <div class="mt-5 pb-3 pt-5 bg-dark mb-5 manageTagContainer">
@@ -24,8 +27,8 @@
             </div>
         </div>
 
-        <div class="px-2 mt-5 col-12 col-lg-4"  id="pendingTagsContainer">
-            <div class="border bg-dark statusContainer">
+        <div class="px-2 mt-5 col-12 col-lg-4">
+            <div class="border bg-dark statusContainer" id="pendingTagsContainer">
                 <h3 class="mt-5">Pending Tags</h3>
                 @foreach ($tags_pending as $tag)
                     <div class="mt-5 pb-3 pt-5 bg-dark mb-5 manageTagContainer">
@@ -43,8 +46,8 @@
             </div>
         </div>
 
-        <div class="px-2 mt-5 col-12 col-lg-4"  id="rejectTagsContainer">
-            <div class="border bg-dark statusContainer">
+        <div class="px-2 mt-5 col-12 col-lg-4">
+            <div class="border bg-dark statusContainer" id="rejectTagsContainer">
                 <h3 class="mt-5">Rejected Tags</h3>
                 @foreach ($tags_rejected as $tag)
                     <div class="mt-5 pb-3 pt-5 bg-dark mb-5 manageTagContainer">

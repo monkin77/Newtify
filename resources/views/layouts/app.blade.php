@@ -12,7 +12,7 @@
     <!-- Authentication info -->
     <meta name="user-id" content="{{ Auth::id() }}" >
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} @yield('title')</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
