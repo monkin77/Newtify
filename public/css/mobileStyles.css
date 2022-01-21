@@ -155,6 +155,9 @@
     #resetPassContainer {
         width: 75%;
     }
+    #loginContainer .loginBtn {
+        width: 75%;
+    }
 
     /* Article */
     .article-container {

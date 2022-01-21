@@ -881,6 +881,9 @@ option {
 #resetPassContainer {
     width: 25%;
 }
+#loginContainer .loginBtn {
+    width: 50%;
+}
 
 /* Custom Bootstrap Variables */
 .text-purple {
@@ -1002,7 +1005,8 @@ option {
 
 /* Notification Panel */
 
-#notificationPanel, #notificationPanelMobile {
+#notificationPanel,
+#notificationPanelMobile {
     z-index: 1;
     max-height: 80vh;
     overflow-y: scroll;
