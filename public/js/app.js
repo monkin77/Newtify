@@ -91,16 +91,22 @@ function filterArticles() {
 
 addEventListeners();
 
+function goBack() {
+  history.back();
+}
+
 // Enable tooltips
 const tooltipTriggerList = [].slice.call(selectAll('[data-bs-toggle="tooltip"]'))
 const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl, {
     delay: { show: 500, hide: 100 },
-  })
+  });
 });
 
-
-function goBack() {
-  history.back();
-}
-
+// Enable Text Editor
+tinymce.init({
+  selector: '#body',
+  plugins: 'a11ychecker advcode casechange export linkchecker autolink lists media mediaembed powerpaste table advtable tinymcespellchecker',
+  toolbar: 'a11ycheck advcode numlist bullist casechange code export table',
+  toolbar_mode: 'floating',
+});
