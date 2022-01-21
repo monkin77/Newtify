@@ -102,7 +102,8 @@ class SearchController extends Controller
 
 
         $users = $rawUsers->map(function ($user) {
-            $followed = Auth::user()->isFollowing($user->id);
+            
+            $followed = !Auth::guest() ? Auth::user()->isFollowing($user->id) : false;
 
             return [
                 'id' => $user->id,

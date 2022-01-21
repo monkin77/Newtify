@@ -1,5 +1,5 @@
-<div class="card user-card flex-row flex-wrap mb-3 bg-secondary">
-    <div class="user-card-avatar px-4 py-4 text-center">
+<div class="card user-card d-flex flex-row flex-wrap mb-3 bg-secondary">
+    <div class="user-card-avatar card-block px-4 py-4 text-center">
         <a href="/user/{{ $user['id'] }}">
         <img src="{{
                 isset($user['avatar']) ?
@@ -26,16 +26,18 @@
             @endif
         </p>
 
-        @if ($user['followed'])
-            <div class="w-25 mb-2">
-                <button type="button" class="btn btn-primary my-0 py-0 me-3" id="followBtn"
-                    onclick="shortcutUnfollowUser(this, {{ $user['id'] }})">Following</button>
-            </div>
-        @else
-            <div class="w-25 mb-2">
-                <button type="button" class="btn btn-primary my-0 py-0 me-3" id="followBtn"
-                    onclick="shortcutFollowUser(this, {{ $user['id'] }})">Follow</button>
-            </div>
+        @if (!Auth::guest())
+            @if ($user['followed'])
+                <div class="w-25 mb-2">
+                    <button type="button" class="btn btn-primary my-0 py-0 me-3" id="followBtn"
+                        onclick="shortcutUnfollowUser(this, {{ $user['id'] }})">Following</button>
+                </div>
+            @else
+                <div class="w-25 mb-2">
+                    <button type="button" class="btn btn-primary my-0 py-0 me-3" id="followBtn"
+                        onclick="shortcutFollowUser(this, {{ $user['id'] }})">Follow</button>
+                </div>
+            @endif
         @endif
 
         @if (isset($user['description']))
