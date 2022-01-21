@@ -1,9 +1,32 @@
+const shortcutFollowUser = (elem, id) => {
+    sendAjaxRequest('post', `/user/${id}/follow`, null, shortcutFollowHandler(elem));
+}
+
+const shortcutUnfollowUser = (elem, id) => {
+    sendAjaxRequest('post', `/user/${id}/unfollow`, null, shortcutUnfollowHandler(elem));
+}
+
 const followUser = (id) => {
     sendAjaxRequest('post', `/user/${id}/follow`, null, followUserHandler);
 }
 
 const unfollowUser = (id) => {
     sendAjaxRequest('post', `/user/${id}/unfollow`, null, unfollowUserHandler);
+}
+
+
+const shortcutFollowHandler = (elem) => function () {
+    const res = JSON.parse(this.responseText);
+    elem.className = "btn btn-primary my-0 py-0 me-3";
+    elem.innerHTML = 'Following';
+    elem.onclick = () => shortcutUnfollowUser(elem, res.id);
+}
+
+const shortcutUnfollowHandler = (elem) => function () {
+    const res = JSON.parse(this.responseText);
+    elem.className = "btn btn-primary my-0 py-0 me-3";
+    elem.innerHTML = 'Follow';
+    elem.onclick = () => shortcutFollowUser(elem, res.id);
 }
 
 function followUserHandler() {
@@ -21,10 +44,10 @@ function unfollowUserHandler() {
     const res = JSON.parse(this.responseText);
     if (res.status == 'OK') {
         const button = select('#followBtn');
-            button.className = "btn btn-primary px-lg-5 my-0 py-0 mx-3";
-            button.innerHTML = 'Follow';
-            button.onclick = () => followUser(res.id);
-            select('#followersCount').innerHTML--;
+        button.className = "btn btn-primary px-lg-5 my-0 py-0 mx-3";
+        button.innerHTML = 'Follow';
+        button.onclick = () => followUser(res.id);
+        select('#followersCount').innerHTML--;
     }
 }
 

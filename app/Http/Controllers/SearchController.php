@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -99,7 +100,11 @@ class SearchController extends Controller
         $canLoadMore = is_null($limit) ? false : $rawUsers->count() > $limit;
         $rawUsers = $rawUsers->take($limit);
 
+
         $users = $rawUsers->map(function ($user) {
+            
+            $followed = !Auth::guest() ? Auth::user()->isFollowing($user->id) : false;
+
             return [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -110,6 +115,7 @@ class SearchController extends Controller
                 'reputation' => $user->reputation,
                 'isAdmin' => $user->is_admin,
                 'topAreasExpertise' => $user->topAreasExpertise(),
+                'followed' => $followed,
             ];
         });
 

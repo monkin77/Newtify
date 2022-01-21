@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 {{-- ------------------------------------------------------------------------------------ --}}
+@section('scripts')
+    <script type="text/javascript" src={{ asset('js/user.js') }}></script>
+@endsection
+
+{{-- ------------------------------------------------------------------------------------ --}}
 
 @section('error-handler')
     <div class="alert alert-danger mb-0 text-center" role="alert">

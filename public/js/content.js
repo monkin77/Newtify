@@ -15,7 +15,7 @@ const giveFeedbackHandler = (elem, content_id, is_like, is_comment) => function(
     }
 
     const previousError = elem.querySelector(`#${elem.id} .error`);
-
+    console.log(this.responseText);
     if (this.status != 200) {
         const error = createErrorMessage(JSON.parse(this.responseText).errors);
         error.classList.add('mt-3');

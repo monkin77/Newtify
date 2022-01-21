@@ -31,13 +31,17 @@ $guest = !Auth::check();
                 </div>
                 <div class="col-7 col-lg-6 d-flex justify-content-center align-items-center">
                     @if ($isOwner)
-                        <button type="button" class="btn transparentButton my-0 py-0 me-5 rounded-circle"
+                        <button type="button" class="btn transparentButton my-0 py-0 me-2 rounded-circle"
                         data-bs-toggle="tooltip" data-bs-placement="left" title="Edit Profile">
                             <a class="fa fa-pencil font-3x darkPurpleLink" href="/user/{{ $user['id'] }}/edit"></a>
                         </button>
+                        <form method="GET" class="m-0 p-0 mx-0 mx-lg-3" action="{{ route('followedUsers', $user['id']) }}">
+                            <button type="submit" class="btn btn-sm btn-primary my-0 py-0" >
+                                Followed Users
+                            </button>
+                        </form>
                     @else
                         @if (!$guest)
-                            <i class="fa fa-comment-dots me-3 text-purple-dark font-2x" onclick="console.log('clicked')"></i>
                             @if ($follows)
                                 <button type="button" class="btn btn-secondary px-lg-5 my-0 py-0 mx-3" id="followBtn"
                                     onclick="unfollowUser({{ $user['id'] }})">Unfollow</button>
@@ -47,9 +51,10 @@ $guest = !Auth::check();
                             @endif
                         @endif
                     @endif
+
                     <i class="fa fa-users font-2x mx-3 text-primary"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" title="Follower Count"></i>
-                    <p class="h5 py-0 my-0" id="followersCount">{{ $followerCount }}</p>
+                    <p class="h5 text-center py-0 my-0" id="followersCount">{{ $followerCount }}</p>
                 </div>
             </div>
             <div class="row w-100 my-2">
@@ -69,6 +74,9 @@ $guest = !Auth::check();
                         @include('partials.user.reputationBar', ['user' => $user, 'isOwner' => $isOwner])
                     </div>
                 </div>
+            </div>
+            <div class="mt-5" id="description">
+                <h5>{{ $user['description'] }}</h5>
             </div>
         </div>
     </section>

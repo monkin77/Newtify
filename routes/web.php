@@ -38,7 +38,7 @@ Route::put('user/{id}', 'UserController@update')->name('editProfile')->where(['i
 Route::delete('user/{id}', 'UserController@delete')->name('deleteUser')->where(['id' => '[0-9]+']);
 Route::post('user/{id}/report', 'UserController@report')->where(['id' => '[0-9]+']);
 Route::get('api/user/{id}/suspension', 'UserController@suspension')->where(['id' => '[0-9]+']);
-Route::get('user/{id}/followed', 'UserController@followed')->where(['id' => '[0-9]+']);
+Route::get('user/{id}/followed', 'UserController@followed')->name('followedUsers')->where(['id' => '[0-9]+']);
 Route::get('api/user/{id}/articles', 'UserController@articles')->where(['id' => '[0-9]+']);
 Route::post('user/{id}/follow', 'UserController@follow')->where(['id' => '[0-9]+']);
 Route::post('user/{id}/unfollow', 'UserController@unfollow')->where(['id' => '[0-9]+']);
