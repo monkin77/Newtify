@@ -180,6 +180,7 @@ option {
 /* Partial Article, just putting here for now then we change */
 #articles .card {
     height: 20vh;
+    min-height: 11em;
     margin-bottom: 1em;
     border-radius: 1rem;
 }
