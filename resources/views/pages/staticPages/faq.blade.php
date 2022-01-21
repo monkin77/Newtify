@@ -69,7 +69,7 @@
             <div class="accordion-item my-5">
                 <h4 class="accordion-header " id="headingFive">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                        What are the areas of expertise used for?
+                        What are the areas of expertise?
                     </button>
                 </h4>
                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
