@@ -942,6 +942,10 @@ option {
     font-size: 3em;
 }
 
+.notification-bell {
+    font-size: 1.5em;
+}
+
 .squareImage {
     width: 100%;
     aspect-ratio: 1;

@@ -9,14 +9,8 @@
                         <i class="purpleLink fas fa-plus-circle fa-2x"></i>
                     </a>
                     <div class="nav-item mx-3 position-relative">
-                        <i class="fas fa-bell" onclick="console.log('Clicked')"></i>
+                        <i class="fas fa-bell notification-bell" onclick="console.log('Clicked')"></i>
                         @if ($newNotifications)
-                            <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
-                        @endif
-                    </div>
-                    <div class="nav-item mx-3 position-relative">
-                        <i class="fas fa-envelope" onclick="console.log('Clicked')"></i>
-                        @if ($newMessages)
                             <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
                         @endif
                     </div>
@@ -91,7 +85,7 @@
                             </a>
                         </label>
                         <div class="nav-item mx-5 position-relative">
-                            <i class="fas fa-bell" onclick="console.log('Clicked')"
+                            <i class="fas fa-bell notification-bell" onclick="console.log('Clicked')"
                             data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications"></i>
                             @if ($newNotifications)
                                 <div class="border border-4 border-warning rounded-circle position-absolute start-100"></div>
