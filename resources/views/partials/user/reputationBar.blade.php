@@ -23,6 +23,7 @@ $guest = !Auth::check();
                 style="background-color: {{ $user['reputation'] >= 0 ? 'green' : 'red' }}; width: {{ calculateReputationLevel($user['reputation']) . '%' }}; border-radius: 0.7em">
             </div>
         </div>
+    </div>
 
     <div class="d-flex justify-content-between align-items-center w-100">
         <h6 class="my-0 py-0 pt-2">Reputation: {{ $user['reputation'] }}</h6>

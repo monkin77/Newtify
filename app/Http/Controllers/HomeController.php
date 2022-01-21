@@ -47,8 +47,8 @@ class HomeController extends Controller
                 'integer',
                 Rule::exists('tag', 'id')->where('state', 'ACCEPTED')
             ],
-            'minDate' => 'nullable|string|date_format:Y-m-d|before:'.date('Y-m-d'),
-            'maxDate' => 'nullable|string|date_format:Y-m-d|before:'.date('Y-m-d'),
+            'minDate' => 'nullable|string|date_format:Y-m-d|before_or_equal:'.date('Y-m-d'),
+            'maxDate' => 'nullable|string|date_format:Y-m-d|before_or_equal:'.date('Y-m-d'),
             'offset' => 'nullable|integer|min:0',
             'limit' => 'nullable|integer|min:1',
         ]);

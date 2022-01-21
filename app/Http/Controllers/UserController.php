@@ -146,7 +146,7 @@ class UserController extends Controller
             'password' => 'required_with:new_password,email|string|password',
             'new_password' => 'nullable|string|min:6|confirmed',
             // Minimum: 12 years old
-            'birthDate' => 'nullable|string|date_format:Y-m-d|before:'.date('Y-m-d', strtotime('-12 years')),
+            'birthDate' => 'nullable|string|date_format:Y-m-d|before_or_equal:'.date('Y-m-d', strtotime('-12 years')),
             'country' => 'nullable|string|exists:country,name',
             'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
             'description' => 'nullable|string|max:500',
@@ -156,7 +156,7 @@ class UserController extends Controller
                 'integer',
                 Rule::exists('tag', 'id')->where('state', 'ACCEPTED')
             ],
-        ], ['before' => 'You must be at least 12 years old']);
+        ], ['before_or_equal' => 'You must be at least 12 years old']);
 
         if ($validator->fails()) {
             $errors = [];
