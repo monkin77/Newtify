@@ -46,7 +46,7 @@
 
             <div id="daterangeContainer" class="flex-fill d-flex justify-content-evenly">
                 <input type="text" name="daterange" class="my-0 mx-5 text-center text-light border-light"
-                placeholder="Filter by Publish Date" />
+                placeholder="Filter by Date" />
             </div>
 
             <select id="filterTags" onchange="filterArticles()" multiple>
@@ -59,7 +59,8 @@
 
             <i class="fa fa-tag filter-tag mx-4 text-lightPurple"></i>
         </div>
-        <div id="filterSectionMobile" class="d-flex justify-content-between d-md-none pe-2">
+
+        <div id="filterSectionMobile" class="d-flex d-md-none justify-content-between align-items-center pe-2">
             <div class="dropdown">
                 <button class="btn btn-purple dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Filter By
@@ -96,6 +97,16 @@
                         </label>
                     </li>
                 </ul>
+            </div>
+
+            <div class="w-50">
+                <select id="filterMobileTags" class="w-100" onchange="filterArticles()" multiple>
+                    @foreach($tags as $tag)
+                        <option value="{{ $tag['id'] }}">
+                            {{ $tag['name'] }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div id="daterangeContainer">

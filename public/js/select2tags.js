@@ -15,6 +15,15 @@ $('#filterTags').select2({
     closeOnSelect: false,
 });
 
+$('#filterMobileTags').select2({
+    multiple: true,
+    maximumSelectionLength: 3,
+    tokenSeparators: [',', ' ', ";"],
+    theme: "bootstrap-5",
+    placeholder: "Tags",
+    closeOnSelect: false,
+});
+
 $('#favoriteTags').select2({
     multiple: true,
     tokenSeparators: [',', ' ', ";"],
