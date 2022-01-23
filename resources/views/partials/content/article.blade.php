@@ -27,7 +27,7 @@
             </span>
 
             <p class="card-text text-light-white text-wrap overflow-hidden h-100">
-                {{ mb_strimwidth(str_replace("&nbsp;", " ", strip_tags($article['body'])), 0, 500, "...") }}
+                {!! mb_strimwidth(str_replace("&nbsp;", " ", strip_tags($article['body'])), 0, 500, "...") !!}
             </p>
         </div>
     </a>
