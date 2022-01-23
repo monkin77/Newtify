@@ -81,7 +81,7 @@
                     
                     <div class="flex-row h-100">
                         <label for="body">Article Body</label>
-                        <textarea id="body" required name="body" minlength="10" rows="15" class="h-100">{{
+                        <textarea id="body" name="body" minlength="10" rows="15" class="h-100">{{
                             old('body') ? old('body') : $article['body']
                         }}</textarea>
                         @if ($errors->has('body'))
