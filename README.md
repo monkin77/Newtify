@@ -17,7 +17,7 @@ Final version of the source code [here](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2
 
 Full Docker command to test the group's Docker Hub image using the DBM database:
 ```
-docker run -it -p 8000:80 --name=lbaw2111 -e DB_DATABASE="lbaw2111" -e DB_SCHEMA="lbaw2111" -e DB_USERNAME="lbaw2111" -e DB_PASSWORD="iROcBrWt" git.fe.up.pt:5050/lbaw/lbaw2122/lbaw2111
+docker run -it -p 8000:80 --name=lbaw2111 -e DB_DATABASE="lbaw2111" -e DB_SCHEMA="lbaw2111" -e DB_USERNAME="lbaw2111" -e DB_PASSWORD=[PASS] git.fe.up.pt:5050/lbaw/lbaw2122/lbaw2111
 ```
 
 ## Usage
