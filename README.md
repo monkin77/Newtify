@@ -11,6 +11,8 @@
 
 The artefacts checklist is available [here](https://docs.google.com/spreadsheets/d/1t7sIAx0rBl6YObh1_6ypMGdorJFQ6nPCqpsOSO0cHY4/edit?usp=sharing).
 
+The artefacts can be found [here](https://github.com/BrunoRosendo/Newtify/wiki)
+
 ## Installation
 
 Final version of the source code [here](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2111/-/tags/Final)
