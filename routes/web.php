@@ -11,6 +11,12 @@
 |
 */
 
+// Enforce https in prod environment
+if (env('APP_ENV') === 'production') {
+    URL::forceScheme('https');
+}
+
+
 // Home
 
 Route::get('/', 'HomeController@show')->name('homepage');
