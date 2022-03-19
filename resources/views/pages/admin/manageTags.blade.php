@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-<script type="text/javascript" src="{{ asset('js/tags.js') }}"></script>
+<script type="text/javascript" src="{{ secure_asset('js/tags.js') }}"></script>
 
 @section('title', "- Manage Tags")
 

@@ -22,29 +22,37 @@ class FeedbackNotification extends Notification
     {
         if (!isset($content->author_id)) return;
 
-        if ($isArticle)
-        {
+        if ($isArticle) {
             $title = Article::find($content->id)->title;
             event(new ArticleLike(
-                $content->author_id, $user->name, asset('storage/avatars/'.$user['avatar']),
-                $user->id, $content->id, $title
+                $content->author_id,
+                $user->name,
+                secure_asset('storage/avatars/' . $user['avatar']),
+                $user->id,
+                $content->id,
+                $title
             ));
-        }
-        else
-        {
+        } else {
             $article = Comment::find($content->id)->article;
             event(new CommentLike(
-                $content->author_id, $user->name, asset('storage/avatars/'.$user['avatar']),
-                $user->id, $article->id, $content->body, $article->title
+                $content->author_id,
+                $user->name,
+                secure_asset('storage/avatars/' . $user['avatar']),
+                $user->id,
+                $article->id,
+                $content->body,
+                $article->title
             ));
         }
     }
 
-    public function feedback_giver() {
+    public function feedback_giver()
+    {
         return $this->belongsTo(User::class, 'fb_giver');
     }
 
-    public function content() {
+    public function content()
+    {
         return $this->belongsTo(Content::class, 'rated_content');
     }
 }

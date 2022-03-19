@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script type="text/javascript" src="{{ asset('js/comments.js') }}"> </script>
-    <script type="text/javascript" src="{{ asset('js/content.js') }}"></script>
-    <script type="text/javascript" src={{ asset('js/user.js') }}></script>
+    <script type="text/javascript" src="{{ secure_asset('js/comments.js') }}"> </script>
+    <script type="text/javascript" src="{{ secure_asset('js/content.js') }}"></script>
+    <script type="text/javascript" src={{ secure_asset('js/user.js') }}></script>
 @endsection
 
 @section('title', "- Article")
@@ -124,7 +124,7 @@
 
                 @if (isset($article['thumbnail']))
                     <div class="h-50 mb-5 text-center">
-                        <img src="{{ asset('storage/thumbnails/' . $article['thumbnail']) }}"
+                        <img src="{{ secure_asset('storage/thumbnails/' . $article['thumbnail']) }}"
                             onerror="this.src='{{ $articleImgPHolder }}'" id="articleImg"
                             alt="Article Thumbnail">
                     </div>
@@ -163,7 +163,7 @@
                 @if (Auth::check())
                     <div class="d-flex flex-row my-3" id="articleCommentsContainer">
                         <div class="flex-column h-100 commentHeader mx-3 mx-lg-5">
-                            <img src="{{ isset(Auth::user()->avatar) ? asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}"
+                            <img src="{{ isset(Auth::user()->avatar) ? secure_asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}"
                                 onerror="this.src='{{ $userImgPHolder }}'" alt="Your Avatar">
                             <p>You</p>
                         </div>

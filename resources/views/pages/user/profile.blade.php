@@ -4,7 +4,7 @@
 $guest = !Auth::check();
 @endphp
 
-<script type="text/javascript" src={{ asset('js/user.js') }}></script>
+<script type="text/javascript" src={{ secure_asset('js/user.js') }}></script>
 
 @section('title', "- User Profile")
 
@@ -14,7 +14,7 @@ $guest = !Auth::check();
         <div class="container-fluid py-3">
             <div class="row w-100 mt-4 mt-lg-5" id="userGraphics">
                 <div class="col-5 col-lg-6 d-flex justify-content-center align-items-center h-100">
-                    <img src="{{ isset($user['avatar']) ? asset('storage/avatars/' . $user['avatar']) : $userImgPHolder }}"
+                    <img src="{{ isset($user['avatar']) ? secure_asset('storage/avatars/' . $user['avatar']) : $userImgPHolder }}"
                         id="avatarImg" onerror="this.src='{{ $userImgPHolder }}'" alt="User Avatar" />
 
                 </div>

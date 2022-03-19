@@ -38,7 +38,7 @@
                     <div class="text-center">
                         <img class="w-25" src="{{ 
                             isset($report['reported']['avatar']) 
-                            ? asset('storage/avatars/' . $report['reported']['avatar']) 
+                            ? secure_asset('storage/avatars/' . $report['reported']['avatar']) 
                             : $userImgPHolder 
                             }}"
                             alt="Reported User Avatar"

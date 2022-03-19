@@ -4,7 +4,7 @@
 
 {{-- ------------------------------------------------------------------------------------ --}}
 @section('scripts')
-    <script type="text/javascript" src={{ asset('js/user.js') }}></script>
+    <script type="text/javascript" src={{ secure_asset('js/user.js') }}></script>
 @endsection
 
 {{-- ------------------------------------------------------------------------------------ --}}

@@ -8,7 +8,7 @@
                 <a href="{{ route('userProfile', ['id' => $author['id']]) }}">
                     <img id="authorAvatar" class="w-100" src="{{
                         isset($author['avatar']) ?
-                        asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
+                        secure_asset('storage/avatars/'.$author['avatar']) : $userImgPHolder 
                     }}" onerror="this.src='{{ $userImgPHolder }}'" alt="Author Avatar" />
                 </a>
             </div>

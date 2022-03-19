@@ -22,23 +22,31 @@ class CommentNotification extends Notification
         if (!isset($receiver_id) || $receiver_id == $user['id'])
             return;
 
-        if (isset($comment['parent_comment_id']))
-        {
+        if (isset($comment['parent_comment_id'])) {
             event(new CommentReply(
-                $receiver_id, $user['name'], asset('storage/avatars/'.$user['avatar'])
-                , $user->id, $article['id'], $article['title'], $comment['body']
+                $receiver_id,
+                $user['name'],
+                secure_asset('storage/avatars/' . $user['avatar']),
+                $user->id,
+                $article['id'],
+                $article['title'],
+                $comment['body']
             ));
-        }
-        else
-        {
+        } else {
             event(new CommentEvent(
-                $receiver_id, $user['name'], asset('storage/avatars/'.$user['avatar'])
-                , $user->id, $article['id'], $article['title'], $comment['body']
+                $receiver_id,
+                $user['name'],
+                secure_asset('storage/avatars/' . $user['avatar']),
+                $user->id,
+                $article['id'],
+                $article['title'],
+                $comment['body']
             ));
         }
     }
 
-    public function comment() {
-      return $this->belongsTo(Comment::class, 'new_comment');
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class, 'new_comment');
     }
 }
