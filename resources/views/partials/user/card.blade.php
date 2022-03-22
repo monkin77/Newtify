@@ -3,7 +3,7 @@
         <a href="/user/{{ $user['id'] }}">
         <img src="{{
                 isset($user['avatar']) ?
-                secure_asset('storage/avatars/'.$user['avatar']) : $userImgPHolder
+                Storage::url('storage/avatars/'.$user['avatar']) : $userImgPHolder
             }}"
             onerror="this.src='{{ $userImgPHolder }}'"
             style="border-radius: 50%;"

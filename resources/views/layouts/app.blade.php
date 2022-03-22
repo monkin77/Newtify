@@ -17,18 +17,18 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link href="{{ secure_asset('css/customBootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/customBootstrap.min.css') }}" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" />
 
-    <link href="{{ secure_asset('css/AppTheme.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('css/milligram.min.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/AppTheme.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/milligram.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- This Stylesheet needs to be placed after app.css  -->
-    <link href="{{ secure_asset('css/mobileStyles.css') }}" rel="stylesheet">  
+    <link href="{{ asset('css/mobileStyles.css') }}" rel="stylesheet">  
 </head>
 
 <body>

@@ -24,7 +24,7 @@
     <!-- Copyright -->
     <div class="text-center p-3" id="copyrightContainer">
         © 2022 Copyright:
-        <a class="text-reset" href="{{ secure_url('/') }}">LBAW</a>
+        <a class="text-reset" href="{{ url('/') }}">LBAW</a>
     </div>
     <!-- Copyright -->
 </footer>

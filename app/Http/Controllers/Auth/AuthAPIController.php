@@ -49,8 +49,9 @@ class AuthAPIController extends Controller
     private static function saveAvatarFromURL($url)
     {
         $content = file_get_contents($url);
-        $imgName = round(microtime(true)*1000).'.jpg';
-        Storage::put('public/avatars/'.$imgName, $content);
+        $imgName = round(microtime(true) * 1000) . '.jpg';
+        Storage::put('storage/avatars/' . $imgName, $content, 'public');
         return $imgName;
     }
 }
+/* TO-DO: CHANGE TO USE THE S3 DRIVER TO STORE / READ IMAGES */

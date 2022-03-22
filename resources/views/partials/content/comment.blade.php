@@ -13,7 +13,7 @@
             >
                 <img alt="Commenter Avatar" src="{{
                     (isset($comment['author']) && isset($comment['author']['avatar'])) ?
-                    secure_asset('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
+                    Storage::url('storage/avatars/'.$comment['author']['avatar']) : $userImgPHolder 
                 }}" onerror="this.src='{{ $userImgPHolder }}'" />
             </a>
 

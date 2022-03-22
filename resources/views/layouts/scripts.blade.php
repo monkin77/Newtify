@@ -12,10 +12,10 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
     // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
 </script>
 
-<script type="text/javascript" src={{ secure_asset('js/loadMore.js') }}></script>
-<script type="text/javascript" src={{ secure_asset('js/share.js') }}></script>
-<script type="text/javascript" src={{ secure_asset('js/app.js') }}></script>
-<script type="text/javascript" src={{ secure_asset('js/notifications.js') }}></script>
-<script type="text/javascript" src={{ secure_asset('js/pusher.js') }}></script>
+<script type="text/javascript" src={{ asset('js/loadMore.js') }}></script>
+<script type="text/javascript" src={{ asset('js/share.js') }}></script>
+<script type="text/javascript" src={{ asset('js/app.js') }}></script>
+<script type="text/javascript" src={{ asset('js/notifications.js') }}></script>
+<script type="text/javascript" src={{ asset('js/pusher.js') }}></script>
 
 @yield('scripts')

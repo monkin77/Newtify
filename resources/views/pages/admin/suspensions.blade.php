@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script type="text/javascript" src="{{ secure_asset('js/suspensions.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/suspensions.js') }}"></script>
 @endsection
 
 @section('title', "- Suspensions")
@@ -55,7 +55,7 @@
                                     <a href="/user/{{ $user['id'] }}" class="text-center">
                                         <img class="mb-4" alt="Suspended User Avatar" src="{{ 
                                             isset($user['avatar']) 
-                                            ? secure_asset('storage/avatars/' . $user['avatar']) 
+                                            ? Storage::url('storage/avatars/' . $user['avatar']) 
                                             : $userImgPHolder 
                                             }}"
                                             id="avatarImg" onerror="this.src='{{ $userImgPHolder }}'" />

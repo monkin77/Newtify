@@ -22,13 +22,13 @@ class ArticleController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function createForm() 
+    public function createForm()
     {
-        if (Auth::guest()) 
+        if (Auth::guest())
             return redirect('/login');
 
         $user = User::find(Auth::id());
-        if (is_null($user)) 
+        if (is_null($user))
             return redirect('/login');
 
         $authorInfo = [
@@ -65,7 +65,8 @@ class ArticleController extends Controller
             return redirect('/login');
         }
 
-        $validator = Validator::make($request -> all(),
+        $validator = Validator::make(
+            $request->all(),
             [
                 'body' => 'required|string|min:10',
                 'title' => 'required|string|min:3|max:100',
@@ -74,7 +75,7 @@ class ArticleController extends Controller
                 'tags.*' => 'required|string|min:1',
             ]
         );
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
             $errors = [];
             foreach ($validator->errors()->messages() as $key => $value) {
                 if (str_contains($key, 'tags'))
@@ -88,12 +89,12 @@ class ArticleController extends Controller
 
         $tagsIds = [];
 
-        foreach($request->tags as $tag) {
+        foreach ($request->tags as $tag) {
             $checkTag = Tag::find($tag);
 
             //check if is valid tag
             if (!$checkTag || $checkTag->state != 'ACCEPTED') {
-                return redirect()->back()->withInput()->withErrors(['tags' => 'Invalid Tag: '.$tag]); 
+                return redirect()->back()->withInput()->withErrors(['tags' => 'Invalid Tag: ' . $tag]);
             }
             array_push($tagsIds, $checkTag->id);
         }
@@ -109,8 +110,8 @@ class ArticleController extends Controller
 
         if (isset($request->thumbnail)) {
             $thumbnail = $request->thumbnail;
-            $imgName = round(microtime(true)*1000).'.'.$thumbnail->extension();
-            $thumbnail->storeAs('public/thumbnails', $imgName);
+            $imgName = round(microtime(true) * 1000) . '.' . $thumbnail->extension();
+            $thumbnail->storePubliclyAs('storage/thumbnails', $imgName);
             $article->thumbnail = $imgName;
         }
 
@@ -130,8 +131,8 @@ class ArticleController extends Controller
     public function show(int $id)
     {
         $article = Article::find($id);
-        if (is_null($article)) 
-            return abort(404, 'Article not found, id: '.$id);
+        if (is_null($article))
+            return abort(404, 'Article not found, id: ' . $id);
 
         $articleInfo = [
             'id' => $article->content_id,
@@ -173,14 +174,14 @@ class ArticleController extends Controller
         $user = Auth::user();
         $is_admin = Auth::user() ? $user->is_admin : false;
 
-        $feedback = Auth::check() 
+        $feedback = Auth::check()
             ? Feedback::where('user_id', '=', Auth::id())->where('content_id', '=', $id)->first()
             : null;
 
         $liked = false;
         $disliked = false;
 
-        if (!is_null($feedback)){
+        if (!is_null($feedback)) {
             $liked = $feedback->is_like;
             $disliked = !$feedback->is_like;
         }
@@ -230,7 +231,7 @@ class ArticleController extends Controller
         $comments = $comments->take($request->limit);
 
         return response()->json([
-            'html' => view('partials.content.comments', [ 'comments' => $comments ])->render(),
+            'html' => view('partials.content.comments', ['comments' => $comments])->render(),
             'canLoadMore' => $canLoadMore
         ], 200);
     }
@@ -244,12 +245,12 @@ class ArticleController extends Controller
     public function edit(int $id)
     {
         $article = Article::find($id);
-        if (is_null($article)) 
-            return abort(404, 'Article not found, id: '.$id);
+        if (is_null($article))
+            return abort(404, 'Article not found, id: ' . $id);
 
         $content = Content::find($article->content_id);
         if (is_null($content))
-            return abort(404, 'Content not found, id: '.$article->content_id);
+            return abort(404, 'Content not found, id: ' . $article->content_id);
 
         $this->authorize('update', $content);
 
@@ -294,29 +295,31 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, int $id) : RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
 
         $article = Article::find($id);
-        if (is_null($article)) 
-            return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
+        if (is_null($article))
+            return redirect()->back()->withErrors(['article' => 'Article not found, id:' . $id]);
 
         $content = Content::find($article->content_id);
-        if (is_null($content)) 
-            return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
+        if (is_null($content))
+            return redirect()->back()->withErrors(['content' => 'Content not found, id:' . $id]);
 
         $this->authorize('update', $content);
 
-        $validator = Validator::make($request -> all(),
-        [
-            'body' => 'nullable|string|min:10',
-            'title' => 'nullable|string|min:1|max:255',
-            'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
-            'tags' => 'required|array|min:1|max:3',
-            'tags.*' => 'required|string|min:1',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'body' => 'nullable|string|min:10',
+                'title' => 'nullable|string|min:1|max:255',
+                'thumbnail' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096',
+                'tags' => 'required|array|min:1|max:3',
+                'tags.*' => 'required|string|min:1',
+            ]
+        );
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
             $errors = [];
             foreach ($validator->errors()->messages() as $key => $value) {
                 if (str_contains($key, 'tags'))
@@ -334,22 +337,22 @@ class ArticleController extends Controller
             $newThumbnail = $request->thumbnail;
             $oldThumbnail = $article->thumbnail;
 
-            $imgName = round(microtime(true)*1000).'.'.$newThumbnail->extension();
-            $newThumbnail->storeAs('public/thumbnails', $imgName);
+            $imgName = round(microtime(true) * 1000) . '.' . $newThumbnail->extension();
+            $newThumbnail->storePubliclyAs('storage/thumbnails', $imgName);
             $article->thumbnail = $imgName;
 
             if (!is_null($oldThumbnail))
-                Storage::delete('public/thumbnails/'.$oldThumbnail);
+                Storage::delete('storage/thumbnails/' . $oldThumbnail);
         }
 
         $tagsIds = [];
 
-        foreach($request->tags as $tag) {
+        foreach ($request->tags as $tag) {
             $checkTag = Tag::find($tag);
 
             //check if is valid tag
             if (!$checkTag || $checkTag->state != 'ACCEPTED') {
-                return redirect()->back()->withInput()->withErrors(['tags' => 'Invalid Tag: '.$tag]); 
+                return redirect()->back()->withInput()->withErrors(['tags' => 'Invalid Tag: ' . $tag]);
             }
             array_push($tagsIds, $checkTag->id);
         }
@@ -375,12 +378,12 @@ class ArticleController extends Controller
     {
 
         $article = Article::find($id);
-        if(is_null($article))
-            return redirect()->back()->withErrors(['article' => 'Article not found, id:'.$id]);
+        if (is_null($article))
+            return redirect()->back()->withErrors(['article' => 'Article not found, id:' . $id]);
 
         $content = Content::find($article->content_id);
-        if (is_null($content)) 
-            return redirect()->back()->withErrors(['content' => 'Content not found, id:'.$id]);
+        if (is_null($content))
+            return redirect()->back()->withErrors(['content' => 'Content not found, id:' . $id]);
 
         $this->authorize('delete', $content);
 
@@ -401,9 +404,9 @@ class ArticleController extends Controller
 
         $deleted = $article->delete();
 
-        if ($deleted) 
+        if ($deleted)
             return redirect('/');
-        else 
+        else
             return redirect("/article/${id}");
     }
 }

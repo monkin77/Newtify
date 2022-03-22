@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\Comment as CommentEvent;
 use App\Events\CommentReply;
+use Illuminate\Support\Facades\Storage;
 
 class CommentNotification extends Notification
 {
@@ -26,7 +27,7 @@ class CommentNotification extends Notification
             event(new CommentReply(
                 $receiver_id,
                 $user['name'],
-                secure_asset('storage/avatars/' . $user['avatar']),
+                Storage::url('storage/avatars/' . $user['avatar']),
                 $user->id,
                 $article['id'],
                 $article['title'],
@@ -36,7 +37,7 @@ class CommentNotification extends Notification
             event(new CommentEvent(
                 $receiver_id,
                 $user['name'],
-                secure_asset('storage/avatars/' . $user['avatar']),
+                Storage::url('storage/avatars/' . $user['avatar']),
                 $user->id,
                 $article['id'],
                 $article['title'],

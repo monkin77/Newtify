@@ -3,8 +3,8 @@
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script type="text/javascript" src={{ secure_asset('js/user.js') }}></script>
-    <script type="text/javascript" src=" {{ secure_asset('js/select2tags.js') }}"> </script>
+    <script type="text/javascript" src={{ asset('js/user.js') }}></script>
+    <script type="text/javascript" src=" {{ asset('js/select2tags.js') }}"> </script>
 @endsection
 
 @section('title', "- Edit Article")
@@ -64,7 +64,7 @@
 
                         <div id="avatarPreviewContainer" class="d-flex flex-column align-items-center">
                             <img class="col-8 col-md-6 mb-3" src={{ isset($article['thumbnail']) 
-                                ? secure_asset('storage/thumbnails/' . $article['thumbnail'])
+                                ? Storage::url('storage/thumbnails/' . $article['thumbnail'])
                                 : $articleImgPHolder }}
                                 alt="Article Thumbnail Preview"
                                 id="avatarPreview" onerror="this.src='{{ $articleImgPHolder }}'" />

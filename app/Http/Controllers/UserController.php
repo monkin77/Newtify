@@ -145,7 +145,7 @@ class UserController extends Controller
             'password' => 'required_with:new_password,email|string|password',
             'new_password' => 'nullable|string|min:6|confirmed',
             // Minimum: 12 years old
-            'birthDate' => 'nullable|string|date_format:Y-m-d|before_or_equal:'.date('Y-m-d', strtotime('-12 years')),
+            'birthDate' => 'nullable|string|date_format:Y-m-d|before_or_equal:' . date('Y-m-d', strtotime('-12 years')),
             'country' => 'nullable|string|exists:country,name',
             'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
             'description' => 'nullable|string|max:500',
@@ -181,12 +181,12 @@ class UserController extends Controller
             $newAvatar = $request->avatar;
             $oldAvatar = $user->avatar;
 
-            $imgName = round(microtime(true)*1000) . '.' . $newAvatar->extension();
-            $newAvatar->storeAs('public/avatars', $imgName);
+            $imgName = round(microtime(true) * 1000) . '.' . $newAvatar->extension();
+            $newAvatar->storePubliclyAs('storage/avatars', $imgName);
             $user->avatar = $imgName;
 
             if (!is_null($oldAvatar))
-                Storage::delete('public/thumbnails/' . $oldAvatar);
+                Storage::delete('storage/thumbnails/' . $oldAvatar);
         }
 
         $user->save();

@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:authenticated_user',
             'password' => 'required|string|min:8|confirmed',
             // Minimum: 12 years old
-            'birthDate' => 'required|string|date_format:Y-m-d|before_or_equal:'.date('Y-m-d', strtotime('-12 years')),
+            'birthDate' => 'required|string|date_format:Y-m-d|before_or_equal:' . date('Y-m-d', strtotime('-12 years')),
             'country' => 'required|string|exists:country,name',
             'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:4096', // max 5MB
         ], ['before_or_equal' => 'You must be at least 12 years old']);
@@ -70,10 +70,10 @@ class RegisterController extends Controller
         $countryId = Country::getIdByName($data['country']);
         $timestamp = strtotime($data['birthDate']);
 
-        if(isset($data['avatar'])) {
+        if (isset($data['avatar'])) {
             $avatar = $data['avatar'];
-            $imgName = round(microtime(true)*1000).'.'.$avatar->extension();
-            $avatar->storeAs('public/avatars', $imgName);
+            $imgName = round(microtime(true) * 1000) . '.' . $avatar->extension();
+            $avatar->storePubliclyAs('storage/avatars', $imgName);
         }
 
         return User::create([

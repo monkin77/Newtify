@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\ArticleLike;
 use App\Events\CommentLike;
+use Illuminate\Support\Facades\Storage;
 
 class FeedbackNotification extends Notification
 {
@@ -27,7 +28,7 @@ class FeedbackNotification extends Notification
             event(new ArticleLike(
                 $content->author_id,
                 $user->name,
-                secure_asset('storage/avatars/' . $user['avatar']),
+                Storage::url('storage/avatars/' . $user['avatar']),
                 $user->id,
                 $content->id,
                 $title
@@ -37,7 +38,7 @@ class FeedbackNotification extends Notification
             event(new CommentLike(
                 $content->author_id,
                 $user->name,
-                secure_asset('storage/avatars/' . $user['avatar']),
+                Storage::url('storage/avatars/' . $user['avatar']),
                 $user->id,
                 $article->id,
                 $content->body,

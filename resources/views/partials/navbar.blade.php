@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarContainer">
         <div class="container-fluid py-4">
-            <a id="logo" class="navbar-brand text-center w-25" href="{{ secure_url('/') }}">Newtify</a>
+            <a id="logo" class="navbar-brand text-center w-25" href="{{ url('/') }}">Newtify</a>
             
             <div class="d-flex d-lg-none justify-content-end align-items-center position-relative flex-grow-1">
                 @if (Auth::check())
@@ -27,7 +27,7 @@
                     <div id="dropdownContainer" class="nav-item dropdown ms-3 me-4">
                         <img id="dropdownAvatar" class="nav-link px-0 dropdown-toggle py-0" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" alt="Your Avatar"
-                            src={{ isset(Auth::user()->avatar) ? secure_asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
+                            src={{ isset(Auth::user()->avatar) ? Storage::url('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
                             onerror="this.src='{{ $userImgPHolder }}'" />
 
                         <ul id="mainDropdown" class="dropdown-menu dropdown-menu-dark text-center"
@@ -39,7 +39,7 @@
                             @endif
 
                             <a class="dropdown-item dropdown-custom-item"
-                                href="{{ secure_url('/user/' . Auth::id()) }}">My
+                                href="{{ url('/user/' . Auth::id()) }}">My
                                 Profile</a>
                             <br>
                             <li class="col text-center">
@@ -114,7 +114,7 @@
                             <img id="dropdownAvatar" class="nav-link px-0 dropdown-toggle py-0" role="button"
                                 alt="Your Avatar"
                                 data-bs-toggle="tooltip" aria-expanded="false" data-bs-placement="bottom" title="{{Auth::user()->name}}"
-                                src={{ isset(Auth::user()->avatar) ? secure_asset('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
+                                src={{ isset(Auth::user()->avatar) ? Storage::url('storage/avatars/' . Auth::user()->avatar) : $userImgPHolder }}
                                 onerror="this.src='{{ $userImgPHolder }}'"/>
                             </label>
 
@@ -127,7 +127,7 @@
                                 @endif
 
                                 <a class="dropdown-item dropdown-custom-item"
-                                    href="{{ secure_url('/user/' . Auth::id()) }}">My
+                                    href="{{ url('/user/' . Auth::id()) }}">My
                                     Profile</a>
                                 <br>
                                 <li class="col text-center">

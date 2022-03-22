@@ -25,8 +25,8 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('userImgPHolder', secure_asset('storage/avatar_placeholder.png'));
-        View::share('articleImgPHolder', secure_asset('storage/thumbnail_placeholder.png'));
+        View::share('userImgPHolder', asset('storage/avatar_placeholder.png'));
+        View::share('articleImgPHolder', asset('storage/thumbnail_placeholder.png'));
 
         View::composer('partials.navbar', function ($view) {
             $newNotifications = false;
