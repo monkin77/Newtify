@@ -1,0 +1,14 @@
+Comandos para correr do inicio:
+- composer install
+- php artisan db:seed
+- php artisan migrate
+- php artisan storage:link
+- php artisan serve
+
+--- Comandos uteis ----
+php artisan cache:clear
+php artisan config:clear
+
+---- Correr workers no background ----
+nohup php artisan queue:work --daemon &
+

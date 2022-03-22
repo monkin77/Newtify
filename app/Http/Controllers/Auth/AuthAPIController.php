@@ -54,4 +54,3 @@ class AuthAPIController extends Controller
         return $imgName;
     }
 }
-/* TO-DO: CHANGE TO USE THE S3 DRIVER TO STORE / READ IMAGES */
